@@ -1,18 +1,10 @@
 ---
 name: Bug report(detail)
-about: 에러 상황 보고
+about: 에러 상황을 자세히 보고합니다.
 title: ''
-labels: ''
+labels: 'bug🐛'
 assignees: ''
 
----
-
----
-name: Bug report (detail)
-about: 
-title: ' '
-labels: 'bug🐛'
-assignees: ' '
 ---
 
 ## 📜 요약
