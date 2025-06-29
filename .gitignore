@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# VS Code
+.vscode/
+
+# 환경변수, 개인 설정
+*.env
+
+# 가상환경
+venv/
+
+# macOS, Windows 잡파일
+.DS_Store
+Thumbs.db
+
+# Django static/media
+media/
+
+# 데이터베이스 백업 파일
+*.sqlite3
+
+# 로그파일
+*.log
