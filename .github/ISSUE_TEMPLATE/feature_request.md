@@ -1,5 +1,5 @@
 ---
-name: Todo
+name: Todo (백엔드)
 about: 이번주 할 일을 작성합니다.
 title: 'API'
 labels: ''
