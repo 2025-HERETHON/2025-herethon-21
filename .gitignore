@@ -17,7 +17,6 @@ venv/
 Thumbs.db
 
 # Django static/media
-staticfiles/
 media/
 
 # 데이터베이스 백업 파일
