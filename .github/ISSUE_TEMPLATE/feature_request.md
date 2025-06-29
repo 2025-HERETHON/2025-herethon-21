@@ -1,18 +1,10 @@
 ---
-name: Feature request
-about: 기능 추가 및 변경 사항 이슈 템플릿
-title: ''
+name: Todo
+about: 이번주 할 일을 작성합니다.
+title: 'API'
 labels: ''
 assignees: ''
 
----
-
----
-name: Todo
-about: 
-title: ' '
-labels: ' '
-assignees: ' '
 ---
 
 ## ✔️ 작업 내용 (선택)
