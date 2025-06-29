@@ -2,6 +2,7 @@
 __pycache__/
 *.py[cod]
 *.pyo
+*.pyc
 
 # VS Code
 .vscode/
@@ -16,8 +17,7 @@ venv/
 .DS_Store
 Thumbs.db
 
-# Django static/media
-staticfiles/
+# Django media
 media/
 
 # 데이터베이스 백업 파일
