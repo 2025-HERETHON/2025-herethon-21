@@ -1,12 +1,10 @@
 ---
 name: Bug report (detail)
 about: 에러 상황을 자세히 보고합니다.
-title: ''
-labels: 'bug🐛'
-assignees: ''
-
+title: ""
+labels: "bug🐛"
+assignees: ""
 ---
-
 
 ## 📜 요약
 
@@ -28,16 +26,13 @@ assignees: ''
 2. 무엇을 했더니:
 3. 이런 버그가 발생했다:
 
-
 ## 👌 예상 결과
 
 어떤 결과를 기대했는지 설명해 주세요.
 
-
 ## 💡 예상 원인
 
 짐작하는 원인이 있다면 설명해 주세요.
-
 
 ## 💬 기타 (선택)
 
