@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>signup</title>
+</head>
+<body>
+    <form method="post" action="{% url 'KakaoAPI:signup' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">회원가입</button> 
+    </form> <br><hr>
+    <a href="{% url 'KakaoAPI:main' %}">메인으로</a>
+</body>
+</html>
