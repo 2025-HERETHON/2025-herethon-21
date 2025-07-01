@@ -41,7 +41,18 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
+    # 카카오 소셜 로그인
+    'django.contrib.sites'
+    
     'KakaoAPI',
+    
+    # allauth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    
+    # provider
+    'allauth.socialaccount.providers.kakao'
 ]
 
 MIDDLEWARE = [
@@ -52,9 +63,22 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # 카카오 소셜 로그인    
+    'allauth.account.middleware.AccountMiddleware'
+
 ]
 
 ROOT_URLCONF = 'HERE.urls'
+
+AUTHENTICATION_BACKENDS = (
+    # 장고에서 사용자의 이름을 기준으로 로그인하도록 설정
+    'django.contrib.auth.backends.ModelBackend',
+
+    # 'allauth'의 인증방식 추가
+    'allauth.account.auth_backends.AuthenticationBackend',
+
+)
 
 TEMPLATES = [
     {
@@ -131,3 +155,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+SITE_ID = 1
+
+# 소셜 로그인 시, 'Sign In Via Kakao'라는 중간 창이 뜨지 않게 함.
+SOCIALACCOUNT_LOGIN_ON_GET = True
+# 로그인 완료 후 연결될 URL 설정
+LOGIN_REDIRECT_URL = 'main'
+# 로그아웃 완료 후 연결될 URL 설정
+ACCOUNT_LOGOUT_REDIRECT_URL = 'index'
+# 로그아웃 요청 시 즉시 로그아웃 되도록 설정
+ACCOUNT_LOGOUT_ON_GET = True 
