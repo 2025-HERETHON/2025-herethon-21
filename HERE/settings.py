@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
+from decouple import config
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -127,6 +129,28 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
+KAKAO_CLIENT_ID = config("KAKAO_CLIENT_ID")
+KAKAO_SECRET = config("KAKAO_SECRET")
+
+SOCIALACCOUNT_PROVIDERS = {
+    "kakao": {
+        "APP": {
+            "client_id": KAKAO_CLIENT_ID, # 공용 키 값 client_id
+            "secret": KAKAO_SECRET, # 공용 키 값 client_secret
+            "key": "" 
+        },
+        "SCOPE": [
+            "profile_nickname", # 사용자의 닉네임 ex) 백수진
+            "profile_image" # 사용자의 프로필 이미지
+        ],
+        "AUTH_PARAMS": {
+            "access_type": "online", # 로그인 시 항상 'online' 상태로
+            "prompt": "select_account" # 계정 선택을 위한 팝업을 강제
+        }
+    }
+}
 
 
 # Internationalization
