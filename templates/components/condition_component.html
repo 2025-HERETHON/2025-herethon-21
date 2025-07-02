@@ -1,0 +1,32 @@
+{% extends "../example/base.html" %}
+{% load static %} 
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/condition_component.css' %}" />
+{% endblock style %} 
+{% block script %}
+<script src="{% static 'functions/condition_component.js' %}"></script>
+{% endblock script %}
+
+{% block body %} 
+    <div class="bighugger">
+      <div class="conditionscore">
+        <span class="condition_per">😵</span
+        ><span class="condition_per">😢</span
+        ><span class="condition_per">😐</span
+        ><span class="condition_per">🙂</span
+        ><span class="condition_per">😎</span>
+      </div>
+      <form method="get">
+        <div class="texting">
+          <div class="line_background"></div>
+          <textarea
+            placeholder="오늘의 일기를 남겨주세요!"
+            id="text"
+          ></textarea>
+        </div>
+        <div class="btnhugger">
+          <button type="submit" value="저장" id="savebtn">저장</button>
+        </div>
+      </form>
+    </div>
+{% endblock body %}

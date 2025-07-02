@@ -1,0 +1,43 @@
+{% extends "../example/base.html" %}
+{% load static %} 
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/routine_ing_component.css' %}" />
+{% endblock style %} 
+{% block script %}
+<script src="{% static 'functions/routine_ing_component.js' %}"></script>
+{% endblock script %}
+
+{% block body %} 
+    <div class="bighugger">
+      <img src="{% static 'assets/img/fitnessdog.png' %}" alt="더미 운동 이미지" class="photobox">
+      <div class="routinesection">
+        <div class="timeline" id="timeline">
+          <div class="step">
+            <div class="circle">3분</div>
+            <div class="label">준비 스트레칭</div>
+          </div>
+          <div class="chain"></div>
+          <div class="step">
+            <div class="circle">5분</div>
+            <div class="label">스쿼트</div>
+          </div>
+          <div class="chain"></div>
+          <div class="step">
+            <div class="circle">3분</div>
+            <div class="label">플랭크</div>
+          </div>
+          <div class="chain"></div>
+          <div class="step">
+            <div class="circle">5분</div>
+            <div class="label">암서클</div>
+          </div>
+          <div class="chain"></div>
+          <div class="step">
+            <div class="circle">4분</div>
+            <div class="label">마무리 스트레칭</div>
+          </div>
+        </div>
+        <button class="endbutton">운동 끝내기</button>
+        </div>
+    </div>
+{% endblock body %}

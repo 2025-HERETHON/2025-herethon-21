@@ -1,0 +1,29 @@
+{% extends "../example/base.html" %}
+{% load static %} 
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/review_component.css' %}" />
+{% endblock style %} 
+{% block script %}
+<script src="{% static 'functions/review_component.js' %}"></script>
+{% endblock script %}
+
+{% block body %} 
+    <div class="bighugger">
+      <div class="starscore">
+        <span class="star_per">★</span>
+        <span class="star_per">★</span>
+        <span class="star_per">★</span>
+        <span class="star_per">★</span>
+        <span class="star_per">★</span>
+      </div>
+      <form method="get">
+        <div class="texting">
+          <div class="line_background"></div>
+          <textarea placeholder="운동 리뷰를 남겨주세요!" id="text"></textarea>
+        </div>
+        <div class="btnhugger">
+          <button type="submit" value="저장" id="savebtn">저장</button>
+        </div>
+      </form>
+    </div>
+{% endblock body %}
