@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const stars = document.getElementsByClassName("star_per");
     const savebtn = document.getElementById("savebtn");
-    const content = document.getElementById("text");
     
     for (let i = 0; i < stars.length; i++) {
     stars[i].addEventListener("click", function () {
@@ -13,4 +12,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
     }
+    savebtn.addEventListener("click", function() {
+        let answer = confirm("저장하시겠습니까?");
+        if (answer) alert("리뷰가 저장되었습니다.");
+        else alert("취소되었습니다.")
+    })
 })
