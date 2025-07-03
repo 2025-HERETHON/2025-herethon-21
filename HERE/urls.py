@@ -24,6 +24,7 @@ urlpatterns = [
     path('account/', include('accounts.urls')),
     path('menstruation/', include('menstruations.urls')),
     path('conditionreview/', include('conditionreviews.urls')),
+    path('exercise/', include('exercises.urls')),
 ]
 
 if settings.DEBUG:
