@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'conditionreviews',
     'exercises',
     'friends',
+    'notifications',
 ]
 
 MIDDLEWARE = [

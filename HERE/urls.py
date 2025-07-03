@@ -26,6 +26,7 @@ urlpatterns = [
     path('conditionreview/', include('conditionreviews.urls')),
     path('exercise/', include('exercises.urls')),
     path('friend/', include('friends.urls')),
+    path('notification/', include('notifications.urls')),
 ]
 
 if settings.DEBUG:
