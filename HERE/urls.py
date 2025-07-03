@@ -21,12 +21,12 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('account/', include('accounts.urls')),
-    path('menstruation/', include('menstruations.urls')),
-    path('conditionreview/', include('conditionreviews.urls')),
-    path('exercise/', include('exercises.urls')),
-    path('friend/', include('friends.urls')),
-    path('notification/', include('notifications.urls')),
+    path('accounts/', include('accounts.urls')),
+    path('menstruations/', include('menstruations.urls')),
+    path('conditionreviews/', include('conditionreviews.urls')),
+    path('exercises/', include('exercises.urls')),
+    path('friends/', include('friends.urls')),
+    path('notifications/', include('notifications.urls')),
 ]
 
 if settings.DEBUG:
