@@ -1,46 +1,52 @@
-
 .bighugger {
-  width: 500px;
-  height: 300px;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  background-color: white;
+  width: 370px;
+  height: auto;
 }
-.starscore {
+
+.contentbox {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.conditionscore {
   background-color: rgb(245, 245, 245);
   width: 100%;
   height: 65px;
-  font-size: 40px;
+  font-size: 30px;
   color: rgb(202, 202, 202);
   border-radius: 10px;
   display: flex;
   justify-content: space-around;
-  z-index: 5;
+  align-items: center;
 }
-.starscore span:hover {
+.conditionscore span:hover {
   cursor: pointer;
 }
+.texting {
+  position: relative;
+  padding: 10px 0 20px 0;
+  border-radius:10px;
+  background-color: white;
+}
+
 .texting textarea {
   position: relative;
   z-index: 2;
   width: 100%;
-  height: 100%;
+  height: 160px;
   resize: none;
   border: none;
   font-size: 19px;
   line-height: 40px;
-  padding: 10px 20px;
+  padding: 0 20px;
   background-color: transparent;
   box-sizing: border-box;
   outline: none;
   font-family: "Noto Sans KR", sans-serif;
 }
-.texting {
-  position: relative;
-  width: 494px;
-  height: 190px;
-  margin: 0 auto;
-}
+
 .line_background {
   position: absolute;
   top: 50px;
@@ -60,6 +66,7 @@
   background-repeat: repeat;
   background-origin: content-box;
 }
+
 #savebtn {
   border-radius: 10px;
   font-weight: 600;
@@ -70,9 +77,20 @@
   justify-content: center;
   border: none;
   background-color: rgb(236, 236, 236);
+  cursor: pointer;
 }
+
 .btnhugger {
   display: flex;
   justify-content: flex-end;
-  padding-right: 20px;
+  padding: 10px 20px;
+}
+
+.condition_per {
+  display: inline-block;
+  font-size: 30px;
+  transition: transform 0.2s;
+}
+.condition_per.selected {
+  transform: scale(1.3);
 }

@@ -1,16 +1,21 @@
 {% extends "../example/base.html" %}
 {% load static %} 
 {% block style %}
-<link rel="stylesheet" href="{% static 'styles/routine_list_component.css' %}" />
+<link rel="stylesheet" href="{% static 'styles/component_styles/routine_list_component.css' %}" />
 {% endblock style %} 
 {% block script %}
-<script src="{% static 'functions/routine_list_component.js' %}"></script>
+<script src="{% static 'functions/component_functions/routine_list_component.js' %}"></script>
 {% endblock script %}
 
 {% block body %} 
     <div class="bighugger">
       <div class="scrapbtn">
-        <img src="{% static 'assets/img/scrapicon.png' %}" alt="스크랩 아이콘" id="scrapicon" />
+      <img
+        src="{% static 'assets/img/scrapicon.png' %}"
+        alt="스크랩 아이콘"
+        id="scrapicon"
+        data-default="{% static 'assets/img/scrapicon.png' %}"
+        data-scraped="{% static 'assets/img/scrapicon_scraped.png' %}" />
       </div>
       <table class="table_centerer">
         <tr>

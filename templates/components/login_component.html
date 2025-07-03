@@ -1,10 +1,10 @@
 {% extends "../example/base.html" %}
 {% load static %} 
 {% block style %}
-<link rel="stylesheet" href="{% static 'styles/component_styles/signup_component.css' %}" />
+<link rel="stylesheet" href="{% static 'styles/component_styles/login_component.css' %}" />
 {% endblock style %} 
 {% block script %}
-<script src="{% static 'functions/component_functions/signup_component.js' %}"></script>
+<script src="{% static 'functions/component_functions/login_component.js' %}"></script>
 {% endblock script %}
 
 {% block body %} 
@@ -18,11 +18,8 @@
                 <label for="password">비밀번호</label><br />
                 <input type="password" id="password" placeholder="영문, 숫자, 특수문자 조합 8~16자" /><br />
             </div>
-            <div class="text_input_hugger">
-                <label for="repassword">비밀번호 확인</label><br />
-                <input type="password" id="repassword" placeholder="비밀번호를 다시 입력해주세요." /><br />
-            </div>
-            <button type="submit" value="회원가입" id="signup_submitbtn">회원가입</button>
+            <div class="finding_pwd_hugger"><a href="#" class="finding_pwd">비밀번호 찾기</a></div>
+            <button type="submit" value="로그인" id="login_submitbtn">로그인</button>
         </form>
     </div>
 {% endblock body %}

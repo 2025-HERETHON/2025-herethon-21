@@ -1,10 +1,10 @@
 {% extends "../example/base.html" %}
 {% load static %} 
 {% block style %}
-<link rel="stylesheet" href="{% static 'styles/condition_component.css' %}" />
+<link rel="stylesheet" href="{% static 'styles/component_styles/condition_component.css' %}" />
 {% endblock style %} 
 {% block script %}
-<script src="{% static 'functions/condition_component.js' %}"></script>
+<script src="{% static 'functions/component_functions/condition_component.js' %}"></script>
 {% endblock script %}
 
 {% block body %} 
@@ -17,6 +17,7 @@
         ><span class="condition_per">😎</span>
       </div>
       <form method="get">
+        <div class="contentbox">
         <div class="texting">
           <div class="line_background"></div>
           <textarea
@@ -26,6 +27,7 @@
         </div>
         <div class="btnhugger">
           <button type="submit" value="저장" id="savebtn">저장</button>
+        </div>
         </div>
       </form>
     </div>
