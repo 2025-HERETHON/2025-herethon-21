@@ -1,3 +1,4 @@
+from django.core.validators import MaxValueValidator
 from django.db import models
 from utils.mixins import JSONIntListHandler
 from utils.choices import ExerciseCategoryType
@@ -50,3 +51,26 @@ class ExerciseHistory(models.Model):
                 name='사용자는 운동을 같은 시각에 한 번만 합니다.',
             )
         ]
+
+class ExerciseReview(models.Model):
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True,
+    )
+    exercise_history = models.OneToOneField(
+        ExerciseHistory,
+        related_name='exercise_review',
+        on_delete=models.CASCADE,
+    )
+    rating = models.PositiveSmallIntegerField(
+        validators=[MaxValueValidator(5)],
+    )
+    comment = models.TextField(
+        null=True,
+        blank=True,
+    )
+
+    def __str__(self):
+        return f'{self.exercise_history.user.email}: {self.exercise_history.created_at}'
