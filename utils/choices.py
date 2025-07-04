@@ -24,3 +24,10 @@ class StatusType(IntegerChoices):
     PENDING = 1, '대기'
     ACCEPT = 2, '수락'
     REJECT = 3, '거절'
+
+class NotificationCategoryType(IntegerChoices):
+    REQUEST = 1, '친구 요청'
+    ACCEPT = 2, '친구 요청을 수락'
+    REJECT = 3, '친구 요청을 거절'
+    REACTION = 4, '운동 리뷰에 반응'
+    PROD = 5, '콕 찌르기'
