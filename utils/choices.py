@@ -19,3 +19,8 @@ class EmojiType(IntegerChoices):
     LAUGH = 3, '🤣'
     SAD = 4, '😢'
     SURPRISED = 5, '😲'
+
+class StatusType(IntegerChoices):
+    PENDING = 1, '대기'
+    ACCEPT = 2, '수락'
+    REJECT = 3, '거절'
