@@ -9,7 +9,7 @@ class CustomBaseUserCreationForm(BaseUserCreationForm):
 
 class CustomUserCreationForm(CustomBaseUserCreationForm):
     class Meta(CustomBaseUserCreationForm.Meta):
-        fields = CustomBaseUserCreationForm.Meta.fields + ("exercise_preference","exercise_goal","profile_image","background_image")
+        fields = CustomBaseUserCreationForm.Meta.fields + ("exercise_preference","exercise_goal","profile_image",)
 
 class CustomUserChangeForm(UserChangeForm):
     class Meta:

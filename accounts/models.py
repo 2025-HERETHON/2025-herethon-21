@@ -39,11 +39,6 @@ class CustomUser(AbstractUser):
         null=True,
         blank=True,
     )
-    background_image = models.ImageField(
-        upload_to='user/image/background',
-        null=True,
-        blank=True,
-    )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
