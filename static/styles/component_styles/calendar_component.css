@@ -1,0 +1,205 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.calendar_container {
+  width: 100%;
+  max-width: 530px;
+  aspect-ratio: 1 / 1; 
+  border-radius: 17px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 6px;
+  box-sizing: border-box;
+  margin: auto;
+  box-shadow:
+    0px 2.59px 2.07px 0px #00000005,
+    0px 6.22px 4.98px 0px #00000007,
+    0px 11.71px 9.37px 0px #00000009,
+    0px 20.89px 16.71px 0px #0000000B,
+    0px 39.08px 31.26px 0px #0000000D,
+    0px 93.53px 74.83px 0px #00000012;
+}
+
+.calendar_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 14px;
+  width: 100%;
+  max-width: 80%;
+  margin: 0 auto;
+  position: relative;
+}
+
+.calendar_body_wrapper {
+  margin: 0 auto;
+  width: 90%;
+  max-width: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; 
+}
+
+.calendar_title {
+  font-size: 24px;
+  font-weight: 800;
+  margin-left: 0; 
+  flex-grow: 1; /* 남는 공간 차지해서 버튼 밀어내기 */
+  text-align: left;
+}
+
+.month_btn {
+  background-color: transparent;
+  border: none;
+  font-size: 23px;
+  cursor: pointer;
+  margin-left: 20px;
+}
+
+/* 요일 행 (고정 높이) */
+.calendar_weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  font-weight: bold;
+  font-size: 13px;
+  text-align: center;
+  padding-top: 15px;
+  padding-bottom: 5px;
+}
+
+/* 날짜 그리드 */
+.calendar_days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  width: 100%;
+  border-top: 1px solid #ccc;    
+  border-left: 1px solid #ccc;  
+}
+
+/* 날짜 */
+.calendar_day {
+  border-right: 1px solid #ccc; 
+  border-bottom: 1px solid #ccc;  
+  box-sizing: border-box;
+  aspect-ratio: 1 / 1;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  background-color: #fff;
+}
+
+/* 오늘 날짜 강조 */
+.calendar_day.today {
+  position: relative;
+  font-weight: bold;
+  background-color: #fff;
+  color: black;
+}
+
+.calendar_day.today::before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  transform: translateX(-50%) rotate(180deg); /* 정중앙 정렬 + 아래 삼각형을 위로 뒤집기 */
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 9px solid black; 
+}
+
+.calendar_day.prev_month,
+.calendar_day.next_month {
+  background-color: #f2f2f2;
+  color: #999;       
+}
+
+.calendar_day:hover {
+  background-color: #f2f2f2;
+}
+
+.calendar_legend {
+  display: flex;
+  gap: 60px;
+  justify-content: center;
+  margin-top: 24px;
+  margin-bottom: 20px;
+}
+
+.legend_item {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 400;
+  position: relative;
+  padding-left: 23px; /* 동그라미 공간 확보 */
+  color: #000000;
+}
+
+.legend_item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+}
+
+/* 항목별 색상 월경기 난포기 배란기 황체기 순 */
+.legend_item.pink::before {
+  background-color: #FFD1D1;
+}
+
+.legend_item.yellow::before {
+  background-color: #FFF4D1;
+}
+
+.legend_item.blue::before {
+  background-color: #D1F2FF;
+}
+
+.legend_item.gray::before {
+  background-color: #EBEBEB;
+}
+
+
+.highlight_trip {
+  background: linear-gradient(to bottom, rgba(255, 164, 164, 0.3) 50%, transparent 50%);
+  background-repeat: no-repeat;
+  background-size: 100% 70%; /* 세로 크기 비율 조정 */
+  background-position: bottom; /* 셀의 아래쪽부터 채우기 */
+}
+
+.highlight_birthday {
+  background: linear-gradient(to bottom, rgba(255, 234, 164, 0.3) 50%, transparent 50%);
+  background-repeat: no-repeat;
+  background-size: 100% 70%; 
+  background-position: bottom; 
+}
+
+.highlight_exam {
+  background: linear-gradient(to bottom, rgba(164, 231, 255, 0.3) 50%, transparent 50%);
+  background-repeat: no-repeat;
+  background-size: 100% 70%; 
+  background-position: bottom; 
+}
+
+.highlight_date {
+  background: linear-gradient(to bottom, rgba(217, 217, 217, 0.3) 50%, transparent 50%);
+  background-repeat: no-repeat;
+  background-size: 100% 70%; 
+  background-position: bottom; 
+}
+
+
+
+

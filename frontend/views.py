@@ -14,3 +14,12 @@ def example(request):
         },
     ]
     return render(request, 'example/home.html', {'data_list': data_list})
+
+def componentpage(request):
+    return render(request,"example/component_page.html")
+
+def componentcalendar(request):
+    return render(request,"example/component_calendar.html")
+
+def mypage(request):
+    return render(request,"example/mypage.html")
