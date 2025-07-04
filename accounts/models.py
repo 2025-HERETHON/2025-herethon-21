@@ -51,3 +51,6 @@ class CustomUser(AbstractUser):
             'exercise_goal',
             ExerciseGoalType,
         )
+
+    def __str__(self):
+        return self.email
