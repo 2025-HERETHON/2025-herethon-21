@@ -12,3 +12,10 @@ class ExerciseCategoryType(IntegerChoices):
     UPPER = 2, '상체'
     LOWER = 3, '하체'
     CORE = 4, '코어'
+
+class EmojiType(IntegerChoices):
+    HEART = 1, '😍'
+    SMILE = 2, '😊'
+    LAUGH = 3, '🤣'
+    SAD = 4, '😢'
+    SURPRISED = 5, '😲'
