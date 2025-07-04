@@ -55,6 +55,7 @@ body{
   font-weight: bold;
   z-index: 1;
   position: relative;
+  overflow: visible; 
 }
 
 .label {
@@ -87,4 +88,18 @@ body{
 }
 .progress {
   transition: stroke-dashoffset 1s linear;
+  stroke: rgb(174, 129, 218);
+}
+
+
+.time_text {
+  font-size: 14px;
+  font-weight: bold;
+  white-space: nowrap;
+  line-height: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
 }
