@@ -103,3 +103,34 @@ class ReactedExerciseReview(models.Model):
                 name='사용자는 운동 리뷰 반응을 한 번만 남깁니다.',
             )
         ]
+
+class ScrappedExerciseRoutine(models.Model):
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+    user = models.ForeignKey(
+        CustomUser,
+        related_name='scrapped_exercise_routines',
+        on_delete=models.CASCADE,
+    )
+    exercise_routine = models.JSONField(
+        default=list # list[int]
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.exercise_routine_handler = JSONIntListHandler(
+            self,
+            'exercise_routine',
+        )
+
+    def __str__(self):
+        return f'{self.user.email}: {self.exercise_routine}'
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user','exercise_routine'],
+                name='사용자는 동일한 운동 루틴을 한 번만 스크랩합니다.',
+            )
+        ]
