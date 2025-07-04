@@ -1,7 +1,7 @@
 from django.core.validators import MaxValueValidator
 from django.db import models
 from utils.mixins import JSONIntListHandler
-from utils.choices import ExerciseCategoryType
+from utils.choices import ExerciseCategoryType, EmojiType
 from accounts.models import CustomUser
 
 class Exercise(models.Model):
@@ -74,3 +74,32 @@ class ExerciseReview(models.Model):
 
     def __str__(self):
         return f'{self.exercise_history.user.email}: {self.exercise_history.created_at}'
+
+class ReactedExerciseReview(models.Model):
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+    user = models.ForeignKey(
+        CustomUser,
+        related_name='reacted_exercise_reviews',
+        on_delete=models.CASCADE,
+    )
+    exercise_review = models.ForeignKey(
+        ExerciseReview,
+        related_name='reactions',
+        on_delete=models.CASCADE,
+    )
+    emoji = models.PositiveSmallIntegerField(
+        choices=EmojiType.choices,
+    )
+
+    def __str__(self):
+        return f'{self.user.email}: {EmojiType(self.emoji).label}-{self.exercise_review}'
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user','exercise_review'],
+                name='사용자는 운동 리뷰 반응을 한 번만 남깁니다.',
+            )
+        ]
