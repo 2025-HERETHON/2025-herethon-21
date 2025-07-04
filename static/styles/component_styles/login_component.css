@@ -39,4 +39,22 @@
     text-decoration: none;
     color: gray;   
     font-size: 15px;  
+    padding-left: 8px;
+}
+.to_signup {
+  text-decoration: none;
+  color: gray;   
+  font-size: 15px;
+  padding-right: 10px;
+  position: relative;
+}
+
+.to_signup::after {
+  content: "";
+  position: absolute;
+  top: 25%; 
+  right: 0;
+  width: 0;
+  height: 70%;
+  border-right: 2px solid gray;
 }
