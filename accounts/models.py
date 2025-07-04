@@ -35,7 +35,7 @@ class CustomUser(AbstractUser):
         default=list, # list[int]
     )
     profile_image = models.ImageField(
-        upload_to='user/image/profile',
+        upload_to='user/profile_image',
         null=True,
         blank=True,
     )
