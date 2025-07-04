@@ -1,0 +1,33 @@
+{% extends "./base.html" %}
+
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/example.css' %}" />
+{% endblock style %}
+{% block script %}
+<script src="{% static 'functions/example.js' %}"></script>
+{% endblock script %}
+
+{% block body %}
+<ol>
+  {% for data in data_list %}
+  <li>
+    <span
+      class="
+        {% if data.tag == '태그1' %}
+        blue
+        {% elif data.tag == '태그2' %}
+        red
+        {% endif %}
+      "
+    >{{data.tag}}</span>
+    <button onclick="show(event)">펼치기</button>
+    <div class="hidden">
+      {{data.content}}
+      <button onclick="hide(event)">접기</button>
+    </div>
+  </li>
+  {% endfor %}
+</ol>
+{% endblock body %}
