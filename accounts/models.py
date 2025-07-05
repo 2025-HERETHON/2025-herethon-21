@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django_nanoid.models import NANOIDField
 from utils.choices import ExerciseGoalType
-from utils.json_handlers import JSONIntListHandler, JSONIntChoicesListHandler
+from utils.json_handlers import JSONIntChoicesListHandler
 from .managers import CustomUserManager
 
 class CustomUser(AbstractUser):
