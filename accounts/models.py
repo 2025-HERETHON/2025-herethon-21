@@ -28,9 +28,6 @@ class CustomUser(AbstractUser):
     nickname = models.CharField(
         max_length=10,
     )
-    exercise_preference = models.JSONField(
-        default=list, # list[int]
-    )
     exercise_goal = models.JSONField(
         default=list, # list[int]
     )
@@ -42,10 +39,6 @@ class CustomUser(AbstractUser):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.exercise_preference_handler = JSONIntListHandler(
-            self,
-            'exercise_preference',
-        )
         self.exercise_goal_handler = JSONIntChoicesListHandler(
             self,
             'exercise_goal',
