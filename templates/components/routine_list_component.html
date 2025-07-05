@@ -1,0 +1,59 @@
+{% extends "../example/base.html" %}
+{% load static %} 
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/component_styles/routine_list_component.css' %}" />
+{% endblock style %} 
+{% block script %}
+<script src="{% static 'functions/component_functions/routine_list_component.js' %}"></script>
+{% endblock script %}
+
+{% block body %} 
+    <div class="bighugger">
+      <div class="scrapbtn">
+      <img
+        src="{% static 'assets/img/scrapicon.png' %}"
+        alt="스크랩 아이콘"
+        id="scrapicon"
+        data-default="{% static 'assets/img/scrapicon.png' %}"
+        data-scraped="{% static 'assets/img/scrapicon_scraped.png' %}" />
+      </div>
+      <table class="table_centerer">
+        <tr>
+          <th>1</th>
+          <td>img</td>
+          <td>준비 스트레칭</td>
+          <td>3분</td>
+          <td>몸풀기</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>img</td>
+          <td>스쿼트</td>
+          <td>5분</td>
+          <td>하체근력</td>
+        </tr>
+
+        <tr>
+          <th>3</th>
+          <td>img</td>
+          <td>플랭크</td>
+          <td>3분</td>
+          <td>코어근력</td>
+        </tr>
+        <tr>
+          <th>4</th>
+          <td>img</td>
+          <td>암서클</td>
+          <td>5분</td>
+          <td>팔 / 어깨</td>
+        </tr>
+        <tr>
+          <th>5</th>
+          <td>img</td>
+          <td>마무리 스트레칭</td>
+          <td>4분</td>
+          <td>근육 이완</td>
+        </tr>
+      </table>
+    </div>
+{% endblock body %}

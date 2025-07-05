@@ -4,5 +4,5 @@ from .views import *
 app_name = 'frontend'
 
 urlpatterns = [
-    path('example', example, name='example'),
+    path("routineingpage", routineingpage, name="routineingpage"),
 ]
