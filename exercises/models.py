@@ -100,7 +100,8 @@ class ReactedExerciseReview(models.Model):
         constraints = [
             models.UniqueConstraint(
                 fields=['user','exercise_review'],
-                name='사용자는 운동 리뷰 반응을 한 번만 남깁니다.',
+                name='unique_user_exercise_review',
+                violation_error_message='사용자는 운동 리뷰 반응을 한 개만 남길 수 있습니다.',
             )
         ]
 

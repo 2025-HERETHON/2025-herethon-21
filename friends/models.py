@@ -31,6 +31,7 @@ class Friend(models.Model):
         constraints = [
             models.UniqueConstraint(
                 fields=['sender','receiver'],
-                name='친구 요청은 한 번만 합니다.',
+                name='unique_sender_receiver',
+                violation_error_message='친구 요청은 한 번만 할 수 있습니다.',
             )
         ]

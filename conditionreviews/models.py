@@ -27,6 +27,7 @@ class ConditionReview(models.Model):
         constraints = [
             models.UniqueConstraint(
                 fields=['user','date'],
-                name='사용자는 컨디션 리뷰를 하루에 한 번만 작성합니다.',
+                name='unique_user_date',
+                violation_error_message='사용자는 컨디션 리뷰를 한 날짜에 한 개만 작성할 수 있습니다.',
             )
         ]

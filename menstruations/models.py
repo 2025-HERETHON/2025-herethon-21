@@ -23,6 +23,7 @@ class Menstruation(models.Model):
         constraints = [
             models.UniqueConstraint(
                 fields=['user','start','end'],
-                name='사용자는 월경을 같은 기간에 한 번만 합니다.',
+                name='unique_user_start_end',
+                violation_error_message='사용자는 월경을 같은 기간에 한 번만 할 수 있습니다.',
             )
         ]
