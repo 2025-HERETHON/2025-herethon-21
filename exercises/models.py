@@ -22,35 +22,33 @@ class Exercise(models.Model):
         return self.name
 
 class ExerciseHistory(models.Model):
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-    )
     user = models.ForeignKey(
         CustomUser,
         related_name='exercise_histories',
         on_delete=models.CASCADE,
     )
-    exercise_routine = models.JSONField(
-        default=list # list[int]
+    exercised_at = models.DateTimeField()
+    order = models.PositiveSmallIntegerField(
+        db_index=True, # 정렬 성능 개선
+    )
+    exercise = models.ForeignKey(
+        Exercise,
+        related_name='exercise_histories',
+        on_delete=models.RESTRICT,
     )
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.exercise_routine_handler = JSONIntListHandler(
-            self,
-            'exercise_routine',
-        )
-
     def __str__(self):
-        return f'{self.user.email}: {self.created_at}'
+        return f'[{self.user.email}] {self.exercised_at}/{self.order}.{self.exercise.name}'
 
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['user','created_at'],
-                name='사용자는 운동을 같은 시각에 한 번만 합니다.',
+                fields=['user','exercised_at','order'],
+                name='unique_user_exercised_at_order',
+                violation_error_message='사용자의 운동 루틴은 순번을 중복해서 가질 수 없습니다.',
             )
         ]
+        ordering = ['exercised_at','order']
 
 class ExerciseReview(models.Model):
     created_at = models.DateTimeField(
@@ -73,7 +71,7 @@ class ExerciseReview(models.Model):
     )
 
     def __str__(self):
-        return f'{self.exercise_history.user.email}: {self.exercise_history.created_at}'
+        return f'[{self.exercise_history.user.email}] {self.exercise_history.exercised_at}'
 
 class ReactedExerciseReview(models.Model):
     created_at = models.DateTimeField(
