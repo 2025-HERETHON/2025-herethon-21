@@ -4,68 +4,60 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from .services import UserService
+from .forms import CustomUserCreationForm
 from django.views.decorators.csrf import csrf_exempt
 import json
 
 
 # 템플릿 렌더링 처리
 
-@csrf_exempt
+def main_view(request):
+    if request.method == "POST":
+        # 로그아웃 버튼 눌렀을 때
+        if request.user.is_authenticated:
+            logout(request)
+            return redirect("accounts:login")  # 로그아웃 후 로그인 페이지로
+        else:
+            return redirect("accounts:login")
+    
+    # GET 요청이면 그냥 메인 렌더링
+    return render(request, "main.html")
+
 # 회원 가입
-def api_signup(request):
-    if request.method == 'POST':
+def signup_view(request):
+    if request.method == "POST":
+        form = CustomUserCreationForm(request.POST)
         try:
-            data = json.loads(request.body)
-            user = UserService.signup(data)
-            return JsonResponse(
-                {"message": "회원가입 완료", 
-                 
-                #위에서 새로 만든 user 객체
-                "user_id": user.username},
-                status=201
-            )
+            user = UserService.signup(form)
+            return redirect("accounts:login")
         except ValidationError as e:
-            return JsonResponse(
-                {"error": str(e)},
-                status=400
-            )
+            return render(request, "signup.html", {"form": form, "error": str(e)})
+    else:
+        form = CustomUserCreationForm()
+    return render(request, "signup.html", {"form": form})
+
             
-@csrf_exempt
-def api_login(request):
+def login_view(request):
     if request.method == 'POST':
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        
         try:
-            data = json.loads(request.body)
-            user = UserService.login(data)
-
-            '''
-            아래 if 문(=방어 코드) 하나로 로그인 성공 여부가 달림. 왜?
-            해당 코드를 넣어서 서버가 죽지 않음.(= 500 에러 안 남)
-            그래서 postman에서 올바르게 재시도.
-            → authenticate가 정상 통과되면서 로그인 성공!
-            '''
-            
-            if not user:
-                raise ValidationError("로그인 실패 (사용자 인증되지 않음)")
-
-            return JsonResponse(
-                {
-                    "message": "로그인 완료",
-                    "user_id": user.username,    # NANOID
-                    "user_email": user.email     # 실제 로그인 아이디
-                },
-                status=200
-            )
+            user = UserService.login(request, email, password)
+            return redirect('accounts:main')  # 로그인 성공 후 홈으로
         except ValidationError as e:
-            error_msg = str(e)
-            if "필수 항목" in error_msg:
-                status_code = 400
-            elif "올바르지" in error_msg:
-                status_code = 404
-            else:
-                status_code = 400
-
-            return JsonResponse(
-                {"error": error_msg},
-                status=status_code
-            ) 
+            # 로그인 실패 시, 에러 메시지와 함께 로그인 페이지 다시 렌더링
+            return render(request, "login.html", 
+                          {"form": form, "error": str(e)})
+    else:
+        form = AuthenticationForm()
+    return render(request, "login.html", {"form": form})
             
+
+def logout_view(request):
+    if not request.user.is_authenticated:
+        # 비로그인 상태면 로그인 화면으로 돌려보내기
+        return redirect('accounts:login')
+    
+    logout(request)
+    return redirect('accounts:login')
