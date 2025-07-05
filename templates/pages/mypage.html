@@ -1,0 +1,68 @@
+{% extends "../example/base.html" %}
+{% load static %} 
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/mypage.css' %}" />
+{% endblock style %} 
+
+
+
+{% block body %}
+<section class="mypage_vertical_layout">
+  <header class="top_section">
+    <section class="top_bar">
+        <img src="{% static 'assets/logo.png' %}" alt="로고" class="logo_image" />
+        <img src="{% static 'assets/Group.png' %}" alt="알림 이미지" class="Group_image" />
+    </section>
+  </header>
+
+<section class="profile_block">
+    <div class="profile_image_wrapper">
+      <img src="{% static 'images/profile.jpg' %}" alt="프로필 이미지" class="profile_image">
+    </div>
+
+    <div class="profile_texts">
+      <p class="nickname">핑구가좋아 님</p>
+      <div class="preference">
+        <span class="preference_tag">헬스</span>
+        <span class="preference_tag">클라이밍</span>
+        <span class="preference_tag">러닝</span>
+        <span class="preference_tag">체형 관리</span>
+        <span class="preference_tag">근력 강화</span>
+      </div>
+    </div>
+</section>
+  
+  <section class="bottom_section">
+    <section class="profile_box">
+        <p>어쩌고 저쩌고</p>
+    </section>
+    <section class="profile_extra_box">
+      <div class = "profile_row">
+        <span class="profile_text">회원정보 수정</span>
+        <svg class="profile_icon" width="26" height="26" viewBox="0 0 24 24" fill="none">
+            <path d="M9 6l6 6-6 6" stroke="#333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class = "profile_row">
+        <span class="profile_text">월경 데이터 관리</span>
+        <svg class="profile_icon" width="26" height="26" viewBox="0 0 24 24" fill="none">
+            <path d="M9 6l6 6-6 6" stroke="#333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class = "profile_row">
+        <span class="profile_text">로그아웃</span>
+        <svg class="profile_icon" width="26" height="26" viewBox="0 0 24 24" fill="none">
+            <path d="M9 6l6 6-6 6" stroke="#333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class = "profile_row">
+        <span class="profile_text">회원 탈퇴</span>
+        <svg class="profile_icon" width="26" height="26" viewBox="0 0 24 24" fill="none">
+            <path d="M9 6l6 6-6 6" stroke="#333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </section>
+  </section>
+</section>
+
+{% endblock body %}

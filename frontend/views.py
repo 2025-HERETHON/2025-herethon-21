@@ -56,3 +56,12 @@ def routineingpage(request):
                         'data_list_json':json.dumps(data_list),
                     }
                 ) 
+
+def componentpage(request):
+    return render(request,"example/component_page.html")
+
+def componentcalendar(request):
+    return render(request,"example/component_calendar.html")
+
+def mypage(request):
+    return render(request,"example/mypage.html")
