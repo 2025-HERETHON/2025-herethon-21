@@ -94,7 +94,7 @@ class ReactedExerciseReview(models.Model):
     )
 
     def __str__(self):
-        return f'{self.user.email}: {ReactionEmojiType(self.emoji).label}-{self.exercise_review}'
+        return f'[{self.user.email}] {self.exercise_review}, {ReactionEmojiType(self.emoji).label}'
 
     class Meta:
         constraints = [

@@ -17,7 +17,7 @@ class Menstruation(models.Model):
     end = models.DateField()
 
     def __str__(self):
-        return f'{self.user.email}: {self.start}-{self.end}'
+        return f'[{self.user.email}] {self.start} - {self.end}'
     
     class Meta:
         constraints = [

@@ -21,7 +21,7 @@ class ConditionReview(models.Model):
     )
 
     def __str__(self):
-        return f'{self.user.email}: {self.date}'
+        return f'[{self.user.email}] {self.date}'
     
     class Meta:
         constraints = [
