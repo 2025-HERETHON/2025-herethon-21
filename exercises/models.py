@@ -1,7 +1,7 @@
 from django.core.validators import MaxValueValidator
 from django.db import models
-from utils.mixins import JSONIntListHandler
 from utils.choices import ExerciseCategoryType, ReactionEmojiType
+from utils.json_handlers import JSONIntListHandler
 from accounts.models import CustomUser
 
 class Exercise(models.Model):
