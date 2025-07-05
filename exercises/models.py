@@ -105,32 +105,30 @@ class ReactedExerciseReview(models.Model):
         ordering = ['emoji']
 
 class ScrappedExerciseRoutine(models.Model):
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-    )
     user = models.ForeignKey(
         CustomUser,
         related_name='scrapped_exercise_routines',
         on_delete=models.CASCADE,
     )
-    exercise_routine = models.JSONField(
-        default=list # list[int]
+    scrapped_at = models.DateTimeField()
+    order = models.PositiveSmallIntegerField(
+        db_index=True, # 정렬 성능 개선
+    )
+    exercise = models.ForeignKey(
+        Exercise,
+        related_name='scrapped_exercise_routines',
+        on_delete=models.RESTRICT,
     )
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.exercise_routine_handler = JSONIntListHandler(
-            self,
-            'exercise_routine',
-        )
-
     def __str__(self):
-        return f'{self.user.email}: {self.exercise_routine}'
+        return f'[{self.user.email}] {self.scrapped_at}/{self.order}.{self.exercise.name}'
 
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['user','exercise_routine'],
-                name='사용자는 동일한 운동 루틴을 한 번만 스크랩합니다.',
+                fields=['user','scrapped_at','order'],
+                name='unique_user_scrapped_at_order',
+                violation_error_message='사용자의 운동 루틴은 순번을 중복해서 가질 수 없습니다.',
             )
         ]
+        ordering = ['scrapped_at','order']
