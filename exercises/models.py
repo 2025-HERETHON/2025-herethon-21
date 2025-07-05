@@ -1,7 +1,7 @@
 from django.core.validators import MaxValueValidator
 from django.db import models
 from utils.mixins import JSONIntListHandler
-from utils.choices import ExerciseCategoryType, EmojiType
+from utils.choices import ExerciseCategoryType, ReactionEmojiType
 from accounts.models import CustomUser
 
 class Exercise(models.Model):
@@ -90,11 +90,11 @@ class ReactedExerciseReview(models.Model):
         on_delete=models.CASCADE,
     )
     emoji = models.PositiveSmallIntegerField(
-        choices=EmojiType.choices,
+        choices=ReactionEmojiType.choices,
     )
 
     def __str__(self):
-        return f'{self.user.email}: {EmojiType(self.emoji).label}-{self.exercise_review}'
+        return f'{self.user.email}: {ReactionEmojiType(self.emoji).label}-{self.exercise_review}'
 
     class Meta:
         constraints = [

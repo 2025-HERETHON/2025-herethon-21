@@ -13,7 +13,7 @@ class ExerciseCategoryType(IntegerChoices):
     LOWER = 3, '하체'
     CORE = 4, '코어'
 
-class EmojiType(IntegerChoices):
+class ReactionEmojiType(IntegerChoices):
     HEART = 1, '😍'
     SMILE = 2, '😊'
     LAUGH = 3, '🤣'
