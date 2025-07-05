@@ -1,7 +1,6 @@
 # 백엔드 비즈니스 로직 처리
 
 from django.core.exceptions import ValidationError
-from .forms import CustomUserCreationForm
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 
@@ -25,3 +24,10 @@ class UserService:
         
         auth_login(request, user)
         return user
+
+    @staticmethod
+    def delete_account(user):
+        if not user.is_authenticated:
+            raise ValidationError("로그인이 필요합니다.")
+        
+        user.delete()

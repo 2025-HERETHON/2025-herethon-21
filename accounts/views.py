@@ -1,13 +1,9 @@
 from django.shortcuts import render, redirect
-from django.http import JsonResponse
 from django.core.exceptions import ValidationError
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import logout
 from django.contrib.auth.forms import AuthenticationForm
 from .services import UserService
 from .forms import CustomUserCreationForm
-from django.views.decorators.csrf import csrf_exempt
-import json
-
 
 # 템플릿 렌더링 처리
 
@@ -61,3 +57,14 @@ def logout_view(request):
     
     logout(request)
     return redirect('accounts:login')
+
+def delete_account_view(request):
+    if request.method == "POST":
+        try:
+            UserService.delete_account(request.user)
+            logout(request)
+            return redirect("accounts:login")  # 탈퇴 후 로그인 페이지
+        except ValidationError:
+            return redirect("accounts:login")
+    else:
+        return redirect("accounts:main")

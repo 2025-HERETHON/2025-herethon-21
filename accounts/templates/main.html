@@ -9,13 +9,18 @@
 
     {% if user.is_authenticated %}
         <p>안녕하세요, {{ user.email }} 님!</p>
-        <form method="post" action="{% url 'accounts:logout' %}">
+        <form method="post" action="{% url 'accounts:main' %}">
             {% csrf_token %}
             <button type="submit">로그아웃</button>
         </form>
+        <form method="post" action="{% url 'accounts:delete_account' %}">
+            {% csrf_token %}
+            <button type="submit">회원 탈퇴</button>
+        </form>
     {% else %}
         <p>로그인 후 이용해주세요.</p>
-        <a href="{% url 'accounts:login' %}">로그인</a>
+        <a href="{% url 'login' %}">로그인</a>
     {% endif %}
+
 </body>
 </html>
