@@ -1,0 +1,33 @@
+{% extends "../components/base.html" %}
+{% load static %} 
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/page_styles/routine_ing_component.css' %}" />
+{% endblock style %} 
+{% block script %}
+  <script>
+    const routineData = JSON.parse('{{ data_list_json|safe }}');
+    const durations = routineData.map(item => item.time);
+    const images = routineData.map(item => "{% static '' %}" + item.image);
+  </script>
+  <script src="{% static 'functions/page_functions/routine_ing_component.js' %}"></script>
+{% endblock script %}
+
+{% block body %} 
+    <div class="bighugger">
+      <img src="{% static data_list.0.iamge %}" alt="더미 운동 이미지" class="photobox" id="routine_image">
+      <div class="routinesection">
+        <div class="timeline" id="timeline">
+          {% for item in data_list %}
+          <div class="step">
+            <div class="circle">{{ item.time }}분</div>
+            <div class="label">{{ item.content }}</div>
+          </div>
+          {% if not forloop.last %}
+            <div class="chain"></div>
+          {% endif %}
+          {% endfor %}
+        </div>
+        <button class="endbutton">운동 끝내기</button>
+        </div>
+    </div>
+{% endblock body %}
