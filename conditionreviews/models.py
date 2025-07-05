@@ -31,3 +31,4 @@ class ConditionReview(models.Model):
                 violation_error_message='사용자는 컨디션 리뷰를 한 날짜에 한 개만 작성할 수 있습니다.',
             )
         ]
+        ordering = ['date']

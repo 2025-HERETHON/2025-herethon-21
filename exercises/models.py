@@ -104,6 +104,7 @@ class ReactedExerciseReview(models.Model):
                 violation_error_message='사용자는 운동 리뷰 반응을 한 개만 남길 수 있습니다.',
             )
         ]
+        ordering = ['emoji']
 
 class ScrappedExerciseRoutine(models.Model):
     created_at = models.DateTimeField(

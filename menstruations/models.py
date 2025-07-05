@@ -27,3 +27,4 @@ class Menstruation(models.Model):
                 violation_error_message='사용자는 월경을 같은 기간에 한 번만 할 수 있습니다.',
             )
         ]
+        ordering = ['-start']

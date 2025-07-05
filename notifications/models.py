@@ -22,4 +22,6 @@ class Notification(models.Model):
 
     def __str__(self):
         return f'{self.sender.email}이/가 {self.receiver.email}에게 {NotificationCategoryType(self.category).label}함'
-    
+
+    class Meta:
+        ordering = ['-created_at']
