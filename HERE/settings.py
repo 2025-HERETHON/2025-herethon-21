@@ -34,6 +34,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'accounts',
+    'menstruations',
+    'conditionreviews',
+    'exercises',
+    'friends',
+    'notifications',
 ]
 
 MIDDLEWARE = [
@@ -65,6 +71,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'HERE.wsgi.application'
+
+AUTH_USER_MODEL = 'accounts.CustomUser'
 
 
 # Password validation
