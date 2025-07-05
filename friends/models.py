@@ -1,5 +1,5 @@
 from django.db import models
-from utils.choices import StatusType
+from utils.choices import FriendStatusType
 from accounts.models import CustomUser
 
 class Friend(models.Model):
@@ -20,7 +20,7 @@ class Friend(models.Model):
         on_delete=models.CASCADE,
     )
     status = models.PositiveSmallIntegerField(
-        choices=StatusType.choices,
+        choices=FriendStatusType.choices,
         default=1,
     )
 

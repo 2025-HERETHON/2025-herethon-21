@@ -20,7 +20,7 @@ class ReactionEmojiType(IntegerChoices):
     SAD = 4, '😢'
     SURPRISED = 5, '😲'
 
-class StatusType(IntegerChoices):
+class FriendStatusType(IntegerChoices):
     PENDING = 1, '대기'
     ACCEPT = 2, '수락'
     REJECT = 3, '거절'
