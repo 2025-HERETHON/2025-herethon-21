@@ -1,4 +1,4 @@
-{% extends "../example/base.html" %}
+{% extends "../components/base.html" %}
 {% load static %} 
 {% block style %}
 <link rel="stylesheet" href="{% static 'styles/page_styles/routine_ing_component.css' %}" />
@@ -26,27 +26,6 @@
             <div class="chain"></div>
           {% endif %}
           {% endfor %}
-          <!--
-          <div class="step">
-            <div class="circle">5분</div>
-            <div class="label">스쿼트</div>
-          </div>
-          <div class="chain"></div>
-          <div class="step">
-            <div class="circle">3분</div>
-            <div class="label">플랭크</div>
-          </div>
-          <div class="chain"></div>
-          <div class="step">
-            <div class="circle">5분</div>
-            <div class="label">암서클</div>
-          </div>
-          <div class="chain"></div>
-          <div class="step">
-            <div class="circle">4분</div>
-            <div class="label">마무리 스트레칭</div>
-          </div>
-          -->
         </div>
         <button class="endbutton">운동 끝내기</button>
         </div>
