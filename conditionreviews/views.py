@@ -22,13 +22,11 @@ def create_ConditionReview(request):
                 rating,
                 comment
                 )
-
-
             context = {
                 "rating":rating,
                 "comment":comment
             }
-            return render(request, 'main.html', context)
+            return redirect('accounts:main')
         except ValidationError as e:
             return render(request, "create.html", {"error": str(e)})
         except IntegrityError as e:
