@@ -31,6 +31,16 @@ def create_send_friends(request):
         return redirect("friends:create_send_friends")
     return render(request, "friend_request_send.html")
 
+@login_required
+def read_send_list(request):
+    user = request.user
+    friend_requests = Friend.objects.filter(
+        receiver=user,
+        status=FriendStatusType.PENDING
+    )
+    return render(request, "friend_request_received.html", {"friend_request":friend_requests})
+
+
 # urlpatterns = [
 #     path('list/', read_friends_list, name="read_friends_list"),
 #     path('send/', create_send_friends, name="create_send_friends"),
