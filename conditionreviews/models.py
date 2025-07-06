@@ -1,5 +1,6 @@
 from django.db import models
 from accounts.models import CustomUser
+from utils.choices import ReactionEmojiType
 
 class ConditionReview(models.Model):
     created_at = models.DateTimeField(
@@ -14,7 +15,9 @@ class ConditionReview(models.Model):
         on_delete=models.CASCADE,
     )
     date = models.DateField()
-    rating = models.PositiveSmallIntegerField()
+    rating = models.PositiveSmallIntegerField(
+        choices=ReactionEmojiType.choices,
+    )
     comment = models.TextField(
         null=True,
         blank=True,
