@@ -14,11 +14,11 @@ class ExerciseCategoryType(IntegerChoices):
     CORE = 4, '코어'
 
 class ReactionEmojiType(IntegerChoices):
-    HEART = 1, '😍'
-    SMILE = 2, '😊'
-    LAUGH = 3, '🤣'
-    SAD = 4, '😢'
-    SURPRISED = 5, '😲'
+    SAD = 1, '😢'
+    ANGRY = 2, '😡'
+    CLOSE = 3, '😌'
+    OPEN = 4, '🙂'
+    SMILE = 5, '😁'
 
 class FriendStatusType(IntegerChoices):
     PENDING = 1, '대기'
