@@ -1,5 +1,8 @@
 from django.contrib.auth.forms import BaseUserCreationForm, UserChangeForm, SetUnusablePasswordMixin
 from .models import CustomUser
+from utils.choices import ExerciseGoalType
+from django import forms
+
 
 class CustomBaseUserCreationForm(BaseUserCreationForm):
     class Meta:
@@ -8,6 +11,11 @@ class CustomBaseUserCreationForm(BaseUserCreationForm):
         read_only_fields = ("username",)
 
 class CustomUserCreationForm(CustomBaseUserCreationForm):
+    exercise_goal = forms.MultipleChoiceField(
+        choices=ExerciseGoalType.choices,
+        widget=forms.CheckboxSelectMultiple,
+        required=True
+    )
     class Meta(CustomBaseUserCreationForm.Meta):
         fields = CustomBaseUserCreationForm.Meta.fields + ("exercise_goal","profile_image",)
 
