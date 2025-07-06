@@ -4,6 +4,7 @@ from django.contrib.auth import logout
 from django.contrib.auth.forms import AuthenticationForm
 from .services import UserService
 from .forms import CustomUserCreationForm
+from .models import CustomUser
 
 # 템플릿 렌더링 처리
 
@@ -19,18 +20,22 @@ def main_view(request):
     # GET 요청이면 그냥 메인 렌더링
     return render(request, "main.html")
 
-# 회원 가입
 def signup_view(request):
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
-        try:
-            user = UserService.signup(form)
-            return redirect("accounts:login")
-        except ValidationError as e:
-            return render(request, "signup.html", {"form": form, "error": str(e)})
+        if form.is_valid():
+            try:
+                user = UserService.signup(form)   # form 그대로 넘김, clean_data만 넘길 시 폼 기능 못 씀
+                return redirect("accounts:login")
+            except ValidationError as e:
+                return render(request, "signup.html", {"form": form, "error": str(e)})
+        else:
+            return render(request, "signup.html", {"form": form, "error": "입력값을 확인해주세요."})
     else:
         form = CustomUserCreationForm()
     return render(request, "signup.html", {"form": form})
+
+
 
             
 def login_view(request):
@@ -58,13 +63,14 @@ def logout_view(request):
     logout(request)
     return redirect('accounts:login')
 
-def delete_account_view(request):
+def delete_CustomUser(request):
     if request.method == "POST":
         try:
-            UserService.delete_account(request.user)
+            UserService.delete(request.user)
             logout(request)
             return redirect("accounts:login")  # 탈퇴 후 로그인 페이지
         except ValidationError:
             return redirect("accounts:login")
     else:
         return redirect("accounts:main")
+    

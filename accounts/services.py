@@ -1,17 +1,19 @@
 # 백엔드 비즈니스 로직 처리
 
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
+from .models import CustomUser
 
 class UserService:
     @staticmethod
     def signup(form):
-        if form.is_valid():
+        try:
             user = form.save()
-            return user
-        else:
-            raise ValidationError("회원가입 유효성 검증에 실패했습니다.")
+        except Exception as e:
+            raise ValidationError(f"회원가입 중 오류가 발생했습니다: {str(e)}")
+        return user
+
 
     @staticmethod
     def login(request, email, password):
@@ -26,8 +28,9 @@ class UserService:
         return user
 
     @staticmethod
-    def delete_account(user):
+    def delete(user):
         if not user.is_authenticated:
             raise ValidationError("로그인이 필요합니다.")
         
         user.delete()
+        
