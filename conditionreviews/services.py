@@ -22,5 +22,12 @@ class ConditionReviewService:
 
     
     @staticmethod
-    def get_review_by_date(user, date):
+    def read_review(user, date):
         return ConditionReview.objects.filter(user=user, date=date).first()
+    
+    @staticmethod
+    def delete_review(user, date):
+        review = ConditionReview.objects.filter(user=user, date=date).first()
+        if not review:
+            raise ValidationError("삭제할 리뷰가 존재하지 않습니다.")
+        review.delete()

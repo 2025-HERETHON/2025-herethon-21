@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .services import ConditionReviewService
 from django.shortcuts import render
 from django.core.exceptions import ValidationError
@@ -45,9 +45,24 @@ def read_ConditionReview(request, date_str):
     except ValueError:
         return render(request, "read.html", {"error": "날짜 형식이 올바르지 않습니다."})
 
-    review = ConditionReviewService.get_review_by_date(request.user, date)
+    review = ConditionReviewService.read_review(request.user, date)
 
     return render(request, "read.html", {
         "review": review,
         "selected_date": date_str
     })
+    
+@login_required
+def delete_ConditionReview(request, date_str):
+    try:
+        date = datetime.strptime(date_str, "%Y-%m-%d").date()
+    except ValueError:
+        return render(request, "read.html", {"error": "날짜 형식이 올바르지 않습니다."})
+
+    try:
+        ConditionReviewService.delete_review(request.user, date)
+        return redirect("accounts:main")  # 삭제 후 메인화면으로
+    except ValidationError as e:
+        return render(request, "read.html", {"error": str(e), "selected_date": date_str})
+    except Exception as e:
+        return render(request, "read.html", {"error": "알 수 없는 오류가 발생했습니다.", "selected_date": date_str})
