@@ -1,0 +1,47 @@
+{% extends "../../components/base.html" %}
+{% load static %} 
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/component_styles/page_component.css' %}" />
+<link rel="stylesheet" href="{% static 'styles/page_styles/onboarding_pages/purpose_page.css' %}">
+{% endblock style %} 
+{% block script %}
+<script src="{% static 'functions/page_functions/onboarding_pages/purpose_page.js' %}"></script>
+{% endblock script %}
+
+{% block body %}
+<body>
+
+    <header class="top_section">
+        <section class="top_bar">
+            <img src="{% static 'assets/img/logo.png' %}" alt="로고" class="logo_image" />
+            </section>
+    </header>
+    
+    <main class="main_layout">
+    <section class="content_area">
+      <section class="content_left">
+        <div class="ment_hugger">
+            <div class="steps"><p class="perstep"></p><p class="perstep"></p><p class="perstep"></p></div>
+            <p>당신의 <b>운동 목적</b>을 <b>우선순위</b>에 따라 선택해주세요.</p>
+            <p id="default_msg">복수 선택 2개 가능</p>
+            <div class="selected_showingbox">
+                <p id="selected_keywords"><span id="selected_purposes"></span></p>
+            </div>
+        </div>
+        <div class="before_page"><a href="{% url 'frontend:preferencepage' %}">&lt;</a></div>
+      </section>
+      <section class="content_right">
+        <div class="container">
+            <div class="purpose">체형 관리</div>
+            <div class="purpose">건강 관리</div>
+            <div class="purpose">스트레스 해소</div>
+            <div class="purpose">근력 강화</div>
+            <div class="purpose">유연성 향상</div>
+        </div>
+        <div class="next_page"><a href="{% url 'frontend:onboarding_3' %}">&gt;</a></div>
+      </section>
+    </section>
+  </main>
+</body>
+
+{% endblock body %}

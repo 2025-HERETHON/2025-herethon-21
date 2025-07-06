@@ -1,4 +1,4 @@
-{% extends "../example/base.html" %}
+{% extends "./base.html" %}
 {% load static %} 
 {% block style %}
 <link rel="stylesheet" href="{% static 'styles/component_styles/login_component.css' %}" />
@@ -18,7 +18,7 @@
                 <label for="password">비밀번호</label><br />
                 <input type="password" id="password" placeholder="영문, 숫자, 특수문자 조합 8~16자" /><br />
             </div>
-            <div class="finding_pwd_hugger"><a href="#" class="to_signup">회원가입</a><a href="#" class="finding_pwd">비밀번호 찾기</a></div>
+            <div class="finding_pwd_hugger"><a href="{% url 'frontend:signuppage' %}" class="to_signup">회원가입</a><a href="#" class="finding_pwd">비밀번호 찾기</a></div>
             <button type="submit" value="로그인" id="login_submitbtn">로그인</button>
         </form>
     </div>

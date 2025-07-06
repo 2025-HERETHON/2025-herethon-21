@@ -1,9 +1,11 @@
-{% extends "./base.html" %}
+{% extends "../components/base.html" %}
 
 {% load static %}
 
 {% block body %}
 
 {% include "../components/calendar_component.html" %}
+<!--아래부분 push전에 삭제-->
+{% include "../components/condition_component.html" %}
 
 {% endblock body %}

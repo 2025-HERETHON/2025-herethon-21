@@ -1,10 +1,10 @@
-{% extends "./base.html" %}
+{% extends "../../components/base.html" %}
 {% load static %} 
 {% block style %}
 <link rel="stylesheet" href="{% static 'styles/component_styles/page_component.css' %}" />
+<link rel="stylesheet" href="{% static 'styles/page_styles/onboarding_pages/onboarding_2.css' %}">
 {% endblock style %} 
 {% block script %}
-<script src="{% static 'functions/component_functions/calendar_component.js' %}"></script>
 {% endblock script %}
 
 {% block body %}
@@ -19,19 +19,19 @@
     <main class="main_layout">
     <section class="content_area">
       <section class="content_left">
-        <!-- 왼쪽 컨텐츠 영역 -->
+        <div class="ment_hugger">
+            회원가입이 완료되었습니다
+            <div class="line"></div>
+            <p>
+                3가지의 질문에 답변해주세요
+            </p>
+        </div>
       </section>
       <section class="content_right">
         <!-- 오른쪽 컨텐츠 영역 -->
+        <div class="next_page"><a href="{% url 'frontend:lastmenstruationpage' %}">&gt;</a></div>
       </section>
     </section>
-
-    <nav class="sidebar_nav" aria-label="페이지 네비게이션">
-      <button class="nav_button nav_button1">주기별</button>
-      <button class="nav_button nav_button2">취향별</button>
-      <button class="nav_button nav_button3">스크랩</button>
-      <button class="nav_button nav_button4">월경</button>
-    </nav>
   </main>
 </body>
 

@@ -1,0 +1,41 @@
+{% extends "../../components/base.html" %}
+{% load static %} 
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/component_styles/page_component.css' %}" />
+<link rel="stylesheet" href="{% static 'styles/page_styles/onboarding_pages/signup_page.css' %}">
+{% endblock style %} 
+{% block script %}
+{% endblock script %}
+
+{% block body %}
+<body>
+
+    <header class="top_section">
+        <section class="top_bar">
+            <img src="{% static 'assets/img/logo.png' %}" alt="로고" class="logo_image" />
+            </section>
+    </header>
+    
+    <main class="main_layout">
+    <section class="content_area">
+      <section class="content_left">
+        <div class="ment_hugger">
+            피포미 회원이신가요?
+            <!-- 회원가입이 완료되었습니다 -->
+            <div class="line"></div>
+            <p>
+            <b>이메일과 비밀번호를 입력해주세요</b>
+            <!-- 3가지의 질문에 답변해주세요 -->
+            </p>
+        </div>
+        <div class="before_page"><a href="{% url 'frontend:onboarding_1' %}">&lt;</a></div>
+
+      </section>
+      <section class="content_right">
+        {% include "../../components/login_component.html" %}
+        <div class="next_page"><a href="{% url 'frontend:onboarding_3' %}">&gt;</a></div>  
+    </section>
+    </section>
+</body>
+
+{% endblock body %}

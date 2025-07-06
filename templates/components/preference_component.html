@@ -1,4 +1,4 @@
-{% extends "../example/base.html" %}
+{% extends "./base.html" %}
 {% load static %} 
 {% block style %}
 <link rel="stylesheet" href="{% static 'styles/component_styles/preference_component.css' %}" />
@@ -25,5 +25,4 @@
         <div class="circle large" style="margin-top: 360px; margin-left: 240px;">등산</div>
         <div class="circle xlarge" style="margin-top: 420px; margin-left: 340px;">러닝</div>
     </div>
-    <p>당신이 선택한 운동은 <span id="selected-text"></span> 입니다.</p>
 {% endblock body %}

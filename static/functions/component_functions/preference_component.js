@@ -1,7 +1,15 @@
 document.addEventListener("DOMContentLoaded", function () {
     const circles = document.querySelectorAll(".circle");
     const selectedText = document.getElementById("selected-text"); 
+    const msg = document.getElementById("default_msg");
+    const selectedBox = document.querySelector(".selected_showingbox");
     let selected = [];
+
+    for (let i = 0; i < circles.length; i++) {
+        circles[i].addEventListener("click", function () {
+        msg.style.display = "none";
+        });
+    }
 
     circles.forEach(circle => {
     circle.addEventListener("click", () => {
@@ -20,9 +28,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         }
         if (selected.length > 0) {
+        selectedBox.style.display = "block";
         const names = selected.map(c => c.textContent.trim()).join(", ");
         selectedText.textContent = `${names}`;
         } else {
+        selectedBox.style.display = "none";
         selectedText.textContent = "";
         }
     });

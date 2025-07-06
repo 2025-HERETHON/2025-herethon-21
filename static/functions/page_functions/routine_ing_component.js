@@ -3,6 +3,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const radius = 30;
   const strokeWidth = 6;
 
+  const stepContentEl = document.getElementById("step_content");
+  const stepCategoryEl = document.getElementById("category");
+
   function injectProgressCircle(circleEl, durationMin) {
     const svgSize = 60;
     const center = svgSize / 2;
@@ -51,6 +54,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const imageEL = document.getElementById("routine_image");
     imageEL.src = images[index];
 
+    stepContentEl.textContent = routineData[index].content;
+    stepCategoryEl.textContent = routineData[index].category;
+
     injectProgressCircle(circleEl, durationMin);
 
     const progressCircle = circleEl.querySelector(".progress");
@@ -63,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const ratio = elapsed / durationSec;
       const offset = circumference * (1 - ratio);
       progressCircle.style.strokeDashoffset = offset;
-      timeText.textContent = `${Math.ceil((durationSec - elapsed) / 60)}분`;
+      timeText.textContent = `${Math.ceil((durationSec - elapsed) / 60)}min`;
 
       if (elapsed >= durationSec) {
         clearInterval(timer);

@@ -1,18 +1,24 @@
 body{
-  background-color: #f2f2f2;
-  padding:40px;
+  padding:10px;
+  overflow: hidden;
 }
 .bighugger {
   display: flex;
+  height:100%;
   flex-direction: row;
   justify-content: center;
-  align-items: flex-start;
-  gap: 40px;
-  padding: 40px;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
+  align-items: center;
   background-color: white;
+  border: 4px solid transparent; /* solid와 transparent 조합 */
+  border-image: repeating-linear-gradient(
+    45deg,
+    #A48BE7 0 10px,
+    transparent 10px 20px
+  );
+  border-image-slice: 1;
+  border-image-repeat: round;
 }
+
 
 .photobox {
   width: 500px;
@@ -27,13 +33,16 @@ body{
   flex-direction: column;
   gap: 40px;
   align-items: center;
+  justify-content: center;
+  margin-left:100px;
 }
 
 .timeline {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 30px;
   position: relative;
+  height:100px;
 }
 
 .step {
@@ -57,29 +66,11 @@ body{
   position: relative;
   overflow: visible; 
 }
-
-.label {
-  font-size: 16px;
-  color: #333;
-}
-
 .chain {
-  margin: -60px 25px;
+  margin:45px -50px 25px -50px;
   padding: 40px 0;
-  height: 10px;
-  border-left: 10px solid rgb(224, 224, 224);
-}
-
-.endbutton {
-  width: 300px;
-  background: white;
-  padding: 16px 40px;
-  border: none;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
+  width: 100px;
+  border-top: 10px solid rgb(224, 224, 224);
 }
 
 .circle svg {
@@ -88,9 +79,8 @@ body{
 }
 .progress {
   transition: stroke-dashoffset 1s linear;
-  stroke: rgb(174, 129, 218);
+  stroke: #A48BE7 ;
 }
-
 
 .time_text {
   font-size: 14px;
@@ -102,4 +92,136 @@ body{
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
+}
+.detail_box{
+  width: 500px;
+  height: 300px;
+  border: 4px solid #A48BE7 ;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: white;
+}
+.about_per_step{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.happy_pipi_hugging{
+  position: absolute;
+  top:-60px;
+  width:130px;
+}
+#step_content{
+  font-size: larger;
+  font-weight: 600;
+}
+#category{
+  font-size: smaller;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color:white;
+  background-color:#A48BE7 ;
+  width:auto;
+  height:30px;
+  border-radius: 10px;
+  padding: 0 10px;
+  margin-left:10px;
+}
+.detail_box > div > div{
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items:center;
+}
+.hugger {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+
+.starscore {
+  height: 40px;
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.star_per{
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  display: flex;
+  margin:0 1px;
+}
+.detail_description_box{
+  width:450px;
+  height:160px;
+  background-color:rgb(241, 233, 250);
+  border-radius:20px;
+  margin-top:25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.detail_lists{
+  list-style: none; /* 기본 점 제거 */
+  padding: 0;
+  margin: 0;
+  counter-reset: item;
+  width:400px;
+}
+.detail_lists li{
+  position: relative;
+  padding-left: 40px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.detail_lists li::before {
+  content: counter(item);
+  counter-increment: item;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 25px;
+  height: 25px;
+  background-color: #A48BE7 ;
+  color: white;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 25px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.top_section {
+  height: 60px; 
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  padding: 0px 50px;
+  position: fixed;
+  top: 20;
+  left: 0;
+  right: 0;
+}
+
+.top_bar {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.logo_image {
+  height: 37px; 
+  width: 127px;
 }

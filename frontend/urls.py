@@ -4,9 +4,16 @@ from .views import *
 app_name = 'frontend'
 
 urlpatterns = [
-    path('example', example, name='example'),
+    path("onboarding_1", onboarding_1, name="onboarding_1"),
+    path("onboarding_2", onboarding_2, name="onboarding_2"),
+    path("onboarding_3", onboarding_3, name="onboarding_3"),
+    path("signuppage", signuppage, name="signuppage"),
     path("componentpage", componentpage, name="componentpage"),
-     path("componentcalendar", componentcalendar, name="componentcalendar"),
+    path("componentcalendar", componentcalendar, name="componentcalendar"),
     path("mypage", mypage, name="mypage"),
     path("routineingpage", routineingpage, name="routineingpage"),
+    path("loginpage", loginpage, name="loginpage"),
+    path("lastmenstruationpage", lastmenstruationpage, name="lastmenstruationpage"),
+    path("preferencepage", preferencepage, name="preferencepage"),
+    path("purposepage", purposepage, name="purposepage"),
 ]
