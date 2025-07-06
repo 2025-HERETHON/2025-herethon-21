@@ -15,12 +15,14 @@ class ConditionReviewService:
                 rating=int(rating),
                 comment=comment
             )
-            print("DB 저장 성공")
         except IntegrityError as e:
-            print("IntegrityError:", e)
             raise ValidationError("같은 날짜에는 한 번만 작성할 수 있습니다.")
         except Exception as e:
-            print("Exception 발생:", e)
             raise ValidationError(f"알 수 없는 오류: {str(e)}")
 
-                
+    
+    # @staticmethod
+    # def read_review():
+        
+    # @staticmethod
+    # def read_review_rating():
