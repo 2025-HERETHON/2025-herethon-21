@@ -4,6 +4,7 @@ from django.contrib.auth import logout
 from django.contrib.auth.forms import AuthenticationForm
 from .services import UserService
 from .forms import CustomUserCreationForm
+from utils.choices import ExerciseGoalType
 from .models import CustomUser
 
 # 템플릿 렌더링 처리
@@ -45,7 +46,14 @@ def login_view(request):
         
         try:
             user = UserService.login(request, email, password)
-            return redirect('accounts:main')  # 로그인 성공 후 홈으로
+            goal_labels = [ExerciseGoalType(int(goal)).label for goal in user.exercise_goal]
+
+            context = {
+                'user':user,
+                'goal_labels':goal_labels
+            }
+            
+            return render(request, 'main.html', context)
         except ValidationError as e:
             # 로그인 실패 시, 에러 메시지와 함께 로그인 페이지 다시 렌더링
             return render(request, "login.html", 
