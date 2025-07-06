@@ -16,10 +16,19 @@ def example(request):
     return render(request, 'example/home.html', {'data_list': data_list})
 
 def componentpage(request):
-    return render(request,"example/component_page.html")
+    return render(request,"pages/component_page.html")
+
+def cyclepage(request):
+    return render(request,"pages/cycle_page.html")
+
+def scrappage(request):
+    return render(request,"pages/scrap_page.html")
+
+def periodpage(request):
+    return render(request,"pages/period_page.html")
 
 def componentcalendar(request):
-    return render(request,"example/component_calendar.html")
+    return render(request,"pages/component_calendar.html")
 
 def mypage(request):
-    return render(request,"example/mypage.html")
+    return render(request,"pages/mypage.html")

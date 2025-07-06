@@ -1,0 +1,11 @@
+.nav_button:first-child {
+  border: 2px solid #A48BE7;
+  border-right: none;
+}
+
+.nav_button:not(:first-child) {
+  border-top: 1.5px dashed #A48BE7;
+  border-left: 1.5px dashed #A48BE7;
+  border-bottom: 1.5px dashed #A48BE7;
+  border-right: 2px solid #A48BE7;
+}

@@ -6,6 +6,9 @@ app_name = 'frontend'
 urlpatterns = [
     path('example', example, name='example'),
     path("componentpage", componentpage, name="componentpage"),
-     path("componentcalendar", componentcalendar, name="componentcalendar"),
+    path("cyclepage", cyclepage, name="cyclepage"),
+    path("scrappage", scrappage, name="scrappage"),
+    path("periodpage", periodpage, name="periodpage"),
+    path("componentcalendar", componentcalendar, name="componentcalendar"),
     path("mypage", mypage, name="mypage"),
 ]
