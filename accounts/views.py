@@ -5,21 +5,28 @@ from django.contrib.auth.forms import AuthenticationForm
 from .services import UserService
 from .forms import CustomUserCreationForm
 from utils.choices import ExerciseGoalType
-from .models import CustomUser
 
 # 템플릿 렌더링 처리
 
 def main_view(request):
     if request.method == "POST":
-        # 로그아웃 버튼 눌렀을 때
+        # 로그아웃 처리
         if request.user.is_authenticated:
             logout(request)
-            return redirect("accounts:login")  # 로그아웃 후 로그인 페이지로
+            return redirect("accounts:login")
         else:
             return redirect("accounts:login")
     
-    # GET 요청이면 그냥 메인 렌더링
-    return render(request, "main.html")
+    # GET 요청
+    goal_labels = []
+    if request.user.is_authenticated:
+        goals = request.user.exercise_goal  # [1,2,4]
+        goal_labels = [ExerciseGoalType(int(g)).label for g in goals]
+    
+    return render(request, "main.html", {
+        "goal_labels": goal_labels,
+    })
+
 
 def signup_view(request):
     if request.method == "POST":
@@ -36,9 +43,7 @@ def signup_view(request):
         form = CustomUserCreationForm()
     return render(request, "signup.html", {"form": form})
 
-
-
-            
+     
 def login_view(request):
     if request.method == 'POST':
         email = request.POST.get("email")
@@ -46,15 +51,9 @@ def login_view(request):
         
         try:
             user = UserService.login(request, email, password)
-            goal_labels = [ExerciseGoalType(int(goal)).label for goal in user.exercise_goal]
-
-            context = {
-                'user':user,
-                'goal_labels':goal_labels
-            }
-            
-            return render(request, 'main.html', context)
+            return redirect("accounts:main")
         except ValidationError as e:
+            form = AuthenticationForm()
             # 로그인 실패 시, 에러 메시지와 함께 로그인 페이지 다시 렌더링
             return render(request, "login.html", 
                           {"form": form, "error": str(e)})
