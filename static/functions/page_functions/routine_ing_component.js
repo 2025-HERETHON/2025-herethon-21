@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
           stroke-linecap="round"
         />
       </svg>
-      <div class="time-text">${durationMin}분</div>
+      <div class="time-text">${durationMin}m</div>
     `;
 
     const timeText = circleEl.querySelector(".time-text");
@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const ratio = elapsed / durationSec;
       const offset = circumference * (1 - ratio);
       progressCircle.style.strokeDashoffset = offset;
-      timeText.textContent = `${Math.ceil((durationSec - elapsed) / 60)}min`;
+      timeText.textContent = `${Math.ceil((durationSec - elapsed) / 60)}m`;
 
       if (elapsed >= durationSec) {
         clearInterval(timer);
