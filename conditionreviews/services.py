@@ -21,8 +21,6 @@ class ConditionReviewService:
             raise ValidationError(f"알 수 없는 오류: {str(e)}")
 
     
-    # @staticmethod
-    # def read_review():
-        
-    # @staticmethod
-    # def read_review_rating():
+    @staticmethod
+    def get_review_by_date(user, date):
+        return ConditionReview.objects.filter(user=user, date=date).first()
