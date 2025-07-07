@@ -35,3 +35,9 @@ class Friend(models.Model):
                 violation_error_message='친구 요청은 한 번만 할 수 있습니다.',
             )
         ]
+        
+def get_exercise_goal_display_list(self):
+    from utils.choices import ExerciseGoalType
+    return [
+        ExerciseGoalType(val).label for val in self.exercise_goal
+    ]
