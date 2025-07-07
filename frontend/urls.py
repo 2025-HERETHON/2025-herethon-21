@@ -11,4 +11,5 @@ urlpatterns = [
     path("periodpage", periodpage, name="periodpage"),
     path("componentcalendar", componentcalendar, name="componentcalendar"),
     path("mypage", mypage, name="mypage"),
+    path("routineingpage", routineingpage, name="routineingpage"),
 ]

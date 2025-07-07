@@ -1,0 +1,29 @@
+{% extends "../example/base.html" %}
+{% load static %} 
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/component_styles/preference_component.css' %}" />
+{% endblock style %} 
+{% block script %}
+<script src="{% static 'functions/component_functions/preference_component.js' %}"></script>
+{% endblock script %}
+
+{% block body %} 
+    <div class="container">
+        <!--아래 원들은 클래스를 하나하나 두기보단 인라인 형식으로 스타일을 적는게 직관적이고 보기 좋을 듯 해서 인라인 형식으로 스타일을 기재하였습니다.-->
+        <div class="circle small" style="margin-top: 210px; margin-left: 20px;">야구</div>
+        <div class="circle medium" style="margin-top: 190px; margin-left: 80px;">축구</div>
+        <div class="circle large" style="margin-top: 290px; margin-left: 60px;">필라테스</div>
+        <div class="circle small" style="margin-top: 420px; margin-left: 140px;">골프</div>
+        <div class="circle xlarge" style="margin-top: 70px; margin-left: 140px;">요가</div>
+        <div class="circle small" style="margin-top: 60px; margin-left: 310px;">탁구</div>
+        <div class="circle medium" style="margin-top: 150px; margin-left: 280px;">클라이밍</div>
+        <div class="circle xlarge" style="margin-top: 220px; margin-left: 170px;">헬스</div>
+        <div class="circle small" style="margin-top: 210px; margin-left: 360px;">배드민턴</div>
+        <div class="circle medium" style="margin-top: 270px; margin-left: 320px;">자전거</div>
+        <div class="circle medium" style="margin-top: 330px; margin-left: 390px;">수영</div>
+        <div class="circle medium" style="margin-top: 130px; margin-left: 410px;">테니스</div>
+        <div class="circle large" style="margin-top: 360px; margin-left: 240px;">등산</div>
+        <div class="circle xlarge" style="margin-top: 420px; margin-left: 340px;">러닝</div>
+    </div>
+    <p>당신이 선택한 운동은 <span id="selected-text"></span> 입니다.</p>
+{% endblock body %}
