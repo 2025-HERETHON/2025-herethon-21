@@ -1,10 +1,13 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,  get_object_or_404
 from .services import ConditionReviewService
 from django.shortcuts import render
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
+from .models import ConditionReview
+from django.http import HttpResponseForbidden
+
 
 
 # Create your views here.
@@ -64,3 +67,25 @@ def delete_ConditionReview(request, date_str):
         return render(request, "read.html", {"error": str(e), "selected_date": date_str})
     except Exception as e:
         return render(request, "read.html", {"error": "알 수 없는 오류가 발생했습니다.", "selected_date": date_str})
+    
+@login_required
+def update_ConditionReview(request, date_str):
+    try:
+        date = datetime.strptime(date_str, "%Y-%m-%d").date()
+    except ValueError:
+        return HttpResponseForbidden("잘못된 날짜 형식입니다.")
+
+    review = get_object_or_404(ConditionReview, user=request.user, date=date)
+
+    choices = review._meta.get_field("rating").choices
+
+    if request.method == "POST":
+        ConditionReviewService.update_review(review, request.POST)
+        return redirect("conditionreviews:read_ConditionReview", date_str=date_str)
+
+    context = {
+        "review": review,
+        "selected_date": date_str,
+        "rating_choices": choices,   # 추가
+    }
+    return render(request, "review_update.html", context)

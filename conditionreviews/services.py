@@ -31,3 +31,13 @@ class ConditionReviewService:
         if not review:
             raise ValidationError("삭제할 리뷰가 존재하지 않습니다.")
         review.delete()
+        
+    @staticmethod
+    def update_review(review: ConditionReview, data):
+        rating = data.get("rating")
+        if rating is not None:
+            review.rating = int(rating)
+        review.comment = data.get("comment", review.comment)
+        review.save()
+        return review
+
