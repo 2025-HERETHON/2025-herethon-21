@@ -50,7 +50,19 @@ def create_accept_friend(request, username):
         ).first()
         if friend:
             FriendService.accept_request(friend)
-        return redirect("friends:read_send_list")
+        return redirect("friends:read_friends_list")
+    
+@login_required
+def create_reject_friend(request, username):
+    if request.method == "POST":
+        friend = Friend.objects.filter(
+            receiver=request.user,
+            sender__username=username,
+            status=FriendStatusType.PENDING
+        ).first()
+        if friend:
+            FriendService.reject_request(friend)
+        return redirect("friends:read_friends_list")
         
 # urlpatterns = [
 #     path('list/', read_friends_list, name="read_friends_list"),

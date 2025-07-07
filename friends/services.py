@@ -20,3 +20,7 @@ class FriendService:
     def accept_request(friend):
         friend.status = FriendStatusType.ACCEPT
         friend.save()
+        
+    @staticmethod
+    def reject_request(friend):
+        friend.delete()
