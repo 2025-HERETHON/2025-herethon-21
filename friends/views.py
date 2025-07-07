@@ -38,9 +38,20 @@ def read_send_list(request):
         receiver=user,
         status=FriendStatusType.PENDING
     )
-    return render(request, "friend_request_received.html", {"friend_request":friend_requests})
+    return render(request, "friend_request_received.html", {"friend_requests":friend_requests})
 
-
+@login_required
+def create_accept_friend(request, username):
+    if request.method == "POST":
+        friend = Friend.objects.filter(
+            receiver=request.user,
+            sender__username=username,
+            status=FriendStatusType.PENDING
+        ).first()
+        if friend:
+            FriendService.accept_request(friend)
+        return redirect("friends:read_send_list")
+        
 # urlpatterns = [
 #     path('list/', read_friends_list, name="read_friends_list"),
 #     path('send/', create_send_friends, name="create_send_friends"),

@@ -15,3 +15,8 @@ class FriendService:
             receiver=receiver,
             status=FriendStatusType.PENDING
         )
+        
+    @staticmethod
+    def accept_request(friend):
+        friend.status = FriendStatusType.ACCEPT
+        friend.save()
