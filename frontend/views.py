@@ -15,6 +15,7 @@ def example(request):
     ]
     return render(request, 'example/home.html', {'data_list': data_list})
 
+
 def componentpage(request):
     return render(request,"pages/component_page.html")
 
@@ -24,6 +25,9 @@ def cyclepage(request):
 def scrappage(request):
     return render(request,"pages/scrap_page.html")
 
+def restpage(request):
+    return render(request,"pages/rest_page.html")
+
 def periodpage(request):
     return render(request,"pages/period_page.html")
 
@@ -32,3 +36,6 @@ def componentcalendar(request):
 
 def mypage(request):
     return render(request,"pages/mypage.html")
+
+def friendpage(request):
+    return render(request,"pages/friend_page.html")
