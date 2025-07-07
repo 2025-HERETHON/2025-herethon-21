@@ -3,6 +3,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const content = document.getElementById("text_input");
   const todaysCondition = document.getElementById("todays_condition");
   const editBtn = document.getElementById("condition_editbtn");
+  const resetBtn = document.getElementById("condition_resetbtn");
+
   let selectedIndex = -1;
   let isEditing = false;
 
@@ -44,22 +46,33 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   editBtn.addEventListener("click", function () {
-  if (!isEditing) {
-    content.disabled = false;
-    content.placeholder = "오늘의 일기를 남겨주세요!";
-    isEditing = true;
-    for (let i = 0; i < conditions.length; i++) {
-      conditions[i].classList.remove("disabled");
+    if (!isEditing) {
+      content.disabled = false;
+      content.placeholder = "오늘의 일기를 남겨주세요!";
+      isEditing = true;
+      for (let i = 0; i < conditions.length; i++) {
+        conditions[i].classList.remove("disabled");
+      }
+    } else {
+      alert("저장되었습니다.");
+      content.disabled = true;
+      content.placeholder = "연필 버튼을 눌러 글을 작성하세요!";
+      isEditing = false;
+      for (let i = 0; i < conditions.length; i++) {
+        conditions[i].classList.add("disabled");
+      }
     }
-  } else {
-    alert("저장되었습니다.");
+  });
 
-    content.disabled = true;
-    content.placeholder = "연필 버튼을 눌러 글을 작성하세요!";
-    isEditing = false;
+  resetBtn.addEventListener("click", function () {
+    let ans = confirm("작성 내용을 초기화하시겠습니까?");
+    if (ans){
+      content.value = "";
+    todaysCondition.innerHTML = "";
     for (let i = 0; i < conditions.length; i++) {
-      conditions[i].classList.add("disabled");
+      conditions[i].classList.remove("selected");
     }
+    selectedIndex = -1;
   }
-});
+  });
 });
