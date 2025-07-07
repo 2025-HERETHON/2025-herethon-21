@@ -1,3 +1,20 @@
+@font-face {
+  font-family: 'Inter';
+  src: url('/static/assets/font/Inter_18pt-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('/static/assets/font/Inter_18pt-Medium.ttf') format('truetype');
+  font-weight: 500;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('/static/assets/font/Inter_24pt-Bold.ttf') format('truetype');
+  font-weight: 700;
+}
+
+
 * {
   margin: 0;
   padding: 0;
@@ -11,110 +28,17 @@ html, body {
   overflow: hidden; 
 }
 
-.main_layout {
-  display: flex;
-  height: 100vh;
-  width: 100vw;
-}
-
-.content_area {
-  display: flex;
-  flex: 1; 
-  overflow: auto; /* 넘칠 시 스크롤 가능 */
-}
-
-.content_left {
-  flex-basis: 50%;
-  background-color: #f0f0f0; /* 🚫나뉜 부분 보기 편하도록 - 나중에 지우기 */
-  padding: 20px;
-  overflow-y: auto;
-}
-
-.content_right {
-  flex-basis: 50%;
-  background-color: #ffffff;
-  padding: 20px;
-  overflow-y: auto;
-}
-
-.sidebar_nav {
-  width: 5vw;
-  min-width: 50px;
-  max-width: 60px;
-  height: 100vh; /* 화면 전체 높이 */
-  display: flex;
-  flex-direction: column;
-  padding: 0;
-  margin: 0;
-}
-
-.nav_button {
-  writing-mode: vertical-rl; /* 텍스트 세로쓰기, 오른쪽에서 왼쪽 방향 */
-  flex-basis: 25%; 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: none;
-  cursor: pointer;
-  font-weight: 700;
-  font-size: 20px;
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-.nav_button1 {
-  background-color: rgba(255, 255, 255, 1); 
-  border: 1px solid rgba(221, 221, 221, 1); 
-  color: rgba(0, 0, 0, 1);
-}
-
-.nav_button2 {
-  background-color: rgba(237, 232, 250, 1);
-  border: 1px solid rgba(237, 232, 250, 1); 
-  color: rgba(0, 0, 0, 1);
-}
-
-.nav_button3 {
-  background-color: rgba(164, 139, 231, 0.6); 
-  border: 1px solid rgba(200, 185, 241, 1); 
-  color: rgba(0, 0, 0, 1);
-}
-
-.nav_button4 {
-  background-color: rgba(164, 139, 231, 0.9); 
-  border: 1px solid rgba(174, 151, 234, 1); 
-  color: rgba(0, 0, 0, 1);
-}
-
-/* 호버 효과 */
-.nav_button1:hover {
-  background-color: rgba(255, 255, 255, 1);
-}
-
-.nav_button2:hover {
-  background-color: rgba(255, 255, 255, 1);
-}
-
-.nav_button3:hover {
-  background-color: rgba(255, 255, 255, 1);
-}
-
-.nav_button4:hover {
-  background-color: rgba(255, 255, 255, 1);
-}
-
 .top_section {
   height: 60px; 
   background-color: transparent;
   display: flex;
   align-items: center;
-  padding: 0px 50px;
+  padding: 30px;
   position: fixed;
-  top: 0;               /* 상단 고정 */
+  top: 0;               
   left: 0;
   right: 0;
+  z-index: 10;
 }
 
 .top_bar {
@@ -124,6 +48,131 @@ html, body {
 }
 
 .logo_image {
-  height: 37px; 
-  width: 127px;
+  width: 10vw;         
+  height: auto;           
+  max-width: 118px;       
+  min-width: 90px;  
+}
+
+.icon_image {
+  height: auto;           
+  max-width: 42px;       
+  min-width: 36px;  
+  margin-left: 15px;
+  margin-top: 3px;
+}
+
+.noti_image {
+  height: auto;           
+  max-width: 35px;       
+  min-width: 30px;  
+  margin-left: 15px;
+  margin-top: 3px;
+}
+
+.star_background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2;
+  pointer-events: none; /* 클릭 막기 */
+}
+
+.star {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background-image: url("/static/assets/img/star.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: 3; 
+  opacity: 0.5;
+}
+
+/* 원하는 위치마다 클래스 지정 */
+.star1 {
+  bottom: 10%;
+  right: 8%;
+}
+.star2 {
+  bottom: 74%;
+  right: 10%;
+}
+.star3 {
+  bottom: 40%;
+  right: 9%;
+}
+.star4 {
+  bottom: 53%;
+  right: 15%;
+}
+.star5 {
+  bottom: 96%;
+  right: 78%;
+}
+.star6 {
+  bottom: 87%;
+  right: 90%;
+}
+.star7 {
+  bottom: 70%;
+  right: 96%;
+}
+.star8 {
+  bottom: 75%;
+  right: 52%;
+}
+.star9 {
+  bottom: 54%;
+  right: 57%;
+}
+.star10 {
+  bottom: 28%;
+  right: 98%;
+}
+.star11 {
+  bottom: 38%;
+  right: 48%;
+}
+.star12 {
+  bottom: 55%;
+  right: 93%;
+}
+.star13 {
+  bottom: 9%;
+  right: 68%;
+}
+.star14 {
+  bottom: 2%;
+  right: 48%;
+}
+.star15 {
+  bottom: 15%;
+  right: 53%;
+}
+.star16 {
+  bottom: -1.5%;
+  right: 80%;
+}
+.star17 {
+  bottom: 97%;
+  right: 58%;
+}
+.star18 {
+  bottom: 97%;
+  right: 40%;
+}
+.star19 {
+  bottom: 96%;
+  right: 23%;
+}
+.star20 {
+  bottom: 3%;
+  right: 92%;
+}
+
+a {
+  text-decoration: none;
 }

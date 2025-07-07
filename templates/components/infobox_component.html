@@ -1,0 +1,23 @@
+{% extends "../example/base.html" %}
+{% load static %} 
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/page_styles/page_common.css' %}" />
+{% endblock style %} 
+
+
+
+{% block body %}
+        <div class="info_box">
+          <div class="info_content">
+            <img src="{% static 'assets/img/icon.png' %}" alt="아이콘" class="icon_image2" />
+            <div class="info_text_group">
+              <h3 class="info_title">나</h3>
+              <p class="info_text">안녕? 나는 너만의 운동 루틴 추천 AI 피피야</p>
+              <div class="tags">
+                <span class="preference_tag">체형 관리</span>
+                <span class="preference_tag">근력 강화</span>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock body %}

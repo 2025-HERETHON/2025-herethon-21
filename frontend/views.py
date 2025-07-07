@@ -101,10 +101,22 @@ def routineingpage(request):
 def componentpage(request):
     return render(request,"pages/component_page.html")
 
+def cyclepage(request):
+    return render(request,"pages/cycle_page.html")
+
+def scrappage(request):
+    return render(request,"pages/scrap_page.html")
+
+def periodpage(request):
+    return render(request,"pages/period_page.html")
+    return render(request,"pages/component_page.html")
+
 def componentcalendar(request):
+    return render(request,"pages/component_calendar.html")
     return render(request,"pages/component_calendar.html")
 
 def mypage(request):
+    return render(request,"pages/mypage.html")
     return render(request,"pages/mypage.html")
 
 def onboarding_1(request):
@@ -140,9 +152,6 @@ def loginpage(request): #아래 더미데이터는 GPT에게 요청해 받았습
 
 def lastmenstruationpage(request):
     return render(request, "pages/onboarding_pages/last_menstruation_page.html")
-
-def preferencepage(request):
-    return render(request, "pages/onboarding_pages/preference_page.html")
 
 def purposepage(request):
     return render(request, "pages/onboarding_pages/purpose_page.html")

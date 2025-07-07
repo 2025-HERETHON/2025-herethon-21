@@ -1,12 +1,10 @@
-{% extends "../components/base.html" %}
+{% extends "../example/base.html" %}
 {% load static %} 
 {% block style %}
 <link rel="stylesheet" href="{% static 'styles/component_styles/page_component.css' %}" />
-<link rel="stylesheet" href="{% static 'styles/page_styles/mypage.css' %}" />
+<link rel="stylesheet" href="{% static 'styles/page_styles/period.css' %}" />
 <link rel="stylesheet" href="{% static 'styles/page_styles/page_common.css' %}" />
-<link rel="stylesheet" href="{% static 'styles/component_styles/modal_component.css' %}">
 {% endblock style %} 
-
 
 
 {% block body %}
@@ -20,17 +18,17 @@
             </section>
     </header>
     
+    
     <main class="main_layout">
     <section class="content_area">
-        <div class="center_image_wrapper">
-            <img src="{% static 'assets/img/page.png' %}" alt="가운데 배너" class="center_image" />
-        </div>
 
-        {% block bg %}
-        {% include "../components/bg_component.html" %}
-        {% endblock bg %}
-
-    </section>
+        <section class="star_background">
+            <span class="star star1"></span> <span class="star star2"></span> <span class="star star3"></span> <span class="star star4"></span>
+            <span class="star star5"></span> <span class="star star6"></span> <span class="star star7"></span> <span class="star star8"></span>
+            <span class="star star9"></span> <span class="star star10"></span> <span class="star star11"></span> <span class="star star12"></span>
+            <span class="star star13"></span> <span class="star star14"></span> <span class="star star15"></span> <span class="star star16"></span>
+            <span class="star star17"></span> <span class="star star18"></span> <span class="star star19"></span> <span class="star star20"></span>
+        </section>
         
       <section class="content_left">
         {% block infobox %}
@@ -42,31 +40,26 @@
           {% include "../components/calendar_component.html" %}
           {% endblock calendar %}
         </div>
-
+        
         {% block friendbox %}
         {% include "../components/friendbox_component.html" %}
         {% endblock friendbox %}
 
       </section>
-
-      <section class="content_right">
-        <!-- 오른쪽 컨텐츠 영역 -->
-         <button class="modal_test_button" onclick="openModal({
-          title: '컨디션 리뷰를 리셋하시겠습니까?',
-          subtext: '*텍스트, 반응이 모두 사라집니다',
-          imageUrl: '/static/assets/img/modal_star.png'
-          })">모달 테스트</button>
-
-         
-      </section>
-    </section>
-
+      
     <nav class="sidebar_nav" aria-label="페이지 네비게이션">
       <a href="/cyclepage" class="nav_button nav_button1">주 기 별</a>
       <a href="/scrappage" class="nav_button nav_button2">스 크 랩</a>
       <a href="/periodpage" class="nav_button nav_button3">월 경</a>
     </nav>
+
+      <section class="content_right">
+        <!-- 오른쪽 컨텐츠 영역 -->
+      </section>
+    </section>
+
+
   </main>
 </body>
-{% include "../components/modal_component.html" %}
+
 {% endblock body %}
