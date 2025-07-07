@@ -37,8 +37,8 @@ class CustomUser(AbstractUser):
         blank=True,
     )
     bio = models.TextField(
-        blank=True,
-        default="",
+        blank=True,   
+        null=True,    
     )
 
     def __init__(self, *args, **kwargs):
