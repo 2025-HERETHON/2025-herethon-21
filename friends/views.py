@@ -64,3 +64,15 @@ def create_reject_friend(request, username):
             FriendService.reject_request(friend)
         return redirect("friends:read_friends_list")
         
+@login_required
+def read_friend_detail(request, username):
+    friend_user = CustomUser.objects.filter(username=username).first()
+    if not friend_user:
+        messages.error(request, "존재하지 않는 사용자입니다.")
+        return redirect("friends:read_friends_list")
+
+    context = {
+        "friend_user": friend_user,
+    }
+    return render(request, "friend_detail.html", context)
+
