@@ -52,6 +52,17 @@ def read_ConditionReview(request, date_str):
         "review": review,
         "selected_date": date_str
     })
+
+@login_required
+def read_ConditionReviewRating(request, date_str):
+    try:
+        date = datetime.strptime(date_str, "%Y-%m-%d").date()
+    except ValueError:
+        return render(request, "read.html", {"error":"날짜 형식이 올바르지 않습니다."})
+    
+    review_rating = ConditionReviewService.read_review_rating(request.user, date)
+    
+    return render(request, "read.html", {"review_rating":review_rating})
     
 @login_required
 def delete_ConditionReview(request, date_str):

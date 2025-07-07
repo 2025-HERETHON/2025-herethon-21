@@ -26,6 +26,14 @@ class ConditionReviewService:
         return ConditionReview.objects.filter(user=user, date=date).first()
     
     @staticmethod
+    def read_reviewrating(user, date):
+        return ConditionReview.objects.filter(user=user, date=date).values_list('rating', flat=True).first()
+    '''
+    flat=True ex) [3, 4, 5]를 [(3,), (4,), (5,)]로 반환한다.
+    튜플 바로 뒤에 붙는 콤마는 파이썬 문법!
+    '''
+    
+    @staticmethod
     def delete_review(user, date):
         review = ConditionReview.objects.filter(user=user, date=date).first()
         if not review:
