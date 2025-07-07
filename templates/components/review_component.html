@@ -8,24 +8,26 @@
 {% endblock script %}
 
 {% block body %} 
-    <div class="bighugger">
-      <div class="starscore">
-        <span class="star_per">★</span>
-        <span class="star_per">★</span>
-        <span class="star_per">★</span>
-        <span class="star_per">★</span>
-        <span class="star_per">★</span>
+  <div class="bighugger">
+    <div class="contentbox">
+      
+      <div class="review_toprow">
+        <span class="time_range">07:00~07:20 (20분)</span>
+        {% include "./star_component.html" %}
       </div>
-      <form method="get">
-        <div class="contentbox">
-        <div class="texting">
-          <div class="line_background"></div>
-          <textarea placeholder="운동 리뷰를 남겨주세요!" id="text"></textarea>
+
+      <div class="review_text">
+        <textarea placeholder="오늘 루틴에 대해 리뷰를 남겨주세요!" id="text_input"></textarea>
+      </div>
+        <div class="review_footer">
+          <button class="icon_btn" id="editbtn">
+            <img src="{% static 'assets/img/rewrite.png' %}" alt="수정" />
+          </button>
+          <button class="icon_btn" id="resetbtn">
+            <img src="{% static 'assets/img/trashcan.png' %}" alt="삭제" />
+          </button>
         </div>
-        <div class="btnhugger">
-          <button type="submit" value="저장" id="savebtn">저장</button>
-        </div>
-        </div>
-      </form>
+      </div>
     </div>
+  </div>
 {% endblock body %}

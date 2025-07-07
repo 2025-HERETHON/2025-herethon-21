@@ -1,25 +1,78 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const conditions = document.getElementsByClassName("condition_per");
-    const savebtn = document.getElementById("savebtn");
-    const content = document.getElementById("text");
-    let cnt = 0;
-    
-    for (let i = 0; i < conditions.length; i++) {
-    conditions[i].addEventListener("click", function () {
-        for (let j = 0; j < conditions.length; j++) {
-        conditions[j].classList.remove("selected");
-        }
-        this.classList.add("selected");
-        cnt++;
-    });
+  const conditions = document.getElementsByClassName("condition_per");
+  const content = document.getElementById("text_input");
+  const todaysCondition = document.getElementById("todays_condition");
+  const editBtn = document.getElementById("condition_editbtn");
+  const resetBtn = document.getElementById("condition_resetbtn");
+
+  let selectedIndex = -1;
+  let isEditing = false;
+
+  content.disabled = true;
+  content.placeholder = "연필 버튼을 눌러 글을 작성하세요!";
+  for (let i = 0; i < conditions.length; i++) {
+    conditions[i].classList.add("disabled");
+  }
+
+  function handleConditionClick(i) {
+    if (!isEditing) return;
+
+    if (selectedIndex === i) {
+      conditions[i].classList.remove("selected");
+      todaysCondition.innerHTML = "";
+      selectedIndex = -1;
+      return;
     }
-    savebtn.addEventListener("click", function () {
-    if (content.value.length === 0) {
-        alert("내용을 입력해주세요.");
-    } else if (cnt === 0) {
-        alert("오늘의 감정을 선택해주세요.");
+
+    for (let j = 0; j < conditions.length; j++) {
+      conditions[j].classList.remove("selected");
+    }
+
+    conditions[i].classList.add("selected");
+    const selectedImg = conditions[i].querySelector("img");
+    const newImg = document.createElement("img");
+    newImg.src = selectedImg.src;
+    newImg.alt = selectedImg.alt;
+    newImg.style.animation = "popEffect 0.3s ease";
+    newImg.style.width = "30px";
+
+    todaysCondition.innerHTML = "";
+    todaysCondition.appendChild(newImg);
+    selectedIndex = i;
+  }
+
+  for (let i = 0; i < conditions.length; i++) {
+    conditions[i].addEventListener("click", () => handleConditionClick(i));
+  }
+
+  editBtn.addEventListener("click", function () {
+    if (!isEditing) {
+      content.disabled = false;
+      content.placeholder = "오늘의 일기를 남겨주세요!";
+      isEditing = true;
+      for (let i = 0; i < conditions.length; i++) {
+        conditions[i].classList.remove("disabled");
+      }
     } else {
-        alert("저장되었습니다.");
+      alert("저장되었습니다.");
+      content.disabled = true;
+      content.placeholder = "연필 버튼을 눌러 글을 작성하세요!";
+      isEditing = false;
+      for (let i = 0; i < conditions.length; i++) {
+        conditions[i].classList.add("disabled");
+      }
     }
-    });
-})
+  });
+
+  resetBtn.addEventListener("click", function () {
+    let ans = confirm("작성 내용을 초기화하시겠습니까?");
+    if (ans){
+      content.value = "";
+    todaysCondition.innerHTML = "";
+    for (let i = 0; i < conditions.length; i++) {
+      conditions[i].classList.remove("selected");
+    }
+    selectedIndex = -1;
+  }
+  });
+});

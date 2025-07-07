@@ -1,0 +1,48 @@
+{% extends "../../example/base.html" %}
+{% load static %} 
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/component_styles/page_component.css' %}" />
+<link rel="stylesheet" href="{% static 'styles/page_styles/onboarding_pages/onboarding_3.css' %}">
+{% endblock style %} 
+{% block script %}
+{% endblock script %}
+
+{% block body %}
+<body>
+
+    <header class="top_section">
+        <section class="top_bar">
+            <img src="{% static 'assets/img/logo.png' %}" alt="로고" class="logo_image" />
+            </section>
+    </header>
+    
+    <main class="main_layout">
+    <section class="content_area">
+      <section class="content_left">
+        <div class="ment_hugger">
+            <img src="{% static 'assets/img/star_highlight.png' %}" alt="피포미 별" />
+            <p><b>
+              아주 좋아요!
+            </b></p>            
+            <p><b>
+              사용자의 맞춤 정보를 파악했어요
+            </b></p>            
+            <p><b>
+              이제 시작해볼까요?
+            </b></p>
+        </div>
+        <div class="before_page"><a href="{% url 'frontend:purposepage' %}">
+          <img src="{% static 'assets/img/left.png' %}" alt="뒤로가기" class="left_right"/>
+        </a></div>
+
+      </section>
+      <section class="content_right">
+        <img src="{% static 'assets/img/happy_pipi_hugging.png' %}" alt="피피 웃는 얼굴" class="pipi"/>
+        <img src="{% static 'assets/img/logo.png' %}" alt="로고" class="logo_big"/>
+        <button type="submit" value="시작하기" id="done_submitbtn">시작하기</button>
+      </section>
+    </section>
+  </main>
+</body>
+
+{% endblock body %}

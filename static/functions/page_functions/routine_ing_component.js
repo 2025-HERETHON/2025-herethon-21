@@ -3,6 +3,34 @@ document.addEventListener("DOMContentLoaded", function () {
   const radius = 30;
   const strokeWidth = 6;
 
+  const stepContentEl = document.getElementById("step_content");
+  const stepCategoryEl = document.getElementById("category");
+  const routineImage = document.getElementById("routine_image");
+  const stepNumber = document.getElementById("step_number");
+  const prevBtn = document.getElementById("photo_prev");
+  const nextBtn = document.getElementById("photo_next");
+  const starscoreEl = document.querySelector(".starscore");
+
+  function updateStars(difficulty) {
+    let starsHTML = "";
+    for (let i = 1; i <= 5; i++) {
+      if (i <= difficulty) {
+        starsHTML += `<span class="star_per">
+          <img src="/static/assets/img/star_purple.png" alt="보라별" />
+        </span>`;
+      } else {
+        starsHTML += `<span class="star_per">
+          <img src="/static/assets/img/star_gray.png" alt="회색별" />
+        </span>`;
+      }
+    }
+    starscoreEl.innerHTML = starsHTML;
+  }
+
+
+  let currentImageIndex = 0;
+  let currentStepIndex = 0;
+
   function injectProgressCircle(circleEl, durationMin) {
     const svgSize = 60;
     const center = svgSize / 2;
@@ -18,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
           stroke-linecap="round"
         />
       </svg>
-      <div class="time-text">${durationMin}분</div>
+      <div class="time-text">${durationMin}m</div>
     `;
 
     const timeText = circleEl.querySelector(".time-text");
@@ -37,19 +65,35 @@ document.addEventListener("DOMContentLoaded", function () {
     circleEl.style.position = "relative";
   }
 
+  function updateImage() {
+    const detailImages = routineData[currentStepIndex].detail_images;
+    const imagePath = detailImages[currentImageIndex];
+
+    routineImage.src = "/static/" + imagePath;
+    stepNumber.textContent = currentImageIndex + 1;
+
+    prevBtn.style.display = currentImageIndex === 0 ? "none" : "block";
+    nextBtn.style.display = currentImageIndex === detailImages.length - 1 ? "none" : "block";
+  }
+
   function runTimer(index) {
     if (index >= stepElements.length) {
       alert("운동이 모두 완료되었습니다!");
       return;
     }
 
+    currentStepIndex = index;
+    currentImageIndex = 0;
+    updateImage();
+
     const step = stepElements[index];
     const circleEl = step.querySelector(".circle");
     const durationMin = durations[index];
     const durationSec = durationMin * 60;
 
-    const imageEL = document.getElementById("routine_image");
-    imageEL.src = images[index];
+    stepContentEl.textContent = routineData[index].content;
+    stepCategoryEl.textContent = routineData[index].category;
+    updateStars(routineData[index].difficulty);
 
     injectProgressCircle(circleEl, durationMin);
 
@@ -63,7 +107,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const ratio = elapsed / durationSec;
       const offset = circumference * (1 - ratio);
       progressCircle.style.strokeDashoffset = offset;
-      timeText.textContent = `${Math.ceil((durationSec - elapsed) / 60)}분`;
+      timeText.textContent = `${Math.ceil((durationSec - elapsed) / 60)}m`;
 
       if (elapsed >= durationSec) {
         clearInterval(timer);
@@ -73,6 +117,22 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }, 1000);
   }
+
+  prevBtn.addEventListener("click", () => {
+    const detailImages = routineData[currentStepIndex].detail_images;
+    if (currentImageIndex > 0) {
+      currentImageIndex--;
+      updateImage();
+    }
+  });
+
+  nextBtn.addEventListener("click", () => {
+    const detailImages = routineData[currentStepIndex].detail_images;
+    if (currentImageIndex < detailImages.length - 1) {
+      currentImageIndex++;
+      updateImage();
+    }
+  });
 
   runTimer(0);
 });

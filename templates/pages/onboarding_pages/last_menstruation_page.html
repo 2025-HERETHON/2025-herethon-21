@@ -1,0 +1,55 @@
+{% extends "../../example/base.html" %}
+{% load static %} 
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/component_styles/page_component.css' %}" />
+<link rel="stylesheet" href="{% static 'styles/page_styles/onboarding_pages/last_menstruation_page.css' %}">
+{% endblock style %} 
+{% block script %}
+<script src="{% static 'functions/page_functions/onboarding_pages/last_menstruation_page.js' %}"></script>
+{% endblock script %}
+
+{% block body %}
+<body>
+
+    <header class="top_section">
+        <section class="top_bar">
+            <img src="{% static 'assets/img/logo.png' %}" alt="로고" class="logo_image" />
+            </section>
+    </header>
+    
+    <main class="main_layout">
+    <section class="content_area">
+      <section class="content_left">
+        <div class="ment_hugger">
+              <img src="{% static 'assets/img/star_highlight.png' %}" alt="피포미 별" />
+                      <p><b>
+                        최근 월경의 마지막 월경 시작일과 종료일을 알려주세요
+                      </b></p>
+                  <div class="selected_showingbox">
+                <p id="start-line" class="hidden">시작일 : <span id="start_text"></span></p>
+                <p id="end-line" class="hidden">종료일 : <span id="end_text"></span></p>
+            </div>
+        </div>
+        <div class="before_page"><a href="{% url 'frontend:onboarding_2' %}">
+          <img src="{% static 'assets/img/left.png' %}" alt="뒤로가기" class="left_right"/>
+        </a></div>
+
+      </section>
+      <section class="content_right">
+        <div class="datepicker">
+        <input type="date" id="start_date">
+        <span class="arrow">→</span>
+        <input type="date" id="end_date">
+        <span class="calendar">
+          <img src="{% static 'assets/img/calendar_icon.png' %}" alt="달력 아이콘"/>
+        </span>
+        </div>
+        <div class="next_page"><a href="{% url 'frontend:purposepage' %}">
+          <img src="{% static 'assets/img/right.png' %}" alt="진행하기" class="left_right"/>
+        </a></div>
+      </section>
+    </section>
+  </main>
+</body>
+
+{% endblock body %}
