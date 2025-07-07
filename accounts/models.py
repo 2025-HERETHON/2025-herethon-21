@@ -36,6 +36,10 @@ class CustomUser(AbstractUser):
         null=True,
         blank=True,
     )
+    bio = models.TextField(
+        blank=True,   
+        null=True,    
+    )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
