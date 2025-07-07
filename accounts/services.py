@@ -1,9 +1,9 @@
 # 백엔드 비즈니스 로직 처리
 
-from django.core.exceptions import ValidationError, ObjectDoesNotExist
+from django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
-from .models import CustomUser
+from .forms import CustomUserChangeForm
 
 class UserService:
     @staticmethod
@@ -34,3 +34,10 @@ class UserService:
         
         user.delete()
         
+    @staticmethod
+    def update(user, form_data, files_data=None):
+        form = CustomUserChangeForm(form_data, files_data, instance=user)
+        if form.is_valid():
+            form.save()
+            return form, True
+        return form, False

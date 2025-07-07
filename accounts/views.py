@@ -1,10 +1,13 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.core.exceptions import ValidationError
 from django.contrib.auth import logout
 from django.contrib.auth.forms import AuthenticationForm
 from .services import UserService
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, CustomUserChangeForm
 from utils.choices import ExerciseGoalType
+from django.http import HttpResponseForbidden
+from .models import CustomUser
+from .services import UserService
 
 # 템플릿 렌더링 처리
 
@@ -81,3 +84,17 @@ def delete_CustomUser(request):
     else:
         return redirect("accounts:main")
     
+def update_CustomUser(request, username):
+    user = get_object_or_404(CustomUser, username=username)
+
+    if request.user != user:
+        return HttpResponseForbidden("권한이 없습니다.")
+
+    if request.method == "POST":
+        form, success = UserService.update(user, request.POST, request.FILES)
+        if success:
+            return redirect("accounts:main")
+    else:
+        form = CustomUserChangeForm(instance=user)
+
+    return render(request, "update.html", {"form": form, "user": user})
