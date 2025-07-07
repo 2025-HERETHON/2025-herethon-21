@@ -20,16 +20,20 @@
     <section class="content_area">
       <section class="content_left">
         <div class="ment_hugger">
+            <img src="{% static 'assets/img/star_highlight.png' %}" alt="피포미 별" />
+            <p><b>
             회원가입이 완료되었습니다
-            <div class="line"></div>
-            <p>
-                3가지의 질문에 답변해주세요
-            </p>
+            </b></p>
+            <p><b>
+                2가지의 질문에 답변해주세요
+            </b></p>
         </div>
       </section>
       <section class="content_right">
-        <!-- 오른쪽 컨텐츠 영역 -->
-        <div class="next_page"><a href="{% url 'frontend:lastmenstruationpage' %}">&gt;</a></div>
+        <img src="{% static 'assets/img/2_selection_pipi.png' %}" alt="질문 두개 피피" class="pipi"/>
+        <div class="next_page"><a href="{% url 'frontend:lastmenstruationpage' %}">
+          <img src="{% static 'assets/img/right.png' %}" alt="진행하기" class="left_right"/>
+        </a></div>
       </section>
     </section>
   </main>

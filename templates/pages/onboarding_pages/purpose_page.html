@@ -21,14 +21,16 @@
     <section class="content_area">
       <section class="content_left">
         <div class="ment_hugger">
-            <div class="steps"><p class="perstep"></p><p class="perstep"></p><p class="perstep"></p></div>
-            <p>당신의 <b>운동 목적</b>을 <b>우선순위</b>에 따라 선택해주세요.</p>
+            <img src="{% static 'assets/img/star_highlight.png' %}" alt="피포미 별" />
+            <p><b>당신의 운동 목적을 2가지 선택해주세요</b></p>
             <p id="default_msg">복수 선택 2개 가능</p>
             <div class="selected_showingbox">
                 <p id="selected_keywords"><span id="selected_purposes"></span></p>
             </div>
         </div>
-        <div class="before_page"><a href="{% url 'frontend:lastmenstruationpage' %}">&lt;</a></div>
+        <div class="before_page"><a href="{% url 'frontend:lastmenstruationpage' %}">
+          <img src="{% static 'assets/img/left.png' %}" alt="뒤로가기" class="left_right"/>
+        </a></div>
       </section>
       <section class="content_right">
         <div class="container">
@@ -38,7 +40,9 @@
             <div class="purpose">근력 강화</div>
             <div class="purpose">유연성 향상</div>
         </div>
-        <div class="next_page"><a href="{% url 'frontend:onboarding_3' %}">&gt;</a></div>
+        <div class="next_page"><a href="{% url 'frontend:onboarding_3' %}">
+          <img src="{% static 'assets/img/right.png' %}" alt="진행하기" class="left_right"/>
+        </a></div>
       </section>
     </section>
   </main>

@@ -20,23 +20,20 @@
     <section class="content_area">
       <section class="content_left">
         <div class="ment_hugger">
-            어서오세요
-            <!-- 먼저 회원가입을 진행해볼까요? -->
-            <!-- 회원가입이 완료되었습니다 -->
-            <div class="line"></div>
+            <img src="{% static 'assets/img/star_highlight.png' %}" alt="피포미 별" />
+            <p><b>어서오세요</b></p>
             <p>
             <b>
-                AI가 월경주기와 운동취향
-                <!-- 이메일과 비밀번호를 입력해주세요 -->
+                AI 피피가 월경주기와 운동취향에 맞는 루틴을 추천해 드려요
             </b>
-            에 맞는 루틴을 추천해 드려요
-            <!-- 3가지의 질문에 답변해주세요 -->
-            </p>
+            <p class="subtext">오른쪽 하단에 다음 버튼을 눌러주세요</p>
         </div>
       </section>
       <section class="content_right">
-        <!-- 오른쪽 컨텐츠 영역 -->
-        <div class="next_page"><a href="{% url 'frontend:loginpage' %}">&gt;</a></div>
+        <img src="{% static 'assets/img/welcoming_pipi.png' %}" alt="반겨주는 피피" class="pipi"/>
+        <div class="next_page"><a href="{% url 'frontend:signuppage' %}">
+          <img src="{% static 'assets/img/right.png' %}" alt="진행하기" class="left_right"/>
+        </a></div>
       </section>
     </section>
   </main>

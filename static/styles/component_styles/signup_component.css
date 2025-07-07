@@ -6,27 +6,27 @@
     margin: 7px 0 10px 0;
     width:95%;
     height:30px;
-    padding:10px;
-    border-radius: 10px;
-    border:2px solid white;
+    padding:30px;
+    border-radius: 20px;
+    border:2px solid rgb(230, 230, 230);
     outline: none;
 }
 .text_input_hugger input::placeholder{
     font-size: 20px;
-    color:rgb(200, 200, 200);
+    color:rgb(230, 230, 230);
 }
 #signup_submitbtn {
+    color:#A48BE7;
     font-size: 20px;
     display:flex;
     justify-content: center;
     align-items: center;
     font-weight: 500;
     margin-top: 50px;
-    width:100%;
+    width:96%;
     height:50px;
-    padding:10px;
-    border-radius: 8px;
-    border:none;
-    background-color:rgb(200, 200, 200);
-    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+    padding:28px;
+    border-radius: 20px;
+    border:2px solid #A48BE7;
+    background-color: white;
 }

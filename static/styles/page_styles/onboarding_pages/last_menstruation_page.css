@@ -4,6 +4,10 @@
     justify-content: center;
     align-items: center;
 }
+.ment_hugger img{
+    width:25px;
+    margin-bottom:30px;
+}
 .content_left{
     display: flex;
     justify-content: center;
@@ -11,28 +15,14 @@
 
 }
 
-.steps{
-    display:flex;
-    margin-bottom: 105px;
-}
-.perstep{
-    background-color: #e3e3e3;
-    width:7px;
-    height:7px;
-    border-radius: 50%;
-    margin:0 10px;
-}
-.perstep:first-child{
-    background-color: pink;
-}
 .selected_showingbox{
-    background-color: #e3e3e3;
-    padding:10px;
+    padding:20px 50px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-radius: 10px;
+    border: 2px solid #A48BE7;
+    border-radius: 20px;
     margin-top:20px;
     display: none;
 }
@@ -48,16 +38,54 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
 }
-.content_right input[type="date"] {
+.datepicker {
+  background-color: #A48BE733;
+  border-radius: 16px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: fit-content;
+}
+
+.datepicker input[type="date"] {
+  -webkit-appearance: none;
+  appearance: none;
+  position: relative;
   font-family: "Noto Sans KR", sans-serif;
-  border: none;
   background: transparent;
+  border: none;
   font-size: 14px;
-  padding: 4px;
+  padding: 6px 8px;
   color: #000;
   font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  max-width: 110px;
+  flex-shrink: 1;
+}
+
+.datepicker input[type="date"]:first-child {
+    margin-right:-30px;
+}
+.datepicker input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.arrow {
+  color: #A48BE7;
+  font-weight: bold;
+  font-size: 20px;
 }
 
 .before_page{
@@ -83,4 +111,13 @@
 .next_page a{
     text-decoration: none;  
     color:inherit;
+}
+
+.left_right{
+  width:15px;
+  margin:20px 10px;
+}
+.calendar img{
+    width:20px;
+    margin-left:-20px;
 }

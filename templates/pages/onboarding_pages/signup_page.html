@@ -20,19 +20,22 @@
     <section class="content_area">
       <section class="content_left">
         <div class="ment_hugger">
+            <img src="{% static 'assets/img/star_highlight.png' %}" alt="피포미 별" />
+            <p>
+            <b>
             먼저 회원가입을 해볼까요?
-            <!-- 회원가입이 완료되었습니다 -->
-            <div class="line"></div>
+            </b>
+            </p>
             <p>
             <b>이메일과 비밀번호를 입력해주세요</b>
-            <!-- 3가지의 질문에 답변해주세요 -->
             </p>
         </div>
-        <div class="before_page"><a href="{% url 'frontend:loginpage' %}">&lt;</a></div>
+        <div class="before_page"><a href="{% url 'frontend:onboarding_1' %}">
+          <img src="{% static 'assets/img/left.png' %}" alt="뒤로가기" class="left_right"/>
+        </a></div>
       </section>
       <section class="content_right">
         {% include "../../components/signup_component.html" %}
-        <div class="next_page"><a href="{% url 'frontend:onboarding_2' %}">&gt;</a></div>
       </section>
     </section>
   </main>

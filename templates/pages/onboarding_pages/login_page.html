@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="{% static 'styles/page_styles/onboarding_pages/signup_page.css' %}">
 {% endblock style %} 
 {% block script %}
+<script src="{% static 'functions/page_functions/onboarding_pages/login_page.js' %}"></script>
 {% endblock script %}
 
 {% block body %}
@@ -19,21 +20,24 @@
     <main class="main_layout">
     <section class="content_area">
       <section class="content_left">
-        <div class="ment_hugger">
+        <div class="ment_hugger">        
+          <img src="{% static 'assets/img/star_highlight.png' %}" alt="피포미 별" />
+          <p id="welcome_text">
+            <b>
+            어서오세요
+            </b>
+            <br />
+            <b>
             피포미 회원이신가요?
-            <!-- 회원가입이 완료되었습니다 -->
-            <div class="line"></div>
-            <p>
-            <b>이메일과 비밀번호를 입력해주세요</b>
-            <!-- 3가지의 질문에 답변해주세요 -->
-            </p>
+            </b>
+          </p>
+          <p id="login_text" style="opacity: 0; transition: opacity 1s;"><b>이메일과 비밀번호를 입력해주세요</b></p>
         </div>
-        <div class="before_page"><a href="{% url 'frontend:onboarding_1' %}">&lt;</a></div>
+
 
       </section>
       <section class="content_right">
         {% include "../../components/login_component.html" %}
-        <div class="next_page"><a href="{% url 'frontend:onboarding_3' %}">&gt;</a></div>  
     </section>
     </section>
 </body>

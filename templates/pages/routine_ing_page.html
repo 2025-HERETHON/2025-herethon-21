@@ -19,7 +19,17 @@
             </section>
     </header>
     <div class="bighugger">
-      <img src="{% static data_list.0.iamge %}" alt="더미 운동 이미지" class="photobox" id="routine_image">
+      <div class="photobox_wrapper">
+        <div class="photobox_nav photobox_prev" id="photo_prev">
+          <img src="{% static 'assets/img/left.png' %}" alt="왼쪽" class="left_right">
+        </div>
+        <div class="step_number" id="step_number">1</div>
+        <img src="{% static data_list.0.detail_images.0 %}" alt="운동 이미지" class="photobox" id="routine_image">
+        <div class="photobox_nav photobox_next" id="photo_next">
+          <img src="{% static 'assets/img/right.png' %}" alt="오른쪽" class="left_right">
+        </div>
+      </div>
+
       <div class="routinesection">
         <div class="timeline" id="timeline">
           {% for item in data_list %}
@@ -67,4 +77,8 @@
         </div>
       </div>
     </div>
+    <a href="#" class="back_button">
+      <img src="{% static 'assets/img/left.png' %}" alt="뒤로가기" />
+    </a>
+
 {% endblock body %}

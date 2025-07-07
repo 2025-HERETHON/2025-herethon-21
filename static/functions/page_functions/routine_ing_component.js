@@ -5,6 +5,31 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const stepContentEl = document.getElementById("step_content");
   const stepCategoryEl = document.getElementById("category");
+  const routineImage = document.getElementById("routine_image");
+  const stepNumber = document.getElementById("step_number");
+  const prevBtn = document.getElementById("photo_prev");
+  const nextBtn = document.getElementById("photo_next");
+  const starscoreEl = document.querySelector(".starscore");
+
+  function updateStars(difficulty) {
+    let starsHTML = "";
+    for (let i = 1; i <= 5; i++) {
+      if (i <= difficulty) {
+        starsHTML += `<span class="star_per">
+          <img src="/static/assets/img/star_purple.png" alt="보라별" />
+        </span>`;
+      } else {
+        starsHTML += `<span class="star_per">
+          <img src="/static/assets/img/star_gray.png" alt="회색별" />
+        </span>`;
+      }
+    }
+    starscoreEl.innerHTML = starsHTML;
+  }
+
+
+  let currentImageIndex = 0;
+  let currentStepIndex = 0;
 
   function injectProgressCircle(circleEl, durationMin) {
     const svgSize = 60;
@@ -40,22 +65,35 @@ document.addEventListener("DOMContentLoaded", function () {
     circleEl.style.position = "relative";
   }
 
+  function updateImage() {
+    const detailImages = routineData[currentStepIndex].detail_images;
+    const imagePath = detailImages[currentImageIndex];
+
+    routineImage.src = "/static/" + imagePath;
+    stepNumber.textContent = currentImageIndex + 1;
+
+    prevBtn.style.display = currentImageIndex === 0 ? "none" : "block";
+    nextBtn.style.display = currentImageIndex === detailImages.length - 1 ? "none" : "block";
+  }
+
   function runTimer(index) {
     if (index >= stepElements.length) {
       alert("운동이 모두 완료되었습니다!");
       return;
     }
 
+    currentStepIndex = index;
+    currentImageIndex = 0;
+    updateImage();
+
     const step = stepElements[index];
     const circleEl = step.querySelector(".circle");
     const durationMin = durations[index];
     const durationSec = durationMin * 60;
 
-    const imageEL = document.getElementById("routine_image");
-    imageEL.src = images[index];
-
     stepContentEl.textContent = routineData[index].content;
     stepCategoryEl.textContent = routineData[index].category;
+    updateStars(routineData[index].difficulty);
 
     injectProgressCircle(circleEl, durationMin);
 
@@ -79,6 +117,22 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }, 1000);
   }
+
+  prevBtn.addEventListener("click", () => {
+    const detailImages = routineData[currentStepIndex].detail_images;
+    if (currentImageIndex > 0) {
+      currentImageIndex--;
+      updateImage();
+    }
+  });
+
+  nextBtn.addEventListener("click", () => {
+    const detailImages = routineData[currentStepIndex].detail_images;
+    if (currentImageIndex < detailImages.length - 1) {
+      currentImageIndex++;
+      updateImage();
+    }
+  });
 
   runTimer(0);
 });

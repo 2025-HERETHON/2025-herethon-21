@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
 import json
 
 def routineingpage(request):
@@ -12,7 +13,11 @@ def routineingpage(request):
                 "텍스트3"
                 ],
             "time": 1, #타이머 테스트용으로 짧게 1분으로 설정해뒀습니다
-            "image": "assets/img/fitnessdog.png", 
+            "detail_images": [
+                "assets/img/fitnessdog.png",
+                "assets/img/squat_1.png",
+                "assets/img/happy_pipi_hugging.png",
+                ],
             "category" : "준비 운동",
             "difficulty" : 2,
         },
@@ -25,7 +30,11 @@ def routineingpage(request):
                 "텍스트3"
                 ],
             "time": 5,
-            "image": "assets/img/fitnessdog.png", 
+            "detail_images": [
+                "assets/img/squat_1.png",
+                "assets/img/fitnessdog.png",
+                "assets/img/happy_pipi_hugging.png",
+                ],
             "category" : "하체 근력",
             "difficulty" : 4,
         },
@@ -38,7 +47,11 @@ def routineingpage(request):
                 "텍스트3"
                 ],
             "time": 3,
-            "image": "assets/img/fitnessdog.png", 
+            "detail_images": [
+                "assets/img/fitnessdog.png",
+                "assets/img/squat_1.png",
+                "assets/img/happy_pipi_hugging.png",
+                ],
             "category" : "코어 근력",
             "difficulty" : 4,
         },
@@ -51,7 +64,11 @@ def routineingpage(request):
                 "텍스트3"
                 ],
             "time": 5,
-            "image": "assets/img/fitnessdog.png", 
+            "detail_images": [
+                "assets/img/fitnessdog.png",
+                "assets/img/squat_1.png",
+                "assets/img/happy_pipi_hugging.png",
+                ],
             "category" : "팔 근력",
             "difficulty" : 3,
         },
@@ -64,7 +81,11 @@ def routineingpage(request):
                 "텍스트3"
                 ],
             "time": 4,
-            "image": "assets/img/fitnessdog.png", 
+            "detail_images": [
+                "assets/img/fitnessdog.png",
+                "assets/img/squat_1.png",
+                "assets/img/happy_pipi_hugging.png",
+                ],
             "category" : "마무리 운동",
             "difficulty" : 2,
         },
@@ -98,8 +119,24 @@ def onboarding_3(request):
 def signuppage(request):
     return render(request, "pages/onboarding_pages/signup_page.html")
 
-def loginpage(request):
-    return render(request, "pages/onboarding_pages/login_page.html")
+def loginpage(request): #아래 더미데이터는 GPT에게 요청해 받았습니다
+    dummy_users = {
+        'fitforme@example.com': 'abc123!@#',
+    }
+
+    if request.method == 'GET':
+        email = request.GET.get('email')
+        password = request.GET.get('password')
+
+        if email and password:
+            if email in dummy_users and dummy_users[email] == password:
+                return redirect(reverse('frontend:onboarding_3'))
+            else:
+                return render(request, 'pages/onboarding_pages/login_page.html', {
+                    'error': '정보가 없습니다'
+                })
+
+    return render(request, 'pages/onboarding_pages/login_page.html')
 
 def lastmenstruationpage(request):
     return render(request, "pages/onboarding_pages/last_menstruation_page.html")

@@ -45,6 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (isValidEmail(email) && isValidPassword(pw) && pw === pwConfirm) {
         submitBtn.style.backgroundColor = "rgb(174, 129, 218)";
+        submitBtn.style.color="white";
         submitBtn.disabled = false;
     } else {
         submitBtn.style.backgroundColor = "white";
@@ -55,4 +56,19 @@ document.addEventListener("DOMContentLoaded", function () {
     emailInput.addEventListener("input", checkInputs);
     pwInput.addEventListener("input", checkInputs);
     pwCheckInput.addEventListener("input", checkInputs);
+
+    submitBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    const email = emailInput.value.trim();
+    const pw = pwInput.value;
+    const pwConfirm = pwCheckInput.value;
+
+    if (isValidEmail(email) && isValidPassword(pw) && pw === pwConfirm) {
+        window.location.href = "/onboarding_2";
+    } else {
+        alert("입력값을 다시 확인해주세요.");
+    }
+    });
+
 })

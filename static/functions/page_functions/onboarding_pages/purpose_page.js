@@ -28,13 +28,20 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         }
         if (selected.length > 0) {
-        selectedBox.style.display = "block";
-        const names = selected.map(p => p.textContent.trim()).join(", ");
-        selecteddPurpose.textContent = `${names}`;
-        } else {
-        selectedBox.style.display = "none";
-        selecteddPurpose.textContent = "";
-        }
+            selectedBox.style.display = "block";
+            selecteddPurpose.innerHTML = ""; // 기존 내용 초기화
+
+            selected.forEach(p => {
+                const item = document.createElement("span");
+                item.className = "selected-item";
+                item.textContent = p.textContent.trim();
+                selecteddPurpose.appendChild(item);
+            });
+            } else {
+            selectedBox.style.display = "none";
+            selecteddPurpose.textContent = "";
+            }
+
     });
     });
 })

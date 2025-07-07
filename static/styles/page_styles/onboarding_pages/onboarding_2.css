@@ -9,6 +9,10 @@
     justify-content: center;
     align-items: center;
 }
+.ment_hugger img{
+    width:25px;
+    margin-bottom:30px;
+}
 .content_left{
     display: flex;
     justify-content: center;
@@ -45,4 +49,13 @@
 .next_page a{
     text-decoration: none;  
     color:inherit;
+}
+
+.left_right{
+  width:15px;
+  margin:20px 10px;
+}
+
+.pipi{
+    width:370px;
 }
