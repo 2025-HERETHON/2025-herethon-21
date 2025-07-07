@@ -69,3 +69,9 @@
   border: 1.5px dashed #A48BE7; /* 여기 수정 https://kovart.github.io/dashed-border-generator/ 활용 */
   color: rgba(0, 0, 0, 1);
 }
+
+.modal_test_button {
+  position: relative;
+  z-index: 15;  /* top_bar보다 위로 */
+  margin-top: 500px;
+}
