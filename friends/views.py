@@ -32,7 +32,7 @@ def create_send_friends(request):
     return render(request, "friend_request_send.html")
 
 @login_required
-def read_send_list(request):
+def read_receive_list(request):
     user = request.user
     friend_requests = Friend.objects.filter(
         receiver=user,
