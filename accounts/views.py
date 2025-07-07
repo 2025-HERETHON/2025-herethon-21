@@ -12,19 +12,10 @@ from .services import UserService
 # 템플릿 렌더링 처리
 
 def main_view(request):
-    if request.method == "POST":
-        # 로그아웃 처리
-        if request.user.is_authenticated:
-            logout(request)
-            return redirect("accounts:login")
-        else:
-            return redirect("accounts:login")
-    
-    # GET 요청
     goal_labels = []
     if request.user.is_authenticated:
-        goals = request.user.exercise_goal  # [1,2,4]
-        goal_labels = [ExerciseGoalType(int(g)).label for g in goals]
+        goals = request.user.exercise_goal  # ["1", "2", "4"]
+        goal_labels = [ExerciseGoalType(int(g)).label for g in goals] # -> [1, 2, 4]
     
     return render(request, "main.html", {
         "goal_labels": goal_labels,
