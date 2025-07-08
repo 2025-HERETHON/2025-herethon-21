@@ -20,11 +20,14 @@ document.addEventListener("DOMContentLoaded", function () {
         selected = selected.filter(c => c !== purpose);
         } else {
         if (selected.length < 2) {
-            purpose.classList.add("selected");
-            selected.push(purpose);
+        purpose.classList.add("selected");
+        selected.push(purpose);
         } else {
-            alert("최대 2개까지만 선택할 수 있습니다.");
-            return;
+        selectedBox.classList.add("shake");
+        setTimeout(() => {
+            selectedBox.classList.remove("shake");
+        }, 400);
+        return;
         }
         }
         if (selected.length > 0) {

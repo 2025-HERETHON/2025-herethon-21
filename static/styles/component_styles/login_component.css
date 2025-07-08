@@ -30,6 +30,7 @@
     border-radius: 20px;
     border:2px solid #A48BE7;
     background-color: white;
+    cursor: pointer;
 }
 #to_signup{
     color:#A48BE7;
@@ -45,6 +46,11 @@
     border-radius: 20px;
     border:2px solid #A48BE7;
     background-color: white;
+    cursor: pointer;
+}
+#to_signup:hover{
+    color:white;
+    background-color: #A48BE7;
 }
 .finding_pwd_hugger{
     display:flex;
@@ -56,4 +62,25 @@
     color: rgb(230, 230, 230);   
     font-size: 15px;  
     margin-right:20px;
+}
+.input_label_row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.input_label_row label {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.input_error {
+    border: 2px solid red !important;
+}
+
+.input_error_message {
+    color: red;
+    font-size: 14px;
+    text-align: right;
+    margin-right: 30px;
 }

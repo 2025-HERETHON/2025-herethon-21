@@ -131,24 +131,36 @@ def onboarding_3(request):
 def signuppage(request):
     return render(request, "pages/onboarding_pages/signup_page.html")
 
-def loginpage(request): #아래 더미데이터는 GPT에게 요청해 받았습니다
+def loginpage(request): #아래 더미데이터는 GPT에게 받은 임시 데이터입니다
     dummy_users = {
         'fitforme@example.com': 'abc123!@#',
     }
+
+    context = {}
 
     if request.method == 'GET':
         email = request.GET.get('email')
         password = request.GET.get('password')
 
-        if email and password:
-            if email in dummy_users and dummy_users[email] == password:
-                return redirect(reverse('frontend:onboarding_3'))
-            else:
-                return render(request, 'pages/onboarding_pages/login_page.html', {
-                    'error': '정보가 없습니다'
-                })
+        if email or password:
+            import re
+            # 이메일 형식 검증
+            email_regex = r'^[\w\.-]+@[\w\.-]+\.\w+$'
+            if not re.match(email_regex, email or ''):
+                context['email_error'] = '이메일 형식이 잘못되었습니다.'
 
-    return render(request, 'pages/onboarding_pages/login_page.html')
+            elif email in dummy_users:
+                if dummy_users[email] == password:
+                    return redirect(reverse('frontend:onboarding_3'))
+                else:
+                    context['password_error'] = '비밀번호가 틀렸습니다.'
+            else:
+                context['password_error'] = '비밀번호가 틀렸습니다.'
+
+            context['email'] = email
+            context['password'] = password
+
+    return render(request, 'pages/onboarding_pages/login_page.html', context)
 
 def lastmenstruationpage(request):
     return render(request, "pages/onboarding_pages/last_menstruation_page.html")

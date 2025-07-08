@@ -10,14 +10,33 @@
 {% block body %}
     <div class="container">
         <form method="get" action="{% url 'frontend:loginpage' %}">
-        <div class="text_input_hugger">
-            <label for="email">이메일</label><br />
-            <input type="text" id="email" name="email" placeholder="예&#41; Fitforme@example.com" />
+       <div class="text_input_hugger">
+        <div class="input_label_row">
+            <label for="email">이메일</label>
+            {% if email_error %}
+                <span class="input_error_message">{{ email_error }}</span>
+            {% endif %}
         </div>
-        <div class="text_input_hugger">
-            <label for="password">비밀번호</label><br />
-            <input type="password" id="password" name="password" placeholder="영문, 숫자, 특수문자 조합 8~16자" /><br />
+        <input type="text" id="email" name="email"
+            placeholder="예) Fitforme@example.com"
+            value="{{ email|default:'' }}"
+            class="{% if email_error %}input_error{% endif %}" />
+       </div>
+
+       <div class="text_input_hugger">
+        <div class="input_label_row">
+            <label for="password">비밀번호</label>
+            {% if password_error %}
+                <span class="input_error_message">{{ password_error }}</span>
+            {% endif %}
         </div>
+        <input type="password" id="password" name="password"
+            placeholder="영문, 숫자, 특수문자 조합 8~16자"
+            value="{{ password|default:'' }}"
+            class="{% if password_error %}input_error{% endif %}" />
+       </div>
+
+
         {% if error %}
             <p style="color:red;">{{ error }}</p>
         {% endif %}

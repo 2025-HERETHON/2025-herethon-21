@@ -30,3 +30,25 @@
     border:2px solid #A48BE7;
     background-color: white;
 }
+.input_label_row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.input_label_row label {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.input_error {
+    border: 2px solid red !important;
+}
+
+.input_error_message {
+    color: red;
+    font-size: 14px;
+    text-align: right;
+    margin-right: 25px;
+}

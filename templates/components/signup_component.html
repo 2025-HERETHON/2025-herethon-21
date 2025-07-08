@@ -10,19 +10,28 @@
 {% block body %} 
     <div class="container">
         <form id="signup_form">
-            <div class="text_input_hugger">
-                <label for="email">이메일</label><br />
-                <input type="text" id="email" placeholder="예&#41; Fitforme@example.com" />
+        <div class="text_input_hugger">
+            <div class="input_label_row">
+                <label for="email">이메일</label>
+                <span class="input_error_message" id="email_error"></span>
             </div>
-            <div class="text_input_hugger">
-                <label for="password">비밀번호</label><br />
-                <input type="password" id="password" placeholder="영문, 숫자, 특수문자 조합 8~16자" /><br />
+            <input type="text" id="email" placeholder="예) Fitforme@example.com" />
+        </div>
+        <div class="text_input_hugger">
+            <div class="input_label_row">
+                <label for="password">비밀번호</label>
+                <span class="input_error_message" id="password_error"></span>
             </div>
-            <div class="text_input_hugger">
-                <label for="repassword">비밀번호 확인</label><br />
-                <input type="password" id="repassword" placeholder="비밀번호를 다시 입력해주세요." /><br />
+            <input type="password" id="password" placeholder="영문, 숫자, 특수문자 조합 8~16자" />
+        </div>
+        <div class="text_input_hugger">
+            <div class="input_label_row">
+                <label for="repassword">비밀번호 확인</label>
+                <span class="input_error_message" id="repassword_error"></span>
             </div>
-            <button type="submit" value="회원가입" id="signup_submitbtn">회원가입</button>
-        </form>
+            <input type="password" id="repassword" placeholder="비밀번호를 다시 입력해주세요." />
+        </div>
+        <button type="submit" value="회원가입" id="signup_submitbtn">회원가입</button>
+    </form>
     </div>
 {% endblock body %}
