@@ -289,3 +289,7 @@ def friended(request):
 
 def finishedroutine(request):
     return render(request, "pages/finished_routine.html")
+
+def editpage(request):
+    return render(request,"pages/edit_page.html")
+  
