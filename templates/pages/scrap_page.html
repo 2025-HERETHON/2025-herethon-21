@@ -3,6 +3,7 @@
 {% load static %} 
 {% block style %}
 <link rel="stylesheet" href="{% static 'styles/component_styles/page_component.css' %}" />
+<link rel="stylesheet" href="{% static 'styles/component_styles/routine_list_component.css' %}" />
 <link rel="stylesheet" href="{% static 'styles/page_styles/scrap.css' %}" />
 <link rel="stylesheet" href="{% static 'styles/page_styles/page_common.css' %}" />
 {% endblock style %} 
@@ -14,7 +15,6 @@
 
 {% block body %}
 <body>
-
     <header class="top_section">
         <section class="top_bar">
             <img src="{% static 'assets/img/logo.png' %}" alt="로고" class="logo_image" />
@@ -70,13 +70,46 @@
             <button id="search_button" class="search_button">검색</button>
           </div>
         </div>
+        <div class="routines">
+        {% if data_list %}
+        {% for routine_day in data_list %}
+        <div class="perroutine">
+          <p class="scrapped_time">
+            <span class="date_">{{ routine_day.date }}</span>
+            <span>{{ routine_day.time }}({{ routine_day.duration }})</span>
+          </p>
+          <div class="bighugger">
+            <div class="scrapbtn">
+              <button class="icon_btn delete_btn" data-index="{{ forloop.counter0 }}">
+                  <img src="{% static 'assets/img/trashcan.png' %}" alt="삭제" />
+                </button>
+            </div>
+            <table class="table_centerer">
+              {% for routine in routine_day.routines %}
+              <tr>
+                <th>{{ routine.id }}</th>
+                <td>img</td>
+                <td>{{ routine.name }}</td>
+                <td>{{ routine.duration }}</td>
+                <td>{{ routine.part }}</td>
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
+        </div>
+        {% endfor %}
+        {% else %}
+          <div class="no_scrap_data">
+            <img src="{% static 'assets/img/lets_start_pipi.png' %}" alt="피피" class="pipi"/>
+            <p class="pipi_says">날짜를 선택하고 운동을 시작해보세요! 피피</p>
+          </div>
+        {% endif %}
+      </div>
       </section>
-
-
     </section>
 
 
   </main>
 </body>
-
+{% include "../components/modal_component.html" %}
 {% endblock body %}

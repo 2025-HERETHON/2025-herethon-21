@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const endInput = document.getElementById('scrap_end_date');
   const searchBtn = document.getElementById('search_button');
 
+  
   function isValidDate(dateStr) {
     // YYYY-MM-DD 형식 검사
     const regex = /^\d{4}-\d{2}-\d{2}$/;
@@ -25,4 +26,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
   startInput.addEventListener('input', updateButtonState);
   endInput.addEventListener('input', updateButtonState);
+
+  // ✅ 삭제 버튼 이벤트 연결
+  const deleteButtons = document.querySelectorAll(".delete_btn");
+  deleteButtons.forEach(button => {
+    button.addEventListener("click", function () {
+      openModal({
+        title: "월경 내역을 삭제하시겠습니까?",
+        subtext: "*삭제한 정보는 복구할 수 없습니다",
+        imageUrl: "/static/assets/img/modal_star.png"
+      });
+    });
+  });
 });
