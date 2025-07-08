@@ -1,0 +1,19 @@
+.starscore {
+  height: 40px;
+  display: flex;
+  gap: 3px;
+  align-items: center;
+}
+
+.starscore span:hover {
+  cursor: pointer;
+  transform: scale(1.2);
+}
+.star_per{
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  display: flex;
+  margin:0 6px;
+}

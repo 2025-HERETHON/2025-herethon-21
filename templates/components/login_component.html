@@ -1,0 +1,31 @@
+{% extends "../example/base.html" %}
+{% load static %} 
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/component_styles/login_component.css' %}" />
+{% endblock style %} 
+{% block script %}
+<script src="{% static 'functions/component_functions/login_component.js' %}"></script>
+{% endblock script %}
+
+{% block body %}
+    <div class="container">
+        <form method="get" action="{% url 'frontend:loginpage' %}">
+        <div class="text_input_hugger">
+            <label for="email">이메일</label><br />
+            <input type="text" id="email" name="email" placeholder="예&#41; Fitforme@example.com" />
+        </div>
+        <div class="text_input_hugger">
+            <label for="password">비밀번호</label><br />
+            <input type="password" id="password" name="password" placeholder="영문, 숫자, 특수문자 조합 8~16자" /><br />
+        </div>
+        {% if error %}
+            <p style="color:red;">{{ error }}</p>
+        {% endif %}
+        <div class="finding_pwd_hugger">
+            <a href="#" class="finding_pwd">비밀번호 찾기</a>
+        </div>
+        <button type="submit" value="로그인" id="login_submitbtn">로그인</button>
+        <button type="button" id="to_signup" data-url="{% url 'frontend:onboarding_1' %}">회원가입</button>
+        </form>
+    </div>
+{% endblock body %}

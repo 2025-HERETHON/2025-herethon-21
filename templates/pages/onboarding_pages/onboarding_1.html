@@ -1,0 +1,42 @@
+{% extends "../../example/base.html" %}
+{% load static %} 
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/component_styles/page_component.css' %}" />
+<link rel="stylesheet" href="{% static 'styles/page_styles/onboarding_pages/onboarding_1.css' %}">
+{% endblock style %} 
+{% block script %}
+{% endblock script %}
+
+{% block body %}
+<body>
+
+    <header class="top_section">
+        <section class="top_bar">
+            <img src="{% static 'assets/img/logo.png' %}" alt="로고" class="logo_image" />
+            </section>
+    </header>
+    
+    <main class="main_layout">
+    <section class="content_area">
+      <section class="content_left">
+        <div class="ment_hugger">
+            <img src="{% static 'assets/img/star_highlight.png' %}" alt="피포미 별" />
+            <p><b>어서오세요</b></p>
+            <p>
+            <b>
+                AI 피피가 월경주기와 운동취향에 맞는 루틴을 추천해 드려요
+            </b>
+            <p class="subtext">오른쪽 하단에 다음 버튼을 눌러주세요</p>
+        </div>
+      </section>
+      <section class="content_right">
+        <img src="{% static 'assets/img/welcoming_pipi.png' %}" alt="반겨주는 피피" class="pipi"/>
+        <div class="next_page"><a href="{% url 'frontend:signuppage' %}">
+          <img src="{% static 'assets/img/right.png' %}" alt="진행하기" class="left_right"/>
+        </a></div>
+      </section>
+    </section>
+  </main>
+</body>
+
+{% endblock body %}

@@ -1,0 +1,32 @@
+.container{
+    width:490px;
+}
+.text_input_hugger input{
+    font-size: 20px;
+    margin: 7px 0 10px 0;
+    width:95%;
+    height:30px;
+    padding:30px;
+    border-radius: 20px;
+    border:2px solid rgb(230, 230, 230);
+    outline: none;
+}
+.text_input_hugger input::placeholder{
+    font-size: 20px;
+    color:rgb(230, 230, 230);
+}
+#signup_submitbtn {
+    color:#A48BE7;
+    font-size: 20px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    margin-top: 50px;
+    width:96%;
+    height:50px;
+    padding:28px;
+    border-radius: 20px;
+    border:2px solid #A48BE7;
+    background-color: white;
+}

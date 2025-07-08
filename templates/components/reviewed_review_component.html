@@ -1,0 +1,47 @@
+{% extends "../example/base.html" %}
+{% load static %} 
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/component_styles/reviewed_review_component.css' %}" />
+<link rel="stylesheet" href="{% static 'styles/component_styles/review_component.css' %}" />
+{% endblock style %} 
+{% block script %}
+<script src="{% static 'functions/component_functions/reviewed_review_component.js' %}"></script>
+{% endblock script %}
+
+{% block body %} 
+  <div class="bighugger">
+    <div class="review_container contentbox" id="reviewToggleBox">
+    <div class="review_toprow" id="reviewSummary">
+        <span class="time_range">07:00~07:20 (20분)</span>
+        <div class="star_rating disabled" id="starRating">
+        {% include "./star_component.html" %}
+        </div>
+    </div>
+
+    <div class="review_detail collapsed" id="reviewDetail">
+        <div class="condition_text">
+        <textarea id="text_input" disabled placeholder="오늘의 일기를 남겨주세요!">기존에 작성된 텍스트입니다</textarea>
+        </div>
+
+        <div class="condition_bottomrow">
+        <div class="emotions">
+            <div class="emotion_btn"><span class="count">5</span><span class="emotion_per"><img src="{% static 'assets/img/crying.png' %}" alt="눈물" /></span></div>
+            <div class="emotion_btn"><span class="count">2</span><span class="emotion_per"><img src="{% static 'assets/img/anger.png' %}" alt="분노" /></span></div>
+            <div class="emotion_btn"><span class="count">10</span><span class="emotion_per"><img src="{% static 'assets/img/agree.png' %}" alt="공감" /></span></div>
+            <div class="emotion_btn"><span class="count">1</span><span class="emotion_per"><img src="{% static 'assets/img/surprized.png' %}" alt="놀람" /></span></div>
+            <div class="emotion_btn"><span class="count">0</span><span class="emotion_per"><img src="{% static 'assets/img/smile.png' %}" alt="미소" /></span></div>
+        </div>
+
+        <div class="condition_footer">
+            <button class="icon_btn" id="reviewed_review_editbtn">
+            <img src="{% static 'assets/img/rewrite.png' %}" alt="수정" />
+            </button>
+            <button class="icon_btn">
+            <img src="{% static 'assets/img/trashcan.png' %}" alt="삭제" />
+            </button>
+        </div>
+        </div>
+    </div>
+    </div>
+  </div>
+{% endblock body %}

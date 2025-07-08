@@ -1,0 +1,58 @@
+{% extends "../example/base.html" %}
+{% load static %} 
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/component_styles/condition_component.css' %}" />
+{% endblock style %} 
+{% block script %}
+<script src="{% static 'functions/component_functions/condition_component.js' %}"></script>
+{% endblock script %}
+
+{% block body %} 
+  <div class="bighugger">
+    <div class="contentbox">
+      
+      <div class="condition_toprow">
+        <!-- 리뷰 컴포넌트로 사용시
+        <span class="time_range">07:00~07:20 (20분)</span>
+        {% include "./star_component.html" %}
+        -->
+        <!-- 컨디션 컴포넌트로 사용시 -->
+        <span class="time_range">2025-05-02 16:00</span>
+        <span id="todays_condition"></span>
+      </div>
+
+      <div class="condition_text">
+        <textarea placeholder="오늘의 일기를 남겨주세요!" id="text_input"></textarea>
+      </div>
+
+      <div class="condition_bottomrow">
+        <div class="conditionscore">
+          <span class="condition_per">
+            <img src="{% static 'assets/img/crying.png' %}" alt="눈물" />
+          </span>
+          <span class="condition_per">
+            <img src="{% static 'assets/img/anger.png' %}" alt="분노" />
+          </span>
+          <span class="condition_per">
+            <img src="{% static 'assets/img/agree.png' %}" alt="공감" />
+          </span>
+          <span class="condition_per">
+            <img src="{% static 'assets/img/surprized.png' %}" alt="깜짝" />
+          </span>
+          <span class="condition_per">
+            <img src="{% static 'assets/img/smile.png' %}" alt="미소" />
+          </span>
+        </div>
+
+        <div class="condition_footer">
+          <button class="icon_btn" id="condition_editbtn">
+            <img src="{% static 'assets/img/rewrite.png' %}" alt="수정" />
+          </button>
+          <button class="icon_btn" id="condition_resetbtn">
+            <img src="{% static 'assets/img/trashcan.png' %}" alt="삭제" />
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock body %}

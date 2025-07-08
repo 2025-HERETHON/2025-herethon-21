@@ -1,0 +1,45 @@
+{% extends "../../example/base.html" %}
+{% load static %} 
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/component_styles/page_component.css' %}" />
+<link rel="stylesheet" href="{% static 'styles/page_styles/onboarding_pages/signup_page.css' %}">
+{% endblock style %} 
+{% block script %}
+<script src="{% static 'functions/page_functions/onboarding_pages/login_page.js' %}"></script>
+{% endblock script %}
+
+{% block body %}
+<body>
+
+    <header class="top_section">
+        <section class="top_bar">
+            <img src="{% static 'assets/img/logo.png' %}" alt="로고" class="logo_image" />
+            </section>
+    </header>
+    
+    <main class="main_layout">
+    <section class="content_area">
+      <section class="content_left">
+        <div class="ment_hugger">        
+          <img src="{% static 'assets/img/star_highlight.png' %}" alt="피포미 별" />
+          <p id="welcome_text">
+            <b>
+            어서오세요
+            </b>
+            <br />
+            <b>
+            피포미 회원이신가요?
+            </b>
+          </p>
+          <p id="login_text" style="opacity: 0; transition: opacity 1s;"><b>이메일과 비밀번호를 입력해주세요</b></p>
+        </div>
+
+
+      </section>
+      <section class="content_right">
+        {% include "../../components/login_component.html" %}
+    </section>
+    </section>
+</body>
+
+{% endblock body %}
