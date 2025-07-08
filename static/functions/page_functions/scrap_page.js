@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
   deleteButtons.forEach(button => {
     button.addEventListener("click", function () {
       openModal({
-        title: "월경 내역을 삭제하시겠습니까?",
+        title: "스크랩을 삭제하시겠습니까?",
         subtext: "*삭제한 정보는 복구할 수 없습니다",
         imageUrl: "/static/assets/img/modal_star.png"
       });
