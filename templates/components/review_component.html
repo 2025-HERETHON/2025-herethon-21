@@ -5,10 +5,11 @@
 {% endblock style %} 
 {% block script %}
 <script src="{% static 'functions/component_functions/review_component.js' %}"></script>
+<script src="{% static 'functions/component_functions/modal_component.js' %}"></script>
 {% endblock script %}
 
 {% block body %} 
-  <div class="bighugger">
+  <div class="big_hugger">
     <div class="contentbox">
       
       <div class="review_toprow">
@@ -23,11 +24,16 @@
           <button class="icon_btn" id="editbtn">
             <img src="{% static 'assets/img/rewrite.png' %}" alt="수정" />
           </button>
-          <button class="icon_btn" id="resetbtn">
+          <button class="icon_btn" id="review_resetbtn" onclick="openModal({
+                title: '운동 리뷰를 리셋하시겠습니까?',
+                subtext:'작성된 리뷰가 초기화됩니다.',
+                imageUrl: '/static/assets/img/modal_star.png'
+                })">
             <img src="{% static 'assets/img/trashcan.png' %}" alt="삭제" />
           </button>
         </div>
       </div>
     </div>
   </div>
+{% include "../components/modal_component.html" %}
 {% endblock body %}

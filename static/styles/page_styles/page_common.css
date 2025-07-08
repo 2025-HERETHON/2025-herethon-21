@@ -131,13 +131,13 @@
 }
 
 .plus_friend {
-    max-width: 61px;     
+    max-width: 61px;  
+    margin-top: 5px;   
 }
 
 .circle_btn {
-  margin-top: 12px;
-  width: 60px;
-  height: 60px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background-color: #e4d9f9;
   color: #a48be7;

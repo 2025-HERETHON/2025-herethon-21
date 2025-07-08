@@ -1,0 +1,44 @@
+.pipi{
+    width:100px;
+}
+.how_it_was p{
+    margin : 10px 0;
+}
+.asking{
+    font-size: 30px;
+    font-weight: 700;
+}
+.routine_hugger{
+    margin-top:20px;
+}
+
+.btn_hugger {
+  width: 100%;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px; 
+  align-items: center;
+}
+.btn_hugger button {
+  width: 90%; 
+  padding: 14px 0;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 20px;
+  border: 3px solid #A48BE7;
+  background-color: white;
+  color: #A48BE7;
+  cursor: pointer;
+}
+
+#go_to_main:hover {
+  background-color: #A48BE7;
+  color: white;
+}
+.content_right{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}

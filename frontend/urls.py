@@ -29,4 +29,5 @@ urlpatterns = [
     path("makefriends", makefriends, name="makefriends"),
     path("friendsconfirm", friendsconfirm, name="friendsconfirm"),
     path("friended", friended, name="friended"),
+    path("finishedroutine", finishedroutine, name="finishedroutine"),
 ]

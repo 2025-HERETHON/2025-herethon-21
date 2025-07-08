@@ -123,7 +123,40 @@ def mypage(request):
     return render(request,"pages/mypage.html")
 
 def friendpage(request):
-    return render(request,"pages/friend_page.html")
+    data_list = [
+        {
+            "id": 1,
+            "start_time": "08:40",
+            "end_time": "09:00",
+            "duration_minutes": 20,
+            "content": "배고파",
+            "rating": 3,
+            "emotion_counts": {
+                "crying": 0,
+                "anger": 0,
+                "agree": 9,
+                "surprized": 1,
+                "smile": 3
+            },
+        },
+        {
+            "id": 2,
+            "start_time": "18:00",
+            "end_time": "19:00",
+            "duration_minutes": 60,
+            "content": "고양이귀여워",
+            "rating": 5,
+            "emotion_counts": {
+                "crying": 0,
+                "anger": 0,
+                "agree": 98,
+                "surprized": 0,
+                "smile":10
+            },
+        },
+    ]
+
+    return render(request,"pages/friend_page.html",{"data_list": data_list})
 
 
 def onboarding_1(request):
@@ -186,6 +219,7 @@ def mypagemain(request):
             "end_time": "08:00",
             "duration_minutes": 60,
             "content": "아 오늘 운동 힘들었다",
+            "rating": 1,
             "emotion_counts": {
                 "crying": 5,
                 "anger": 2,
@@ -200,6 +234,7 @@ def mypagemain(request):
             "end_time": "20:40",
             "duration_minutes": 40,
             "content": "ㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴ",
+            "rating": 4,
             "emotion_counts": {
                 "crying": 3,
                 "anger": 0,
@@ -251,3 +286,6 @@ def friendsconfirm(request):
 
 def friended(request):
     return render(request, "pages/make_friends_pages/friended.html")
+
+def finishedroutine(request):
+    return render(request, "pages/finished_routine.html")

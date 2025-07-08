@@ -153,3 +153,156 @@ input:not(:checked) + .slider .on_text {
 input:not(:checked) + .slider .off_text {
   opacity: 1;
 }
+
+
+.slider-container {
+  margin-left:100px;
+  width: 500px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slider-track {
+  position: relative;
+  width: 100%;
+  height: 36px;
+  background-color: #e6e6e6;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.slider-fill {
+  position: absolute; 
+  left: 0;
+  top: 0;
+  height: 100%;
+  background-color: #b497f0;
+  width: 0%;
+  z-index: 1;
+}
+.slider-time {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-weight: bold;
+  color: white;
+  background-color: #b497f0;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 14px;
+  z-index: 4;
+  display: none;
+  white-space: nowrap;
+}
+
+input[type=range] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  height: 36px; 
+  background: transparent;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  pointer-events: all;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background-color: white;
+  border: 3px solid #b497f0;
+  cursor: pointer;
+
+  background-image: url('/static/assets/img/star_highlight.png'); /* 네 이미지 경로로 변경 */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 40%;
+  box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.05);
+}
+
+input[type=range]::-moz-range-thumb {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background-color: white;
+  border: 3px solid #b497f0;
+  cursor: pointer;
+
+  background-image: url('/static/assets/img/star_highlight.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 40%;
+}
+
+input.user-interacted::-webkit-slider-thumb {
+  margin-left: 5px;
+}
+
+input.user-interacted::-moz-range-thumb {
+  margin-left: 5px;
+}
+.routine_hugger{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+}
+.per_routine_list{
+  margin-top:10px;
+  background-color: white;
+  position: relative;
+}
+.startbtn_hugger{
+  width:510px;
+  margin-left:20px;
+}
+#start_btn {
+    color:#A48BE7;
+    font-size: 20px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    margin-top: 50px;
+    width:96%;
+    height:50px;
+    padding:28px;
+    border-radius: 20px;
+    border: 3px solid #A48BE7;
+    background-color: white;
+    cursor: pointer;
+}
+#start_btn:disabled {
+  background-color: #e5dbfb; /* 연한 보라 */
+  color: white;
+  border: 3px solid #e5dbfb;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+#list_prev{
+  position: absolute;
+  top: 38%;
+  left:60px;
+}
+#list_prev img{
+  width:10px;
+  cursor: pointer;
+}
+#list_next{
+  position: absolute;
+  top: 38%;
+  right:60px;
+}
+#list_next img{
+  width:10px;
+  cursor: pointer;
+}

@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function runTimer(index) {
     if (index >= stepElements.length) {
-      alert("운동이 모두 완료되었습니다!");
+      window.location.href = "/finishedroutine";
       return;
     }
 
