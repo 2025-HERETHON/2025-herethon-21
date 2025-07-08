@@ -1,7 +1,9 @@
 *{
     margin:0;
     box-sizing: border-box;
-    overflow: hidden;
+}
+body{
+    overflow-y: hidden;
 }
 .nav_button:first-child {
   border: 2px solid #A48BE7;
@@ -53,4 +55,11 @@
 }
 .star_background{
     margin-left:50%;
+}
+.set_midder{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
 }

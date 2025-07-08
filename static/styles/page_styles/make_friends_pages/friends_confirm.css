@@ -1,3 +1,11 @@
+
+.email_finder_hugger{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width:490px;
+}
 #friend_confirmbtn {
     color:#A48BE7;
     font-size: 20px;
@@ -21,4 +29,12 @@
 #useremail{
     margin-top: 20px;
     font-size: 20px;
+}
+*{
+    overflow-y: hidden;
+}
+
+.profile_photo{
+    width:160px;
+    margin-left:5px;
 }
