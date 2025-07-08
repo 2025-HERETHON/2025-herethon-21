@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test</title>
+  </head>
+  <body>
+    <section>
+      <h1>Create</h1>
+      <form
+        action="{% url 'menstruations:create_menstruation' %}"
+        method="post"
+        >
+        {% csrf_token %}
+        <input name="start" type="date" />
+        <input name="end" type="date" />
+        <button type="submit">제출</button>
+      </form>
+    </section>
+  </body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test</title>
+  </head>
+  <body>
+    <section>
+      <h1>Create</h1>
+      <form
+        action="{% url 'menstruations:create_menstruation' %}"
+        method="post"
+        >
+        {% csrf_token %}
+        <input name="start" type="date" />
+        <input name="end" type="date" />
+        <button type="submit">추가</button>
+      </form>
+    </section>
+    <section>
+      <h1>List</h1>
+      <ol>
+        {% for menstruation in menstruation_list %}
+        <li>
+          {{menstruation.start}} - {{menstruation.end}} | {{menstruation.duration}} | {{menstruation.cycle}}
+          <form
+            action="{% url 'menstruations:update_menstruation' pk=menstruation.id %}"
+            method="post"
+          >
+            {% csrf_token %}
+            <fieldset>
+              <legend>Update</legend>
+              <input name="start" type="date" />
+              <input name="end" type="date" />
+            </fieldset>
+            <button type="submit">수정</button>
+          </form>
+          <form
+            action="{% url 'menstruations:delete_menstruation' pk=menstruation.id %}"
+            method="post"
+          >
+           {% csrf_token %}
+           <button type="submit">삭제</button>
+          </form>
+        </li>
+        {% endfor %}
+      </ol>
+    </section>
+    <section>
+      <h1>Average</h1>
+      {{menstruation_average.duration}} | {{menstruation_average.cycle}}
+    </section>
+    <section>
+      <h1>Cycle</h1>
+      {{menstruation_cycle}}
+    </section>
+  </body>
+</html>
