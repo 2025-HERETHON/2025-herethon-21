@@ -353,4 +353,4 @@ def finishedroutine(request):
 
 def editpage(request):
     return render(request,"pages/edit_page.html")
-  
+
