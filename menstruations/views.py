@@ -16,6 +16,10 @@ def root(request:HttpRequest):
         'menstruation_cycle': menstruation_cycle,
     })
 
+@require_GET
+def test_create_menstruation(request:HttpRequest):
+    return render(request, 'test_create_menstruation.html')
+
 @require_POST
 def create_menstruation(request:HttpRequest):
     service = MenstruationService(request)
