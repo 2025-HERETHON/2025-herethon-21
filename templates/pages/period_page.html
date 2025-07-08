@@ -8,6 +8,7 @@
 
 {% block script %}
 <script src="{% static 'functions/component_functions/calendar_component.js' %}"></script>
+<script src="{% static 'functions/page_functions/period_page.js' %}"></script>
 {% endblock script %}
 
 {% block body %}
@@ -56,8 +57,32 @@
     </nav>
 
       <section class="content_right">
-        <!-- 오른쪽 컨텐츠 영역 -->
+        <div class="date_picker_wrapper">
+          <p class="date_description">월경 평균</p>
+          <div class="date_range_box">
+            <span class="line_text_wrapper">
+              <span class="text_group">
+                <span class="text_left_1">평균 기간</span>
+                <span class="text_left_2">7일</span>
+              </span>
+              <img src="{% static 'assets/img/period_line.png' %}" alt="분간선" class="line" />
+              <span class="text_group">
+                <span class="text_right_1">평균 주기</span>
+                <span class="text_right_2">28일</span>
+              </span>
+            </span>
+          </div>
+          <p class="date_description">월경 추가</p>
+          <div class="date_range_box">
+            <input type="text" id="start_date" class="date_input" />
+            <img src="{% static 'assets/img/arrow.png' %}" alt="화살표" class="arrow" />
+            <input type="text" id="end_date" class="date_input" />
+            <button id="search_button" class="search_button">추가</button>
+          </div>
+        </div>
       </section>
+
+
     </section>
 
 

@@ -9,6 +9,7 @@
 
 {% block script %}
 <script src="{% static 'functions/component_functions/calendar_component.js' %}"></script>
+<script src="{% static 'functions/page_functions/scrap_page.js' %}"></script>
 {% endblock script %}
 
 {% block body %}
@@ -57,8 +58,18 @@
     </nav>
 
       <section class="content_right">
-        <!-- 오른쪽 컨텐츠 영역 -->
+        <div class="date_picker_wrapper">
+          <p class="date_description">날짜 선택</p>
+          <div class="date_range_box">
+            <input type="text" id="scrap_start_date" class="date_input" />
+            <img src="{% static 'assets/img/arrow.png' %}" alt="화살표" class="arrow" />
+            <input type="text" id="scrap_end_date" class="date_input" />
+            <button id="search_button" class="search_button">검색</button>
+          </div>
+        </div>
       </section>
+
+
     </section>
 
 

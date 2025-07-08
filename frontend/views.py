@@ -39,4 +39,7 @@ def mypage(request):
 
 def friendpage(request):
     return render(request,"pages/friend_page.html")
+
+def editpage(request):
+    return render(request,"pages/edit_page.html")
     

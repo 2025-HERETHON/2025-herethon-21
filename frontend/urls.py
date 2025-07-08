@@ -13,4 +13,5 @@ urlpatterns = [
     path("mypage", mypage, name="mypage"),
     path("friendpage", friendpage, name="friendpage"),
     path("restpage", restpage, name="restpage"),
+    path("editpage", editpage, name="editpage"),
 ]
