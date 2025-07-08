@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest
+from django.views.decorators.http import require_GET, require_POST
 from .services import MenstruationService
 
+@require_GET
 def root(request:HttpRequest):
     service = MenstruationService(request)
     menstruations = service.get_list()
@@ -14,20 +16,20 @@ def root(request:HttpRequest):
         'menstruation_cycle': menstruation_cycle,
     })
 
+@require_POST
 def create_menstruation(request:HttpRequest):
-    if request.method == 'POST':
-        service = MenstruationService(request)
-        message = service.post()
-        return redirect('menstruations:root')
+    service = MenstruationService(request)
+    message = service.post()
+    return redirect('menstruations:root')
 
+@require_POST
 def update_menstruation(request:HttpRequest, pk:int):
-    if request.method == 'POST':
-        service = MenstruationService(request, pk)
-        message = service.put()
-        return redirect('menstruations:root')
+    service = MenstruationService(request, pk)
+    message = service.put()
+    return redirect('menstruations:root')
 
+@require_POST
 def delete_menstruation(request:HttpRequest, pk:int):
-    if request.method == 'POST':
-        service = MenstruationService(request, pk)
-        message = service.delete()
-        return redirect('menstruations:root')
+    service = MenstruationService(request, pk)
+    message = service.delete()
+    return redirect('menstruations:root')
