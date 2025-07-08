@@ -117,7 +117,8 @@ class MenstruationService:
         })
 
     @validate_auth
-    def get_cycle(self, month_str:str|None):
+    def get_cycle(self):
+        month_str = self.request.GET.get('month')
         if month_str != None:
             year, month = map(int, month_str.split('-'))
         else:
