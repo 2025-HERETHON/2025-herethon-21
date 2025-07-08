@@ -2,7 +2,7 @@ function changeBgImage() {
   const img = document.getElementById("clickImg");
   const beforeSrc = "/static/assets/img/click_before.png";
   const afterSrc = "/static/assets/img/click_after.png";
-
+  
 
   if (img.src.includes('click_before.png')) {
     img.src = afterSrc;

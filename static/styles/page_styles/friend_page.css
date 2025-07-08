@@ -154,3 +154,6 @@
   transform: rotate(180deg);
   z-index: 10;
 }
+.friend_page .condition_footer .icon_btn {
+  display: none;
+}
