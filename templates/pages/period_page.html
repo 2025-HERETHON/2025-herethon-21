@@ -82,6 +82,41 @@
             <button id="search_button" class="search_button">추가</button>
           </div>
         </div>
+        {% if period_data %}
+        <div class="period_history">
+          <h2>월경 내역</h2>
+          <div class="period_table">
+            <div class="period_header">
+              <span class="period_cycle">월경 주기</span>
+              <span>기간</span>
+              <span>주기</span>
+              <span></span> 
+            </div>
+
+            {% for item in period_data %}
+            <div class="period_row">
+              <span>{{ item.start_date }} - {{ item.end_date }}</span>
+              <span>{{ item.duration }}</span>
+              <span>{{ item.cycle }}</span>
+              <span class="icon_cell">
+                <button class="icon_btn edit_btn" data-index="{{ forloop.counter0 }}">
+                  <img src="{% static 'assets/img/rewrite.png' %}" alt="수정" />
+                </button>
+                <button class="icon_btn delete_btn" data-index="{{ forloop.counter0 }}">
+                  <img src="{% static 'assets/img/trashcan.png' %}" alt="삭제" />
+                </button>
+              </span>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% else %}
+          <div class="no_period_data">
+            <img src="{% static 'assets/img/heart_pipi.png' %}" alt="피피" class="pipi"/>
+            <p class="pipi_says">월경 날짜를 추가하고 더욱 정확한 월경 데이터를 만들어가요! 피피</p>
+          </div>
+        {% endif %}
+
       </section>
 
 
@@ -90,5 +125,5 @@
 
   </main>
 </body>
-
+{% include "../components/modal_component.html" %}
 {% endblock body %}
