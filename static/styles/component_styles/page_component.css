@@ -33,9 +33,9 @@ html, body {
   background-color: transparent;
   display: flex;
   align-items: center;
-  padding: 30px;
+  padding: 40px;
   position: fixed;
-  top: 0;               
+  top: 1%;               
   left: 0;
   right: 0;
   z-index: 10;
