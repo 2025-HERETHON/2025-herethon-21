@@ -1,0 +1,97 @@
+.condition_bottomrow{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px 15px 15px;
+}
+.emotions {
+  width: 330px;
+  height: 60px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: relative;
+}
+.emotion_per {
+  font-size: 30px;
+  cursor: pointer;
+}.emotion_btn {
+  position: relative;
+  width: 50px;
+  height: 50px;
+}
+
+.emotion_per img {
+  width: 40px;
+  height: 40px;
+  transition: transform 0.2s;
+}
+
+.count {
+  position: absolute;
+  top: -5;
+  right: 3;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  font-size: 12px;
+  font-weight: 600;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 999px;
+  color: #555;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  z-index: 1;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.count.animate {
+  animation: pop 0.3s ease;
+}
+
+.review_detail.collapsed {
+  height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  overflow: hidden;
+  transition: height 0.3s ease, padding 0.3s ease;
+}
+
+.review_container {
+  cursor: pointer;
+  padding-bottom: 10px;
+  box-sizing: border-box;
+}
+
+.review_detail {
+  height: auto;
+  transition: height 0.3s ease, padding 0.3s ease;
+}
+
+.star_rating.disabled {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+textarea:disabled {
+  cursor: not-allowed;
+  background-color: #f9f9f9;
+}
+

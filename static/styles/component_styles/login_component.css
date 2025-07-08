@@ -1,0 +1,86 @@
+.container{
+    width:490px;
+}
+.text_input_hugger input{
+    background-color: white;
+    font-size: 20px;
+    margin: 7px 0 10px 0;
+    width:95%;
+    height:50px;
+    padding:20px;
+    border-radius: 20px;
+    border:2px solid rgb(230, 230, 230);
+    outline: none;
+}
+.text_input_hugger input::placeholder{
+    font-size: 20px;
+    color:rgb(230, 230, 230);
+}
+#login_submitbtn {
+    color:#A48BE7;
+    font-size: 20px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    margin-top: 50px;
+    width:96%;
+    height:50px;
+    padding:20px;
+    border-radius: 20px;
+    border:2px solid #A48BE7;
+    background-color: white;
+    cursor: pointer;
+}
+#to_signup{
+    color:#A48BE7;
+    font-size: 20px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    margin-top: 10px;
+    width:96%;
+    height:50px;
+    padding:20px;
+    border-radius: 20px;
+    border:2px solid #A48BE7;
+    background-color: white;
+    cursor: pointer;
+}
+#to_signup:hover{
+    color:white;
+    background-color: #A48BE7;
+}
+.finding_pwd_hugger{
+    display:flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+.finding_pwd{
+    text-decoration: none;
+    color: rgb(230, 230, 230);   
+    font-size: 15px;  
+    margin-right:20px;
+}
+.input_label_row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.input_label_row label {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.input_error {
+    border: 2px solid red !important;
+}
+
+.input_error_message {
+    color: red;
+    font-size: 14px;
+    text-align: right;
+    margin-right: 30px;
+}

@@ -1,0 +1,28 @@
+{% extends "../example/base.html" %}
+{% load static %} 
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/component_styles/star_component.css' %}" />
+{% endblock style %} 
+{% block script %}
+<script src="{% static 'functions/component_functions/star_component.js' %}"></script>
+{% endblock script %}
+
+{% block body %} 
+      <div class="starscore">
+        <span class="star_per">
+          <img src="{% static 'assets/img/star_gray.png' %}" alt="회색별" />
+        </span>
+        <span class="star_per">
+          <img src="{% static 'assets/img/star_gray.png' %}" alt="회색별" />
+        </span>
+        <span class="star_per">
+          <img src="{% static 'assets/img/star_gray.png' %}" alt="회색별" />
+        </span>
+        <span class="star_per">
+          <img src="{% static 'assets/img/star_gray.png' %}" alt="회색별" />
+        </span>
+        <span class="star_per">
+          <img src="{% static 'assets/img/star_gray.png' %}" alt="회색별" />
+        </span>
+      </div>
+{% endblock body %}

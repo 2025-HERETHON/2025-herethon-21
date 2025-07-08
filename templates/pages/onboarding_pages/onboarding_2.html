@@ -1,0 +1,48 @@
+{% extends "../../example/base.html" %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/page_styles/onboarding_pages/onboarding_base.css' %}" />
+<link rel="stylesheet" href="{% static 'styles/page_styles/onboarding_pages/onboarding_2.css' %}" />
+{% endblock style %}
+{% block script %}
+{% endblock script %}
+{% block body %}
+<body>
+    <header class="top_section">
+        <section class="top_bar">
+            <img src="{% static 'assets/img/logo.png' %}" alt="로고" class="logo_image" />
+        </section>
+    </header>
+  <main class="main_layout">
+    <section class="content_left">
+      <div class="ment_hugger">
+        <img src="{% static 'assets/img/star_highlight.png' %}" alt="피포미 별" />
+            <p><b>
+            회원가입이 완료되었습니다
+            </b></p>
+            <p><b>
+                2가지의 질문에 답변해주세요
+            </b></p>
+        </div>
+    </section>
+
+    <!-- 중앙 인덱스 모양 경계선 -->
+    <section class="index_separator"></section>
+    <div class="index_bookmark"><div><span class="star star4"></span> </div></div>
+
+    <section class="content_right">
+      <section class="star_background">
+        <span class="star star1"></span> <span class="star star2"></span> <span class="star star1"></span>
+        <span class="star star7"></span> <span class="star star6"></span> <span class="star star8"></span>
+        <span class="star star20"></span> <span class="star star10"></span>
+        <span class="star star3"></span> <span class="star star14"></span> <span class="star star15"></span>
+        <span class="star star10"></span> <span class="star star18"></span><span class="star star20"></span>
+      </section>
+        <img src="{% static 'assets/img/2_selection_pipi.png' %}" alt="질문 두개 피피" class="pipi"/>
+        <div class="next_page"><a href="{% url 'frontend:lastmenstruationpage' %}">
+          <img src="{% static 'assets/img/right.png' %}" alt="진행하기" class="left_right"/>
+        </a></div>
+    </section>
+  </main>
+</body>
+{% endblock body %}

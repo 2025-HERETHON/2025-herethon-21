@@ -1,0 +1,111 @@
+.content_left{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.content_right{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.ment_hugger{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.ment_hugger img{
+    width:25px;
+    margin-bottom:30px;
+}
+.selected_showingbox{
+    margin-top: 30px;
+    width:auto;
+    padding:10px;
+    border-radius: 10px;
+    display:none;
+}
+#default_msg{
+  margin-top:40px;
+  color:gray;
+}
+
+.container {
+  position: relative;
+  width: 470px;
+  height: 600px;
+  margin-top: 50px;
+}
+.purpose{
+    font-size: 20px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    margin-top: 40px;
+    width:100%;
+    height:70px;
+    padding:10px;
+    border-radius: 20px;
+    border:none;
+    background-color:#EFEFEF;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.purpose:first-child{
+    margin-top: 0;
+}
+.purpose.selected {
+  background-color: #EAE3FF;
+}
+
+.before_page{
+    position: absolute;
+    bottom:0;
+    left:0;
+    font-size:50px;
+    color:gray;
+    margin: 20px 30px;
+}
+.before_page a{
+    text-decoration: none;  
+    color:inherit;
+}
+.next_page{
+    position: absolute;
+    bottom:0;
+    right:0;
+    font-size:50px;
+    color:gray;
+    margin: 20px 30px;
+}
+.next_page a{
+    text-decoration: none;  
+    color:inherit;
+}
+#selected_purposes .selected-item {
+  display: inline-block;
+  margin: 5px;
+  padding: 8px 16px;
+  font-size: 16px;
+  color: black;
+  border: 2px solid #A48BE7;
+  border-radius: 20px;
+  background-color: white;
+}
+
+.left_right{
+  width:15px;
+  margin:20px 10px;
+}
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
+
+.shake {
+  animation: shake 0.4s;
+}
