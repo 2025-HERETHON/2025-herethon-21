@@ -3,7 +3,6 @@ from calendar import monthrange
 from datetime import date, timedelta
 from statistics import mean
 from django.db.models import Avg
-from django.forms.models import model_to_dict
 from django.http import HttpRequest
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
@@ -30,9 +29,7 @@ class MenstruationService:
         self.form = MenstruationForm(request.POST, instance=instance)
 
     def _predict_next_menstruation(self):
-        menstruations = Menstruation.objects.filter(
-            user=self.request.user,
-        )
+        menstruations = self.get_list()
 
         recent_menstruation_list = list(menstruations[:self.RECENT_COUNT])
         recent_duration_list = [menstruation.duration for menstruation in recent_menstruation_list]
@@ -96,27 +93,18 @@ class MenstruationService:
         ).defer(
             'created_at','updated_at','user',
         )
-        menstruation_list = [
-            {
-                **model_to_dict(menstruation),
-                'cycle': menstruation.cycle
-            }
-            for menstruation in menstruations
-        ]
-        return ResponseHelper.success(200, 'OK', data=menstruation_list)
+        return menstruations
 
     @validate_auth
     def get_average(self):
-        menstruations = Menstruation.objects.filter(
-            user=self.request.user,
-        )
+        menstruations = self.get_list()
         average_duration = menstruations.aggregate(duration=Avg('duration'))['duration']
         average_cycle = mean([menstruation.cycle for menstruation in menstruations])
 
-        return ResponseHelper.success(200, 'OK', data={
+        return {
             'duration': round(average_duration, 1) if average_duration else None,
             'cycle': round(average_cycle, 1) if average_cycle else None
-        })
+        }
 
     @validate_auth
     def get_cycle(self):
@@ -142,12 +130,12 @@ class MenstruationService:
 
         phase_list = [self._calc_cycle_phase(menstruation) for menstruation in target_menstruation_list]
 
-        return ResponseHelper.success(200, 'OK', data={
+        return {
             'menstrual_phase': self._calc_overlap_days(first_date, last_date, [phase['menstrual_phase'] for phase in phase_list]),
             'follicular_phase': self._calc_overlap_days(first_date, last_date, [phase['follicular_phase'] for phase in phase_list]),
             'ovulatory_phase': self._calc_overlap_days(first_date, last_date, [phase['ovulatory_phase'] for phase in phase_list]),
             'luteal_phase': self._calc_overlap_days(first_date, last_date, [phase['luteal_phase'] for phase in phase_list])
-        })
+        }
 
     @validate_unique
     @validate_form
@@ -157,7 +145,7 @@ class MenstruationService:
         created_menstruation.user = self.request.user
         created_menstruation.duration = (created_menstruation.end - created_menstruation.start).days + 1
         created_menstruation.save()
-        return ResponseHelper.success(201, 'Created', message='월경을 추가했습니다.')
+        return '월경을 추가했습니다.'
 
     @validate_unique
     @validate_form
@@ -167,10 +155,10 @@ class MenstruationService:
         updated_menstruation:Menstruation = self.form.save(commit=False)
         updated_menstruation.duration = (updated_menstruation.end - updated_menstruation.start).days + 1
         updated_menstruation.save()
-        return ResponseHelper.success(204, 'No Content', message='월경을 수정했습니다.')
+        return '월경을 수정했습니다.'
 
     @validate_permission
     @validate_auth
     def delete(self):
         self.instance.delete()
-        return ResponseHelper.success(204, 'No Content', message='월경을 삭제했습니다.')
+        return '월경을 삭제했습니다.'
