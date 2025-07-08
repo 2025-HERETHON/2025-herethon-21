@@ -19,8 +19,10 @@
         <section class="top_bar">
             <img src="{% static 'assets/img/logo.png' %}" alt="로고" class="logo_image" />
             <img src="{% static 'assets/img/icon.png' %}" alt="아이콘" class="icon_image" />
-            <img src="{% static 'assets/img/noti.png' %}" alt="알림" class="noti_image" />
-            </section>
+
+            <a href="{% url 'frontend:alarmpage' %}">
+                <img src="{% static 'assets/img/noti.png' %}" alt="알림" class="noti_image" />
+            </a>                        </section>
     </header>
     
     <main class="main_layout">
@@ -30,8 +32,10 @@
             <span class="star star5"></span> <span class="star star6"></span> <span class="star star7"></span> <span class="star star8"></span>
             <span class="star star9"></span> <span class="star star10"></span> <span class="star star11"></span> <span class="star star12"></span>
             <span class="star star13"></span> <span class="star star14"></span> <span class="star star15"></span> <span class="star star16"></span>
-            <span class="star star17"></span> <span class="star star20"></span>
-        </section>
+
+            <a href="{% url 'frontend:alarmpage' %}">
+                <img src="{% static 'assets/img/noti.png' %}" alt="알림" class="noti_image" />
+            </a>                    </section>
         
       <section class="content_left">
         {% block infobox %}
