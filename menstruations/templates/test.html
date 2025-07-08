@@ -21,7 +21,7 @@
     <section>
       <h1>List</h1>
       <ol>
-        {% for menstruation in menstruation_list %}
+        {% for menstruation in menstruations %}
         <li>
           {{menstruation.start}} - {{menstruation.end}} | {{menstruation.duration}} | {{menstruation.cycle}}
           <form
