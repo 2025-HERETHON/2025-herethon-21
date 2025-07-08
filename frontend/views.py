@@ -98,6 +98,7 @@ def routineingpage(request):
                     }
                 ) 
 
+
 def componentpage(request):
     return render(request,"pages/component_page.html")
 
@@ -106,6 +107,9 @@ def cyclepage(request):
 
 def scrappage(request):
     return render(request,"pages/scrap_page.html")
+
+def restpage(request):
+    return render(request,"pages/rest_page.html")
 
 def periodpage(request):
     return render(request,"pages/period_page.html")
@@ -117,7 +121,10 @@ def componentcalendar(request):
 
 def mypage(request):
     return render(request,"pages/mypage.html")
-    return render(request,"pages/mypage.html")
+
+def friendpage(request):
+    return render(request,"pages/friend_page.html")
+
 
 def onboarding_1(request):
     return render(request, "pages/onboarding_pages/onboarding_1.html")
