@@ -20,16 +20,16 @@ def root(request:HttpRequest):
 def create_menstruation(request:HttpRequest):
     service = MenstruationService(request)
     message = service.post()
-    return redirect('menstruations:root')
+    return redirect(request.META.get('HTTP_REFERER', '/'))
 
 @require_POST
 def update_menstruation(request:HttpRequest, pk:int):
     service = MenstruationService(request, pk)
     message = service.put()
-    return redirect('menstruations:root')
+    return redirect(request.META.get('HTTP_REFERER', '/'))
 
 @require_POST
 def delete_menstruation(request:HttpRequest, pk:int):
     service = MenstruationService(request, pk)
     message = service.delete()
-    return redirect('menstruations:root')
+    return redirect(request.META.get('HTTP_REFERER', '/'))
