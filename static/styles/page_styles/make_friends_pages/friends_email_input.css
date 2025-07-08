@@ -1,0 +1,58 @@
+.ment_hugger p{
+    margin-bottom:10px;
+}
+.email_finder_hugger{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width:490px;
+}
+
+.input_hugger input{
+    font-size: 20px;
+    margin:10px 0;
+    width:470px;
+    height:30px;
+    padding:30px;
+    border-radius: 20px;
+    border:2px solid rgb(230, 230, 230);
+    outline: none;
+}
+.input_hugger input::placeholder{
+    font-size: 20px;
+    color:rgb(230, 230, 230);
+}
+#friend_submitbtn {
+    color:#A48BE7;
+    font-size: 20px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    margin-top: 50px;
+    width:96%;
+    height:60px;
+    padding:20px;
+    border-radius: 20px;
+    border:2px solid #A48BE7;
+    background-color: white;
+}
+#friend_submitbtn:hover{
+    cursor: pointer;
+}
+.before_page{
+    position: absolute;
+    bottom:0;
+    left:0;
+    font-size:50px;
+    color:gray;
+    margin: 20px 30px;
+}
+.before_page a{
+    text-decoration: none;  
+    color:inherit;
+}
+.profile_photo{
+    width:160px;
+}

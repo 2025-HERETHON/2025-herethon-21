@@ -1,0 +1,28 @@
+.friended_users{
+    display: flex;
+    flex-direction: row;
+}
+.peruser{
+    margin:10px;
+}
+
+#goto_main {
+    color:#A48BE7;
+    font-size: 20px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    margin-top: 50px;
+    width:96%;
+    height:60px;
+    padding:20px;
+    border-radius: 20px;
+    border:2px solid #A48BE7;
+    background-color: white;
+}
+#goto_main:hover{
+    cursor: pointer;
+    background-color: #A48BE7;
+    color:white;
+}

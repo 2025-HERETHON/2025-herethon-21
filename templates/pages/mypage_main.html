@@ -1,0 +1,87 @@
+{% extends "../example/base.html" %}
+{% load static %} 
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/component_styles/page_component.css' %}" />
+<link rel="stylesheet" href="{% static 'styles/page_styles/mypage.css' %}" />
+<link rel="stylesheet" href="{% static 'styles/page_styles/mypage_main.css' %}" />
+<link rel="stylesheet" href="{% static 'styles/page_styles/page_common.css' %}" />
+<link rel="stylesheet" href="{% static 'styles/component_styles/modal_component.css' %}">
+{% endblock style %} 
+
+{% block body %}
+<body>
+
+    <header class="top_section">
+        <section class="top_bar">
+            <img src="{% static 'assets/img/logo.png' %}" alt="로고" class="logo_image" />
+            <img src="{% static 'assets/img/icon.png' %}" alt="아이콘" class="icon_image" />
+            <a href="{% url 'frontend:alarmpage' %}">
+                <img src="{% static 'assets/img/noti.png' %}" alt="알림" class="noti_image" />
+            </a>
+            </section>
+    </header>
+    
+    <main class="main_layout">
+    <section class="content_area">
+        <div class="center_image_wrapper">
+            <img src="{% static 'assets/img/page.png' %}" alt="가운데 배너" class="center_image" />
+        </div>
+
+        {% block bg %}
+        {% include "../components/bg_component.html" %}
+        {% endblock bg %}
+
+    </section>
+        
+      <section class="content_left">
+        {% block infobox %}
+        {% include "../components/infobox_component.html" %}
+        {% endblock infobox %}
+
+        <div class="calendar_wrapper">
+          {% block calendar %}
+          {% include "../components/calendar_component.html" %}
+          {% endblock calendar %}
+        </div>
+
+        {% block friendbox %}
+        {% include "../components/friendbox_component.html" %}
+        {% endblock friendbox %}
+
+      </section>
+
+      <section class="content_right">
+        <div class="right_inner">
+        <div class="condition_hugger">
+            <h2><span>컨디션 리뷰</span></h2>
+                {% include "../components/condition_component.html" with data=data %}
+                
+            {% if data_list %}
+        </div>
+        <div class="review_hugger">            
+          <img src="{% static 'assets/img/pipi.png' %}" alt="피피" class="pipi_image" />
+            <h2><span>운동 리뷰</span></h2>
+            {% for data in data_list %}
+            <div class="per_review">
+                {% include "../components/reviewed_review_component.html" with data=data index=forloop.counter0 %}
+            </div>
+            {% endfor %}
+            {% else %}
+            <img src="{% static 'assets/img/welcoming_pipi.png' %}" alt="반겨주는 피피" class="pipi" />
+            <p class="pipi_says">운동을 시작하고 리뷰를 남겨보세요! 피피</p>
+            {% endif %}
+        </div>
+        </div>
+      </section>
+
+    </section>
+
+    <nav class="sidebar_nav" aria-label="페이지 네비게이션">
+      <a href="/cyclepage" class="nav_button nav_button1">주 기 별</a>
+      <a href="/scrappage" class="nav_button nav_button2">스 크 랩</a>
+      <a href="/periodpage" class="nav_button nav_button3">월 경</a>
+    </nav>
+  </main>
+</body>
+{% include "../components/modal_component.html" %}
+{% endblock body %}

@@ -4,71 +4,61 @@ document.addEventListener("DOMContentLoaded", function () {
     const pwCheckInput = document.getElementById("repassword");
     const submitBtn = document.getElementById("signup_submitbtn");
 
+    const emailError = document.getElementById("email_error");
+    const pwError = document.getElementById("password_error");
+    const repwError = document.getElementById("repassword_error");
+
     function isValidEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
     }
 
     function isValidPassword(pw) {
-    const pwRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+\[\]{};':"\\|,.<>\/?]).{8,16}$/;
-    return pwRegex.test(pw);
+        const pwRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+\[\]{};':"\\|,.<>\/?]).{8,16}$/;
+        return pwRegex.test(pw);
     }
 
-    function checkInputs() {
-    const email = emailInput.value.trim();
-    const pw = pwInput.value;
-    const pwConfirm = pwCheckInput.value;
-
-    if (email.length === 0) {
-        emailInput.style.border = "2px solid white";
-    } else if (!isValidEmail(email)) {
-        emailInput.style.border = "2px solid rgb(240, 102, 125)";
-    } else {
-        emailInput.style.border = "2px solid rgb(131, 218, 129)";
+    function resetValidation() {
+        [emailInput, pwInput, pwCheckInput].forEach(input => input.classList.remove("input_error"));
+        [emailError, pwError, repwError].forEach(span => span.textContent = "");
     }
 
-    if (pw.length === 0) {
-        pwInput.style.border = "2px solid white";
-    } else if (!isValidPassword(pw)) {
-        pwInput.style.border = "2px solid rgb(240, 102, 125)";
-    } else {
-        pwInput.style.border = "2px solid rgb(131, 218, 129)";
+    function showError(input, errorSpan, message) {
+        input.classList.add("input_error");
+        errorSpan.textContent = message;
     }
 
-    if (pwConfirm.length === 0) {
-        pwCheckInput.style.border = "2px solid white";
-    } else if (pwConfirm !== pw) {
-        pwCheckInput.style.border = "2px solid rgb(240, 102, 125)";
-    } else {
-        pwCheckInput.style.border = "2px solid rgb(131, 218, 129)";
-    }
+    function validateForm() {
+        resetValidation();
 
-    if (isValidEmail(email) && isValidPassword(pw) && pw === pwConfirm) {
-        submitBtn.style.backgroundColor = "rgb(174, 129, 218)";
-        submitBtn.style.color="white";
-        submitBtn.disabled = false;
-    } else {
-        submitBtn.style.backgroundColor = "white";
-        submitBtn.disabled = true;
-    }
-    }
+        let valid = true;
+        const email = emailInput.value.trim();
+        const pw = pwInput.value;
+        const pwConfirm = pwCheckInput.value;
 
-    emailInput.addEventListener("input", checkInputs);
-    pwInput.addEventListener("input", checkInputs);
-    pwCheckInput.addEventListener("input", checkInputs);
+        if (!isValidEmail(email)) {
+            showError(emailInput, emailError, "이메일 형식이 잘못되었습니다.");
+            valid = false;
+        }
+
+        if (!isValidPassword(pw)) {
+            showError(pwInput, pwError, "비밀번호 형식을 확인해주세요.");
+            valid = false;
+        }
+
+        if (pw !== pwConfirm || pwConfirm === "") {
+            showError(pwCheckInput, repwError, "비밀번호가 일치하지 않습니다.");
+            valid = false;
+        }
+
+        return valid;
+    }
 
     submitBtn.addEventListener("click", function (e) {
-    e.preventDefault();
+        e.preventDefault();
 
-    const email = emailInput.value.trim();
-    const pw = pwInput.value;
-    const pwConfirm = pwCheckInput.value;
-
-    if (isValidEmail(email) && isValidPassword(pw) && pw === pwConfirm) {
-        window.location.href = "/onboarding_2";
-    } else {
-        alert("입력값을 다시 확인해주세요.");
-    }
+        if (validateForm()) {
+            window.location.href = "/onboarding_2";
+        }
     });
-
-})
+});

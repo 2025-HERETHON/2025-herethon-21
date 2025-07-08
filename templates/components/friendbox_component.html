@@ -37,7 +37,9 @@
         <p class="friend_name">친구5</p>
     </div>
     <div class="plus_friend">
+        <a href="{% url 'frontend:makefriends' %}">
         <img src="{% static 'assets/img/plus_button.png' %}" alt="친구 추가 아이콘" class="plus_friend" />
+        </a>
     </div>
 </div>
 {% endblock body %}

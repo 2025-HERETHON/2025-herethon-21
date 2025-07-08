@@ -1,0 +1,129 @@
+{% extends "../example/base.html" %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/page_styles/onboarding_pages/onboarding_base.css' %}" />
+<link rel="stylesheet" href="{% static 'styles/page_styles/alarm_page.css' %}" />
+{% endblock style %}
+{% block script %}
+<script src="{% static 'functions/page_functions/alarm_page.js' %}"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    window.respond = function(userId, username, accepted) {
+        const bubble = document.getElementById(`bubble${userId}`);
+        bubble.innerHTML = `
+            <div class="timestamp">방금</div>
+            <div class="message_text">
+                ${username}의 친구 요청을 ${accepted ? '수락' : '거절'}했습니다
+            </div>
+        `;
+    }
+});
+</script>
+{% endblock script %}
+{% block body %}
+<body>
+<header class="top_section">
+    <section class="top_bar">
+        <img src="{% static 'assets/img/logo.png' %}" alt="로고" class="logo_image" />
+    </section>
+</header>
+<main class="main_layout">
+    <section class="content_left">
+        <section class="star_background">
+            <span class="star star1"></span> <span class="star star2"></span> <span class="star star1"></span>
+            <span class="star star7"></span> <span class="star star6"></span> <span class="star star8"></span>
+            <span class="star star20"></span> <span class="star star10"></span>
+            <span class="star star3"></span> <span class="star star14"></span> <span class="star star15"></span>
+            <span class="star star10"></span> <span class="star star18"></span><span class="star star20"></span>
+        </section>
+        <div class="pipihugger">
+            <img src="{% static 'assets/img/phone_pipi.png' %}" alt="폰을 든 피피" class="pipi" />
+            <p class="pipi_says">어떤 알림이 왔는지 확인해 볼까요?</p>
+        </div>
+    </section>
+
+    <section class="index_separator"></section>
+    <div class="index_bookmark">
+        <div class="set_mid">
+            <div>알<br>림</div>
+        </div>
+    </div>
+
+    <section class="content_right">
+        <div class="alarmhugger">
+            <!-- 친구 요청 A-1 -->
+            <div class="bubble left" id="bubbleA1">
+                <div class="timestamp">방금</div>
+                <div class="content_line">
+                    <div class="message_text"><span class="username">A</span>가 친구 요청을 보냈습니다</div>
+                    <div class="btns">
+                        <button onclick="respond('A1', 'A', true)">수락</button>
+                        <button onclick="respond('A1', 'A', false)">거절</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 친구 요청 B-1 -->
+            <div class="bubble right" id="bubbleB1">
+                <div class="timestamp">10분 전</div>
+                <div class="content_line">
+                    <div class="message_text"><span class="username">B</span>가 친구 요청을 보냈습니다</div>
+                    <div class="btns">
+                        <button onclick="respond('B1', 'B', true)">수락</button>
+                        <button onclick="respond('B1', 'B', false)">거절</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 일반 알림 D -->
+            <div class="bubble left">
+                <div class="timestamp">12시간 전</div>
+                <div class="message_text">D가 운동을 재측하며 콕 찔렀어요</div>
+            </div>
+
+            <!-- 일반 알림 E -->
+            <div class="bubble right">
+                <div class="timestamp">3일 전</div>
+                <div class="message_text">E가 게시글에 댓글을 남겼어요</div>
+            </div>
+
+            <!-- 친구 요청 A-2 -->
+            <div class="bubble left" id="bubbleA2">
+                <div class="timestamp">방금</div>
+                <div class="content_line">
+                    <div class="message_text"><span class="username">A</span>가 친구 요청을 보냈습니다</div>
+                    <div class="btns">
+                        <button onclick="respond('A2', 'A', true)">수락</button>
+                        <button onclick="respond('A2', 'A', false)">거절</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 친구 요청 B-2 -->
+            <div class="bubble right" id="bubbleB2">
+                <div class="timestamp">10분 전</div>
+                <div class="content_line">
+                    <div class="message_text"><span class="username">B</span>가 친구 요청을 보냈습니다</div>
+                    <div class="btns">
+                        <button onclick="respond('B2', 'B', true)">수락</button>
+                        <button onclick="respond('B2', 'B', false)">거절</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 일반 알림 D -->
+            <div class="bubble left">
+                <div class="timestamp">12시간 전</div>
+                <div class="message_text">D가 운동을 재측하며 콕 찔렀어요</div>
+            </div>
+
+            <!-- 일반 알림 E -->
+            <div class="bubble right">
+                <div class="timestamp">3일 전</div>
+                <div class="message_text">E가 게시글에 댓글을 남겼어요</div>
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+{% endblock body %}

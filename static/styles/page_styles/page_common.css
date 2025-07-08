@@ -133,3 +133,26 @@
 .plus_friend {
     max-width: 61px;     
 }
+
+.circle_btn {
+  margin-top: 12px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #e4d9f9;
+  color: #a48be7;
+  font-size: 48px;
+  border: none;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.circle_btn:hover {
+  background-color: #d9cfff;
+  transform: scale(1.05);
+}
