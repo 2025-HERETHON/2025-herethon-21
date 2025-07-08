@@ -93,6 +93,8 @@ class MenstruationService:
     def get_list(self):
         menstruations = Menstruation.objects.filter(
             user=self.request.user,
+        ).defer(
+            'created_at','updated_at','user',
         )
         menstruation_list = [
             {
