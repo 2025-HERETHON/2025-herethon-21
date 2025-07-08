@@ -8,22 +8,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
   let isScraped = false;
 
+  // ✅ 초기 스타일 적용
+  scrapIcon.src = defaultSrc;
+  border.style.border = "2px solid rgb(223, 223, 223)";
+  scrapTextBtn.style.color = "black";
+  scrapTextBtn.style.backgroundColor = "white";
+
   function toggleScrap() {
     isScraped = !isScraped;
 
     // 아이콘 버튼 스타일
     scrapIcon.src = isScraped ? scrapedSrc : defaultSrc;
     border.style.border = isScraped
-      ? "3px solid #A48BE7"
-      : "3px solid rgb(223, 223, 223)";
+      ? "2px solid #A48BE7"
+      : "2px solid rgb(223, 223, 223)";
 
     // 하단 텍스트 버튼 스타일
-    scrapTextBtn.style.color = isScraped ? "white" : "#A48BE7";
+    scrapTextBtn.style.color = isScraped ? "white" : "black";
     scrapTextBtn.style.backgroundColor = isScraped ? "#A48BE7" : "white";
-
   }
 
-  // 두 버튼에 이벤트 리스너 연결
   scrapIcon.addEventListener("click", toggleScrap);
   scrapTextBtn.addEventListener("click", toggleScrap);
 });
