@@ -15,6 +15,21 @@ def validate_form(func):
         return func(self, *args, **kwargs)
     return wrapper
 
+def validate_not_self(func):
+    @wraps(func)
+    def wrapper(self, *args, **kwargs):
+        import inspect
+        bound = inspect.signature(func).bind(self, *args, **kwargs)
+        bound.apply_defaults()
+
+        sender = bound.arguments.get('sender')
+        receiver = bound.arguments.get('receiver')
+
+        if sender == receiver:
+            raise HttpResponseException(400, "자신에게는 요청을 수행할 수 없습니다.")
+        return func(self, *args, **kwargs)
+    return wrapper
+
 def validate_auth(func):
     @wraps(func)
     def wrapper(self, *args, **kwargs):
