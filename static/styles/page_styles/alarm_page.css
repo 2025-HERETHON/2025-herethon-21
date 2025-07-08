@@ -1,3 +1,4 @@
+
 .set_mid{
     display: flex;
     justify-content: center;
@@ -39,10 +40,9 @@
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
-.alarmhugger::-webkit-scrollbar {
+*::-webkit-scrollbar {
     display: none;
 }
-
 .bubble {
   width: 100%;
   margin: 20px 0;
