@@ -6,9 +6,9 @@ function changeBgImage() {
 
   if (img.src.includes('click_before.png')) {
     img.src = afterSrc;
-    img.classList.add('large');  // 크기 키우기
+    img.classList.add('large');  
   } else {
     img.src = beforeSrc;
-    img.classList.remove('large'); // 원래 크기로
+    img.classList.remove('large'); 
   }
 }
