@@ -24,5 +24,9 @@
         <img src="{% static 'assets/img/icon.png' %}" alt="친구 아이콘" class="friend_icon" />
         <p class="friend_name">친구3</p>
     </div>
+    <a href="{% url 'frontend:makefriends' %}">
+    <button class="circle_btn">+</button>
+    </a>
+
 </div>
 {% endblock body %}

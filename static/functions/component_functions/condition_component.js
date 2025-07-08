@@ -65,14 +65,20 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   resetBtn.addEventListener("click", function () {
-    let ans = confirm("작성 내용을 초기화하시겠습니까?");
-    if (ans){
+  openModal({
+    title: '컨디션 리뷰를 리셋하시겠습니까?',
+    text: '작성한 일기와 감정 선택이 모두 사라집니다.',
+    subtext: '*텍스트, 반응이 모두 초기화됩니다.',
+    imageUrl: '/static/assets/img/modal_star.png',
+    onConfirm: function () {
       content.value = "";
-    todaysCondition.innerHTML = "";
-    for (let i = 0; i < conditions.length; i++) {
-      conditions[i].classList.remove("selected");
+      todaysCondition.innerHTML = "";
+      for (let i = 0; i < conditions.length; i++) {
+        conditions[i].classList.remove("selected");
+      }
+      selectedIndex = -1;
     }
-    selectedIndex = -1;
-  }
   });
+});
+
 });

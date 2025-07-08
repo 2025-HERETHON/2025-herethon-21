@@ -62,13 +62,13 @@ html, body {
   border-left: 3px solid #A48BE7;
 }
 .index_bookmark {
-  width: 100px;
+  width: 90px;
   height: 245px;
   border: 3px solid #A48BE7;
   border-radius: 30px;
   position: absolute;
   top: -5;
-  left: 50%;
+  left: 47.15%;
   transform: translateX(-50%);
   z-index: 4;
 }
@@ -76,11 +76,11 @@ html, body {
 .index_bookmark div {
   background-color: white;
   width: 180px;
-  height: 244px;
+  height: 240px;
   border-radius: 30px;
   position: absolute;
-  top: -1;
-  left: 8px;
+  top: 0;
+  left: 0;
   z-index: 5;
 }
 

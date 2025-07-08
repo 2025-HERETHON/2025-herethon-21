@@ -2,10 +2,12 @@
 {% load static %}
 {% block style %}
 <link rel="stylesheet" href="{% static 'styles/page_styles/onboarding_pages/onboarding_base.css' %}" />
-<link rel="stylesheet" href="{% static 'styles/page_styles/onboarding_pages/onboarding_3.css' %}" />
+<link rel="stylesheet" href="{% static 'styles/page_styles/make_friends_pages/friends_email_input.css' %}" />
+<link rel="stylesheet" href="{% static 'styles/page_styles/make_friends_pages/friends_confirm.css' %}" />
+<link rel="stylesheet" href="{% static 'styles/component_styles/signup_component.css' %}" />
 {% endblock style %}
 {% block script %}
-<script src="{% static 'functions/page_functions/onboarding_pages/onboarding_3.js' %}"></script>
+<script src="{% static 'functions/page_functions/make_friends_pages/friends_confirm.js' %}"></script>
 {% endblock script %}
 {% block body %}
 <body>
@@ -18,17 +20,12 @@
     <section class="content_left">
       <div class="ment_hugger">
         <img src="{% static 'assets/img/star_highlight.png' %}" alt="피포미 별" />
-            <p><b>
-              아주 좋아요!
-            </b></p>            
-            <p><b>
-              사용자의 맞춤 정보를 파악했어요
-            </b></p>            
-            <p><b>
-              이제 시작해볼까요?
-            </b></p>
-        </div>
-        <div class="before_page"><a href="{% url 'frontend:purposepage' %}">
+        <b>
+        <p>친구 이름이 <span id="username">성혜린</span>님 맞으신가요?</p>
+        <p>아니라면 뒤로가기 버튼을 눌러 수정해주세요</p>
+        </b>
+      </div>
+        <div class="before_page"><a href="{% url 'frontend:makefriends' %}">
           <img src="{% static 'assets/img/left.png' %}" alt="뒤로가기" class="left_right"/>
         </a></div>
     </section>
@@ -45,9 +42,11 @@
         <span class="star star3"></span> <span class="star star14"></span> <span class="star star15"></span>
         <span class="star star10"></span> <span class="star star18"></span><span class="star star20"></span>
       </section>
-        <img src="{% static 'assets/img/happy_pipi_hugging.png' %}" alt="피피 웃는 얼굴" class="pipi"/>
-        <img src="{% static 'assets/img/logo.png' %}" alt="로고" class="logo_big"/>
-        <button type="submit" value="시작하기" id="done_submitbtn">시작하기</button>
+      <div class="email_finder_hugger">
+        <img src="{% static 'assets/img/anger.png' %}" alt="프로필 사진" class="profile_photo" />
+        <p id="useremail">hyerin@gmail.com</p>
+        <button type="submit" id="friend_confirmbtn">친구 추가</button>
+      </div>
     </section>
   </main>
 </body>

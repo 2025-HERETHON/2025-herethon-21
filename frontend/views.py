@@ -155,3 +155,80 @@ def lastmenstruationpage(request):
 
 def purposepage(request):
     return render(request, "pages/onboarding_pages/purpose_page.html")
+
+def alarmpage(request):
+    return render(request, "pages/alarm_page.html")
+
+def mypagemain(request):
+    data_list = [
+        {
+            "id": 1,
+            "start_time": "07:00",
+            "end_time": "08:00",
+            "duration_minutes": 60,
+            "content": "아 오늘 운동 힘들었다",
+            "emotion_counts": {
+                "crying": 5,
+                "anger": 2,
+                "agree": 10,
+                "surprized": 1,
+                "smile": 0
+            },
+        },
+        {
+            "id": 2,
+            "start_time": "20:00",
+            "end_time": "20:40",
+            "duration_minutes": 40,
+            "content": "ㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴ",
+            "emotion_counts": {
+                "crying": 3,
+                "anger": 0,
+                "agree": 7,
+                "surprized": 9,
+                "smile": 1
+            },
+        },
+    ]
+    return render(request, "pages/mypage_main.html", {"data_list": data_list})
+
+def makefriends(request):
+    data_list = [
+        {
+            "id": 1,
+            "name": "성혜린",
+            "email": "hyerin@gmail.com",
+            "profile_photo" : "assets/img/anger.png",
+        },
+        {
+            "id": 2,
+            "name": "이승언",
+            "email": "seungun@hanmail.com",
+            "profile_photo" : "assets/img/smile.png",
+        },
+        {
+            "id": 3,
+            "name": "백수진",
+            "email": "sujin@naver.com",
+            "profile_photo" : "assets/img/surprized.png",
+        },
+        {
+            "id": 4,
+            "name": "김시원",
+            "email": "siwon@gmail.com",
+            "profile_photo" : "assets/img/agree.png",
+        },
+        {
+            "id": 5,
+            "name": "허윤아",
+            "email": "yuna@gmail.com",
+            "profile_photo" : "assets/img/crying.png",
+        },
+    ]
+    return render(request, "pages/make_friends_pages/friends_email_input.html", {"data_list": data_list})
+
+def friendsconfirm(request):
+    return render(request, "pages/make_friends_pages/friends_confirm.html")
+
+def friended(request):
+    return render(request, "pages/make_friends_pages/friended.html")

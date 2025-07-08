@@ -22,4 +22,9 @@ urlpatterns = [
     path("loginpage", loginpage, name="loginpage"),
     path("lastmenstruationpage", lastmenstruationpage, name="lastmenstruationpage"),
     path("purposepage", purposepage, name="purposepage"),
+    path("mypagemain", mypagemain, name="mypagemain"),
+    path("alarmpage", alarmpage, name="alarmpage"),
+    path("makefriends", makefriends, name="makefriends"),
+    path("friendsconfirm", friendsconfirm, name="friendsconfirm"),
+    path("friended", friended, name="friended"),
 ]

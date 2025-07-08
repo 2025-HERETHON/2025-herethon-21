@@ -48,7 +48,11 @@
           <button class="icon_btn" id="condition_editbtn">
             <img src="{% static 'assets/img/rewrite.png' %}" alt="수정" />
           </button>
-          <button class="icon_btn" id="condition_resetbtn">
+          <button class="icon_btn" id="condition_resetbtn" onclick="openModal({
+                title: '컨디션 리뷰를 리셋하시겠습니까?',
+                subtext: '*텍스트, 반응이 모두 사라집니다',
+                imageUrl: '/static/assets/img/modal_star.png'
+                })">
             <img src="{% static 'assets/img/trashcan.png' %}" alt="삭제" />
           </button>
         </div>

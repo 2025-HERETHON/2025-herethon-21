@@ -6,8 +6,6 @@
 .contentbox {
   background-color: white;
   border-radius: 10px;
-  border: 2px solid rgb(223, 223, 223);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
 
