@@ -19,8 +19,10 @@
         <section class="top_bar">
             <img src="{% static 'assets/img/logo.png' %}" alt="로고" class="logo_image" />
             <img src="{% static 'assets/img/icon.png' %}" alt="아이콘" class="icon_image" />
-            <img src="{% static 'assets/img/noti.png' %}" alt="알림" class="noti_image" />
-            </section>
+
+            <a href="{% url 'frontend:alarmpage' %}">
+                <img src="{% static 'assets/img/noti.png' %}" alt="알림" class="noti_image" />
+            </a>                        </section>
     </header>
     
     <main class="main_layout">
@@ -53,16 +55,28 @@
       </section>
 
       <section class="content_right">
-        
-        <div class="right_image_wrapper">
-          <img src="{% static 'assets/img/mypage_bg.png' %}" alt="캐릭터 배경 이미지" class="bg_image" />
-          <img src="{% static 'assets/img/mypage_icon.png' %}" alt="오른쪽 캐릭터" class="right_icon" />
-          <div class="text_box">
-            <p class="text_in_box">친구야, 운동하자 피피! 콕 찔러볼까요?</p>
+        {% if data_list %}
+        <div class="review_hugger">
+          <img src="{% static 'assets/img/pipi.png' %}" alt="피피" class="pipi_image" />
+          <div class="friends_review">
+          <h2><span>운동 리뷰</span></h2>
+            {% for data in data_list %}
+            <div class="per_review">
+                {% include "../components/reviewed_review_component.html" with data=data index=forloop.counter0 %}
+            </div>
+            {% endfor %}
           </div>
-          <img id="clickImg" src="{% static 'assets/img/click_before.png' %}" alt="콕 찌르기 이미지" class="click_image" onclick="changeBgImage()" />
+        {% else %}
+            <div class="right_image_wrapper">
+              <img src="{% static 'assets/img/mypage_bg.png' %}" alt="캐릭터 배경 이미지" class="bg_image" />
+              <img src="{% static 'assets/img/mypage_icon.png' %}" alt="오른쪽 캐릭터" class="right_icon" />
+              <div class="text_box">
+                <p class="text_in_box">친구야, 운동하자 피피! 콕 찔러볼까요?</p>
+              </div>
+              <img id="clickImg" src="{% static 'assets/img/click_before.png' %}" alt="콕 찌르기 이미지" class="click_image" onclick="changeBgImage()" />
+            </div>
+        {% endif %}
         </div>
-
       </section>
     </section>
 

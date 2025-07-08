@@ -9,20 +9,15 @@
 
 {% block body %} 
       <div class="starscore">
+      {% for i in "12345" %}
         <span class="star_per">
-          <img src="{% static 'assets/img/star_gray.png' %}" alt="회색별" />
+          {% if forloop.counter <= data.rating %}
+            <img src="{% static 'assets/img/star_purple.png' %}" alt="별" />
+          {% else %}
+            <img src="{% static 'assets/img/star_gray.png' %}" alt="별" />
+          {% endif %}
         </span>
-        <span class="star_per">
-          <img src="{% static 'assets/img/star_gray.png' %}" alt="회색별" />
-        </span>
-        <span class="star_per">
-          <img src="{% static 'assets/img/star_gray.png' %}" alt="회색별" />
-        </span>
-        <span class="star_per">
-          <img src="{% static 'assets/img/star_gray.png' %}" alt="회색별" />
-        </span>
-        <span class="star_per">
-          <img src="{% static 'assets/img/star_gray.png' %}" alt="회색별" />
-        </span>
-      </div>
+      {% endfor %}
+    </div>
+
 {% endblock body %}

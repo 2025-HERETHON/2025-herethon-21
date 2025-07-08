@@ -19,8 +19,10 @@
         <section class="top_bar">
             <img src="{% static 'assets/img/logo.png' %}" alt="로고" class="logo_image" />
             <img src="{% static 'assets/img/icon.png' %}" alt="아이콘" class="icon_image" />
-            <img src="{% static 'assets/img/noti.png' %}" alt="알림" class="noti_image" />
-            </section>
+
+            <a href="{% url 'frontend:alarmpage' %}">
+                <img src="{% static 'assets/img/noti.png' %}" alt="알림" class="noti_image" />
+            </a>                        </section>
     </header>
     
     <main class="main_layout">
@@ -30,8 +32,10 @@
             <span class="star star5"></span> <span class="star star6"></span> <span class="star star7"></span> <span class="star star8"></span>
             <span class="star star9"></span> <span class="star star10"></span> <span class="star star11"></span> <span class="star star12"></span>
             <span class="star star13"></span> <span class="star star14"></span> <span class="star star15"></span> <span class="star star16"></span>
-            <span class="star star17"></span> <span class="star star20"></span>
-        </section>
+
+            <a href="{% url 'frontend:alarmpage' %}">
+                <img src="{% static 'assets/img/noti.png' %}" alt="알림" class="noti_image" />
+            </a>                    </section>
         
       <section class="content_left">
         {% block infobox %}
@@ -81,7 +85,28 @@
             </div>
           </div>
 
-      </section>
+          <div class="slider-container">
+          <div class="slider-track">
+            <div class="slider-fill" id="fillTrack"></div>
+            <div class="slider-time" id="timeLabel">0m</div>
+          </div>
+          <input type="range" min="0" max="4" step="1" value="0" id="customSlider">
+          </div>
+          <div class="routine_hugger">
+            <div id="list_prev">
+              <img src="{% static 'assets/img/left.png' %}" alt="왼쪽">
+            </div>
+            <div class="per_routine_list">
+            {% include "../components/routine_list_component.html" %}
+            </div>
+            <div id="list_next">
+              <img src="{% static 'assets/img/right.png' %}" alt="오른쪽">
+            </div>
+            <div class="startbtn_hugger">
+              <button type="submit" value="운동 시작하기" id="start_btn" disabled>운동 시작하기</button>
+            </div>
+          </div>
+        </section>
     </section>
 
 

@@ -50,7 +50,7 @@
 .modal_buttons {
   display: flex;
   width: 100%;
-  height: 95px; /* 기존 85px → 95px */
+  height: 90px; /* 기존 85px → 95px */
 }
 .modal_button {
   flex: 1;
@@ -64,7 +64,6 @@
   height: 90px;
   text-align: center;
   transition: background-color 0.3s ease;
-  padding-bottom: 15px;
 }
 
 

@@ -18,8 +18,10 @@
         <section class="top_bar">
             <img src="{% static 'assets/img/logo.png' %}" alt="로고" class="logo_image" />
             <img src="{% static 'assets/img/icon.png' %}" alt="아이콘" class="icon_image" />
-            <img src="{% static 'assets/img/noti.png' %}" alt="알림" class="noti_image" />
-            </section>
+            <a href="{% url 'frontend:alarmpage' %}">
+                <img src="{% static 'assets/img/noti.png' %}" alt="알림" class="noti_image" />
+            </a>            
+          </section>
     </header>
     
     

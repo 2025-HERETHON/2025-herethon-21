@@ -14,7 +14,7 @@
       <div class="review_toprow" id="reviewSummary_{{ forloop.counter0 }}">
         <span class="time_range">{{ data.start_time }}~{{ data.end_time }} ({{ data.duration_minutes }}분)</span>
         <div class="star_rating disabled" id="starRating_{{ forloop.counter0 }}">
-          {% include "./star_component.html" %}
+          {% include "./star_component.html" with data=data %}
         </div>
       </div>
 

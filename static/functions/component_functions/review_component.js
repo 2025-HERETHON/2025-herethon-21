@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   const editBtn = document.getElementById("editbtn");
-  const resetBtn = document.getElementById("resetbtn");
+  const resetBtn = document.getElementById("review_resetbtn"); // ✅ id 수정
   const textarea = document.getElementById("text_input");
 
   const stars = document.getElementsByClassName("star_per");
@@ -23,12 +23,15 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   resetBtn.addEventListener("click", function () {
-    let ans = confirm("작성한 내용을 초기화하시겠습니까?")
-    if (ans) {
+    openModal({
+      title: '운동 리뷰를 리셋하시겠습니까?',
+      imageUrl: '/static/assets/img/modal_star.png',
+      onConfirm: function () {
         textarea.value = "";
         for (let j = 0; j < stars.length; j++) {
-        stars[j].querySelector("img").src = emptySrc;
+          stars[j].querySelector("img").src = emptySrc;
         }
-    }
+      }
+    });
   });
 });

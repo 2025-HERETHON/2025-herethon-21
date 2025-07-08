@@ -33,9 +33,9 @@ html, body {
   background-color: transparent;
   display: flex;
   align-items: center;
-  padding: 40px;
+  padding: 30px;
   position: fixed;
-  top: 1%;               
+  top: 0;               
   left: 0;
   right: 0;
   z-index: 10;
@@ -174,9 +174,5 @@ html, body {
 }
 
 a {
-  text-decoration: none;
-}
-
-a:hover {
   text-decoration: none;
 }

@@ -135,3 +135,27 @@
   background-color: #A48BE7;
   color:white;
 }
+
+.logo_image {
+  width: 10vw;         
+  height: auto;           
+  max-width: 118px;       
+  min-width: 90px;  
+}
+
+.icon_image {
+  height: auto;           
+  max-width: 42px;       
+  min-width: 36px;  
+  margin-left: 15px;
+  margin-top: 3px;
+}
+
+.tohome_image {
+  height: auto;           
+  max-width: 35px;       
+  min-width: 30px;  
+  margin-left: 15px;
+  margin-top: 3px;
+  margin-bottom: 5px;
+}
