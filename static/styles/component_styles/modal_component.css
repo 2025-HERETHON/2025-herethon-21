@@ -8,17 +8,18 @@
   align-items: center;
   z-index: 9999;
 }
-
 .modal_box {
   background: #fff;
   border-radius: 20px;
-  width: 405px;
-  height: 205px;
+  width: 450px;
+  height: 250px; /* 기존 230px → 250px */
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  overflow: hidden; /* 하단 버튼들이 모달 경계 밖으로 안나가도록 */
+  overflow: hidden;
   display: flex;
   flex-direction: column;
 }
+
+
 
 .modal_content {
   padding: 30px 20px 0 20px;
@@ -27,7 +28,7 @@
 }
 
 .modal_title {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700;
   margin-top: 3px;
   color: rgba(0, 0, 0, 1);
@@ -40,7 +41,7 @@
 }
 
 .modal_subtext {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 500;
   color: rgba(255, 0, 0, 0.5);
   margin:10px 0 20px 0;
@@ -49,17 +50,24 @@
 .modal_buttons {
   display: flex;
   width: 100%;
-  height: 65px; 
+  height: 95px; /* 기존 85px → 95px */
 }
-
 .modal_button {
-  flex: 1; 
+  flex: 1;
+  display: flex; /* flex 적용 */
+  align-items: center; /* 수직 가운데 정렬 */
+  justify-content: center; /* 가로 가운데 정렬 */
   border: none;
   cursor: pointer;
-  transition: background-color 0.3s ease;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 16px;
+  height: 90px;
+  text-align: center;
+  transition: background-color 0.3s ease;
+  padding-bottom: 15px;
 }
+
+
 
 .modal_button.left_btn {
   border-right: 1px solid #ddd; /* 버튼 사이 경계선 */
