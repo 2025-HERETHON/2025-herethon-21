@@ -37,9 +37,10 @@ class CustomUser(AbstractUser):
         blank=True,
     )
     bio = models.TextField(
-        blank=True,   
+        blank=True,
         null=True,
     )
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.exercise_goal_handler = JSONIntChoicesListHandler(
