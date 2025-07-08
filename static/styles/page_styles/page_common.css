@@ -60,6 +60,7 @@
   display: flex;
   align-items: center; 
   gap: 16px; 
+  
 }
 
 .info_box {
@@ -73,6 +74,23 @@
   box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.05);
   position: relative;
   z-index: 5;
+}
+
+.profile_image_wrapper {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;  /* 텍스트랑 같이 있을 때 이미지 크기 유지 */
+}
+
+.profile_image_wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border-radius: 50%; /* 모서리 둥글게 */
 }
 
 .icon_image2 {
@@ -96,12 +114,12 @@
 
 .preference_tag {
   display: inline-block;
-  padding: 4px 11px;
+  padding: 4px 8px;
   background: var(--gray-200, #EFEFEF);
   border-radius: 22px;
-  font-size: 10px;
+  font-size: 11px;
   color: rgba(0, 0, 0, 1);
-  font-weight: 500;
+  font-weight: 700;
 }
 
 .friend_box {
