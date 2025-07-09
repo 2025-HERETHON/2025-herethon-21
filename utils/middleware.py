@@ -16,8 +16,6 @@ class ErrorHandlingMiddleware:
         return response
 
     def process_exception(self, request:HttpRequest, exception:Exception):
-        if settings.DEBUG: return None  # 개발 환경에서는 Django 기본 디버그 페이지 노출
-
         if isinstance(exception, ClientError):
             logger.warning(f'{exception.status_code} {exception.status_title}: {exception.message}', exc_info=True)
 
@@ -27,6 +25,8 @@ class ErrorHandlingMiddleware:
                 messages.error(request, exception.message)
 
             return redirect(request.META.get('HTTP_REFERER', '/'))
+        elif settings.DEBUG:
+            return None  # 개발 환경에서는 Django 기본 디버그 페이지 노출
         else:
             logger.error(f'{type(exception).__name__}: {exception}', exc_info=True)
             
