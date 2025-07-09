@@ -6,6 +6,7 @@
 {% block script %}
 <script src="{% static 'functions/component_functions/review_component.js' %}"></script>
 <script src="{% static 'functions/component_functions/modal_component.js' %}"></script>
+<script src="{% static 'functions/component_functions/alert_modal_component.js' %}"></script>
 {% endblock script %}
 
 {% block body %} 
@@ -21,14 +22,10 @@
         <textarea placeholder="오늘 루틴에 대해 리뷰를 남겨주세요!" id="text_input"></textarea>
       </div>
         <div class="review_footer">
-          <button class="icon_btn" id="editbtn">
+          <button class="icon_btn" id="edit_btn">
             <img src="{% static 'assets/img/rewrite.png' %}" alt="수정" />
           </button>
-          <button class="icon_btn" id="review_resetbtn" onclick="openModal({
-                title: '운동 리뷰를 리셋하시겠습니까?',
-                subtext:'작성된 리뷰가 초기화됩니다.',
-                imageUrl: '/static/assets/img/modal_star.png'
-                })">
+          <button class="icon_btn" id="review_resetbtn">
             <img src="{% static 'assets/img/trashcan.png' %}" alt="삭제" />
           </button>
         </div>
@@ -36,4 +33,5 @@
     </div>
   </div>
 {% include "../components/modal_component.html" %}
+{% include "../components/alert_modal_component.html" %}
 {% endblock body %}

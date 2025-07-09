@@ -1,3 +1,6 @@
+*{
+    overflow-y: hidden;
+}
 .content_left{
     display: flex;
     justify-content: center;

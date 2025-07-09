@@ -1,3 +1,6 @@
+*{
+    overflow-y: hidden;
+}
 .ment_hugger{
     display: flex;
     flex-direction: column;

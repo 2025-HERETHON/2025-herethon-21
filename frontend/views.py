@@ -106,13 +106,74 @@ def cyclepage(request):
     return render(request,"pages/cycle_page.html")
 
 def scrappage(request):
-    return render(request,"pages/scrap_page.html")
+    data_list = [
+        {
+            "date": "2025-05-09",
+            "time": "13:02",
+            "duration": "20분",
+            "routines": [
+                {"id": 1, "name": "준비 스트레칭", "duration": "3분", "part": "몸풀기"},
+                {"id": 2, "name": "런지", "duration": "5분", "part": "하체 근력"},
+                {"id": 3, "name": "버피 테스트", "duration": "3분", "part": "전신 유산소"},
+                {"id": 4, "name": "팔 돌리기", "duration": "5분", "part": "어깨 유연성"},
+                {"id": 5, "name": "마무리 스트레칭", "duration": "4분", "part": "근육 이완"},
+            ]
+        },
+        {
+            "date": "2025-05-09",
+            "time": "09:10",
+            "duration": "20분",
+            "routines": [
+                {"id": 1, "name": "워밍업 점핑잭", "duration": "3분", "part": "전신 워밍업"},
+                {"id": 2, "name": "사이드 런지", "duration": "5분", "part": "하체 근력"},
+                {"id": 3, "name": "플랭크 트위스트", "duration": "3분", "part": "복근/코어"},
+                {"id": 4, "name": "암 레이즈", "duration": "5분", "part": "팔/어깨"},
+                {"id": 5, "name": "쿨다운 요가", "duration": "4분", "part": "유연성"},
+            ]
+        },
+        {
+            "date": "2025-05-08",
+            "time": "18:00",
+            "duration": "20분",
+            "routines": [
+                {"id": 1, "name": "목 스트레칭", "duration": "3분", "part": "경추 이완"},
+                {"id": 2, "name": "스쿼트", "duration": "5분", "part": "하체 근력"},
+                {"id": 3, "name": "마운틴 클라이머", "duration": "3분", "part": "코어/전신"},
+                {"id": 4, "name": "삼두근 킥백", "duration": "5분", "part": "팔/삼두"},
+                {"id": 5, "name": "호흡 명상", "duration": "4분", "part": "호흡 안정"},
+            ]
+        },
+    ]
+    return render(request,"pages/scrap_page.html", {"data_list": data_list})
 
 def restpage(request):
     return render(request,"pages/rest_page.html")
 
 def periodpage(request):
-    return render(request,"pages/period_page.html")
+    dummy_period_data = [
+        {
+            "start_date": "2025.06.01.",
+            "end_date": "2025.06.07.",
+            "duration": 7,
+            "cycle": 28,
+        },
+        {
+            "start_date": "2025.06.29.",
+            "end_date": "2025.07.05.",
+            "duration": 7,
+            "cycle": 35,
+        },
+        {
+            "start_date": "2025.07.26.",
+            "end_date": "2025.08.02.",
+            "duration": 8,
+            "cycle": 30,
+        },
+    ]
+    context = {
+        "period_data": dummy_period_data
+    }
+    return render(request, "pages/period_page.html", context)
     return render(request,"pages/component_page.html")
 
 def componentcalendar(request):
@@ -191,7 +252,7 @@ def loginpage(request): #아래 더미데이터는 GPT에게 받은 임시 데�
 
             elif email in dummy_users:
                 if dummy_users[email] == password:
-                    return redirect(reverse('frontend:onboarding_3'))
+                    return redirect(reverse('frontend:mypagemain'))
                 else:
                     context['password_error'] = '비밀번호가 틀렸습니다.'
             else:
@@ -292,4 +353,5 @@ def finishedroutine(request):
 
 def editpage(request):
     return render(request,"pages/edit_page.html")
-  
+
+

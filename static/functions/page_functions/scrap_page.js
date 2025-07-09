@@ -7,7 +7,14 @@ document.addEventListener("DOMContentLoaded", function () {
   const endText = document.getElementById("scrap_end_text");
   const box = document.getElementsByClassName("selected_showingbox")[0];
   const searchBtn = document.getElementById("search_button");
+  
+  function isValidDate(dateStr) {
+    // YYYY-MM-DD 형식 검사
+    const regex = /^\d{4}-\d{2}-\d{2}$/;
+    if (!regex.test(dateStr)) return false;
 
+    const date = new Date(dateStr);
+    return !isNaN(date.getTime());  // 날짜 객체로 변환 가능하면 유효
   function formatDate(isoDate) {
     const [year, month, day] = isoDate.split("-");
     return `${year}년 ${parseInt(month)}월 ${parseInt(day)}일`;
@@ -46,6 +53,20 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  startInput.addEventListener('input', updateButtonState);
+  endInput.addEventListener('input', updateButtonState);
+
+  // ✅ 삭제 버튼 이벤트 연결
+  const deleteButtons = document.querySelectorAll(".delete_btn");
+  deleteButtons.forEach(button => {
+    button.addEventListener("click", function () {
+      openModal({
+        title: "스크랩을 삭제하시겠습니까?",
+        subtext: "*삭제한 정보는 복구할 수 없습니다",
+        imageUrl: "/static/assets/img/modal_star.png"
+      });
+    });
+  });
   startDateInput.addEventListener("change", updateDisplay);
   endDateInput.addEventListener("change", updateDisplay);
 

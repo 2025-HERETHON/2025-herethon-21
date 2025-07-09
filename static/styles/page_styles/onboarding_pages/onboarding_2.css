@@ -1,3 +1,6 @@
+*{
+    overflow-y: hidden;
+}
 .line{
     height:50px;
     border-left: 1px solid black;
@@ -56,6 +59,6 @@
   margin:20px 10px;
 }
 
-.pipi{
-    width:370px;
+.two_pipi{
+    width:350px;
 }

@@ -58,7 +58,7 @@ const aiPredictedSchedules = [
     // 이번 달 날짜 채우기
     for (let day = 1; day <= lastDateOfMonth; day++) {
       const dayCell = document.createElement("div");
-      dayCell.classList.add("calendar_day");
+      dayCell.classList.add("calendar_day", "calendar_day_positioned");
       dayCell.textContent = day;
 
       // 오늘 날짜 표시
@@ -94,6 +94,60 @@ const aiPredictedSchedules = [
       fragment.appendChild(nextDay);
     }
     calendarDays.appendChild(fragment);
+
+
+    // ⭐ 오늘 날짜에 별 아이콘 추가 (운동 리뷰가 있을 경우)
+    if (
+      year === today.getFullYear() &&
+      month === today.getMonth() &&
+      hasReviewToday === true
+    ) {
+      const calendarCells = document.querySelectorAll(".calendar_day_positioned");
+      const todayDate = today.getDate();
+
+      calendarCells.forEach((cell) => {
+        const cellDay = parseInt(cell.textContent.trim(), 10);
+        // 별 아이콘 렌더링
+if (
+  year === today.getFullYear() &&
+  month === today.getMonth() &&
+  hasReviewToday === true
+) {
+  const calendarCells = document.querySelectorAll(".calendar_day_positioned");
+  const todayDate = today.getDate();
+
+  calendarCells.forEach((cell) => {
+    const cellDay = parseInt(cell.textContent.trim(), 10);
+    if (
+      cellDay === todayDate &&
+      !cell.classList.contains("prev_month") &&
+      !cell.classList.contains("next_month")
+    ) {
+      let iconWrapper = cell.querySelector(".calendar_icon_wrapper");
+      if (!iconWrapper) {
+        iconWrapper = document.createElement("div");
+        iconWrapper.className = "calendar_icon_wrapper";
+        cell.appendChild(iconWrapper);
+      }
+
+      const existingStar = iconWrapper.querySelector(".review_star_icon");
+      if (!existingStar) {
+        const img = document.createElement("img");
+        img.src = "/static/assets/img/star_calendar_icon.png";
+        img.alt = "review star";
+        img.className = "review_star_icon";
+
+        // ⭐ 항상 뒤에 추가 (별은 오른쪽)
+        iconWrapper.appendChild(img);
+      }
+    }
+  });
+}
+
+      });
+    }
+
+
   }
 
   renderCalendar(currentYear, currentMonth);

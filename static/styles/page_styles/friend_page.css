@@ -154,3 +154,6 @@
   top: -8%;
   left: 68%;
 }
+.friend_page .condition_footer .icon_btn {
+  display: none;
+}

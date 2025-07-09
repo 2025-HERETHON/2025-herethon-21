@@ -193,3 +193,26 @@ body {
   background-size: 100% 70%; 
   background-position: bottom; 
 }
+
+.calendar_day_positioned {
+  position: relative;
+}
+
+
+.calendar_icon_wrapper {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  display: flex;
+  flex-direction: row;  /* 가로로 나란히 */
+  align-items: center;
+  gap: 3px;
+  z-index: 10;
+}
+
+.emotion_icon,
+.review_star_icon {
+  width: 13px;
+  height: 13px;
+  animation: popEffect 0.3s ease;
+}

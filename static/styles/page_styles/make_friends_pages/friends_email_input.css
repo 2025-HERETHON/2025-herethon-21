@@ -56,3 +56,6 @@
 .profile_photo{
     width:160px;
 }
+*{
+    overflow-y: hidden;
+}
