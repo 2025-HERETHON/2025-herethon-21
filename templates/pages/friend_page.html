@@ -15,15 +15,9 @@
 {% block body %}
 <body class="friend_page">
 
-    <header class="top_section">
-        <section class="top_bar">
-            <img src="{% static 'assets/img/logo.png' %}" alt="로고" class="logo_image" />
-            <img src="{% static 'assets/img/icon.png' %}" alt="아이콘" class="icon_image" />
-
-            <a href="{% url 'frontend:alarmpage' %}">
-                <img src="{% static 'assets/img/noti.png' %}" alt="알림" class="noti_image" />
-            </a>                        </section>
-    </header>
+    {% block header %}
+        {% include "../components/header_component.html" %}
+    {% endblock header %}
     
     <main class="main_layout">
     <section class="content_area">
@@ -57,7 +51,7 @@
       <section class="content_right">
         {% if data_list %}
         <div class="review_hugger">
-          <img src="{% static 'assets/img/pipi.png' %}" alt="피피" class="pipi_image" />
+          <img src="{% static 'assets/img/deco_pipi.png' %}" alt="피피" class="pipi_image" />
           <div class="friends_review">
           <h2><span>운동 리뷰</span></h2>
             {% for data in data_list %}

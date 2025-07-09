@@ -14,15 +14,9 @@
 {% block body %}
 <body>
 
-    <header class="top_section">
-        <section class="top_bar">
-            <img src="{% static 'assets/img/logo.png' %}" alt="로고" class="logo_image" />
-            <img src="{% static 'assets/img/icon.png' %}" alt="아이콘" class="icon_image" />
-            <a href="{% url 'frontend:alarmpage' %}">
-                <img src="{% static 'assets/img/noti.png' %}" alt="알림" class="noti_image" />
-            </a>            
-          </section>
-    </header>
+    {% block header %}
+        {% include "../components/header_component.html" %}
+    {% endblock header %}
     
     
     <main class="main_layout">
@@ -75,11 +69,16 @@
             </span>
           </div>
           <p class="date_description">월경 추가</p>
-          <div class="date_range_box">
-            <input type="text" id="start_date" class="date_input" />
+          <div class="datepicker">
+            <input type="date" id="period_start_date" class="date_input" />
             <img src="{% static 'assets/img/arrow.png' %}" alt="화살표" class="arrow" />
-            <input type="text" id="end_date" class="date_input" />
-            <button id="search_button" class="search_button">추가</button>
+            <input type="date" id="period_end_date" class="date_input" />
+            <button id="add_button" class="search_button">추가</button>
+          </div>
+
+          <div class="selected_showingbox hidden">
+            <p id="period_start_line" class="hidden"><span id="period_start_text"></span></p>
+            <p id="period_end_line" class="hidden"><span id="period_end_text"></span></p>
           </div>
         </div>
         {% if period_data %}

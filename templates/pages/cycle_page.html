@@ -15,15 +15,9 @@
 {% block body %}
 <body>
 
-    <header class="top_section">
-        <section class="top_bar">
-            <img src="{% static 'assets/img/logo.png' %}" alt="로고" class="logo_image" />
-            <img src="{% static 'assets/img/icon.png' %}" alt="아이콘" class="icon_image" />
-
-            <a href="{% url 'frontend:alarmpage' %}">
-                <img src="{% static 'assets/img/noti.png' %}" alt="알림" class="noti_image" />
-            </a>                        </section>
-    </header>
+      {% block header %}
+        {% include "../components/header_component.html" %}
+      {% endblock header %}
     
     <main class="main_layout">
     <section class="content_area">
@@ -33,9 +27,8 @@
             <span class="star star9"></span> <span class="star star10"></span> <span class="star star11"></span> <span class="star star12"></span>
             <span class="star star13"></span> <span class="star star14"></span> <span class="star star15"></span> <span class="star star16"></span>
 
-            <a href="{% url 'frontend:alarmpage' %}">
-                <img src="{% static 'assets/img/noti.png' %}" alt="알림" class="noti_image" />
-            </a>                    </section>
+                         
+          </section>
         
       <section class="content_left">
         {% block infobox %}

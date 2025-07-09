@@ -13,11 +13,11 @@
 {% endblock script %}
 
 {% block body %} 
-    <header class="top_section">
-        <section class="top_bar">
-            <img src="{% static 'assets/img/logo.png' %}" alt="로고" class="logo_image" />
-            </section>
-    </header>
+
+    {% block header %}
+        {% include "../components/header_component.html" %}
+    {% endblock header %}
+
     <div class="bighugger">
       <div class="photobox_wrapper">
         <div class="photobox_nav photobox_prev" id="photo_prev">
