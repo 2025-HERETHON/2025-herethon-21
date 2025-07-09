@@ -9,7 +9,7 @@
     <section>
       <h1>Create</h1>
       <form
-        action="{% url 'menstruations:create_menstruation' %}"
+        action="{% url 'menstruations:create' %}"
         method="post"
         >
         {% csrf_token %}
@@ -28,7 +28,7 @@
         <li>
           {{menstruation.start}} - {{menstruation.end}} | {{menstruation.duration}} | {{menstruation.cycle}}
           <form
-            action="{% url 'menstruations:update_menstruation' pk=menstruation.id %}"
+            action="{% url 'menstruations:update' pk=menstruation.id %}"
             method="post"
           >
             {% csrf_token %}
@@ -40,7 +40,7 @@
             <button type="submit">수정</button>
           </form>
           <form
-            action="{% url 'menstruations:delete_menstruation' pk=menstruation.id %}"
+            action="{% url 'menstruations:delete' pk=menstruation.id %}"
             method="post"
           >
            {% csrf_token %}

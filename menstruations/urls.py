@@ -5,8 +5,8 @@ app_name = 'menstruations'
 
 urlpatterns = [
     path('', root, name='root'),
-    path('test_create_menstruation', test_create_menstruation, name='test_create_menstruation'),
-    path('create', create_menstruation, name='create_menstruation'),
-    path('<int:pk>/update', update_menstruation, name='update_menstruation'),
-    path('<int:pk>/delete', delete_menstruation, name='delete_menstruation'),
+    path('read/create_form', test_create_menstruation, name='read/create_form'),
+    path('create', create_menstruation, name='create'),
+    path('<int:pk>/update', update_menstruation, name='update'),
+    path('<int:pk>/delete', delete_menstruation, name='delete'),
 ]
