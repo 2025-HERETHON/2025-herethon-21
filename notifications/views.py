@@ -6,7 +6,7 @@ from accounts.models import CustomUser
 from .services import NotificationService
 
 @require_GET
-def read_is_prodded(request:HttpRequest, friend_username:str):
+def test_read(request:HttpRequest, friend_username:str):
     service = NotificationService(request)
     notification_list = service.get_list()
     is_prodded = service.get_is_prodded(friend_username)
