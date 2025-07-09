@@ -76,6 +76,10 @@
     </nav>
   </main>
 {% block script %}
+  <script>
+    window.hasReviewToday = JSON.parse("{{ data_list|length|yesno:'true,false' }}");
+  </script>
+
   <script src="{% static 'functions/component_functions/calendar_component.js' %}"></script>
 {% endblock script %}
 </body>
