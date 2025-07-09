@@ -105,16 +105,16 @@
                 </span>
               </label>
             </div>
-          </div>
+            <div class="slider-container">
+            <div class="slider-track">
+              <div class="slider-fill" id="fillTrack"></div>
+              <div class="slider-time" id="timeLabel">0m</div>
+            </div>
+            <input type="range" min="0" max="4" step="1" value="0" id="customSlider">
+            </div>
 
-          <div class="slider-container">
-          <div class="slider-track">
-            <div class="slider-fill" id="fillTrack"></div>
-            <div class="slider-time" id="timeLabel">0m</div>
-          </div>
-          <input type="range" min="0" max="4" step="1" value="0" id="customSlider">
-          </div>
-          <div class="routine_hugger">
+
+            <div class="routine_hugger">
             <div id="list_prev">
               <img src="{% static 'assets/img/left.png' %}" alt="왼쪽">
             </div>
@@ -131,7 +131,7 @@
               <button type="submit" value="운동 시작하기" id="start_btn" disabled>운동 시작하기</button>
             </div>
           </div>
-
+          </div>
         </section>
     </section>
 

@@ -157,12 +157,13 @@ input:not(:checked) + .slider .off_text {
 
 
 .slider-container {
-  margin-left:120px;
   width: 450px;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top:17px;
+  margin-left:-1vw;
 }
 
 .slider-track {
@@ -291,7 +292,8 @@ input.user-interacted::-moz-range-thumb {
 #list_prev{
   position: absolute;
   top: 38%;
-  left:60px;
+  left:-40px;
+  z-index:10;
 }
 #list_prev img{
   width:10px;
@@ -300,7 +302,8 @@ input.user-interacted::-moz-range-thumb {
 #list_next{
   position: absolute;
   top: 38%;
-  right:60px;
+  right:-40px;
+  z-index:10;
 }
 #list_next img{
   width:10px;
