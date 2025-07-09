@@ -29,9 +29,5 @@ document.addEventListener("DOMContentLoaded", function () {
     const email = emailInput.value.trim();
     const password = passwordInput.value.trim();
 
-    if (!email || !password) {
-      e.preventDefault(); // 입력 안 하면 서브밋 막기
-      alert("이메일과 비밀번호를 입력해주세요.");
-    }
   });
 });

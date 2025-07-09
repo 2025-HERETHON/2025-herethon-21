@@ -9,7 +9,36 @@
 {% block script %}
 <script src="{% static 'functions/component_functions/calendar_component.js' %}"></script>
 <script src="{% static 'functions/page_functions/cycle_page.js' %}"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const routineItems = document.querySelectorAll(".routine_item");
+    const prevBtn = document.getElementById("list_prev");
+    const nextBtn = document.getElementById("list_next");
+    let currentIndex = 0;
+
+    function updateRoutineDisplay() {
+      routineItems.forEach((item, index) => {
+        item.style.display = index === currentIndex ? "block" : "none";
+      });
+    }
+
+    prevBtn.addEventListener("click", () => {
+      currentIndex = (currentIndex - 1 + routineItems.length) % routineItems.length;
+      updateRoutineDisplay();
+    });
+
+    nextBtn.addEventListener("click", () => {
+      currentIndex = (currentIndex + 1) % routineItems.length;
+      updateRoutineDisplay();
+    });
+
+    updateRoutineDisplay();
+  });
+
+</script>
 {% endblock script %}
+
 
 
 {% block body %}
@@ -89,16 +118,20 @@
             <div id="list_prev">
               <img src="{% static 'assets/img/left.png' %}" alt="왼쪽">
             </div>
+
             <div class="per_routine_list">
-            {% include "../components/routine_list_component.html" %}
+              {% include "../components/routine_list_component.html" with data_list=data_list %}
             </div>
+
             <div id="list_next">
               <img src="{% static 'assets/img/right.png' %}" alt="오른쪽">
             </div>
+
             <div class="startbtn_hugger">
               <button type="submit" value="운동 시작하기" id="start_btn" disabled>운동 시작하기</button>
             </div>
           </div>
+
         </section>
     </section>
 
