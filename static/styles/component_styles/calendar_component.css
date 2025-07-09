@@ -6,7 +6,7 @@ body {
 .calendar_container {
   width: 100%;
   max-width: 500px;
-  height: 520px;
+  height: 500px;
   border-radius: 20px;
   background-color: #fff;
   display: flex;
@@ -39,7 +39,7 @@ body {
 }
 
 .calendar_title {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 800;
   margin-left: 0; 
   flex-grow: 1; /* 남는 공간 차지해서 버튼 밀어내기 */
@@ -123,8 +123,8 @@ body {
   display: flex;
   gap: 60px;
   justify-content: center;
-  margin-top: 24px;
-  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .legend_item {

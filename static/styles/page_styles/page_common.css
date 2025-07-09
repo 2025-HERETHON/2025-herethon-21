@@ -37,7 +37,7 @@
 .content_area {
   display: flex;
   flex: 1; 
-  overflow: auto; /* 넘칠 시 스크롤 가능 */
+  overflow: auto; 
   position: relative;
 }
 
@@ -50,10 +50,15 @@
   position: relative;
 }
 
+.content_left {
+  overflow-y: hidden; 
+}
+
 .calendar_wrapper {
- transform: scale(0.90); /* 크기 줄이기 (90% 비율) */
+ transform: scale(0.85); /* 크기 줄이기 (90% 비율) */
  position: relative;
  z-index: 5;
+ margin-top: -20px; 
 }
 
 .info_content {
@@ -68,9 +73,9 @@
   border: 1.5px solid var(--gray-100, #DDD);
   border-radius: 20px;
   padding: 20px;
-  width: 450px;
+  width: 425px;
   height: 145px;
-  margin: 80px auto 0 auto; 
+  margin: 70px auto 0 auto; 
   box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.05);
   position: relative;
   z-index: 5;
@@ -102,12 +107,12 @@
 .info_title {
   font-size: 20px;
   font-weight: 700;
-  margin-bottom: 14px;
+  margin-bottom: 8px;
   color: rgba(0, 0, 0, 1);
 }
 
 .info_text {
-  font-size: 16px;
+  font-size: 15px;
   color: rgba(0, 0, 0, 1);
   margin-bottom: 9px;
 }
@@ -120,15 +125,17 @@
   font-size: 11px;
   color: rgba(0, 0, 0, 1);
   font-weight: 700;
+  margin-right: 5px;
 }
 
 .friend_box {
-  width: 450px;
+  width: 425px;
   margin: 5px auto 0 auto; /* 가로 중앙 정렬 */
   display: flex;
   gap: 20px; 
   overflow-x: auto; /* 가로 스크롤 허용 */
   white-space: nowrap; /* 줄바꿈 방지 */
+  margin-top: -10px; 
 }
 
 .friend_item {
