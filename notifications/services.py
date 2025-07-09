@@ -1,7 +1,6 @@
 from django.http import HttpRequest
 from django.utils import timezone
 from utils.choices import NotificationCategoryType
-from utils.helpers import ResponseHelper
 from utils.validators import validate_auth, validate_not_self
 from accounts.models import CustomUser
 from .models import Notification
