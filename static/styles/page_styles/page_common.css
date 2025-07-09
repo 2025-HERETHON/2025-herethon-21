@@ -50,13 +50,51 @@
   position: relative;
 }
 
-
 .calendar_wrapper {
- transform: scale(0.85); /* 크기 줄이기 (90% 비율) */
+ transform: scale(0.90); 
  position: relative;
  z-index: 5;
- margin-top: -20px; 
+ margin-top: -15px; 
+ min-height: 0;
+ max-height: 100%;
 }
+
+@media (max-height: 750px) {
+  .calendar_wrapper {
+    transform: scale(0.75);
+    margin-top: -50px;
+  }
+
+  .content_left {
+    gap: 8px;
+    padding: 10px;
+  }
+
+  .info_box {
+    width: 90%;            
+    max-width: 380px;
+    height: auto;             /* 고정 높이 제거 */
+    padding: 12px 16px;       /* 패딩 줄이기 */
+    margin-top: 90px !important;
+  }
+
+  .info_title {
+    font-size: 16px !important;
+    margin-bottom: 6px;
+  }
+
+  .info_text {
+    font-size: 13px !important;
+    margin-bottom: 6px;
+  }
+
+  .friend_box {
+    width: 90%;            
+    max-width: 380px;
+    margin-top: -40px !important;
+  }
+}
+
 
 .info_content {
   display: flex;
@@ -70,9 +108,9 @@
   border: 1.5px solid var(--gray-100, #DDD);
   border-radius: 20px;
   padding: 20px;
-  width: 425px;
+  width: 455px;
   height: 145px;
-  margin: 70px auto 0 auto; 
+  margin: 65px auto 0 auto; 
   box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.05);
   position: relative;
   z-index: 5;
@@ -126,13 +164,12 @@
 }
 
 .friend_box {
-  width: 425px;
+  width: 455px;
   margin: 0 auto 0 auto; /* 가로 중앙 정렬 */
   display: flex;
   gap: 20px; 
   overflow-x: auto; /* 가로 스크롤 허용 */
   white-space: nowrap; /* 줄바꿈 방지 */
-  margin-top: -14px; 
 }
 
 .friend_item {
