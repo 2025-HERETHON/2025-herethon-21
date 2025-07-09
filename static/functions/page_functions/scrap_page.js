@@ -5,8 +5,12 @@ document.addEventListener("DOMContentLoaded", function () {
   const endLine = document.getElementById("scrap_end_line");
   const startText = document.getElementById("scrap_start_text");
   const endText = document.getElementById("scrap_end_text");
-  const box = document.getElementsByClassName("selected_showingbox")[0];
+  const box = document.querySelector(".selected_showingbox");
   const searchBtn = document.getElementById("search_button");
+
+  function parseDotDate(dateStr) {
+    return dateStr.replace(/\./g, "-").replace(/-$/, "").trim();
+  }
 
   function formatDate(isoDate) {
     const [year, month, day] = isoDate.split("-");
@@ -17,28 +21,26 @@ document.addEventListener("DOMContentLoaded", function () {
     const startVal = startDateInput.value;
     const endVal = endDateInput.value;
 
-    // 시작일 텍스트 표시 & 클래스 토글
     if (startVal) {
-      // startText.textContent = formatDate(startVal);
       startLine.classList.remove("hidden");
+      startText.textContent = formatDate(parseDotDate(startVal));
       box.style.display = "block";
-      startDateInput.classList.add("has-value");  
+      startDateInput.classList.add("has-value");
     } else {
       startLine.classList.add("hidden");
-      startDateInput.classList.remove("has-value");  
+      startDateInput.classList.remove("has-value");
     }
 
     if (endVal) {
-      // endText.textContent = formatDate(endVal);
       endLine.classList.remove("hidden");
+      endText.textContent = formatDate(parseDotDate(endVal));
       box.style.display = "block";
-      endDateInput.classList.add("has-value");  
+      endDateInput.classList.add("has-value");
     } else {
       endLine.classList.add("hidden");
-      endDateInput.classList.remove("has-value"); 
+      endDateInput.classList.remove("has-value");
     }
 
-  
     if (startVal && endVal) {
       searchBtn.classList.add("active");
     } else {
@@ -48,8 +50,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   startDateInput.addEventListener("change", updateDisplay);
   endDateInput.addEventListener("change", updateDisplay);
+  updateDisplay();
 
-  // ✅ 삭제 버튼 이벤트 연결
   const deleteButtons = document.querySelectorAll(".delete_btn");
   deleteButtons.forEach(button => {
     button.addEventListener("click", function () {
@@ -60,8 +62,34 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
   });
-  startDateInput.addEventListener("change", updateDisplay);
-  endDateInput.addEventListener("change", updateDisplay);
 
-  updateDisplay();
+  searchBtn.addEventListener("click", function () {
+    const startVal = parseDotDate(startDateInput.value);
+    const endVal = parseDotDate(endDateInput.value);
+
+    if (!startVal || !endVal) return;
+
+    const startDate = new Date(startVal);
+    const endDate = new Date(endVal);
+
+    const items = document.querySelectorAll(".perroutine");
+
+    items.forEach(item => {
+      const dateText = item.querySelector(".date_")?.textContent.trim(); 
+      if (!dateText) return;
+
+      const cleanDateText = dateText.replace(/\./g, "-").replace(/-$/, "").trim();
+      const itemDate = new Date(cleanDateText);
+
+      if (itemDate >= startDate && itemDate <= endDate) {
+        item.style.display = "block";
+      } else {
+        item.style.display = "none";
+      }
+    });
+
+    // 검색 후 날짜 박스 텍스트 숨기기
+    startLine.classList.add("hidden");
+    endLine.classList.add("hidden");
+  });
 });

@@ -70,7 +70,7 @@
     padding: 10px;
   }
 
-  .info_box {
+  .content_left .info_box {
     width: 90%;            
     max-width: 380px;
     height: auto;            

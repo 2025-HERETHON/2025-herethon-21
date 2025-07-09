@@ -7,18 +7,24 @@
 
 
 {% block body %}
-        <div class="info_box">
-          <div class="info_content">
-            <img src="{% static 'assets/img/icon.png' %}" alt="아이콘" class="icon_image2" />
-            <div class="info_text_group">
-              <h3 class="info_title">친구1</h3>
-              <p class="info_text">안녕? 나는 친구1라고 해. 운동광EAZY</p>
-              <div class="tags">
-                <span class="preference_tag">체형 관리</span>
-                <span class="preference_tag">근력 강화</span>
-              </div>
-            </div>
-          </div>
-        </div>
+<div class="info_box">
+  {% if friend %}
+  <div class="info_content">
+    <img src="{% static friend.icon %}" alt="아이콘" class="icon_image2" />
+    <div class="info_text_group">
+      <h3 class="info_title">{{ friend.name }}</h3>
+      <p class="info_text">{{ friend.intro }}</p>
+      <div class="tags">
+        {% for tag in friend.tags %}
+        <span class="preference_tag">{{ tag }}</span>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <p>친구 정보를 불러올 수 없습니다.</p>
+  {% endif %}
+</div>
+
 
 {% endblock body %}

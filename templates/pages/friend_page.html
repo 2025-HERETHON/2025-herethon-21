@@ -33,7 +33,7 @@
         
       <section class="content_left"> 
         {% block infobox %}
-        {% include "../components/infobox_friend.html" %}
+        {% include "../components/infobox_friend.html" with friend=friend %}
         {% endblock infobox %}
 
         <div class="calendar_wrapper">
