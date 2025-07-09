@@ -50,8 +50,11 @@ document.addEventListener("DOMContentLoaded", function () {
         starRating.classList.add("disabled");
 
         const updatedText = textInput.value;
-        console.log("저장된 텍스트:", updatedText);
-        alert("저장되었습니다.");
+        openAlertModal({
+        title: '저장되었습니다.',
+        text: '리뷰가 성공적으로 저장되었습니다.',
+        imageUrl: '/static/assets/img/modal_star.png',
+          });
       }
     });
 
@@ -86,8 +89,6 @@ document.addEventListener("DOMContentLoaded", function () {
             // 선택 여부 초기화용 데이터 속성까지 초기화
             btn.dataset.selected = "false";
           });
-
-          alert("리뷰가 초기화되었습니다.");
         }
       });
     });

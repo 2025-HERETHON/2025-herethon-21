@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (selectedIndex === i) {
       conditions[i].classList.remove("selected");
       todaysCondition.innerHTML = "";
+      // 달력 반영은 저장 시 처리하므로 여기선 제거하지 않음
       selectedIndex = -1;
       return;
     }
@@ -39,7 +40,10 @@ document.addEventListener("DOMContentLoaded", function () {
     todaysCondition.innerHTML = "";
     todaysCondition.appendChild(newImg);
     selectedIndex = i;
+
+    // 달력에는 저장 후 반영하므로 여기서는 호출하지 않음
   }
+
 
   for (let i = 0; i < conditions.length; i++) {
     conditions[i].addEventListener("click", () => handleConditionClick(i));
@@ -54,31 +58,85 @@ document.addEventListener("DOMContentLoaded", function () {
         conditions[i].classList.remove("disabled");
       }
     } else {
-      alert("저장되었습니다.");
-      content.disabled = true;
-      content.placeholder = "연필 버튼을 눌러 글을 작성하세요!";
-      isEditing = false;
-      for (let i = 0; i < conditions.length; i++) {
-        conditions[i].classList.add("disabled");
-      }
+      openAlertModal({
+        title: '저장되었습니다.',
+        text: '리뷰가 성공적으로 저장되었습니다.',
+        imageUrl: '/static/assets/img/modal_star.png',
+        onConfirm: function () {
+          content.disabled = true;
+          content.placeholder = "연필 버튼을 눌러 글을 작성하세요!";
+          isEditing = false;
+          for (let i = 0; i < conditions.length; i++) {
+            conditions[i].classList.add("disabled");
+          }
+
+          // 저장 시 달력 이모지 반영
+          removeEmotionFromCalendar(); // 기존 이모지 제거
+          if (selectedIndex !== -1) {
+            addEmotionToCalendar();
+          }
+        }
+      });
     }
   });
+
+
 
   resetBtn.addEventListener("click", function () {
-  openModal({
-    title: '컨디션 리뷰를 리셋하시겠습니까?',
-    text: '작성한 일기와 감정 선택이 모두 사라집니다.',
-    subtext: '*텍스트, 반응이 모두 초기화됩니다.',
-    imageUrl: '/static/assets/img/modal_star.png',
-    onConfirm: function () {
-      content.value = "";
-      todaysCondition.innerHTML = "";
-      for (let i = 0; i < conditions.length; i++) {
-        conditions[i].classList.remove("selected");
+    openModal({
+      title: '컨디션 리뷰를 리셋하시겠습니까?',
+      subtext: '*텍스트, 감정이 모두 초기화됩니다.',
+      imageUrl: '/static/assets/img/modal_star.png',
+      onConfirm: function () {
+        content.value = "";
+        todaysCondition.innerHTML = "";
+        for (let i = 0; i < conditions.length; i++) {
+          conditions[i].classList.remove("selected");
+        }
+        selectedIndex = -1;
       }
-      selectedIndex = -1;
-    }
+    });
   });
-});
 
+  function addEmotionToCalendar() {
+    const calendarCells = document.querySelectorAll(".calendar_day_positioned");
+    const today = new Date();
+    const todayDate = today.getDate();
+
+    calendarCells.forEach((cell) => {
+      const cellDay = parseInt(cell.textContent.trim(), 10);
+      if (
+        cellDay === todayDate &&
+        !cell.classList.contains("prev_month") &&
+        !cell.classList.contains("next_month")
+      ) {
+        const existingIcon = cell.querySelector(".emotion_icon");
+        if (existingIcon) existingIcon.remove();
+
+        const img = document.createElement("img");
+        img.src = "/static/assets/img/smile_calendar_emozi.png";
+        img.alt = "emotion";
+        img.className = "emotion_icon";
+        cell.appendChild(img);
+      }
+    });
+  }
+
+  function removeEmotionFromCalendar() {
+    const calendarCells = document.querySelectorAll(".calendar_day_positioned");
+    const today = new Date();
+    const todayDate = today.getDate();
+
+    calendarCells.forEach((cell) => {
+      const cellDay = parseInt(cell.textContent.trim(), 10);
+      if (
+        cellDay === todayDate &&
+        !cell.classList.contains("prev_month") &&
+        !cell.classList.contains("next_month")
+      ) {
+        const icon = cell.querySelector(".emotion_icon");
+        if (icon) icon.remove();
+      }
+    });
+  }
 });

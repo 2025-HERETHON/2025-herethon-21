@@ -8,23 +8,23 @@
   align-items: center;
   z-index: 9999;
 }
+
 .modal_box {
   background: #fff;
   border-radius: 20px;
   width: 450px;
-  height: 250px; /* 기존 230px → 250px */
+  height: 250px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 
-
-
 .modal_content {
   text-align: center;
-  flex-grow: 1; /* 콘텐츠가 공간을 다 차지하게 */
+  flex-grow: 1;
 }
+
 
 .modal_title {
   font-size: 20px;
@@ -62,30 +62,13 @@
   font-weight: 700;
   font-size: 20px;
   height: 75px;
+  background-color: #A48BE7; /* 💜 보라색 배경 */
+  color: white;
   text-align: center;
   transition: background-color 0.3s ease;
-  padding-top: 7px;
+  padding-bottom: 10px;
 }
 
-.modal_button.left_btn {
-  border-right: 1px solid #ddd; /* 버튼 사이 경계선 */
-  background-color: #f0f0f0;
-  color: #333;
-  border-bottom-left-radius: 20px; 
-  border-top: 1px solid rgba(239, 239, 239, 1); 
-}
-
-.modal_button.left_btn:hover {
-  background-color: #ddd;
-}
-
-.modal_button.right_btn {
-  background-color: #a48be7;
-  color: rgba(255, 255, 255, 1);
-  border-bottom-right-radius: 20px;
-  border-top: 1px solid rgba(164, 139, 231, 1); 
-}
-
-.modal_button.right_btn:hover {
-  background-color: #9169d9;
+.modal_button:hover {
+  background-color: #9169d9; /* 더 진한 보라 */
 }

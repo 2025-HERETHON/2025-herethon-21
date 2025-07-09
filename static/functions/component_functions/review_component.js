@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const editBtn = document.getElementById("editbtn");
+  const editBtn = document.getElementById("edit_btn");
   const resetBtn = document.getElementById("review_resetbtn"); // ✅ id 수정
   const textarea = document.getElementById("text_input");
 
@@ -17,14 +17,19 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
-
   editBtn.addEventListener("click", function () {
-    alert("저장되었습니다.");
-  });
+  openAlertModal({
+    title: '저장되었습니다.',
+    text: '리뷰가 성공적으로 저장되었습니다.',
+    imageUrl: '/static/assets/img/modal_star.png',
+      });
+    });
+
 
   resetBtn.addEventListener("click", function () {
     openModal({
-      title: '운동 리뷰를 리셋하시겠습니까?',
+      title: '운동 리뷰를 리셋하시겠습니까?',    
+      subtext: '작성된 리뷰내용이 모두 초기화됩니다.',
       imageUrl: '/static/assets/img/modal_star.png',
       onConfirm: function () {
         textarea.value = "";

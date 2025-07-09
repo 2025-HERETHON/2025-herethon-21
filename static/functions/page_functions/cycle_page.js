@@ -54,6 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   slider.addEventListener("input", updateSlider);
+  slider.value = 2;
   updateSlider();
 
   slider.addEventListener('mousedown', () => {

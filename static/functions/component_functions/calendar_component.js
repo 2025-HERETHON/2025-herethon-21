@@ -58,7 +58,7 @@ const aiPredictedSchedules = [
     // 이번 달 날짜 채우기
     for (let day = 1; day <= lastDateOfMonth; day++) {
       const dayCell = document.createElement("div");
-      dayCell.classList.add("calendar_day");
+      dayCell.classList.add("calendar_day", "calendar_day_positioned");
       dayCell.textContent = day;
 
       // 오늘 날짜 표시

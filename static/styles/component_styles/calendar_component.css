@@ -193,3 +193,18 @@ body {
   background-size: 100% 70%; 
   background-position: bottom; 
 }
+/* 감정 아이콘 표시용 */
+.emotion_icon {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  width: 13px;
+  height: 13px;
+  animation: popEffect 0.3s ease;
+  z-index: 5;
+  margin-top: 5px;
+}
+
+.calendar_day_positioned {
+  position: relative;
+}
