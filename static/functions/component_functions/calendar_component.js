@@ -107,22 +107,46 @@ const aiPredictedSchedules = [
 
       calendarCells.forEach((cell) => {
         const cellDay = parseInt(cell.textContent.trim(), 10);
-        if (
-          cellDay === todayDate &&
-          !cell.classList.contains("prev_month") &&
-          !cell.classList.contains("next_month")
-        ) {
-          const existingStar = cell.querySelector(".review_star_icon");
-          if (!existingStar) {
-            const img = document.createElement("img");
-            img.src = "/static/assets/img/star_calendar_icon.png"; // ⭐ 네가 사용할 별 아이콘 경로!
-            img.alt = "review star";
-            img.className = "review_star_icon";
-            cell.appendChild(img);
-          }
-        }
+        // 별 아이콘 렌더링
+if (
+  year === today.getFullYear() &&
+  month === today.getMonth() &&
+  hasReviewToday === true
+) {
+  const calendarCells = document.querySelectorAll(".calendar_day_positioned");
+  const todayDate = today.getDate();
+
+  calendarCells.forEach((cell) => {
+    const cellDay = parseInt(cell.textContent.trim(), 10);
+    if (
+      cellDay === todayDate &&
+      !cell.classList.contains("prev_month") &&
+      !cell.classList.contains("next_month")
+    ) {
+      let iconWrapper = cell.querySelector(".calendar_icon_wrapper");
+      if (!iconWrapper) {
+        iconWrapper = document.createElement("div");
+        iconWrapper.className = "calendar_icon_wrapper";
+        cell.appendChild(iconWrapper);
+      }
+
+      const existingStar = iconWrapper.querySelector(".review_star_icon");
+      if (!existingStar) {
+        const img = document.createElement("img");
+        img.src = "/static/assets/img/star_calendar_icon.png";
+        img.alt = "review star";
+        img.className = "review_star_icon";
+
+        // ⭐ 항상 뒤에 추가 (별은 오른쪽)
+        iconWrapper.appendChild(img);
+      }
+    }
+  });
+}
+
       });
     }
+
 
   }
 

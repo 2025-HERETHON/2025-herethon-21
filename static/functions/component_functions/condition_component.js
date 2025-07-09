@@ -98,29 +98,40 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  function addEmotionToCalendar() {
-    const calendarCells = document.querySelectorAll(".calendar_day_positioned");
-    const today = new Date();
-    const todayDate = today.getDate();
+ function addEmotionToCalendar() {
+  const calendarCells = document.querySelectorAll(".calendar_day_positioned");
+  const today = new Date();
+  const todayDate = today.getDate();
 
-    calendarCells.forEach((cell) => {
-      const cellDay = parseInt(cell.textContent.trim(), 10);
-      if (
-        cellDay === todayDate &&
-        !cell.classList.contains("prev_month") &&
-        !cell.classList.contains("next_month")
-      ) {
-        const existingIcon = cell.querySelector(".emotion_icon");
-        if (existingIcon) existingIcon.remove();
-
-        const img = document.createElement("img");
-        img.src = "/static/assets/img/smile_calendar_emozi.png";
-        img.alt = "emotion";
-        img.className = "emotion_icon";
-        cell.appendChild(img);
+  calendarCells.forEach((cell) => {
+    const cellDay = parseInt(cell.textContent.trim(), 10);
+    if (
+      cellDay === todayDate &&
+      !cell.classList.contains("prev_month") &&
+      !cell.classList.contains("next_month")
+    ) {
+      let iconWrapper = cell.querySelector(".calendar_icon_wrapper");
+      if (!iconWrapper) {
+        iconWrapper = document.createElement("div");
+        iconWrapper.className = "calendar_icon_wrapper";
+        cell.appendChild(iconWrapper);
       }
-    });
-  }
+
+      const existingEmotion = iconWrapper.querySelector(".emotion_icon");
+      if (existingEmotion) existingEmotion.remove();
+
+      const img = document.createElement("img");
+      img.src = "/static/assets/img/smile_calendar_emozi.png";
+      img.alt = "emotion";
+      img.className = "emotion_icon";
+
+      // ⭐ 항상 앞에 추가 (이모지가 왼쪽)
+      iconWrapper.prepend(img);
+    }
+  });
+}
+
+
 
   function removeEmotionFromCalendar() {
     const calendarCells = document.querySelectorAll(".calendar_day_positioned");
