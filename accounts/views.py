@@ -5,8 +5,6 @@ from django.contrib.auth.forms import AuthenticationForm
 from .services import UserService
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 from utils.choices import ExerciseGoalType
-from django.http import HttpResponseForbidden
-from .models import CustomUser
 from .services import UserService
 
 # 템플릿 렌더링 처리
