@@ -68,6 +68,7 @@
   cursor: pointer;
   max-width: 110px;
   flex-shrink: 1;
+  margin-right:-20px;
 }
 
 .datepicker input[type="date"]:first-child {
@@ -120,7 +121,8 @@
   width:15px;
   margin:20px 10px;
 }
-.calendar img{
-    width:20px;
-    margin-left:-20px;
+.calendar img {
+    width: 20px;
+    position: relative; /* 💥 꼭 필요해 */
+    z-index: 10;
 }
