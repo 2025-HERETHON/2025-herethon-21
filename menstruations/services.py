@@ -6,7 +6,6 @@ from django.db.models import Avg
 from django.http import HttpRequest
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
-from utils.helpers import ResponseHelper
 from utils.validators import validate_form, validate_auth, validate_permission, validate_unique
 from .models import Menstruation
 from .forms import MenstruationForm
