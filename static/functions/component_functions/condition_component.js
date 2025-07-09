@@ -59,8 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     } else {
       openAlertModal({
-        title: '저장되었습니다.',
-        text: '리뷰가 성공적으로 저장되었습니다.',
+        title: '리뷰가 저장되었습니다.',
         imageUrl: '/static/assets/img/modal_star.png',
         onConfirm: function () {
           content.disabled = true;

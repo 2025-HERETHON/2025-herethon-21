@@ -1,5 +1,4 @@
 {% extends "../example/base.html" %}
-
 {% load static %}
 {% block style %}
 <link rel="stylesheet" href="{% static 'styles/component_styles/alert_modal_component.css' %}" />
@@ -10,18 +9,15 @@
 {% endblock script %}
 
 {% block body %}
-<div id="alertModal" class="modal_overlay" style="display: none;">
-  <div class="modal_box">
-    <div class="modal_content">
-      <img id="alertModalImage" class="modal_image" />
-      <h3 id="alertModalTitle" class="modal_title"></h3>
-      <p id="alertModalText" class="modal_text"></p>
-      <p id="alertModalSubText" class="modal_subtext" style="display: none;"></p>
+<div id="alertModal" class="alert_modal_overlay" style="display: none;">
+  <div class="alert_modal_box">
+    <div class="alert_modal_content">
+      <img id="alertModalImage" class="alert_modal_image" />
+      <h3 id="alertModalTitle" class="alert_modal_title"></h3>
     </div>
-    <div class="modal_buttons">
-      <button class="modal_button" id="alertConfirmBtn">확인</button>
+    <div class="alert_modal_buttons">
+      <button class="alert_modal_button" id="alertConfirmBtn">확인</button>
     </div>
   </div>
 </div>
-
 {% endblock body %}
