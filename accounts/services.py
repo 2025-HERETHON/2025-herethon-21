@@ -3,7 +3,7 @@
 from django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
-from .forms import CustomUserChangeForm
+from .forms import CustomUserCreationForm
 
 class UserService:
     @staticmethod
@@ -36,7 +36,7 @@ class UserService:
         
     @staticmethod
     def update(user, form_data, files_data=None):
-        form = CustomUserChangeForm(form_data, files_data, instance=user)
+        form = CustomUserCreationForm(form_data, files_data, instance=user)
         if form.is_valid():
             form.save()
             return form, True

@@ -80,5 +80,6 @@ def update_CustomUser(request):
             return redirect("accounts:main")
     else:
         # 폼을 새로 불러올 때 사용자 기존 정보가 담겨 있게 수정
-        form = CustomUserChangeForm(instance=request.user)
+        # 폼 변경
+        form = CustomUserCreationForm(instance=request.user)
     return render(request, "update.html", {"form": form})
