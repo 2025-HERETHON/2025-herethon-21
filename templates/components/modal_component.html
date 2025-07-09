@@ -6,8 +6,11 @@
 {% endblock style %} 
 
 {% block script %}
-<script src="{% static 'functions/component_functions/modal_component.js' %}"></script>
+  {% if not modal_loaded %}
+  <script src="{% static 'functions/component_functions/modal_component.js' %}"></script>
+  {% endif %}
 {% endblock script %}
+
 
 {% block body %}
 <div id="commonModal" class="modal_overlay" style="display: none;">

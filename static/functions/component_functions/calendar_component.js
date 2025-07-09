@@ -98,17 +98,7 @@ const aiPredictedSchedules = [
 
     // ⭐ 오늘 날짜에 별 아이콘 추가 (운동 리뷰가 있을 경우)
     if (
-      year === today.getFullYear() &&
-      month === today.getMonth() &&
-      hasReviewToday === true
-    ) {
-      const calendarCells = document.querySelectorAll(".calendar_day_positioned");
-      const todayDate = today.getDate();
-
-      calendarCells.forEach((cell) => {
-        const cellDay = parseInt(cell.textContent.trim(), 10);
-        // 별 아이콘 렌더링
-if (
+  typeof hasReviewToday !== "undefined" &&
   year === today.getFullYear() &&
   month === today.getMonth() &&
   hasReviewToday === true
@@ -136,16 +126,11 @@ if (
         img.src = "/static/assets/img/star_calendar_icon.png";
         img.alt = "review star";
         img.className = "review_star_icon";
-
-        // ⭐ 항상 뒤에 추가 (별은 오른쪽)
         iconWrapper.appendChild(img);
       }
     }
   });
 }
-
-      });
-    }
 
 
   }

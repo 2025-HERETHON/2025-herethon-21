@@ -1,5 +1,7 @@
-let modalConfirmCallback = null; // 콜백 저장 변수
-
+// 전역에서 중복 선언 방지
+if (typeof window.modalConfirmCallback === 'undefined') {
+  window.modalConfirmCallback = null;
+}
 function openModal({ title, subtext = "", imageUrl, onConfirm = null }) {
   document.getElementById('modalTitle').textContent = title;
   document.getElementById('modalImage').src = imageUrl;
