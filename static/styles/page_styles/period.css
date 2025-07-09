@@ -17,6 +17,9 @@
   box-sizing: border-box;
 }
 
+.content_right::-webkit-scrollbar {
+    display: none;
+}
 .date_picker_wrapper {
   display: flex;
   flex-direction: column;
@@ -109,13 +112,14 @@
 }
 
 .period_history {
-  width: 495px;
+  width: 470px;
   margin: 0 auto;
 }
 
 .period_history h2 {
-  font-size: 18px;
-  margin-bottom: 12px;
+  font-size: 17px;
+  margin: 12px 0;
+  margin-top:25px;
 }
 
 .period_table {

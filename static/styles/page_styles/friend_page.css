@@ -41,6 +41,9 @@
   flex-direction: column;
 }
 
+.content_right::-webkit-scrollbar {
+    display: none;
+}
 .sidebar_nav {
   width: 6vw;
   min-width: 50px;

@@ -354,8 +354,4 @@ def finishedroutine(request):
 def editpage(request):
     return render(request,"pages/edit_page.html")
 
-def willbedeleted(request):
-    return render(request,"pages/will_be_deleted.html")
-
-
 
