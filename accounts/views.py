@@ -74,18 +74,12 @@ def delete_CustomUser(request):
             return redirect("accounts:login")
     else:
         return redirect("accounts:main")
-    
-def update_CustomUser(request, username):
-    user = get_object_or_404(CustomUser, username=username)
 
-    if request.user != user:
-        return HttpResponseForbidden("권한이 없습니다.")
-
+def update_CustomUser(request):
     if request.method == "POST":
-        form, success = UserService.update(user, request.POST, request.FILES)
+        form, success = UserService.update(request.user, request.POST, request.FILES)
         if success:
             return redirect("accounts:main")
     else:
-        form = CustomUserChangeForm(instance=user)
-
-    return render(request, "update.html", {"form": form, "user": user})
+        form = CustomUserChangeForm()
+    return render(request, "update.html", {"form": form})
