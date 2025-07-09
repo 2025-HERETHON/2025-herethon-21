@@ -37,9 +37,21 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   if (editableName) {
-    editableName.addEventListener('input', checkModified);
-    editableName.addEventListener('keyup', checkModified);
-  }
+  editableName.addEventListener('input', () => {
+    penIcon2.src = editableName.textContent.trim() !== ""
+      ? "/static/assets/img/pen_after.png"
+      : "/static/assets/img/pen_before.png";
+    checkModified();
+  });
+
+  editableName.addEventListener('keyup', () => {
+    penIcon2.src = editableName.textContent.trim() !== ""
+      ? "/static/assets/img/pen_after.png"
+      : "/static/assets/img/pen_before.png";
+    checkModified();
+  });
+}
+
 
   if (penIcon2) {
     penIcon2.addEventListener('click', () => {
@@ -55,6 +67,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (textarea) {
     textarea.addEventListener('input', () => {
+      if (textarea.value.length > 30) {
+      textarea.value = textarea.value.slice(0, 30); 
+    }
       penIcon.src = textarea.value.trim() !== "" 
         ? "/static/assets/img/pen_after.png"
         : "/static/assets/img/pen_before.png";
