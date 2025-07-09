@@ -24,9 +24,9 @@
 
 .text_image_wrapper {
   display: flex;
-  justify-content: center;   /* 가로 중앙 정렬 */
-  align-items: center;       /* 세로 정렬 */
-  gap: 12px;                 /* 텍스트와 이미지 사이 간격 */
+  justify-content: center;  
+  align-items: center;      
+  gap: 12px;             
 }
 
 .text_1 {
@@ -66,7 +66,6 @@
   align-items: center;                          
 }
 
-/* 토글 스위치 전체 */
 .switch {
   position: relative;
   display: inline-block;
@@ -75,7 +74,6 @@
   margin-left: 12px;
 }
 
-/* 숨겨진 체크박스 */
 .switch input {
   opacity: 0;
   width: 0;
@@ -103,7 +101,7 @@
 }
 
 .toggle_text {
-  z-index: 2; /* 동그라미 아래로 깔리지 않도록 */
+  z-index: 2; 
   pointer-events: none;
 }
 
@@ -129,12 +127,10 @@
   z-index: 1; 
 }
 
-/* 체크되었을 때 색상 변경 */
 input:checked + .slider {
   background-color: #a48be7; 
 }
 
-/* 체크되었을 때 동그라미 이동 */
 input:checked + .slider::before {
   transform: translateX(29px);
 }
@@ -220,7 +216,7 @@ input[type=range]::-webkit-slider-thumb {
   border-radius: 50%;
   background-color: white;
   cursor: pointer;
-  background-image: url('/static/assets/img/star_highlight.png'); /* 네 이미지 경로로 변경 */
+  background-image: url('/static/assets/img/star_highlight.png'); 
   background-repeat: no-repeat;
   background-position: center;
   background-size: 40%;
@@ -281,7 +277,7 @@ input.user-interacted::-moz-range-thumb {
     cursor: pointer;
 }
 #start_btn:disabled {
-  background-color: #e5dbfb; /* 연한 보라 */
+  background-color: #e5dbfb;
   color: white;
   border: 3px solid #e5dbfb;
   cursor: not-allowed;
@@ -311,4 +307,17 @@ input.user-interacted::-moz-range-thumb {
 
 .content_right::-webkit-scrollbar {
     display: none;
+}
+
+.text_birthday {
+  color: rgba(255, 221, 113, 1); 
+}
+.text_trip {
+  color: rgba(255, 161, 161, 1); 
+}
+.text_exam {
+  color: rgba(140, 222, 255, 1); 
+}
+.text_date {
+  color: rgba(217, 217, 217, 1); 
 }

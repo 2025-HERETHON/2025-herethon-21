@@ -7,7 +7,7 @@
 .content_area {
   display: flex;
   flex: 1; 
-  overflow: auto; /* 넘칠 시 스크롤 가능 */
+  overflow: auto;
   position: relative;
 }
 
@@ -17,10 +17,9 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 5; 
-  pointer-events: none; /* 클릭 방지 */
+  pointer-events: none; 
 }
 
-/* 이미지 사이즈 조절 */
 .center_image {
   height: 80vh;
   object-fit: contain;
@@ -45,7 +44,7 @@
   width: 6vw;
   min-width: 50px;
   max-width: 60px;
-  height: 100vh; /* 화면 전체 높이 */
+  height: 100vh;
   display: flex;
   flex-direction: column;
   padding: 0;
@@ -53,7 +52,7 @@
 }
 
 .nav_button {
-  writing-mode: vertical-rl; /* 텍스트 세로쓰기, 오른쪽에서 왼쪽 방향 */
+  writing-mode: vertical-rl; 
   flex: 1;
   display: flex;
   justify-content: center;
@@ -126,7 +125,7 @@
 
 .preference_box .tags {
   display: grid;
-  grid-template-columns: repeat(2, auto); /* 2열 고정 */
+  grid-template-columns: repeat(2, auto); 
   flex-wrap: wrap;
   justify-content: center; 
   gap: 12px 38px;
@@ -256,14 +255,13 @@
   
 }
 
-.info_box {
+.content_right .info_box {
   background: #FFF;
   border: 1.5px solid var(--gray-100, #DDD);
   border-radius: 20px;
   padding: 20px;
   width: 450px;
   height: 145px;
-  margin: 80px auto 0 auto; 
   box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.05);
   position: relative;
   z-index: 5;
@@ -274,7 +272,7 @@
   height: 100px;
   border-radius: 50%;
   overflow: hidden;
-  flex-shrink: 0;  /* 텍스트랑 같이 있을 때 이미지 크기 유지 */
+  flex-shrink: 0; 
 }
 
 .profile_image_wrapper img {
@@ -283,11 +281,23 @@
   object-fit: cover;
   object-position: center;
   display: block;
-  border-radius: 50%; /* 모서리 둥글게 */
+  border-radius: 50%; 
 }
 
 .icon_image2 {
   height: auto;           
   width: 100px;        
   margin-left: 3px;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-1.5px); }
+  50% { transform: translateX(1.5px); }
+  75% { transform: translateX(-1.5px); }
+  100% { transform: translateX(0); }
+}
+
+.shake {
+  animation: shake 0.4s;
 }

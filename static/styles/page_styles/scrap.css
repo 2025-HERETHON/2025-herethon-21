@@ -192,3 +192,7 @@
   font-size: 14px;
   font-weight: 500;
 }
+
+.hidden {
+  display: none !important;
+}

@@ -28,6 +28,12 @@ html, body {
   overflow: hidden; 
 }
 
+.main_layout {
+  display: flex;
+  min-height: 100vh; /* 브라우저 화면보다 작을 땐 채우고, 클 땐 자동 확장 */
+  width: 100%;
+}
+
 .star_background {
   position: fixed;
   top: 0;

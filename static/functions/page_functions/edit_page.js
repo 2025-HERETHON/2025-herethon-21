@@ -97,23 +97,28 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   tags.forEach(tag => {
-    tag.addEventListener('click', () => {
-      const activeTags = document.querySelectorAll('.preference_box .preference_tag.active');
+  tag.addEventListener('click', () => {
+    const activeTags = document.querySelectorAll('.preference_box .preference_tag.active');
 
-      if (tag.classList.contains('active')) {
-        tag.classList.remove('active');
+    if (tag.classList.contains('active')) {
+      tag.classList.remove('active');
+    } else {
+      if (activeTags.length < maxSelected) {
+        tag.classList.add('active');
       } else {
-        if (activeTags.length < maxSelected) {
-          tag.classList.add('active');
-        } else {
-          alert(`최대 ${maxSelected}개까지만 선택할 수 있습니다.`);
-          return;
-        }
+  
+        tags.forEach(t => {
+          t.classList.add("shake");
+          setTimeout(() => t.classList.remove("shake"), 300);
+        });
+        return;
       }
+    }
 
-      checkModified();
-    });
+    checkModified();
   });
+});
+
 
   saveButton.addEventListener('click', () => {
 
