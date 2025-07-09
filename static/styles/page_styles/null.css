@@ -63,3 +63,21 @@ body{
   align-items: center;
 
 }
+
+.logo_image{
+  width: 115px;
+  position:absolute;
+  top:33.8px;
+  left:50px;
+  z-index:10;
+}
+.logohugger{
+  position:absolute;
+  top:27.8px;
+  left:169px;
+  z-index:10;
+}
+.logohugger .logo_image{
+  top:5px;
+  left:-119px;
+}

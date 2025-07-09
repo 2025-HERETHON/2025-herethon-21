@@ -148,11 +148,11 @@
 }
 
 .pipi_image {
-  width: 140px;
-  height: auto;
-  position: absolute;
-  top: -8%;
-  left: 68%;
+    top: -20px;
+    width: 140px;
+    height: auto;
+    position: absolute;               
+    left: 61%; 
 }
 .friend_page .condition_footer .icon_btn {
   display: none;

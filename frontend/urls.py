@@ -31,4 +31,5 @@ urlpatterns = [
     path("friended", friended, name="friended"),
     path("finishedroutine", finishedroutine, name="finishedroutine"),
     path("editpage", editpage, name="editpage"),
+    path("willbedeleted", willbedeleted, name="willbedeleted"),
 ]

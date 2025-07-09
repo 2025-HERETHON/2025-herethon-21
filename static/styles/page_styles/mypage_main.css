@@ -55,11 +55,11 @@
 }
 
 .pipi_image{
-    width: 150px;
+    top: -445px;
+    width: 140px;
     height: auto;
-    position: absolute;
-    top: -441px;
-    left: 65%;
+    position: absolute;               
+    left: 61%; 
 }
 
 .main_layout {
