@@ -9,6 +9,8 @@ urlpatterns = [
     path('login/', login_view, name="login"),
     path('logout/', logout_view, name="logout"),
     path('delete/', delete_CustomUser, name="delete_CustomUser"),
-    path('update/<str:username>/', update_CustomUser, name="update_CustomUser")
+    
+    # 사용자 개인 정보 수정이므로 request.user 접근으로 수정
+    path('update/', update_CustomUser, name="update_CustomUser")
 ]
 

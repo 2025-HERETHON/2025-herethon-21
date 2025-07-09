@@ -79,5 +79,6 @@ def update_CustomUser(request):
         if success:
             return redirect("accounts:main")
     else:
-        form = CustomUserChangeForm()
+        # 폼을 새로 불러올 때 사용자 기존 정보가 담겨 있게 수정
+        form = CustomUserChangeForm(instance=request.user)
     return render(request, "update.html", {"form": form})
