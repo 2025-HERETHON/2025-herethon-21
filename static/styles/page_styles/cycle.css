@@ -157,13 +157,12 @@ input:not(:checked) + .slider .off_text {
 
 
 .slider-container {
-  width: 450px;
+  width: 435px;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top:17px;
-  margin-left:-1vw;
 }
 
 .slider-track {
