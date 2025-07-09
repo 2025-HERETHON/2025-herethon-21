@@ -5,7 +5,6 @@
 <link rel="stylesheet" href="{% static 'styles/component_styles/page_component.css' %}" />
 <link rel="stylesheet" href="{% static 'styles/page_styles/onboarding_pages/onboarding_1.css' %}" />
 <link rel="stylesheet" href="{% static 'styles/page_styles/mypage_main.css' %}" />
-<link rel="stylesheet" href="{% static 'styles/page_styles/alarm_page.css' %}" />
 <link rel="stylesheet" href="{% static 'styles/page_styles/finished_routine.css' %}" />
 {% endblock style %} 
 
@@ -50,13 +49,13 @@
             <span class="star star13"></span> <span class="star star14"></span> <span class="star star15"></span> <span class="star star16"></span>
         </section>
         <!-- 오른쪽 컨텐츠 영역 -->
-      {% include "../components/review_component.html" with data=data index=forloop.counter0 %}
+        {% include "../components/review_component.html" with data=data index=forloop.counter0 %}
             <br>
             <div class="btn_hugger">
                 <button type="submit" value="주기별 바로가기" id="go_to_main" >주기별 바로가기</button>
                 <button type="submit" value="운동 시작하기" id="scrap_btn">운동 스크랩하기</button>
             </div>
-        </section>
+               </section>
     </section>
   </main>
 </body>

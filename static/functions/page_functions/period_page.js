@@ -8,20 +8,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const box = document.getElementsByClassName("selected_showingbox")[0];
   const searchBtn = document.getElementById("add_button");
 
-  function isValidDate(dateStr) {
-    const regex = /^\d{4}-\d{2}-\d{2}$/;
-    if (!regex.test(dateStr)) return false;
-
-    const date = new Date(dateStr);
-    return !isNaN(date.getTime());
-  }
-
-  function updateButtonState() {
-    const start = startInput.value.trim();
-    const end = endInput.value.trim();
-
-    if (isValidDate(start) && isValidDate(end)) {
-      searchBtn.classList.add('active');
   function formatDate(isoDate) {
     const [year, month, day] = isoDate.split("-");
     return `${year}년 ${parseInt(month)}월 ${parseInt(day)}일`;
@@ -58,8 +44,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  startInput.addEventListener('input', updateButtonState);
-  endInput.addEventListener('input', updateButtonState);
+  startDateInput.addEventListener("change", updateDisplay);
+  endDateInput.addEventListener("change", updateDisplay);
 
   // ✅ 삭제 버튼 이벤트 연결
   const deleteButtons = document.querySelectorAll(".delete_btn");

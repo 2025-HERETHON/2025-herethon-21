@@ -9,7 +9,36 @@
 {% block script %}
 <script src="{% static 'functions/component_functions/calendar_component.js' %}"></script>
 <script src="{% static 'functions/page_functions/cycle_page.js' %}"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const routineItems = document.querySelectorAll(".routine_item");
+    const prevBtn = document.getElementById("list_prev");
+    const nextBtn = document.getElementById("list_next");
+    let currentIndex = 0;
+
+    function updateRoutineDisplay() {
+      routineItems.forEach((item, index) => {
+        item.style.display = index === currentIndex ? "block" : "none";
+      });
+    }
+
+    prevBtn.addEventListener("click", () => {
+      currentIndex = (currentIndex - 1 + routineItems.length) % routineItems.length;
+      updateRoutineDisplay();
+    });
+
+    nextBtn.addEventListener("click", () => {
+      currentIndex = (currentIndex + 1) % routineItems.length;
+      updateRoutineDisplay();
+    });
+
+    updateRoutineDisplay();
+  });
+
+</script>
 {% endblock script %}
+
 
 
 {% block body %}
@@ -48,7 +77,7 @@
       </section>
       
     <nav class="sidebar_nav" aria-label="페이지 네비게이션">
-      <a href="/cyclepage" class="nav_button nav_button1">주 기 별</a>
+      <a href="/cyclepage" class="nav_button nav_button1">운 동</a>
       <a href="/scrappage" class="nav_button nav_button2">스 크 랩</a>
       <a href="/periodpage" class="nav_button nav_button3">월 경</a>
     </nav>
@@ -76,28 +105,32 @@
                 </span>
               </label>
             </div>
-          </div>
+            <div class="slider-container">
+            <div class="slider-track">
+              <div class="slider-fill" id="fillTrack"></div>
+              <div class="slider-time" id="timeLabel">0m</div>
+            </div>
+            <input type="range" min="0" max="4" step="1" value="0" id="customSlider">
+            </div>
 
-          <div class="slider-container">
-          <div class="slider-track">
-            <div class="slider-fill" id="fillTrack"></div>
-            <div class="slider-time" id="timeLabel">0m</div>
-          </div>
-          <input type="range" min="0" max="4" step="1" value="0" id="customSlider">
-          </div>
-          <div class="routine_hugger">
+
+            <div class="routine_hugger">
             <div id="list_prev">
               <img src="{% static 'assets/img/left.png' %}" alt="왼쪽">
             </div>
+
             <div class="per_routine_list">
-            {% include "../components/routine_list_component.html" %}
+              {% include "../components/routine_list_component.html" with data_list=data_list %}
             </div>
+
             <div id="list_next">
               <img src="{% static 'assets/img/right.png' %}" alt="오른쪽">
             </div>
+
             <div class="startbtn_hugger">
               <button type="submit" value="운동 시작하기" id="start_btn" disabled>운동 시작하기</button>
             </div>
+          </div>
           </div>
         </section>
     </section>

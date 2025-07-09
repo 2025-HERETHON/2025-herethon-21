@@ -40,9 +40,6 @@
         {% if error %}
             <p style="color:red;">{{ error }}</p>
         {% endif %}
-        <div class="finding_pwd_hugger">
-            <a href="#" class="finding_pwd">비밀번호 찾기</a>
-        </div>
         <button type="submit" value="로그인" id="login_submitbtn">로그인</button>
         <button type="button" id="to_signup" data-url="{% url 'frontend:onboarding_1' %}">회원가입</button>
         </form>

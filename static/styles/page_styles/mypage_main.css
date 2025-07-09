@@ -1,6 +1,6 @@
 .pipi{
-    width:500px;
-    margin-top:80px;
+    margin-top:20px;
+    width:350px;
 }
 .condition_hugger{
     margin-top:33px;
@@ -8,7 +8,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin-bottom:80px;
+    margin-bottom:50px;
 }
 .condition_hugger h2 {
   width: 100%;
@@ -55,11 +55,11 @@
 }
 
 .pipi_image{
-    width: 150px;
+    top: -445px;
+    width: 140px;
     height: auto;
-    position: absolute;
-    top: -441px;
-    left: 65%;
+    position: absolute;               
+    left: 64.8%; 
 }
 
 .main_layout {
@@ -97,6 +97,9 @@
   overflow-y: auto;
 }
 
+.content_right::-webkit-scrollbar {
+    display: none;
+}
 .content_right {
   flex-basis: 50%;
   background-color: #ffffff;
@@ -137,4 +140,8 @@
   position: relative;
   z-index: 15;  /* top_bar보다 위로 */
   margin-top: 500px;
+}
+
+.h2_hugger{
+  margin-top: 50px;
 }

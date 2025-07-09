@@ -32,7 +32,6 @@ document.addEventListener('DOMContentLoaded', function () {
   if (logoutButton) {
     logoutButton.addEventListener('click', () => {
       modalTitle.textContent = "로그아웃 하시겠습니까?";
-      modalText.style.display = "none";
       modalSubText.style.display = "none";
       modal.style.display = 'flex';
 
@@ -45,7 +44,6 @@ document.addEventListener('DOMContentLoaded', function () {
   if (withdrawButton) {
     withdrawButton.addEventListener('click', () => {
       modalTitle.textContent = "정말로 회원 탈퇴를 하시겠습니까?";
-      modalText.style.display = "none";
       modalSubText.textContent = "*돌이킬 수 없습니다";
       modalSubText.style.display = "block";
       modal.style.display = 'flex';

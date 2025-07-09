@@ -7,52 +7,30 @@
 {% endblock script %}
 
 {% block body %} 
-    <div class="bighugger" id="border">
-      <div class="scrapbtn">
+{% for routine_day in data_list %}
+<div class="routine_item" data-index="{{ forloop.counter0 }}" {% if not forloop.first %}style="display:none;"{% endif %}>
+  <div class="bighugger" id="border">
+    <div class="scrapbtn">
       <img
         src="{% static 'assets/img/scrap.png' %}"
         alt="스크랩 아이콘"
         id="scrapicon"
         data-default="{% static 'assets/img/scrap.png' %}"
         data-scraped="{% static 'assets/img/scrap_scrapped.png' %}" />
-      </div>
-      <table class="table_centerer">
-        <tr>
-          <th>1</th>
-          <td>img</td>
-          <td>준비 스트레칭</td>
-          <td>3분</td>
-          <td>몸풀기</td>
-        </tr>
-        <tr>
-          <th>2</th>
-          <td>img</td>
-          <td>스쿼트</td>
-          <td>5분</td>
-          <td>하체근력</td>
-        </tr>
-
-        <tr>
-          <th>3</th>
-          <td>img</td>
-          <td>플랭크</td>
-          <td>3분</td>
-          <td>코어근력</td>
-        </tr>
-        <tr>
-          <th>4</th>
-          <td>img</td>
-          <td>암서클</td>
-          <td>5분</td>
-          <td>팔 / 어깨</td>
-        </tr>
-        <tr>
-          <th>5</th>
-          <td>img</td>
-          <td>마무리 스트레칭</td>
-          <td>4분</td>
-          <td>근육 이완</td>
-        </tr>
-      </table>
     </div>
+    <table class="table_centerer">
+      {% for routine in routine_day.routines %}
+      <tr>
+        <th>{{ routine.id }}</th>
+        <td>img</td>
+        <td>{{ routine.name }}</td>
+        <td>{{ routine.duration }}</td>
+        <td>{{ routine.part }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+{% endfor %}
+
 {% endblock body %}
