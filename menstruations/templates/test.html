@@ -58,5 +58,18 @@
       <h1>Cycle</h1>
       {{menstruation_cycle}}
     </section>
+    {% if messages %}
+    <dialog
+      open
+      style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); margin: 0;"
+    >
+      {% for message in messages %}
+        <p class="{{ message.tags }}">{{ message }}</p>
+      {% endfor %}
+      <form method="dialog">
+        <button>닫기</button>
+      </form>
+    </dialog>
+    {% endif %}
   </body>
 </html>

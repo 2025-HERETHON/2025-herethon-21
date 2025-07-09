@@ -17,6 +17,11 @@
         <input name="end" type="date" />
         <button type="submit">제출</button>
       </form>
+      {% if messages %}
+        {% for message in messages %}
+          <p class="{{ message.tags }}">{{ message }}</p>
+        {% endfor %}
+      {% endif %}
     </section>
   </body>
 </html>
