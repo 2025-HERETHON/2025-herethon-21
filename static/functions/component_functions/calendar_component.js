@@ -94,6 +94,36 @@ const aiPredictedSchedules = [
       fragment.appendChild(nextDay);
     }
     calendarDays.appendChild(fragment);
+
+
+    // ⭐ 오늘 날짜에 별 아이콘 추가 (운동 리뷰가 있을 경우)
+    if (
+      year === today.getFullYear() &&
+      month === today.getMonth() &&
+      hasReviewToday === true
+    ) {
+      const calendarCells = document.querySelectorAll(".calendar_day_positioned");
+      const todayDate = today.getDate();
+
+      calendarCells.forEach((cell) => {
+        const cellDay = parseInt(cell.textContent.trim(), 10);
+        if (
+          cellDay === todayDate &&
+          !cell.classList.contains("prev_month") &&
+          !cell.classList.contains("next_month")
+        ) {
+          const existingStar = cell.querySelector(".review_star_icon");
+          if (!existingStar) {
+            const img = document.createElement("img");
+            img.src = "/static/assets/img/star_calendar_icon.png"; // ⭐ 네가 사용할 별 아이콘 경로!
+            img.alt = "review star";
+            img.className = "review_star_icon";
+            cell.appendChild(img);
+          }
+        }
+      });
+    }
+
   }
 
   renderCalendar(currentYear, currentMonth);

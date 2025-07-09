@@ -7,10 +7,6 @@
 <link rel="stylesheet" href="{% static 'styles/component_styles/modal_component.css' %}">
 {% endblock style %} 
 
-{% block script %}
-<script src="{% static 'functions/component_functions/calendar_component.js' %}"></script>
-{% endblock script %}
-
 {% block body %}
 <body>
 
@@ -85,6 +81,12 @@
       <a href="/periodpage" class="nav_button nav_button3">월 경</a>
     </nav>
   </main>
+{% block script %}
+  <script>
+    const hasReviewToday = JSON.parse("{{ data_list|length|yesno:'true,false' }}");
+  </script>
+  <script src="{% static 'functions/component_functions/calendar_component.js' %}"></script>
+{% endblock script %}
 </body>
 {% include "../components/modal_component.html" %}
 {% endblock body %}
