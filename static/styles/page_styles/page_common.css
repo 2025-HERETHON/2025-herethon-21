@@ -165,11 +165,11 @@
 
 .friend_box {
   width: 455px;
-  margin: 0 auto 0 auto; /* 가로 중앙 정렬 */
+  margin: 0 auto 0 auto; 
   display: flex;
   gap: 20px; 
-  overflow-x: auto; /* 가로 스크롤 허용 */
-  white-space: nowrap; /* 줄바꿈 방지 */
+  overflow-x: auto; 
+  white-space: nowrap; 
 }
 
 .friend_item {

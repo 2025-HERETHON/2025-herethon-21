@@ -42,7 +42,7 @@ body {
   font-size: 22px;
   font-weight: 800;
   margin-left: 0; 
-  flex-grow: 1; /* 남는 공간 차지해서 버튼 밀어내기 */
+  flex-grow: 1; 
   text-align: left;
 }
 
@@ -54,7 +54,6 @@ body {
   margin-left: 35px;
 }
 
-/* 요일 행 (고정 높이) */
 .calendar_weekdays {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -64,7 +63,6 @@ body {
   padding-bottom: 5px;
 }
 
-/* 날짜 그리드 */
 .calendar_days {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -73,7 +71,6 @@ body {
   border-left: 1px solid #ccc;  
 }
 
-/* 날짜 */
 .calendar_day {
   border-right: 1px solid #ccc; 
   border-bottom: 1px solid #ccc;  
@@ -88,7 +85,6 @@ body {
   background-color: #fff;
 }
 
-/* 오늘 날짜 강조 */
 .calendar_day.today {
   position: relative;
   font-weight: bold;
@@ -101,7 +97,7 @@ body {
   position: absolute;
   top: 0px;
   left: 50%;
-  transform: translateX(-50%) rotate(180deg); /* 정중앙 정렬 + 아래 삼각형을 위로 뒤집기 */
+  transform: translateX(-50%) rotate(180deg); 
   width: 0;
   height: 0;
   border-left: 6px solid transparent;
@@ -133,7 +129,7 @@ body {
   font-size: 11px;
   font-weight: 400;
   position: relative;
-  padding-left: 21px; /* 동그라미 공간 확보 */
+  padding-left: 21px; 
   color: #000000;
 }
 
@@ -148,7 +144,6 @@ body {
   border-radius: 50%;
 }
 
-/* 항목별 색상 월경기 난포기 배란기 황체기 순 */
 .legend_item.pink::before {
   background-color: #FFD1D1;
 }
@@ -169,8 +164,8 @@ body {
 .highlight_trip {
   background: linear-gradient(to bottom, rgba(255, 164, 164, 0.3) 50%, transparent 50%);
   background-repeat: no-repeat;
-  background-size: 100% 70%; /* 세로 크기 비율 조정 */
-  background-position: bottom; /* 셀의 아래쪽부터 채우기 */
+  background-size: 100% 70%; 
+  background-position: bottom; 
 }
 
 .highlight_birthday {
@@ -204,7 +199,7 @@ body {
   bottom: 4px;
   right: 4px;
   display: flex;
-  flex-direction: row;  /* 가로로 나란히 */
+  flex-direction: row;
   align-items: center;
   gap: 3px;
   z-index: 10;
