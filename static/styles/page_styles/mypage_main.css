@@ -13,6 +13,7 @@
 .condition_hugger h2 {
   width: 100%;
   text-align: left; 
+  font-size: 19px;
 }
 
 .condition_hugger h2 span {
@@ -30,6 +31,7 @@
 .review_hugger h2 {
   width: 100%;
   text-align: left; 
+  font-size: 19px;
 }
 
 .review_hugger h2 span {
@@ -51,13 +53,15 @@
   align-items: center;
   justify-content: center;
 }
+
 .pipi_image{
+    width: 150px;
+    height: auto;
     position: absolute;
-    top:-490px;
-    right:0;
-    width:190px;
-    transform: rotate(180deg);
+    top: -441px;
+    left: 65%;
 }
+
 .main_layout {
   display: flex;
   height: 100vh;
@@ -71,7 +75,6 @@
   position: relative;
 }
 
-/* 중앙 이미지 wrapper */
 .center_image_wrapper {
   position: absolute;
   top: 50%;

@@ -8,19 +8,16 @@
 
 {% block script %}
 <script src="{% static 'functions/component_functions/calendar_component.js' %}"></script>
+<script src="{% static 'functions/page_functions/edit_page.js' %}"></script>
 {% endblock script %}
 
 
 {% block body %}
 <body>
 
-    <header class="top_section">
-        <section class="top_bar">
-            <img src="{% static 'assets/img/logo.png' %}" alt="로고" class="logo_image" />
-            <img src="{% static 'assets/img/icon.png' %}" alt="아이콘" class="icon_image" />
-            <img src="{% static 'assets/img/noti.png' %}" alt="알림" class="noti_image" />
-            </section>
-    </header>
+    {% block header %}
+        {% include "../components/header_component.html" %}
+    {% endblock header %}
     
     <main class="main_layout">
     <section class="content_area">
@@ -52,12 +49,53 @@
       </section>
 
       <section class="content_right">
-        <div class="right_wrapper">
-            <p class="info_title">나의 프로필</p>
-            
-            {% block infobox_edit %}
-            {% include "../components/infobox_component.html" %}
-            {% endblock infobox_edit %}
+        <img src="{% static 'assets/img/deco_pipi.png' %}" alt="상단 피피" class="deco_pipi" />
+        <div class="info_block_wrapper">
+            <p class="section_title">나의 프로필</p>
+
+          <div class="info_box">
+            <div class="info_content">
+              <div class="profile_image_wrapper">
+                <img src="{% static 'assets/img/icon.png' %}" alt="아이콘"
+                class="icon_image2 {% if is_editable %}editable_icon{% endif %}" />
+              </div>
+     
+              <h3 class="info_title editable_text" contenteditable="true" spellcheck="false">나</h3>
+     
+            </div>
+            <div class="intro_images">
+                <img id="penIcon_2" src="{% static 'assets/img/pen_before.png' %}" alt="연필" class="pen_icon" />
+                <img id="trashcanIcon_2" src="{% static 'assets/img/trashcan.png' %}" alt="휴지통" class="trashcan_img" />
+            </div>
+          </div>
+        
+            <div id="imageOptionBox" class="image_option_box hidden">
+              <p id="galleryOption" class="option_item">갤러리 들어가기</p>
+              <p id="defaultImageOption" class="option_item">기본 사진 선택하기</p>
+            </div>
+
+            <input type="file" id="profileImageInput" accept="image/*" style="display: none;" />
+
+            <p class="section_title_2">자기소개</p>
+            <div class="section_box">
+              <textarea id="introTextarea" class="intro_textarea"></textarea>
+              <div class="intro_images">
+                <img id="penIcon" src="{% static 'assets/img/pen_before.png' %}" alt="연필" class="pen_icon" />
+                <img id="trashcanIcon" src="{% static 'assets/img/trashcan.png' %}" alt="휴지통" class="trashcan_img" />
+              </div>
+            </div>
+
+            <p class="section_title_2">운동 목적</p>
+            <div class="preference_box">
+              <div class="tags">
+                <span class="preference_tag">체형 관리</span> <span class="preference_tag">체형 증진</span> <span class="preference_tag">스트레스 해소</span>
+                <span class="preference_tag">근력 강화</span> <span class="preference_tag">유연성 향상</span>
+              </div>
+            </div>
+
+            <div class="button_wrapper">
+              <button id="saveButton" class="submit_button" disabled>수정 완료</button>
+            </div>
         </div>
       </section>
     </section>

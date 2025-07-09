@@ -134,7 +134,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin-bottom:80px;
+    margin-bottom: 80px;
     position: relative;
 }
 .review_hugger h2 {
@@ -146,11 +146,11 @@
   display: block;
   margin-bottom: 12px;
 }
+
 .pipi_image {
+  width: 140px;
+  height: auto;
   position: absolute;
-  top: -60px;
-  right: 0;
-  width: 190px;
-  transform: rotate(180deg);
-  z-index: 10;
+  top: -8%;
+  left: 68%;
 }

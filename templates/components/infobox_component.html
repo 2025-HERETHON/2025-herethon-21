@@ -9,7 +9,10 @@
 {% block body %}
         <div class="info_box">
           <div class="info_content">
-            <img src="{% static 'assets/img/icon.png' %}" alt="아이콘" class="icon_image2" />
+            <div class="profile_image_wrapper">
+             <img src="{% static 'assets/img/icon.png' %}" alt="아이콘"
+             class="icon_image2 {% if is_editable %}editable_icon{% endif %}" />
+            </div>
             <div class="info_text_group">
               <h3 class="info_title">나</h3>
               <p class="info_text">안녕? 나는 너만의 운동 루틴 추천 AI 피피야</p>

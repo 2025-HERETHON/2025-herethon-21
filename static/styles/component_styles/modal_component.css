@@ -12,14 +12,12 @@
   background: #fff;
   border-radius: 20px;
   width: 450px;
-  height: 250px; /* 기존 230px → 250px */
+  height: 220px; 
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   overflow: hidden;
   display: flex;
   flex-direction: column;
 }
-
-
 
 .modal_content {
   padding: 30px 20px 0 20px;
@@ -50,7 +48,7 @@
 .modal_buttons {
   display: flex;
   width: 100%;
-  height: 90px; /* 기존 85px → 95px */
+  height: 85px;
 }
 .modal_button {
   flex: 1;
@@ -61,11 +59,10 @@
   cursor: pointer;
   font-weight: 700;
   font-size: 16px;
-  height: 90px;
+  height: 85px;
   text-align: center;
   transition: background-color 0.3s ease;
 }
-
 
 
 .modal_button.left_btn {

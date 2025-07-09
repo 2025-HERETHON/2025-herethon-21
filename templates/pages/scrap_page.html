@@ -15,16 +15,9 @@
 {% block body %}
 <body>
 
-    <header class="top_section">
-        <section class="top_bar">
-            <img src="{% static 'assets/img/logo.png' %}" alt="로고" class="logo_image" />
-            <img src="{% static 'assets/img/icon.png' %}" alt="아이콘" class="icon_image" />
-
-            <a href="{% url 'frontend:alarmpage' %}">
-                <img src="{% static 'assets/img/noti.png' %}" alt="알림" class="noti_image" />
-            </a>            
-            </section>
-    </header>
+    {% block header %}
+        {% include "../components/header_component.html" %}
+    {% endblock header %}
     
     
     <main class="main_layout">
@@ -63,14 +56,19 @@
       <section class="content_right">
         <div class="date_picker_wrapper">
           <p class="date_description">날짜 선택</p>
-          <div class="date_range_box">
-            <input type="text" id="scrap_start_date" class="date_input" />
+          <div class="datepicker">
+            <input type="date" id="scrap_start_date" class="date_input" />
             <img src="{% static 'assets/img/arrow.png' %}" alt="화살표" class="arrow" />
-            <input type="text" id="scrap_end_date" class="date_input" />
+            <input type="date" id="scrap_end_date" class="date_input" />
             <button id="search_button" class="search_button">검색</button>
+          </div>
+          <div class="selected_showingbox hidden">
+            <p id="scrap_start_line" class="hidden"><span id="scrap_start_text"></span></p>
+            <p id="scrap_end_line" class="hidden"><span id="scrap_end_text"></span></p>
           </div>
         </div>
       </section>
+      
 
 
     </section>
