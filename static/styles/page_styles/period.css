@@ -61,7 +61,29 @@
   border: none;
   background-color: rgba(255, 255, 255, 1);
 }
+.period_date_input {
+  min-width: 0;
+  width: 75px;
+  padding: 0;
+  outline: none;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size:13.5px;
+  color: #000;  /* 추가 */
+  position: relative;
+  z-index: 1; /* 겹침 방지 */
+}
 
+.period_date_input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  pointer-events: auto;
+}
 .search_button {
   padding: 8px 16px;
   background-color: rgba(239, 239, 239, 1);

@@ -1,53 +1,111 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const startDateInput = document.getElementById("period_start_date");
-  const endDateInput = document.getElementById("period_end_date");
-  const startLine = document.getElementById("period_start_line");
-  const endLine = document.getElementById("period_end_line");
-  const startText = document.getElementById("period_start_text");
-  const endText = document.getElementById("period_end_text");
-  const box = document.getElementsByClassName("selected_showingbox")[0];
-  const searchBtn = document.getElementById("add_button");
+  const dateInputs = document.querySelectorAll(".datepicker input[type='date']");
 
-  function formatDate(isoDate) {
-    const [year, month, day] = isoDate.split("-");
-    return `${year}년 ${parseInt(month)}월 ${parseInt(day)}일`;
-  }
+  dateInputs.forEach(input => {
+    input.addEventListener("change", () => {
+      if (input.value) {
+        input.classList.add("has-value");
+      } else {
+        input.classList.remove("has-value");
+      }
+    });
 
-  function updateDisplay() {
-    const startVal = startDateInput.value;
-    const endVal = endDateInput.value;
-
-    if (startVal) {
-      //startText.textContent = formatDate(startVal);  
-      startLine.classList.remove("hidden");
-      box.style.display = "block";
-      startDateInput.classList.add("has-value");  
-    } else {
-      startLine.classList.add("hidden");
-      startDateInput.classList.remove("has-value");  
+    if (input.value) {
+      input.classList.add("has-value");
     }
+  });
 
-    if (endVal) {
-      //endText.textContent = formatDate(endVal);  
-      endLine.classList.remove("hidden");
-      box.style.display = "block";
-      endDateInput.classList.add("has-value");  
-    } else {
-      endLine.classList.add("hidden");
-      endDateInput.classList.remove("has-value"); 
-    }
+  const editButtons = document.querySelectorAll(".edit_btn");
+  let currentlyEditingRow = null;
 
-    if (startVal && endVal) {
-      searchBtn.classList.add("active");
-    } else {
-      searchBtn.classList.remove("active");
-    }
-  }
+  editButtons.forEach(button => {
+    button.addEventListener("click", function () {
+      const row = button.closest(".period_row");
+      const dateSpan = row.querySelector("span:nth-child(1)");
+      const durationSpan = row.querySelector("span:nth-child(2)");
+      const cycleSpan = row.querySelector("span:nth-child(3)");
 
-  startDateInput.addEventListener("change", updateDisplay);
-  endDateInput.addEventListener("change", updateDisplay);
+      if (row.classList.contains("editing")) {
+        openModal({
+          title: "수정 내용을 저장하시겠습니까?",
+          subtext: "*수정한 정보는 즉시 반영됩니다.",
+          imageUrl: "/static/assets/img/modal_star.png",
+          onConfirm: function () {
+            const startInput = row.querySelector(".period_start_input");
+            const endInput = row.querySelector(".period_end_input");
 
-  // ✅ 삭제 버튼 이벤트 연결
+            const newStart = startInput.value;
+            const newEnd = endInput.value;
+
+            const newStartDate = new Date(newStart);
+            const newEndDate = new Date(newEnd);
+
+            const duration = Math.floor((newEndDate - newStartDate) / (1000 * 60 * 60 * 24)) + 1;
+
+            // 이전 행 종료일 가져와서 주기 계산
+            const prevRow = row.previousElementSibling?.classList.contains("period_row") ? row.previousElementSibling : null;
+            let cycle = "-";
+            if (prevRow) {
+              const prevDateText = prevRow.querySelector("span:nth-child(1)").textContent;
+              const prevEndStr = prevDateText.split(" - ")[1].replaceAll(".", "-").trim();
+              const prevEndDate = new Date(prevEndStr);
+              cycle = Math.floor((newStartDate - prevEndDate) / (1000 * 60 * 60 * 24));
+            }
+
+            function formatDot(dateStr) {
+              const [y, m, d] = dateStr.split("-");
+              return `${y}.${m}.${d}`;
+            }
+
+            dateSpan.textContent = `${formatDot(newStart)} - ${formatDot(newEnd)}`;
+            durationSpan.textContent = `${duration}일`;
+            cycleSpan.textContent = cycle !== "-" ? `${cycle}일` : "-";
+
+            row.classList.remove("editing");
+            currentlyEditingRow = null;
+          }
+        });
+        return;
+      }
+
+      if (currentlyEditingRow && currentlyEditingRow !== row) return;
+
+      const [startRaw, endRaw] = dateSpan.textContent.trim().split(" - ");
+      const start = startRaw.replaceAll(".", "-").trim();
+      const end = endRaw.replaceAll(".", "-").trim();
+
+      dateSpan.innerHTML = `
+        <input type="date" value="${start}" class="date_input period_date_input period_start_input" data-type="start">
+        <span>-</span>
+        <input type="date" value="${end}" class="date_input period_date_input period_end_input" data-type="end">
+      `;
+
+      // **여기서 input 이벤트 추가:**
+      const startInput = row.querySelector(".period_start_input");
+      const endInput = row.querySelector(".period_end_input");
+
+      function updateDuration() {
+        if (!startInput.value || !endInput.value) {
+          durationSpan.textContent = "-";
+          return;
+        }
+        const startDate = new Date(startInput.value);
+        const endDate = new Date(endInput.value);
+        const diffDays = Math.floor((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
+        durationSpan.textContent = diffDays > 0 ? `${diffDays}` : "-";
+      }
+
+      startInput.addEventListener("change", updateDuration);
+      endInput.addEventListener("change", updateDuration);
+
+      // 초기 기간 계산
+      updateDuration();
+
+      row.classList.add("editing");
+      currentlyEditingRow = row;
+    });
+  });
+
   const deleteButtons = document.querySelectorAll(".delete_btn");
   deleteButtons.forEach(button => {
     button.addEventListener("click", function () {
@@ -58,7 +116,4 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
   });
-  startDateInput.addEventListener("change", updateDisplay);
-  endDateInput.addEventListener("change", updateDisplay);
-  updateDisplay();
 });

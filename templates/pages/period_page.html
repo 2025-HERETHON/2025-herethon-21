@@ -93,7 +93,7 @@
             </div>
 
             {% for item in period_data %}
-            <div class="period_row">
+            <div class="period_row" id="period_row_{{ forloop.counter0 }}">
               <span>{{ item.start_date }} - {{ item.end_date }}</span>
               <span>{{ item.duration }}</span>
               <span>{{ item.cycle }}</span>
