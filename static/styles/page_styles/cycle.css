@@ -312,3 +312,9 @@ input.user-interacted::-moz-range-thumb {
 .content_right::-webkit-scrollbar {
     display: none;
 }
+.content_right{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

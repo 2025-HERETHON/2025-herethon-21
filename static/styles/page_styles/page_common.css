@@ -50,13 +50,10 @@
   position: relative;
 }
 
-.content_left::-webkit-scrollbar {
-    display: none;
+.content_left {
+  overflow-y: hidden; 
 }
 
-.content_right::-webkit-scrollbar {
-    display: none;
-}
 .calendar_wrapper {
  transform: scale(0.85); /* 크기 줄이기 (90% 비율) */
  position: relative;
