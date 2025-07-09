@@ -14,5 +14,3 @@ urlpatterns = [
     path('detail/<str:username>/', read_friend_detail, name="read_friend_detail"),  
 
 ]
-
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
