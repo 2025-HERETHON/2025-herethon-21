@@ -9,11 +9,13 @@ def root(request:HttpRequest):
     menstruations = service.get_list()
     menstruation_average = service.get_average()
     menstruation_cycle = service.get_cycle()
+    today_phase = service.get_today_phase()
 
     return render(request, 'test.html', {
         'menstruations': menstruations,
         'menstruation_average': menstruation_average,
         'menstruation_cycle': menstruation_cycle,
+        'today_phase': today_phase,
     })
 
 @require_GET

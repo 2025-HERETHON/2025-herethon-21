@@ -106,9 +106,9 @@ class MenstruationService:
         }
 
     @validate_auth
-    def get_cycle(self):
+    def get_cycle(self, this_month:Optional[bool]=None):
         month_str = self.request.GET.get('month')
-        if month_str != None:
+        if (not this_month) and (month_str != None):
             year, month = map(int, month_str.split('-'))
         else:
             now = timezone.now()
@@ -135,6 +135,27 @@ class MenstruationService:
             'ovulatory_phase': self._calc_overlap_days(first_date, last_date, [phase['ovulatory_phase'] for phase in phase_list]),
             'luteal_phase': self._calc_overlap_days(first_date, last_date, [phase['luteal_phase'] for phase in phase_list])
         }
+    
+    @validate_auth
+    def get_today_phase(self):
+        today = timezone.now().date()
+        cycle = self.get_cycle(this_month=True)
+
+        today_phase_eng = None
+        for phase_eng, dates in dict(sorted(cycle.items())).items():
+            if today.isoformat() in dates:
+                today_phase_eng = phase_eng
+
+        if today_phase_eng is None:
+            return "알 수 없음"
+        else:
+            today_phase_kor = {
+                'menstrual_phase': '월경기',
+                'follicular_phase': '난포기',
+                'ovulatory_phase': '배란기',
+                'luteal_phase': '황체기',
+            }.get(today_phase_eng)
+            return today_phase_kor
 
     @validate_unique
     @validate_form
