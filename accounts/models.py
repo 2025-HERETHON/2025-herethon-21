@@ -48,12 +48,6 @@ class CustomUser(AbstractUser):
             'exercise_goal',
             ExerciseGoalType,
         )
-        
-    def get_exercise_goal_display_list(self):
-        from utils.choices import ExerciseGoalType
-        return [
-            ExerciseGoalType(int(val)).label for val in self.exercise_goal
-        ]
 
     def __str__(self):
         return self.email
