@@ -7,11 +7,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const editBtn = document.getElementById(`reviewed_review_editbtn_${index}`);
     const deleteBtn = document.getElementById(`delete_btn_${index}`);
     const textInput = document.getElementById(`text_input_${index}`);
+
     const starRating = document.getElementById(`starRating_${index}`);
+    const starImgs = starRating.querySelectorAll(".star_per img");
     const emotionBtns = toggleBox.querySelectorAll(".emotion_btn");
 
     let isOpen = false;
     let isEditing = false;
+    let currentRating = starRating.querySelectorAll("img[src*='star_purple']").length;
 
     // 펼치기/접기
     toggleBox.addEventListener("click", function (e) {
@@ -49,14 +52,32 @@ document.addEventListener("DOMContentLoaded", function () {
         textInput.setAttribute("disabled", true);
         starRating.classList.add("disabled");
 
-        const updatedText = textInput.value;
         openAlertModal({
-        title: '리뷰가 저장되었습니다.',
-        imageUrl: '/static/assets/img/modal_star.png',
-          });
+          title: '리뷰가 저장되었습니다.',
+          imageUrl: '/static/assets/img/modal_star.png',
+        });
       }
     });
 
+    // 별점 클릭 (이 컴포넌트 안에서만 동작)
+   // reviewed_review_component.js 중 별점 부분만 따로 추출
+  starImgs.forEach((img, i) => {
+    img.addEventListener("click", function (e) {
+      e.stopPropagation();  // 다른 toggle 이벤트 방지
+      if (starRating.classList.contains("disabled")) return;
+
+      starImgs.forEach((star, j) => {
+        star.src = j <= i
+          ? "/static/assets/img/star_purple.png"
+          : "/static/assets/img/star_gray.png";
+      });
+
+      currentRating = i + 1;
+    });
+  });
+
+
+    // 삭제 버튼
     deleteBtn.addEventListener("click", function (e) {
       e.stopPropagation();
 
@@ -65,34 +86,31 @@ document.addEventListener("DOMContentLoaded", function () {
         subtext: "*텍스트, 별점, 반응 개수가 모두 사라집니다",
         imageUrl: "/static/assets/img/modal_star.png",
         onConfirm: function () {
-          // ⭐ 1. 텍스트 초기화
+          // 텍스트 초기화
           textInput.value = "";
 
-          // ⭐ 2. 별점 초기화
-          const stars = starRating.querySelectorAll(".star_per img");
-          stars.forEach(img => {
+          // 별점 초기화 (이 컴포넌트에만 적용)
+          currentRating = 0;
+          starImgs.forEach(img => {
             img.src = "/static/assets/img/star_gray.png";
           });
 
-          // ⭐ 3. 감정 버튼 초기화
+          // 감정 초기화
           emotionBtns.forEach(btn => {
             btn.classList.remove("selected");
 
             const countSpan = btn.querySelector(".count");
             const originalCount = parseInt(countSpan.dataset.original) || 0;
 
-            // 숫자 초기화
             countSpan.textContent = originalCount;
             countSpan.style.display = originalCount === 0 ? "none" : "flex";
-
-            // 선택 여부 초기화용 데이터 속성까지 초기화
             btn.dataset.selected = "false";
           });
         }
       });
     });
 
-    // 감정 버튼들
+    // 감정 버튼
     emotionBtns.forEach(function (btn) {
       const countSpan = btn.querySelector(".count");
       const originalCount = parseInt(countSpan.dataset.original) || 0;

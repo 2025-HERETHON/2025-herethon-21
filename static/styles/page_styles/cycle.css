@@ -308,3 +308,7 @@ input.user-interacted::-moz-range-thumb {
   width:10px;
   cursor: pointer;
 }
+
+.content_right::-webkit-scrollbar {
+    display: none;
+}
