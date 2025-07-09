@@ -20,20 +20,10 @@ class CustomUserCreationForm(CustomBaseUserCreationForm):
         fields = CustomBaseUserCreationForm.Meta.fields + ("exercise_goal","profile_image",)
 
 class CustomUserChangeForm(UserChangeForm):
-    exercise_goal = forms.MultipleChoiceField(
-        choices=ExerciseGoalType.choices,
-        widget=forms.CheckboxSelectMultiple,
-        required=False
-    )
     class Meta:
         model = CustomUser
-        fields = ("email", "profile_image", "exercise_goal", "bio")
+        fields = "__all__"
         read_only_fields = ("username",)
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        if self.initial.get("exercise_goal"):
-            self.initial["exercise_goal"] = list(map(int, self.initial["exercise_goal"]))
 
 class CustomAdminUserCreationForm(SetUnusablePasswordMixin, CustomBaseUserCreationForm):
     usable_password = SetUnusablePasswordMixin.create_usable_password_field()
