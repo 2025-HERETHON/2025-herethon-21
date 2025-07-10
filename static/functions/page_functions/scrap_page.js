@@ -109,7 +109,6 @@ document.addEventListener("DOMContentLoaded", function () {
     if (routineItem && !target.closest(".delete_btn")) {
       openModal({
         title: "이 운동을 다시 진행하시겠습니까?",
-        subtext: "*루틴을 불러와 운동을 시작합니다",
         imageUrl: "/static/assets/img/modal_star.png",
         onConfirm: function () {
           window.location.href = "/routineingpage";
