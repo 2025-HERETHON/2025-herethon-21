@@ -20,7 +20,9 @@
 
     <header class="top_section">
         <section class="top_bar">
+            <a href="{% url 'frontend:mypagemain' %}">
             <img src="{% static 'assets/img/logo.png' %}" alt="로고" class="logo_image" />
+            </a>
         </section>
     </header>
     
@@ -52,7 +54,7 @@
         {% include "../components/review_component.html" with data=data index=forloop.counter0 %}
             <br>
             <div class="btn_hugger">
-                <button type="submit" value="주기별 바로가기" id="go_to_main" >주기별 바로가기</button>
+                <button type="submit" value="주기별 바로가기" id="go_to_main" >홈으로 이동하기</button>
                 <button type="submit" value="운동 시작하기" id="scrap_btn">운동 스크랩하기</button>
             </div>
                </section>
