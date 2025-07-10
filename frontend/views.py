@@ -190,20 +190,20 @@ def restpage(request):
 def periodpage(request):
     dummy_period_data = [
         {
-            "start_date": "2025.06.01.",
-            "end_date": "2025.06.07.",
+            "start_date": "2025-06-01",
+            "end_date": "2025-06-07",
             "duration": 7,
             "cycle": 28,
         },
         {
-            "start_date": "2025.06.29.",
-            "end_date": "2025.07.05.",
+            "start_date": "2025-06-29",
+            "end_date": "2025-07-05",
             "duration": 7,
             "cycle": 35,
         },
         {
-            "start_date": "2025.07.26.",
-            "end_date": "2025.08.02.",
+            "start_date": "2025-07-26",
+            "end_date": "2025-08-02",
             "duration": 8,
             "cycle": 30,
         },

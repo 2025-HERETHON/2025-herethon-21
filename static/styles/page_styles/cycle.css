@@ -321,3 +321,10 @@ input.user-interacted::-moz-range-thumb {
 .text_date {
   color: rgba(217, 217, 217, 1); 
 }
+
+.content_right{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
