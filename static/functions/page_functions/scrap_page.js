@@ -53,15 +53,21 @@ document.addEventListener("DOMContentLoaded", function () {
   updateDisplay();
 
   const deleteButtons = document.querySelectorAll(".delete_btn");
-  deleteButtons.forEach(button => {
-    button.addEventListener("click", function () {
-      openModal({
-        title: "스크랩을 삭제하시겠습니까?",
-        subtext: "*삭제한 정보는 복구할 수 없습니다",
-        imageUrl: "/static/assets/img/modal_star.png"
-      });
+deleteButtons.forEach(button => {
+  button.addEventListener("click", function () {
+    const scrapItem = button.closest(".perroutine"); // 삭제할 루틴 요소 저장
+
+    openModal({
+      title: "스크랩을 삭제하시겠습니까?",
+      subtext: "*삭제한 정보는 복구할 수 없습니다",
+      imageUrl: "/static/assets/img/modal_star.png",
+      onConfirm: function () {
+        scrapItem.remove(); // 예 누르면 삭제되도록
+      }
     });
   });
+});
+
 
   searchBtn.addEventListener("click", function () {
     const startVal = parseDotDate(startDateInput.value);

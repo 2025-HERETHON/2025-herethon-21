@@ -57,17 +57,23 @@ document.addEventListener("DOMContentLoaded", function () {
   updateDisplay();
 
   function setupDeleteButtons() {
-    const deleteButtons = document.querySelectorAll(".delete_btn");
-    deleteButtons.forEach(button => {
-      button.addEventListener("click", function () {
-        openModal({
-          title: "월경 내역을 삭제하시겠습니까?",
-          subtext: "*삭제한 정보는 복구할 수 없습니다",
-          imageUrl: "/static/assets/img/modal_star.png"
-        });
+  const deleteButtons = document.querySelectorAll(".delete_btn");
+  deleteButtons.forEach(button => {
+    button.addEventListener("click", function () {
+      const row = button.closest(".period_row"); // ← 삭제 대상 행 저장
+
+      openModal({
+        title: "월경 내역을 삭제하시겠습니까?",
+        subtext: "*삭제한 정보는 복구할 수 없습니다",
+        imageUrl: "/static/assets/img/modal_star.png",
+        onConfirm: function () {
+          row.remove(); // ← 예 누르면 삭제되게 처리
+        }
       });
     });
-  }
+  });
+}
+
 
   setupDeleteButtons();
 
