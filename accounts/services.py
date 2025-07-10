@@ -4,6 +4,8 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 from .forms import CustomUserCreationForm
+from django.contrib.auth import get_user_model
+
 
 class UserService:
     @staticmethod
@@ -14,16 +16,18 @@ class UserService:
             raise ValidationError(f"회원가입 중 오류가 발생했습니다: {str(e)}")
         return user
 
-
     @staticmethod
     def login(request, email, password):
-        if not email or not password:
-            raise ValidationError("이메일과 비밀번호를 모두 입력해주세요.")
-        
-        user = authenticate(username=email, password=password)
+
+        user = authenticate(request, email=email, password=password)
+
         if user is None:
-            raise ValidationError("이메일 또는 비밀번호가 올바르지 않습니다.")
-        
+            User = get_user_model()
+            try:
+                found_user = User.objects.get(email=email)
+            except User.DoesNotExist:
+                raise ValidationError("이메일 또는 비밀번호가 올바르지 않습니다.")
+
         auth_login(request, user)
         return user
 
@@ -40,4 +44,5 @@ class UserService:
         if form.is_valid():
             form.save()
             return form, True
-        return form, False
+        else:
+            return form, False

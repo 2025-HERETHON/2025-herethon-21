@@ -22,7 +22,14 @@ def main_view(request):
 
 def signup_view(request):
     if request.method == "POST":
-        form = CustomUserCreationForm(request.POST)
+        # form.data["nickname"]으론 접근 불가 (form은 쿼리여서 수정 불가)
+        # 또한 form은 dict가 아니기 때문에 .get으로 값 접근 불가
+        # form.instance.nickname -> 유효성 검사에 의미 X
+        
+        post_data = request.POST.copy()
+        post_data["nickname"] = post_data.get("email")
+        form = CustomUserCreationForm(post_data, request.FILES)
+
         if form.is_valid():
             try:
                 user = UserService.signup(form)   # form 그대로 넘김, clean_data만 넘길 시 폼 기능 못 씀
@@ -40,6 +47,9 @@ def login_view(request):
     if request.method == 'POST':
         email = request.POST.get("email")
         password = request.POST.get("password")
+        
+        if not email or not password:
+            raise ValidationError("이메일과 비밀번호를 모두 입력해주세요.")
         
         try:
             user = UserService.login(request, email, password)
