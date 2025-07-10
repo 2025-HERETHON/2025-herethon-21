@@ -196,3 +196,7 @@
 .hidden {
   display: none !important;
 }
+
+.perroutine {
+  cursor: pointer; /* ✅ 클릭 가능한 느낌 추가 */
+}

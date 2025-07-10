@@ -52,17 +52,25 @@ document.addEventListener("DOMContentLoaded", function () {
   endDateInput.addEventListener("change", updateDisplay);
   updateDisplay();
 
+  // 삭제 버튼 이벤트
   const deleteButtons = document.querySelectorAll(".delete_btn");
   deleteButtons.forEach(button => {
-    button.addEventListener("click", function () {
+    button.addEventListener("click", function (event) {
+      event.stopPropagation(); // 클릭 이벤트 전파 방지
+      const scrapItem = button.closest(".perroutine");
+
       openModal({
         title: "스크랩을 삭제하시겠습니까?",
         subtext: "*삭제한 정보는 복구할 수 없습니다",
-        imageUrl: "/static/assets/img/modal_star.png"
+        imageUrl: "/static/assets/img/modal_star.png",
+        onConfirm: function () {
+          scrapItem.remove();
+        }
       });
     });
   });
 
+  // 검색 버튼 클릭 이벤트
   searchBtn.addEventListener("click", function () {
     const startVal = parseDotDate(startDateInput.value);
     const endVal = parseDotDate(endDateInput.value);
@@ -75,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const items = document.querySelectorAll(".perroutine");
 
     items.forEach(item => {
-      const dateText = item.querySelector(".date_")?.textContent.trim(); 
+      const dateText = item.querySelector(".date_")?.textContent.trim();
       if (!dateText) return;
 
       const cleanDateText = dateText.replace(/\./g, "-").replace(/-$/, "").trim();
@@ -88,8 +96,24 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 
-    // 검색 후 날짜 박스 텍스트 숨기기
     startLine.classList.add("hidden");
     endLine.classList.add("hidden");
+  });
+
+  // ✅ 루틴 클릭 시 모달 열고 페이지 이동 - 항상 바인딩됨
+  const routineWrapper = document.querySelector(".routines");
+  routineWrapper.addEventListener("click", function (e) {
+    const target = e.target;
+    const routineItem = target.closest(".perroutine");
+
+    if (routineItem && !target.closest(".delete_btn")) {
+      openModal({
+        title: "이 운동을 다시 진행하시겠습니까?",
+        imageUrl: "/static/assets/img/modal_star.png",
+        onConfirm: function () {
+          window.location.href = "/routineingpage";
+        }
+      });
+    }
   });
 });
