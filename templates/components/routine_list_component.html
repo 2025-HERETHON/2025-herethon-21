@@ -22,7 +22,11 @@
       {% for routine in routine_day.routines %}
       <tr>
         <th>{{ routine.id }}</th>
-        <td>img</td>
+        <td>
+          <div class="fitness_img">
+            <img src="{% static routine.img %}" alt="{{ routine.name }}" style="width: 100%; height: 100%;" />
+          </div>
+        </td>
         <td>{{ routine.name }}</td>
         <td>{{ routine.duration }}</td>
         <td>{{ routine.part }}</td>
