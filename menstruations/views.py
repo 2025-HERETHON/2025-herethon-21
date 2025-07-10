@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.http import HttpRequest
 from django.views.decorators.http import require_GET, require_POST
@@ -26,16 +27,19 @@ def test_create_menstruation(request:HttpRequest):
 def create_menstruation(request:HttpRequest):
     service = MenstruationService(request)
     message = service.post()
+    messages.success(request, message)
     return redirect(request.META.get('HTTP_REFERER', '/'))
 
 @require_POST
 def update_menstruation(request:HttpRequest, pk:int):
     service = MenstruationService(request, pk)
     message = service.put()
+    messages.success(request, message)
     return redirect(request.META.get('HTTP_REFERER', '/'))
 
 @require_POST
 def delete_menstruation(request:HttpRequest, pk:int):
     service = MenstruationService(request, pk)
     message = service.delete()
+    messages.success(request, message)
     return redirect(request.META.get('HTTP_REFERER', '/'))
