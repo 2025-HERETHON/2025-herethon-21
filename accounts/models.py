@@ -26,13 +26,14 @@ class CustomUser(AbstractUser):
 
     # 커스텀 필드
     nickname = models.CharField(
-        max_length=10,
+        max_length=100,
     )
     exercise_goal = models.JSONField(
         default=list, # list[int]
     )
     profile_image = models.ImageField(
         upload_to='user/profile_image',
+        default='user/profile_image/default.jpg',
         null=True,
         blank=True,
     )
