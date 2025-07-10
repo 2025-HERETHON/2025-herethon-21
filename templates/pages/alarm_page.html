@@ -19,7 +19,9 @@
 
     <header class="top_section">
         <section class="top_bar logohugger">
+            <a href="{% url 'frontend:mypagemain' %}">
             <img src="{% static 'assets/img/logo.png' %}" alt="로고" class="logo_image" />
+            </a>
             <img src="{% static 'assets/img/icon.png' %}" alt="아이콘" class="icon_image" />
             <a href="{% url 'frontend:mypagemain' %}">
                 <img src="{% static 'assets/img/to_home.png' %}" alt="홈으로" class="tohome_image" />
