@@ -1,4 +1,5 @@
 {% extends "../example/base.html" %}
+
 {% load static %}
 
 {% block style %}
@@ -16,11 +17,11 @@
 <body>
   <header class="top_section">
     <section class="top_bar logohugger">
-      <a href="{% url 'frontend:mypagemain' %}">
+      <a href="{% url 'frontend:cyclepage' %}">
         <img src="{% static 'assets/img/logo.png' %}" alt="로고" class="logo_image" />
       </a>
       <img src="{% static 'assets/img/icon.png' %}" alt="아이콘" class="icon_image" />
-      <a href="{% url 'frontend:mypagemain' %}">
+      <a href="{% url 'frontend:cyclepage' %}">
         <img src="{% static 'assets/img/to_home.png' %}" alt="홈으로" class="tohome_image" />
       </a>
     </section>
@@ -59,10 +60,20 @@
               <div class="bubble left" id="bubbleA1">
                 <div class="timestamp">{{notification.created_at|timesince}} 전</div>
                 <div class="content_line">
-                  <div class="message_text"><span class="username">{{notification.sender__nickname}}</span>가 친구 요청을 보냈어요</div>
+                  <div class="message_text">
+                    <span class="username">{{notification.sender__nickname}}</span>가 친구 요청을 보냈어요
+                  </div>
                   <div class="btns">
-                    <button onclick="location.href=`{% url 'friends:create_accept_friend' username=notification.sender__username %}`">수락</button>
-                    <button onclick="location.href=`{% url 'friends:create_reject_friend' username=notification.sender__username %}`">거절</button>
+                    <button
+                      onclick="location.href=`{% url 'friends:create_accept_friend' username=notification.sender__username %}`"
+                    >
+                      수락
+                    </button>
+                    <button
+                      onclick="location.href=`{% url 'friends:create_reject_friend' username=notification.sender__username %}`"
+                    >
+                      거절
+                    </button>
                   </div>
                 </div>
               </div>
@@ -91,6 +102,10 @@
                 <div class="message_text">{{notification.sender__nickname}}가 운동을 재촉하며 콕 찔렀어요</div>
               </div>
             {% endif %}
+          {% empty %}
+            <div class="pipi_null_img">
+              <img src="{% static 'assets/img/mypage_icon.png' %}" alt="알림X피피이미지" />
+            </div>
           {% endfor %}
         </div>
       </section>
