@@ -79,33 +79,33 @@ def login_view(request):
                           {"form": form, "error": str(e)})
     else:
         form = AuthenticationForm()
-    return render(request, "login.html", {"form": form})
+    return render(request, "pages/onboarding_pages/login_page.html", {"form": form})
             
 
 def logout_view(request):
     if not request.user.is_authenticated:
         # 비로그인 상태면 로그인 화면으로 돌려보내기
-        return redirect('accounts:login')
+        return redirect('frontend:loginpage')
     
     logout(request)
-    return redirect('accounts:login')
+    return redirect('frontend:loginpage')
 
 def delete_CustomUser(request):
     if request.method == "POST":
         try:
             UserService.delete(request.user)
             logout(request)
-            return redirect("accounts:login")  # 탈퇴 후 로그인 페이지
+            return redirect("frontend:loginpage")  # 탈퇴 후 로그인 페이지
         except ValidationError:
-            return redirect("accounts:login")
+            return redirect("frontend:loginpage")
     else:
-        return redirect("accounts:main")
+        return redirect("frontend:mypagemain")
 
 def update_CustomUser(request):
     if request.method == "POST":
         form, success = UserService.update(request.user, request.POST, request.FILES)
         if success:
-            return redirect("accounts:main")
+            return redirect("frontend:mypagemain")
     else:
         # 폼을 새로 불러올 때 사용자 기존 정보가 담겨 있게 수정
         # 폼 변경
