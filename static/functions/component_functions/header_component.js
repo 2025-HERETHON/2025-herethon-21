@@ -56,9 +56,22 @@ document.addEventListener('DOMContentLoaded', function () {
       modal.style.display = 'flex';
 
       rightBtn.onclick = () => {
-        const deleteUrl = withdrawButton.dataset.deleteUrl;  // <- 탈퇴 URL도 동일하게 처리
-        if (deleteUrl) {
-          window.location.href = deleteUrl;
+        const deleteUrl = withdrawButton.dataset.deleteUrl;
+        const csrfTokenInput = document.querySelector('input[name="csrfmiddlewaretoken"]');
+
+        if (deleteUrl && csrfTokenInput) {
+          const form = document.createElement('form');
+          form.method = 'POST';
+          form.action = deleteUrl;
+
+          const csrfInput = document.createElement('input');
+          csrfInput.type = 'hidden';
+          csrfInput.name = 'csrfmiddlewaretoken';
+          csrfInput.value = csrfTokenInput.value;
+
+          form.appendChild(csrfInput);
+          document.body.appendChild(form);
+          form.submit();
         }
       };
     });
