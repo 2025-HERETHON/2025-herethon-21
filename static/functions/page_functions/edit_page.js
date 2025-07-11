@@ -1,33 +1,30 @@
 document.addEventListener('DOMContentLoaded', function () {
   const editableName = document.querySelector('.editable_text'); 
+  const nicknameInput = document.getElementById('nickname_input');
   const penIcon2 = document.getElementById('penIcon_2');
   const trashcanIcon2 = document.getElementById('trashcanIcon_2');
-  const leftInfoTitle = document.querySelector('.content_left .info_title');
 
   const textarea = document.getElementById('introTextarea');
+  const bioInput = document.getElementById('bio_input');
   const penIcon = document.getElementById('penIcon');
   const trashcanIcon = document.getElementById('trashcanIcon');
 
   const tags = document.querySelectorAll('.preference_box .preference_tag');
-  const maxSelected = 2;
-
   const saveButton = document.getElementById('saveButton');
 
-  const editableIcon = document.querySelector(".content_right .icon_image2");
-  const imageOptionBox = document.getElementById("imageOptionBox");
-  const galleryOption = document.getElementById("galleryOption");
-  const imageInput = document.getElementById("profileImageInput");
-  const defaultImageOption = document.getElementById("defaultImageOption");
+  const imageInput = document.getElementById('profileImageInput');
+  const currentImage = document.querySelector('#profileImage');
+  const defaultImage = "/static/assets/img/icon.png";
 
-  let currentImageSrc = "/static/assets/img/icon.png";
+  let currentImageSrc = currentImage ? currentImage.src : defaultImage;
 
   function checkModified() {
-    const nameModified = editableName && editableName.textContent.trim() !== '나';
-    const textModified = textarea && textarea.value.trim() !== '';
-    const selectedTags = document.querySelectorAll('.preference_box .preference_tag.active').length > 0;
-    const imageModified = currentImageSrc !== "/static/assets/img/icon.png";
+    const nameChanged = editableName && editableName.textContent.trim() !== nicknameInput.value.trim();
+    const bioChanged = textarea && textarea.value.trim() !== bioInput.value.trim();
+    const goalChanged = Array.from(document.querySelectorAll('.goal_checkbox')).some(cb => cb.checked);
+    const imageChanged = currentImage && currentImage.src !== defaultImage;
 
-    if (nameModified || textModified || selectedTags || imageModified) {
+    if (nameChanged || bioChanged || goalChanged || imageChanged) {
       saveButton.classList.add('active');
       saveButton.disabled = false;
     } else {
@@ -37,27 +34,14 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   if (editableName) {
-  editableName.addEventListener('input', () => {
-    penIcon2.src = editableName.textContent.trim() !== ""
-      ? "/static/assets/img/pen_after.png"
-      : "/static/assets/img/pen_before.png";
-    checkModified();
-  });
-
-  editableName.addEventListener('keyup', () => {
-    penIcon2.src = editableName.textContent.trim() !== ""
-      ? "/static/assets/img/pen_after.png"
-      : "/static/assets/img/pen_before.png";
-    checkModified();
-  });
-}
-
+    editableName.addEventListener('input', checkModified);
+    editableName.addEventListener('keyup', checkModified);
+  }
 
   if (penIcon2) {
-    penIcon2.addEventListener('click', () => {
-      editableName.focus();
-    });
+    penIcon2.addEventListener('click', () => editableName.focus());
   }
+
   if (trashcanIcon2) {
     trashcanIcon2.addEventListener('click', () => {
       editableName.textContent = '나';
@@ -68,15 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
   if (textarea) {
     textarea.addEventListener('input', () => {
       if (textarea.value.length > 30) {
-      textarea.value = textarea.value.slice(0, 30); 
-    }
-      penIcon.src = textarea.value.trim() !== "" 
-        ? "/static/assets/img/pen_after.png"
-        : "/static/assets/img/pen_before.png";
-
-      const infoText = document.querySelector('.content_right .info_text');
-      if (infoText) {
-        infoText.textContent = textarea.value || "안녕? 나는 너만의 운동 루틴 추천 AI 피피야";
+        textarea.value = textarea.value.slice(0, 30);
       }
       checkModified();
     });
@@ -84,112 +60,52 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (trashcanIcon) {
     trashcanIcon.addEventListener('click', () => {
-      if (textarea) {
-        textarea.value = "";
-      }
-      penIcon.src = "/static/assets/img/pen_before.png";
-      const infoText = document.querySelector('.content_right .info_text');
-      if (infoText) {
-        infoText.textContent = "안녕? 나는 너만의 운동 루틴 추천 AI 피피야";
-      }
+      textarea.value = "";
       checkModified();
     });
   }
 
   tags.forEach(tag => {
-  tag.addEventListener('click', () => {
-    const activeTags = document.querySelectorAll('.preference_box .preference_tag.active');
-
-    if (tag.classList.contains('active')) {
-      tag.classList.remove('active');
-    } else {
-      if (activeTags.length < maxSelected) {
-        tag.classList.add('active');
-      } else {
-  
-        tags.forEach(t => {
-          t.classList.add("shake");
-          setTimeout(() => t.classList.remove("shake"), 300);
-        });
-        return;
+    tag.addEventListener('click', () => {
+      tag.classList.toggle('active');
+      const checkbox = tag.querySelector('input[type="checkbox"]');
+      if (checkbox) {
+        checkbox.checked = tag.classList.contains('active');
       }
-    }
-
-    checkModified();
+      checkModified();
+    });
   });
-});
 
-
-  saveButton.addEventListener('click', () => {
-
-    if (editableName && leftInfoTitle) {
-      leftInfoTitle.textContent = editableName.textContent.trim() || '나';
-    }
-
-    const leftText = document.querySelector('.content_left .info_text');
-    if (leftText && textarea) {
-      leftText.textContent = textarea.value.trim() || "안녕? 나는 너만의 운동 루틴 추천 AI 피피야";
-    }
-
-    const leftTags = document.querySelector('.content_left .info_box .tags');
-    if (leftTags) {
-      leftTags.innerHTML = '';
-      document.querySelectorAll('.preference_box .preference_tag.active').forEach(t => {
-        const span = document.createElement('span');
-        span.className = 'preference_tag';
-        span.textContent = t.textContent.trim();
-        leftTags.appendChild(span);
-      });
-    }
-
-    if (editableIcon) {
-      const leftImage = document.querySelector('.content_left .icon_image2');
-      if (leftImage) {
-        leftImage.src = currentImageSrc;
-      }
-    }
-
-    saveButton.classList.remove('active');
-    saveButton.disabled = true;
-
-    penIcon.src = "/static/assets/img/pen_before.png";
-  });
+  const galleryOption = document.getElementById('galleryOption');
+  const defaultImageOption = document.getElementById('defaultImageOption');
+  const imageOptionBox = document.getElementById('imageOptionBox');
+  const editableIcon = document.querySelector('.icon_image2');
 
   if (editableIcon && imageOptionBox) {
-    editableIcon.addEventListener("click", (event) => {
-      const isHidden = imageOptionBox.classList.contains("hidden");
-
-      if (isHidden) {
-        editableIcon.src = "/static/assets/img/edit_image.png"; 
-        imageOptionBox.classList.remove("hidden");
-      } else {
-        editableIcon.src = currentImageSrc;
-        imageOptionBox.classList.add("hidden");
-      }
-      event.stopPropagation();
+    editableIcon.addEventListener('click', e => {
+      imageOptionBox.classList.toggle('hidden');
+      e.stopPropagation();
     });
 
-    document.addEventListener("click", (event) => {
-      if (!imageOptionBox.contains(event.target) && event.target !== editableIcon) {
-        imageOptionBox.classList.add("hidden");
-        editableIcon.src = currentImageSrc;
+    document.addEventListener('click', e => {
+      if (!imageOptionBox.contains(e.target) && e.target !== editableIcon) {
+        imageOptionBox.classList.add('hidden');
       }
     });
   }
 
-  if (galleryOption && imageInput && editableIcon) {
-    galleryOption.addEventListener("click", () => {
+  if (galleryOption && imageInput) {
+    galleryOption.addEventListener('click', () => {
       imageInput.click();
     });
 
-    imageInput.addEventListener("change", (e) => {
+    imageInput.addEventListener('change', e => {
       const file = e.target.files[0];
       if (file) {
         const reader = new FileReader();
         reader.onload = function (event) {
           currentImageSrc = event.target.result;
-          editableIcon.src = currentImageSrc;
-          imageOptionBox.classList.add("hidden");
+          if (editableIcon) editableIcon.src = currentImageSrc;
           checkModified();
         };
         reader.readAsDataURL(file);
@@ -197,12 +113,27 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  if (defaultImageOption && editableIcon && imageOptionBox) {
-    defaultImageOption.addEventListener("click", () => {
-      currentImageSrc = "/static/assets/img/icon.png";
-      editableIcon.src = currentImageSrc;
-      imageOptionBox.classList.add("hidden");
+  if (defaultImageOption) {
+    defaultImageOption.addEventListener('click', () => {
+      currentImageSrc = defaultImage;
+      if (editableIcon) editableIcon.src = defaultImage;
       checkModified();
+    });
+  }
+
+  const form = document.getElementById('editProfileForm');
+  if (form) {
+    form.addEventListener('submit', function () {
+      if (editableName) nicknameInput.value = editableName.textContent.trim();
+      if (textarea) bioInput.value = textarea.value.trim();
+
+      console.log("\ud83d\ude80 \uc81c출\ub428");
+      console.log("\ub2c9\ub124임:", nicknameInput.value);
+      console.log("\uc18c개:", bioInput.value);
+
+      document.querySelectorAll('.goal_checkbox').forEach(cb => {
+        console.log("\uc6b4동 \ubaa9적 checkbox:", cb.name, cb.value, "=>", cb.checked);
+      });
     });
   }
 

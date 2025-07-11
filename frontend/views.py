@@ -1,6 +1,16 @@
-from django.shortcuts import render, redirect
-from django.urls import reverse
+from django.shortcuts import render, redirect, get_object_or_404
+from django.utils.timezone import now as timezone_now
+from datetime import date
+from django.contrib.auth.decorators import login_required
+from utils.choices import ReactionEmojiType
 import json
+from conditionreviews.models import ConditionReview
+from accounts.models import CustomUser
+from utils.choices import ExerciseGoalType
+from utils.json_handlers import JSONIntChoicesListHandler
+from django.urls import reverse
+
+
 
 def routineingpage(request):
     data_list = [
@@ -212,10 +222,8 @@ def periodpage(request):
         "period_data": dummy_period_data
     }
     return render(request, "pages/period_page.html", context)
-    return render(request,"pages/component_page.html")
 
 def componentcalendar(request):
-    return render(request,"pages/component_calendar.html")
     return render(request,"pages/component_calendar.html")
 
 def mypage(request):
@@ -273,7 +281,9 @@ def purposepage(request):
 def alarmpage(request):
     return render(request, "pages/alarm_page.html")
 
+@login_required
 def mypagemain(request):
+    # 운동 리뷰 mock 데이터
     data_list = [
         {
             "id": 1,
@@ -295,7 +305,7 @@ def mypagemain(request):
             "start_time": "20:00",
             "end_time": "20:40",
             "duration_minutes": 40,
-            "content": "ㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴ",
+            "content": "운동 너무 길었어",
             "rating": 4,
             "emotion_counts": {
                 "crying": 3,
@@ -306,8 +316,32 @@ def mypagemain(request):
             },
         },
     ]
-    return render(request, "pages/mypage_main.html", {"data_list": data_list})
 
+    # 운동 목표 변환
+    goal_labels = []
+    if request.user.is_authenticated:
+        goals = request.user.exercise_goal  # 예: ["1", "2", "4"]
+        goal_labels = [ExerciseGoalType(int(g)).label for g in goals]
+
+    # 컨디션 리뷰 조회용 context
+    today = date.today()
+    now_time = timezone_now().strftime("%H:%M")
+    review = ConditionReview.objects.filter(user=request.user, date=today).first()
+    review_time = review.updated_at.strftime("%H:%M") if review else None
+
+    return render(request, "pages/mypage_main.html", {
+        "data_list": data_list,
+        "goal_labels": goal_labels,
+        "today": today,
+        "now": now_time,
+        "review": review,
+        "rating_choices": ReactionEmojiType.choices,
+        "rating": getattr(review, "rating", None),
+        "review_time":review_time
+    })
+
+    
+    
 def makefriends(request):
     data_list = [
         {
@@ -343,11 +377,21 @@ def makefriends(request):
     ]
     return render(request, "pages/make_friends_pages/friends_email_input.html", {"data_list": data_list})
 
-def friendsconfirm(request):
-    return render(request, "pages/make_friends_pages/friends_confirm.html")
-
+def friendsconfirm(request, email):
+    receiver_user = get_object_or_404(CustomUser, email=email)
+    return render(request, 'pages/make_friends_pages/friends_confirm.html', {
+        'receiver_user': receiver_user
+    })
 def friended(request):
-    return render(request, "pages/make_friends_pages/friended.html")
+    sender = request.user
+    receiver_email = request.GET.get("email")  # 또는 request.POST.get 등
+    receiver = get_object_or_404(CustomUser, email=receiver_email)
+
+    return render(request, "pages/make_friends_pages/friended.html", {
+        "sender": sender,
+        "receiver": receiver,
+        "receiver_email": receiver_email
+    })
 
 def finishedroutine(request):
     data_list = [
@@ -366,8 +410,16 @@ def finishedroutine(request):
     ]
     return render(request, "pages/finished_routine.html", {"data_list": data_list})
 
+
 def editpage(request):
-    return render(request,"pages/edit_page.html")
+    user = request.user
+    handler = JSONIntChoicesListHandler(user, "exercise_goal", ExerciseGoalType)
+
+    return render(request, "pages/edit_page.html", {
+        'user': user,
+        'goal_choices': ExerciseGoalType.choices,
+        'selected_goals': handler.get_int_values()
+    })
 
 def friendpage(request):
     dummy_friends = [
