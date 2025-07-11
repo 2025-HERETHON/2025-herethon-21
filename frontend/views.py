@@ -374,89 +374,11 @@ def finishedroutine(request:HttpRequest):
 def editpage(request:HttpRequest):
     return render(request,"pages/edit_page.html")
 
-def friendpage(request:HttpRequest):
-    dummy_friends = [
-        {"id": 1, "name": "친구1", "icon": "assets/img/icon.png", "intro": "안녕? 나는 친구1라고 해. 운동광EAZY", "tags": ["체형 관리", "근력 강화"]},
-        {"id": 2, "name": "친구2", "icon": "assets/img/icon.png", "intro": "나는 친구2야.", "tags": ["근력 강화", "체형 증진"]},
-        {"id": 3, "name": "친구3", "icon": "assets/img/icon.png", "intro": "나는 친구3이야.", "tags": ["스트레스 해소", "유연성 향상"]},
-        {"id": 4, "name": "친구4", "icon": "assets/img/icon.png", "intro": "나는 친구4이야.", "tags": ["체형 관리", "근력 강화"]},
-        {"id": 5, "name": "친구5", "icon": "assets/img/icon.png", "intro": "나는 친구5이야.", "tags": ["근력 강화", "스트레스 해소"]},
-    ]
-
-    friend_id = request.GET.get("id")
-    selected_friend = None
-
-    if friend_id:
-        try:
-            friend_id = int(friend_id)
-            selected_friend = next((f for f in dummy_friends if f["id"] == friend_id), None)
-        except ValueError:
-            pass
+def friendpage(request:HttpRequest, friend_username:str):
+    service = NotificationService(request)
+    is_prodded = service.get_is_prodded(friend_username)
 
     return render(request, "pages/friend_page.html", {
-        "friend": selected_friend
-    })
-
-def friendpage(request:HttpRequest):
-    # 친구 상세정보 더미 데이터
-    dummy_friends = [
-        {"id": 1, "name": "친구1", "icon": "assets/img/icon.png", "intro": "안녕? 나는 친구1라고 해. 운동광EAZY", "tags": ["체형 관리", "근력 강화"]},
-        {"id": 2, "name": "친구2", "icon": "assets/img/icon.png", "intro": "나는 친구2야.", "tags": ["근력 강화", "체형 증진"]},
-        {"id": 3, "name": "친구3", "icon": "assets/img/icon.png", "intro": "나는 친구3이야.", "tags": ["스트레스 해소", "유연성 향상"]},
-        {"id": 4, "name": "친구4", "icon": "assets/img/icon.png", "intro": "나는 친구4이야.", "tags": ["체형 관리", "근력 강화"]},
-        {"id": 5, "name": "친구5", "icon": "assets/img/icon.png", "intro": "나는 친구5이야.", "tags": ["근력 강화", "스트레스 해소"]},
-    ]
-
-    # 친구 리뷰 더미 데이터
-    data_list = [
-        {
-            "id": 1,
-            "start_time": "08:40",
-            "end_time": "09:00",
-            "duration_minutes": 20,
-            "content": "배고파",
-            "rating": 3,
-            "emotion_counts": {
-                "crying": 0,
-                "anger": 0,
-                "agree": 9,
-                "surprized": 1,
-                "smile": 3
-            },
-        },
-        {
-            "id": 2,
-            "start_time": "18:00",
-            "end_time": "19:00",
-            "duration_minutes": 60,
-            "content": "고양이귀여워",
-            "rating": 5,
-            "emotion_counts": {
-                "crying": 0,
-                "anger": 0,
-                "agree": 98,
-                "surprized": 0,
-                "smile": 10
-            },
-        },
-    ]
-
-    has_review_today = True  # TODO: 날짜 비교해서 바꾸기
-
-
-    friend_id = request.GET.get("id")
-    selected_friend = None
-
-    if friend_id:
-        try:
-            friend_id = int(friend_id)
-            selected_friend = next((f for f in dummy_friends if f["id"] == friend_id), None)
-        except ValueError:
-            selected_friend = None
-
-  
-    return render(request, "pages/friend_page.html", {
-        "friend": selected_friend,
-        "data_list": data_list,
-        "has_review_today": has_review_today,
+        'friend_username': friend_username,
+        'is_prodded': is_prodded,
     })
