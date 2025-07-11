@@ -1,59 +1,57 @@
 {% extends "../example/base.html" %}
 {% load static %} 
+
 {% block style %}
 <link rel="stylesheet" href="{% static 'styles/component_styles/login_component.css' %}" />
 {% endblock style %} 
+
 {% block script %}
 <script src="{% static 'functions/component_functions/login_component.js' %}"></script>
 {% endblock script %}
 
 {% block body %}
-    <div class="container">
-        <form method="get" action="{% url 'frontend:loginpage' %}">
-       <div class="text_input_hugger">
-        <div class="input_label_row">
-            <label for="email">이메일</label>
-            {% if email_error %}
-                <span class="input_error_message">{{ email_error }}</span>
-            {% endif %}
+<div class="container">
+    <form method="post" action="{% url 'accounts:login' %}">
+        {% csrf_token %}
+
+        <!-- 이메일 입력 -->
+        <div class="text_input_hugger">
+            <div class="input_label_row">
+                <label for="email">이메일</label>
+                {% if email_error %}
+                    <span class="input_error_message">{{ email_error }}</span>
+                {% endif %}
+            </div>
+            <input type="email" id="email" name="email"
+                   placeholder="예) Fitforme@example.com"
+                   value="{{ email|default:'' }}"
+                   class="{% if email_error %}input_error{% endif %}" required />
         </div>
-            <form method="post" action="{% url 'accounts:login' %}">
-                {% csrf_token %}
-                <input type="email" id="email" name="email"
-                    placeholder="예) Fitforme@example.com"
-                    value="{{ email|default:'' }}"
-                    class="{% if email_error %}input_error{% endif %}" required />
-            </form>
-       </div>
 
-       <div class="text_input_hugger">
-        <div class="input_label_row">
-            <label for="password">비밀번호</label>
-            {% if password_error %}
-                <span class="input_error_message">{{ password_error }}</span>
-            {% endif %}
+        <!-- 비밀번호 입력 -->
+        <div class="text_input_hugger">
+            <div class="input_label_row">
+                <label for="password">비밀번호</label>
+                {% if password_error %}
+                    <span class="input_error_message">{{ password_error }}</span>
+                {% endif %}
+            </div>
+            <input type="password" id="password" name="password"
+                   placeholder="영문, 숫자, 특수문자 조합 8~16자"
+                   value="{{ password|default:'' }}"
+                   class="{% if password_error %}input_error{% endif %}" required />
         </div>
-            <form method="post" action="{% url 'accounts:login' %}">
-                {% csrf_token %}
-                <input type="password" id="password" name="password"
-                    placeholder="영문, 숫자, 특수문자 조합 8~16자"
-                    value="{{ password|default:'' }}"
-                    class="{% if password_error %}input_error{% endif %}" />
-            </form>
-       </div>
 
-
+        <!-- 로그인 에러 메시지 -->
         {% if error %}
             <p style="color:red;">{{ error }}</p>
         {% endif %}
 
-        <form method="post" action="{% url 'accounts:login' %}">
-            {% csrf_token %}
-            <button type="submit" value="로그인" id="login_submitbtn">로그인</button>
-        </form>
+        <!-- 로그인 버튼 -->
+        <button type="submit" id="login_submitbtn">로그인</button>
+    </form>
 
-        <button type="button" id="to_signup" data-url="{% url 'frontend:onboarding_1' %}">회원가입</button>
-        
-        </form>
-    </div>
+    <!-- 회원가입 페이지로 이동 -->
+    <button type="button" id="to_signup" data-url="{% url 'frontend:onboarding_1' %}">회원가입</button>
+</div>
 {% endblock body %}

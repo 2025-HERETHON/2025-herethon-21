@@ -1,16 +1,16 @@
 from django.shortcuts import render, redirect
 from django.core.exceptions import ValidationError
-from django.contrib.auth import logout
+from django.contrib.auth import logout, login
 from django.contrib.auth.forms import AuthenticationForm
 from .services import UserService
 from .forms import CustomUserCreationForm
 from utils.choices import ExerciseGoalType
 from .services import UserService
 from django.core.cache import cache
+from utils.json_handlers import JSONIntChoicesListHandler
 
 
 # 템플릿 렌더링 처리
-    
 def signup_onboarding1(request):
     if request.method == "POST":
         email = request.POST.get("email")
@@ -29,7 +29,6 @@ def signup_onboarding1(request):
 
         return redirect("frontend:onboarding_2")
     
-from django.core.exceptions import ValidationError
 
 def signup_onboarding3_submit(request):
     if request.method == "POST":
@@ -52,6 +51,7 @@ def signup_onboarding3_submit(request):
         if form.is_valid():
             try:
                 user = UserService.signup(form)
+                login(request, user)
                 return redirect("frontend:onboarding_3")
             except ValidationError as e:
                 print("회원가입 실패:", e)
@@ -59,9 +59,6 @@ def signup_onboarding3_submit(request):
         else:
             print("폼 에러:", form.errors)
             return redirect("frontend:signuppage")
-
-
-
      
 def login_view(request):
     if request.method == 'POST':
@@ -73,41 +70,42 @@ def login_view(request):
         
         try:
             user = UserService.login(request, email, password)
-            return redirect("accounts:main")
+            login(request, user)
+            return redirect("frontend:mypagemain")
         except ValidationError as e:
             form = AuthenticationForm()
             # 로그인 실패 시, 에러 메시지와 함께 로그인 페이지 다시 렌더링
-            return render(request, "login.html", 
+            return render(request, "pages/onboarding_pages/login_page.html", 
                           {"form": form, "error": str(e)})
     else:
         form = AuthenticationForm()
-    return render(request, "login.html", {"form": form})
+    return render(request, "pages/onboarding_pages/login_page.html", {"form": form})
             
 
 def logout_view(request):
     if not request.user.is_authenticated:
         # 비로그인 상태면 로그인 화면으로 돌려보내기
-        return redirect('accounts:login')
+        return redirect('frontend:loginpage')
     
     logout(request)
-    return redirect('accounts:login')
+    return redirect('frontend:loginpage')
 
 def delete_CustomUser(request):
     if request.method == "POST":
         try:
             UserService.delete(request.user)
             logout(request)
-            return redirect("accounts:login")  # 탈퇴 후 로그인 페이지
+            return redirect("frontend:loginpage")  # 탈퇴 후 로그인 페이지
         except ValidationError:
-            return redirect("accounts:login")
+            return redirect("frontend:loginpage")
     else:
-        return redirect("accounts:main")
+        return redirect("frontend:mypagemain")
 
 def update_CustomUser(request):
     if request.method == "POST":
         form, success = UserService.update(request.user, request.POST, request.FILES)
         if success:
-            return redirect("accounts:main")
+            return redirect("frontend:mypagemain")
     else:
         # 폼을 새로 불러올 때 사용자 기존 정보가 담겨 있게 수정
         # 폼 변경

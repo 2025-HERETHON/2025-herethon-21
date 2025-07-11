@@ -137,3 +137,6 @@ textarea:disabled {
   pointer-events: none;
   opacity: 0.5;
 }
+#text_input{
+  font-size:20px;
+}

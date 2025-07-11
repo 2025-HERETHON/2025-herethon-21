@@ -1,65 +1,101 @@
 {% extends "../example/base.html" %}
-{% load static %} 
+{% load static %}
+
 {% block style %}
 <link rel="stylesheet" href="{% static 'styles/component_styles/condition_component.css' %}" />
-{% endblock style %} 
+{% endblock style %}
+
 {% block script %}
 <script src="{% static 'functions/component_functions/condition_component.js' %}"></script>
 {% endblock script %}
 
-{% block body %} 
-  <div class="bighugger">
-    <div class="contentbox">
-      
-      <div class="condition_toprow">
-        <!-- 리뷰 컴포넌트로 사용시
-        <span class="time_range">07:00~07:20 (20분)</span>
-        {% include "./star_component.html" %}
-        -->
-        <!-- 컨디션 컴포넌트로 사용시 -->
-        <span class="time_range">2025-05-02 16:00</span>
-        <span id="todays_condition"></span>
-      </div>
+{% block body %}
+<div class="bighugger">
+  <div class="contentbox">
 
-      <div class="condition_text">
-        <textarea placeholder="오늘의 일기를 남겨주세요!" id="text_input"></textarea>
+    <div class="condition_toprow">
+      <span class="time_range" id="current_time_display" data-date="{{ review.date }}">
+        {% if review %}
+          {{ review.date }} {{ review_time }}
+        {% else %}
+          {{ today }} {{ now }}
+        {% endif %}
+      </span>
+      <!-- <span id="todays_condition">
+        {% if review %}
+          {{ review.get_rating_display }}
+        {% endif %}
+      </span> -->
+
+      {% if review %}
+      <div class="selected_emotion_image">
+        {% if review.rating == 1 %}
+          <img src="{% static 'assets/img/crying.png' %}" alt="감정 이모지" width="30"/>
+        {% elif review.rating == 2 %}
+          <img src="{% static 'assets/img/anger.png' %}" alt="감정 이모지" width="30" />
+        {% elif review.rating == 3 %}
+          <img src="{% static 'assets/img/agree.png' %}" alt="감정 이모지" width="30"/>
+        {% elif review.rating == 4 %}
+          <img src="{% static 'assets/img/surprized.png' %}" alt="감정 이모지" width="30"/>
+        {% elif review.rating == 5 %}
+          <img src="{% static 'assets/img/smile.png' %}" alt="감정 이모지" width="30"/>
+        {% endif %}
       </div>
+      {% endif %}
+    </div>
+
+    {% if review %}
+    <form method="post" action="{% url 'conditionreviews:update_ConditionReview' date_str=review.date|date:"Y-m-d" %}" id="condition_form">
+    {% else %}
+    <form method="post" action="{% url 'conditionreviews:create_ConditionReview' date_str=today|date:"Y-m-d" %}" id="condition_form">
+    {% endif %}
+      {% csrf_token %}
+      <div class="condition_text">
+      <textarea
+        placeholder="오늘의 일기를 남겨주세요!"
+        id="text_input"
+        name="comment"
+        rows="3"
+        {% if review and not is_editing %}disabled{% endif %}
+      >{{ review.comment|default_if_none:"" }}</textarea>
+    </div>
+
+
 
       <div class="condition_bottomrow">
         <div class="conditionscore">
-          <span class="condition_per">
+          <span class="condition_per {% if review.rating == 1 %}selected{% endif %}" data-rating="1">
             <img src="{% static 'assets/img/crying.png' %}" alt="눈물" />
           </span>
-          <span class="condition_per">
+          <span class="condition_per {% if review.rating == 2 %}selected{% endif %}" data-rating="2">
             <img src="{% static 'assets/img/anger.png' %}" alt="분노" />
           </span>
-          <span class="condition_per">
+          <span class="condition_per {% if review.rating == 3 %}selected{% endif %}" data-rating="3">
             <img src="{% static 'assets/img/agree.png' %}" alt="공감" />
           </span>
-          <span class="condition_per">
+          <span class="condition_per {% if review.rating == 4 %}selected{% endif %}" data-rating="4">
             <img src="{% static 'assets/img/surprized.png' %}" alt="깜짝" />
           </span>
-          <span class="condition_per">
+          <span class="condition_per {% if review.rating == 5 %}selected{% endif %}" data-rating="5">
             <img src="{% static 'assets/img/smile.png' %}" alt="미소" />
           </span>
         </div>
 
         <div class="condition_footer">
-          <button class="icon_btn" id="condition_editbtn">
+          <button class="icon_btn" id="condition_editbtn" type="button">
             <img src="{% static 'assets/img/rewrite.png' %}" alt="수정" />
           </button>
-          <button class="icon_btn" id="condition_resetbtn" onclick="openModal({
-                title: '컨디션 리뷰를 리셋하시겠습니까?',
-                subtext: '*텍스트, 반응이 모두 사라집니다',
-                imageUrl: '/static/assets/img/modal_star.png'
-                })">
+          <button class="icon_btn" id="condition_resetbtn" type="button">
             <img src="{% static 'assets/img/trashcan.png' %}" alt="삭제" />
           </button>
+
+          <input type="hidden" name="rating" id="selected_rating" value="{{ review.rating|default_if_none:'' }}" />
         </div>
       </div>
-    </div>
+    </form>
   </div>
+</div>
+
 {% include "../components/modal_component.html" %}
 {% include "../components/alert_modal_component.html" %}
-
 {% endblock body %}
