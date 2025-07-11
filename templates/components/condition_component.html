@@ -22,7 +22,13 @@
       </div>
 
       <div class="condition_text">
-        <textarea placeholder="오늘의 일기를 남겨주세요!" id="text_input"></textarea>
+        <textarea
+                placeholder="오늘의 일기를 남겨주세요!"
+                id="text_input"
+                name="comment"
+                rows="3"
+                {% if review and not is_editing %}disabled{% endif %}
+              >{{ review.comment|default_if_none:"" }}</textarea>
       </div>
 
       <div class="condition_bottomrow">
