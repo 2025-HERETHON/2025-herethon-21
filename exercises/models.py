@@ -1,6 +1,5 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
-from django.db.models import Sum
 from utils.choices import ExerciseCategoryType, ReactionEmojiType
 from accounts.models import CustomUser
 
@@ -13,10 +12,16 @@ class Exercise(models.Model):
     category = models.PositiveSmallIntegerField(
         choices=ExerciseCategoryType.choices
     )
-    image = models.ImageField(
+    description = models.TextField()
+    image1 = models.ImageField(
         upload_to='exercise/image',
     )
-    description = models.TextField()
+    image2 = models.ImageField(
+        upload_to='exercise/image',
+    )
+    image3 = models.ImageField(
+        upload_to='exercise/image',
+    )
 
     def __str__(self):
         return self.name
@@ -30,7 +35,7 @@ class ExerciseHistory(models.Model):
         related_name='exercise_histories',
         on_delete=models.CASCADE,
     )
-    routine_duration = models.DurationField()
+    exercise_routine_duration = models.DurationField()
 
     def __str__(self):
         return f'[{self.user.email}] {self.created_at}'
@@ -119,14 +124,6 @@ class ScrappedExerciseRoutine(models.Model):
     )
     difficulty = models.PositiveSmallIntegerField()
 
-    @property
-    def routine_duration(self):
-        total_duration = ScrappedExerciseRoutine.objects.filter(
-            user=self.user,
-            scrapped_at=self.scrapped_at,
-        ).aggregate(total=Sum('exercise__duration'))['total']
-        return total_duration
-
     def __str__(self):
         return f'[{self.user.email}] {self.scrapped_at}/{self.order}.{self.exercise.name}'
 
@@ -138,4 +135,4 @@ class ScrappedExerciseRoutine(models.Model):
                 violation_error_message='사용자의 운동 루틴은 순번을 중복해서 가질 수 없습니다.',
             )
         ]
-        ordering = ['scrapped_at','order']
+        ordering = ['-scrapped_at','order']
