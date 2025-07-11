@@ -1,12 +1,16 @@
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.timezone import now as timezone_now
 from datetime import date
 from django.contrib.auth.decorators import login_required
 from utils.choices import ReactionEmojiType
-from conditionreviews.services import ConditionReviewService
-from utils.choices import ExerciseGoalType  
 import json
 from conditionreviews.models import ConditionReview
+from accounts.models import CustomUser
+from utils.choices import ExerciseGoalType
+from utils.json_handlers import JSONIntChoicesListHandler
+from django.urls import reverse
+
+
 
 def routineingpage(request):
     data_list = [
@@ -373,11 +377,21 @@ def makefriends(request):
     ]
     return render(request, "pages/make_friends_pages/friends_email_input.html", {"data_list": data_list})
 
-def friendsconfirm(request):
-    return render(request, "pages/make_friends_pages/friends_confirm.html")
-
+def friendsconfirm(request, email):
+    receiver_user = get_object_or_404(CustomUser, email=email)
+    return render(request, 'pages/make_friends_pages/friends_confirm.html', {
+        'receiver_user': receiver_user
+    })
 def friended(request):
-    return render(request, "pages/make_friends_pages/friended.html")
+    sender = request.user
+    receiver_email = request.GET.get("email")  # 또는 request.POST.get 등
+    receiver = get_object_or_404(CustomUser, email=receiver_email)
+
+    return render(request, "pages/make_friends_pages/friended.html", {
+        "sender": sender,
+        "receiver": receiver,
+        "receiver_email": receiver_email
+    })
 
 def finishedroutine(request):
     data_list = [
@@ -396,8 +410,16 @@ def finishedroutine(request):
     ]
     return render(request, "pages/finished_routine.html", {"data_list": data_list})
 
+
 def editpage(request):
-    return render(request,"pages/edit_page.html")
+    user = request.user
+    handler = JSONIntChoicesListHandler(user, "exercise_goal", ExerciseGoalType)
+
+    return render(request, "pages/edit_page.html", {
+        'user': user,
+        'goal_choices': ExerciseGoalType.choices,
+        'selected_goals': handler.get_int_values()
+    })
 
 def friendpage(request):
     dummy_friends = [

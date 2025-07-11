@@ -9,6 +9,8 @@ from notifications.services import NotificationService
 from django.contrib import messages
 from utils.json_handlers import JSONIntChoicesListHandler
 from utils.choices import ExerciseGoalType, NotificationCategoryType
+from django.urls import reverse
+
 
 
 @login_required
@@ -18,7 +20,7 @@ def read_friends_list(request):
         Q(sender=user) | Q(receiver=user),
         status=FriendStatusType.ACCEPT
     )
-    return render(request, "friend_list.html", {"friends":friends})
+    return render(request, "pages/make_friends_pages/friended.html", {"friends":friends})
 
 @login_required
 def create_send_friends(request):
@@ -34,12 +36,14 @@ def create_send_friends(request):
                 category=NotificationCategoryType.REQUEST
             )
             messages.success(request, f"{email}님에게 친구 요청을 보냈습니다.")
+            return redirect(f"{reverse('frontend:friended')}?email={receiver.email}")
+
         except CustomUser.DoesNotExist:
             messages.error(request, "해당 이메일의 사용자가 존재하지 않습니다.")
         except ValueError as e:
             messages.error(request, str(e))
-        return redirect("friends:create_send_friends")
-    return render(request, "friend_request_send.html")
+            return redirect("frontend:friendsconfirm", email=receiver.email)
+    return render(request, "pages/make_friends_pages/friends_confirm.html")
 
 @login_required
 def read_receive_list(request):

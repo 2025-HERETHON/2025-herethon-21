@@ -103,11 +103,21 @@ def delete_CustomUser(request):
 
 def update_CustomUser(request):
     if request.method == "POST":
+        print("🔵 [DEBUG] POST 요청 수신됨")
+        print("📦 POST 데이터:", dict(request.POST))
+        print("📎 FILES 데이터:", dict(request.FILES))
+
         form, success = UserService.update(request.user, request.POST, request.FILES)
+
+        if not success:
+            print("❌ [DEBUG] form.is_valid() 실패")
+            print("🧾 form.errors:", form.errors)
+
         if success:
+            print("✅ [DEBUG] 저장 성공!")
             return redirect("frontend:mypagemain")
     else:
-        # 폼을 새로 불러올 때 사용자 기존 정보가 담겨 있게 수정
-        # 폼 변경
         form = CustomUserCreationForm(instance=request.user)
-    return render(request, "update.html", {"form": form})
+        print("🟡 [DEBUG] GET 요청 - 초기 폼 렌더링")
+
+    return render(request, "pages/edit_page.html", {"form": form})

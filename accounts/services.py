@@ -5,6 +5,9 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 from .forms import CustomUserCreationForm
 from django.contrib.auth import get_user_model
+from utils.json_handlers import JSONIntChoicesListHandler
+from utils.choices import ExerciseGoalType
+
 
 
 class UserService:
@@ -40,9 +43,24 @@ class UserService:
         
     @staticmethod
     def update(user, form_data, files_data=None):
+        print("🔵 [SERVICE] update() 진입")
         form = CustomUserCreationForm(form_data, files_data, instance=user)
+
         if form.is_valid():
-            form.save()
+            instance = form.save(commit=False)
+
+            goals = form_data.getlist("goals")
+            print("🎯 선택된 goals (문자열):", goals)
+
+            goal_ints = [int(g) for g in goals if g.isdigit()]
+            print("🎯 변환된 goals (정수):", goal_ints)
+
+            JSONIntChoicesListHandler(instance, "exercise_goal", ExerciseGoalType).set(goal_ints, save=False)
+
+            instance.save()
+            print("✅ [SERVICE] 사용자 정보 저장 완료")
             return form, True
-        else:
-            return form, False
+
+        print("❌ [SERVICE] form 유효성 실패")
+        print("🔎 form.errors:", form.errors)
+        return form, False
