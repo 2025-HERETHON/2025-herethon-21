@@ -21,6 +21,14 @@ DATABASES = {
     'default': DATABASE_DEFAULT,
 }
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+        'TIMEOUT': 3600*2,  # 2시간
+    }
+}
+
 
 ALLOWED_HOSTS = []
 
@@ -67,6 +75,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'builtins': [
+                'templatetags.duration_filter',
+            ]
         },
     },
 ]
