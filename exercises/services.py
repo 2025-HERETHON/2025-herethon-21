@@ -316,8 +316,13 @@ class ExerciseReviewService:
     @validate_auth
     def get_list(self):
         """운동 리뷰 목록 조회 (달력)"""
-        month_str = self.request.GET['month']
-        year, month = map(int, month_str.split('-'))
+        month_str = self.request.GET.get('month')
+        if month_str != None:
+            year, month = map(int, month_str.split('-'))
+        else:
+            now = timezone.now()
+            year = now.year
+            month = now.month
 
         friend_username = self.request.GET.get('friend_username')
         username = friend_username or self.request.user.username
