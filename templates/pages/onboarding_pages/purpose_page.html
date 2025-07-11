@@ -22,7 +22,9 @@
         </section>
     </header>
     
+  
     <main class="main_layout">
+   
     <section class="content_area">
         <section class="content_left">
         <div class="ment_hugger">
@@ -41,7 +43,7 @@
         <p class="nav_button nav_button1"></p>   
         <div class="nav_line"></div>
         <div class="nav_line"></div>
-        </nav>
+        </nav>    
 
       <section class="content_right">
         <section class="star_background">
@@ -49,17 +51,32 @@
             <span class="star star9"></span><span class="star star11"></span> <span class="star star12"></span>
             <span class="star star13"></span> <span class="star star14"></span> <span class="star star15"></span> <span class="star star16"></span>
         </section>
+        <form method="POST" action="{% url 'accounts:signup_onboarding3_submit' %}" id="exercise-form">
+          {% csrf_token %} 
         <!-- 오른쪽 컨텐츠 영역 -->
         <div class="container">
-            <div class="purpose">체형 관리</div>
-            <div class="purpose">체력 증진</div>
-            <div class="purpose">스트레스 해소</div>
-            <div class="purpose">근력 강화</div>
-            <div class="purpose">유연성 향상</div>
+          <label class="purpose">
+            <input type="checkbox" name="exercise_goal" value="1" /> 체형 관리
+          </label>
+          <label class="purpose">
+            <input type="checkbox" name="exercise_goal" value="2" /> 체력 증진
+          </label>
+          <label class="purpose">
+            <input type="checkbox" name="exercise_goal" value="3" /> 스트레스 해소
+          </label>
+          <label class="purpose">
+            <input type="checkbox" name="exercise_goal" value="4" /> 근력 강화
+          </label>
+          <label class="purpose">
+            <input type="checkbox" name="exercise_goal" value="5" /> 유연성 향상
+          </label>
         </div>
-        <div class="next_page"><a href="{% url 'frontend:onboarding_3' %}">
-          <img src="{% static 'assets/img/right.png' %}" alt="진행하기" class="left_right"/>
-        </a></div>
+        <div class="next_page">
+          <button type="submit">
+            <img src="{% static 'assets/img/right.png' %}" alt="진행하기" class="left_right" />
+          </button>
+        </div>
+          </form>
         </section>
     </section>
   </main>
