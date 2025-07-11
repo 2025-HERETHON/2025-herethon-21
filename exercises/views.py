@@ -6,7 +6,10 @@ from django.shortcuts import render, redirect
 from django.http import HttpRequest
 from django.utils.dateparse import parse_duration
 from django.views.decorators.http import require_GET, require_POST
+from utils.choices import NotificationCategoryType
 from utils.constants import CACHE_KEY
+from notifications.services import NotificationService
+from .models import ExerciseHistory
 from .services import ExerciseAiService, ScrappedExerciseRoutineService, ExerciseHistoryService, ExerciseReviewService, ReactedExerciseReviewService
 
 @require_GET
@@ -100,5 +103,16 @@ def delete_exercise_review(request:HttpRequest, pk:int):
 def createordelete_reacted_exercise_review(request:HttpRequest, exercise_review_id:int):
     service = ReactedExerciseReviewService(request)
     message = service.post(exercise_review_id)
+
+    if '추가' in message:
+        exercise_history = ExerciseHistory.objects.get(exercise_review__id=exercise_review_id)
+
+        service = NotificationService(request)
+        service.post(
+            sender=request.user,
+            receiver=exercise_history.user,
+            category=NotificationCategoryType.REACTION
+        )
+
     messages.success(request, message)
     return redirect(request.META.get('HTTP_REFERER', '/'))
