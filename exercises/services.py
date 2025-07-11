@@ -24,7 +24,7 @@ class ExerciseAiService:
 
     def get(self) -> list[list[dict[str,any]]]:
         """AI 운동 루틴 생성"""
-        exercise_routine_duration_str = self.request.GET['exercise_routine_duration']
+        exercise_routine_duration_str = self.request.GET.get('exercise_routine_duration', '00:20:00')
         exercise_routine_duration = parse_duration(exercise_routine_duration_str)
 
         menstruation_service = MenstruationService(self.request)
