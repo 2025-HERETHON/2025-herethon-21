@@ -6,8 +6,6 @@ certifi==2025.6.15
 charset-normalizer==3.4.2
 Django==5.2.3
 django-environ==0.12.0
-django-nanoid==0.0.2
-djangorestframework==3.16.0
 google-auth==2.40.3
 google-genai==1.23.0
 h11==0.16.0
