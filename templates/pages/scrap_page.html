@@ -12,11 +12,13 @@
 {% block script %}
 <script src="{% static 'functions/component_functions/calendar_component.js' %}"></script>
 <script src="{% static 'functions/page_functions/scrap_page.js' %}"></script>
+{{ exercise_reviews|json_script:"exercise_reviews" }}
 {{ menstruation_cycle|json_script:"menstruation_cycle" }}
 <script>
   document.addEventListener('DOMContentLoaded', function() {
+    const exercise_reviews = JSON.parse(document.getElementById('exercise_reviews').textContent);
     const menstruation_cycle = JSON.parse(document.getElementById('menstruation_cycle').textContent);
-    callFullCalendar(menstruation_cycle);
+    callFullCalendar(exercise_reviews, menstruation_cycle);
   });
 </script>
 {% endblock script %}

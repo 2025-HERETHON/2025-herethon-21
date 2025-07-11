@@ -1,8 +1,6 @@
 from ast import literal_eval
 from datetime import date, timedelta
-import json
 from django.core.cache import cache
-from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
@@ -13,7 +11,7 @@ from utils.choices import ReactionEmojiType, ExerciseGoalType
 from utils.json_handlers import JSONIntChoicesListHandler
 from accounts.models import CustomUser
 from conditionreviews.models import ConditionReview
-from exercises.services import ExerciseAiService, ScrappedExerciseRoutineService, ExerciseHistoryService
+from exercises.services import ExerciseAiService, ScrappedExerciseRoutineService, ExerciseHistoryService, ExerciseReviewService
 from menstruations.services import MenstruationService
 from notifications.services import NotificationService
 
@@ -32,47 +30,67 @@ def routineingpage(request:HttpRequest):
         'exercise_routine': exercise_routine,
     })
 
-def componentpage(request:HttpRequest):
-    return render(request,"pages/component_page.html")
-
 def cyclepage(request:HttpRequest):
+    exercise_review_service = ExerciseReviewService(request)
+    exercise_reviews = exercise_review_service.get_list()
+
     menstruation_service = MenstruationService(request)
+    menstruation_cycle = menstruation_service.get_cycle()
     today_phase = menstruation_service.get_today_phase()
 
     ai_service = ExerciseAiService(request)
     ai_exercise_routines = ai_service.get()
 
     return render(request,"pages/cycle_page.html", {
+        'exercise_reviews': exercise_reviews,
+        'menstruation_cycle': menstruation_cycle,
         "today_phase": today_phase,
         'ai_exercise_routines': ai_exercise_routines,
     })
 
 def scrappage(request:HttpRequest):
+    exercise_review_service = ExerciseReviewService(request)
+    exercise_reviews = exercise_review_service.get_list()
+    
+    menstruation_service = MenstruationService(request)
+    menstruation_cycle = menstruation_service.get_cycle()
+
     scrap_service = ScrappedExerciseRoutineService(request)
     scrapped_exercise_routines = scrap_service.get_list()
 
     return render(request,"pages/scrap_page.html", {
+        'exercise_reviews': exercise_reviews,
+        'menstruation_cycle': menstruation_cycle,
         'scrapped_exercise_routines': scrapped_exercise_routines,
     })
 
 def restpage(request:HttpRequest):
-    return render(request,"pages/rest_page.html")
+    exercise_review_service = ExerciseReviewService(request)
+    exercise_reviews = exercise_review_service.get_list()
+    
+    menstruation_service = MenstruationService(request)
+    menstruation_cycle = menstruation_service.get_cycle()
+
+    return render(request,"pages/rest_page.html", {
+        'exercise_reviews': exercise_reviews,
+        'menstruation_cycle': menstruation_cycle,
+    })
 
 def periodpage(request:HttpRequest):
-    service = MenstruationService(request)
-    menstruations = service.get_list()
-    menstruation_average = service.get_average()
+    exercise_review_service = ExerciseReviewService(request)
+    exercise_reviews = exercise_review_service.get_list()
+
+    menstruation_service = MenstruationService(request)
+    menstruation_cycle = menstruation_service.get_cycle()
+    menstruations = menstruation_service.get_list()
+    menstruation_average = menstruation_service.get_average()
     
     return render(request, "pages/period_page.html", {
+        'exercise_reviews': exercise_reviews,
+        'menstruation_cycle': menstruation_cycle,
         'menstruations': menstruations,
         'menstruation_average': menstruation_average,
     })
-
-def componentcalendar(request:HttpRequest):
-    return render(request,"pages/component_calendar.html")
-
-def mypage(request:HttpRequest):
-    return render(request,"pages/mypage.html")
 
 def onboarding_1(request:HttpRequest):
     return render(request, "pages/onboarding_pages/onboarding_1.html")
@@ -131,8 +149,16 @@ def alarmpage(request:HttpRequest):
         'notification_list': notification_list,
     })
 
-@login_required
 def mypagemain(request:HttpRequest):
+    exercise_review_service = ExerciseReviewService(request)
+    exercise_reviews = exercise_review_service.get_list()
+    
+    menstruation_service = MenstruationService(request)
+    menstruation_cycle = menstruation_service.get_cycle()
+
+    history_service = ExerciseHistoryService(request)
+    exercise_histories = history_service.get_list()
+
     # 운동 목표 변환
     goal_labels = []
     if request.user.is_authenticated:
@@ -144,11 +170,10 @@ def mypagemain(request:HttpRequest):
     now_time = timezone_now().strftime("%H:%M")
     review = ConditionReview.objects.filter(user=request.user, date=today).first()
     review_time = review.updated_at.strftime("%H:%M") if review else None
-    
-    history_service = ExerciseHistoryService(request)
-    exercise_histories = history_service.get_list()
 
     return render(request, "pages/mypage_main.html", {
+        'exercise_reviews': exercise_reviews,
+        'menstruation_cycle': menstruation_cycle,
         "exercise_histories": exercise_histories,
         "goal_labels": goal_labels,
         "today": today,
@@ -211,28 +236,41 @@ def friended(request):
     })
 
 def finishedroutine(request:HttpRequest):
-    return render(request, "pages/finished_routine.html", {"data_list": data_list})
+    exercise_routine = cache.get(CACHE_KEY(request.user.username).EXERCISE_ROUTINE)
+    exercise_history_id = cache.get(CACHE_KEY(request.user.username).EXERCISE_HISTORY_ID)
+    
+    return render(request, "pages/finished_routine.html", {
+        'exercise_routine': exercise_routine,
+        'exercise_history_id': exercise_history_id,
+    })
 
 def editpage(request:HttpRequest):
+    exercise_review_service = ExerciseReviewService(request)
+    exercise_reviews = exercise_review_service.get_list()
+
+    menstruation_service = MenstruationService(request)
+    menstruation_cycle = menstruation_service.get_cycle()
+
     user = request.user
     handler = JSONIntChoicesListHandler(user, "exercise_goal", ExerciseGoalType)
 
-    exercise_routine = cache.get(CACHE_KEY(request.user.username).EXERCISE_ROUTINE)
-    exercise_history_id = cache.get(CACHE_KEY(request.user.username).EXERCISE_HISTORY_ID)
-
     return render(request, 'pages/edit_page.html', {
-        'exercise_routine': exercise_routine,
-        'exercise_history_id': exercise_history_id,
+        'menstruation_cycle': menstruation_cycle,
+        'exercise_reviews': exercise_reviews,
         'user': user,
         'goal_choices': ExerciseGoalType.choices,
-        'selected_goals': handler.get_int_values()
+        'selected_goals': handler.get_int_values(),
     })
 
 def friendpage(request:HttpRequest, friend_username:str):
-    service = NotificationService(request)
-    is_prodded = service.get_is_prodded(friend_username)
+    exercise_review_service = ExerciseReviewService(request)
+    exercise_reviews = exercise_review_service.get_list()
+    
+    notification_service = NotificationService(request)
+    is_prodded = notification_service.get_is_prodded(friend_username)
 
     return render(request, "pages/friend_page.html", {
+        'exercise_reviews': exercise_reviews,
         'friend_username': friend_username,
         'is_prodded': is_prodded,
     })
