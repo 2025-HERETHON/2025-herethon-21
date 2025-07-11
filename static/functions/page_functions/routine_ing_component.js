@@ -27,14 +27,13 @@ document.addEventListener("DOMContentLoaded", function () {
     starscoreEl.innerHTML = starsHTML;
   }
 
-
   let currentImageIndex = 0;
   let currentStepIndex = 0;
 
   function injectProgressCircle(circleEl, durationMin) {
     const svgSize = 80;
     const radius = 30;
-    const strokeWidth =7;
+    const strokeWidth = 7;
     const center = svgSize / 2;
     const circumference = 2 * Math.PI * radius;
 
@@ -80,7 +79,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     circleEl.style.position = "relative";
   }
-
 
   function updateImage() {
     const detailImages = routineData[currentStepIndex].detail_images;
@@ -134,11 +132,10 @@ document.addEventListener("DOMContentLoaded", function () {
       if (elapsed >= durationSec) {
         clearInterval(timer);
         timeText.textContent = "완료!";
-        timeText.style.width= "50px";
+        timeText.style.width = "50px";
         runTimer(index + 1);
       }
     }, 1000);
-
   }
 
   prevBtn.addEventListener("click", () => {

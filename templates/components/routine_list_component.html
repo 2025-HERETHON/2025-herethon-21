@@ -1,40 +1,55 @@
 {% extends "../example/base.html" %}
-{% load static %} 
+
+{% load static %}
+
 {% block style %}
 <link rel="stylesheet" href="{% static 'styles/component_styles/routine_list_component.css' %}" />
-{% endblock style %} 
+{% endblock style %}
+
 {% block script %}
 {% endblock script %}
 
 {% block body %} 
-{% for routine_day in data_list %}
-<div class="routine_item" data-index="{{ forloop.counter0 }}" {% if not forloop.first %}style="display:none;"{% endif %}>
-  <div class="bighugger" id="border">
-    <div class="scrapbtn">
-      <img
-        src="{% static 'assets/img/scrap.png' %}"
-        alt="스크랩 아이콘"
-        id="scrapicon"
-        data-default="{% static 'assets/img/scrap.png' %}"
-        data-scraped="{% static 'assets/img/scrap_scrapped.png' %}" />
+  {% for routine_day in data_list %}
+    <div class="routine_item" data-index="{{ forloop.counter0 }}" {% if not forloop.first %}style="display:none;"{% endif %}>
+      <div class="bighugger" id="border">
+        <form
+          class="scrapbtn"
+          action="{% url 'exercises:scrapped_exercise_routine_create' %}"
+          method="post"
+        >
+          {% csrf_token %}
+          <input name="exercise_routine" type="hidden" value="{{ ai_exercise_routine|safe }}" />
+          <button type="submit">
+            <img
+              id="scrapicon"
+              src="{% static 'assets/img/scrap.png' %}"
+              alt="스크랩 아이콘"
+              data-default="{% static 'assets/img/scrap.png' %}"
+              data-scraped="{% static 'assets/img/scrap_scrapped.png' %}"
+            />
+          </button>
+        </form>
+        <table class="table_centerer">
+          {% for routine in routine_day.routines %}
+            <tr>
+              <th>{{ routine.id }}</th>
+              <td>
+                <div class="fitness_img">
+                  <img
+                    src="{% static routine.img %}"
+                    alt="{{ routine.name }}"
+                    style="width: 100%; height: 100%;"
+                  />
+                </div>
+              </td>
+              <td>{{ routine.name }}</td>
+              <td>{{ routine.duration }}</td>
+              <td>{{ routine.part }}</td>
+            </tr>
+          {% endfor %}
+        </table>
+      </div>
     </div>
-    <table class="table_centerer">
-      {% for routine in routine_day.routines %}
-      <tr>
-        <th>{{ routine.id }}</th>
-        <td>
-          <div class="fitness_img">
-            <img src="{% static routine.img %}" alt="{{ routine.name }}" style="width: 100%; height: 100%;" />
-          </div>
-        </td>
-        <td>{{ routine.name }}</td>
-        <td>{{ routine.duration }}</td>
-        <td>{{ routine.part }}</td>
-      </tr>
-      {% endfor %}
-    </table>
-  </div>
-</div>
-{% endfor %}
-
+  {% endfor %}
 {% endblock body %}

@@ -39,9 +39,11 @@
         친구의 이메일을 입력해주세요
         </b>
       </div>
-        <div class="before_page"><a href="{% url 'frontend:mypagemain' %}">
-          <img src="{% static 'assets/img/left.png' %}" alt="뒤로가기" class="left_right"/>
-        </a></div>
+        <div class="before_page">
+          <a href="javascript:history.back();">
+            <img src="{% static 'assets/img/left.png' %}" alt="뒤로가기" class="left_right"/>
+          </a>
+        </div>
       </section>
 
     <nav class="sidebar_nav" aria-label="페이지 네비게이션">
