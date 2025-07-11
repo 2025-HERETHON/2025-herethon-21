@@ -241,8 +241,12 @@ class ExerciseHistoryService:
     @validate_auth
     def get_list(self) -> list[dict[str,any]]:
         """운동 내역 목록 조회"""
-        date_str = self.request.GET['date']
-        target_date = parse_date(date_str)
+        date_str = self.request.GET.get('date')
+        if date_str != None:
+            target_date = parse_date(date_str)
+        else:
+            target_date = timezone.localdate()
+
         friend_username = self.request.GET.get('friend_username')
         username = friend_username or self.request.user.username
 
