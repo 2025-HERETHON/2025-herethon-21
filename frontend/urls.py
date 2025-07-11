@@ -2,7 +2,6 @@ from django.urls import path
 from .views import *
 from django.shortcuts import redirect
 
-
 app_name = 'frontend'
 
 urlpatterns = [
@@ -18,7 +17,7 @@ urlpatterns = [
     path("componentcalendar", componentcalendar, name="componentcalendar"),
     path("componentcalendar", componentcalendar, name="componentcalendar"),
     path("mypage", mypage, name="mypage"),
-    path("friendpage", friendpage, name="friendpage"),
+    path("friendpage/<str:friend_username>", friendpage, name="friendpage"),
     path("restpage", restpage, name="restpage"),
     path("routineingpage", routineingpage, name="routineingpage"),
     path("loginpage", loginpage, name="loginpage"),
