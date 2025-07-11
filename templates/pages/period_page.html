@@ -1,27 +1,20 @@
-{% extends "../example/base.html" %}
-
-{% load static %}
-
-{% block style %}
+{% extends "../example/base.html" %} {% load static %} {% block style %}
 <link rel="stylesheet" href="{% static 'styles/component_styles/page_component.css' %}" />
 <link rel="stylesheet" href="{% static 'styles/page_styles/period.css' %}" />
 <link rel="stylesheet" href="{% static 'styles/page_styles/page_common.css' %}" />
-{% endblock style %}
-
-{% block script %}
+{% endblock style %} {% block script %}
 <script src="{% static 'functions/component_functions/calendar_component.js' %}"></script>
 <script src="{% static 'functions/page_functions/period_page.js' %}"></script>
+{{ menstruation_cycle|json_script:"menstruation_cycle" }}
 <script>
-  const menstruation_cycle = JSON.parse('{{ menstruation_cycle|escapejs }}');
-  callCalendar(menstruation_cycle);
+  document.addEventListener('DOMContentLoaded', function() {
+    const menstruation_cycle = JSON.parse(document.getElementById("menstruation_cycle").textContent);
+    callFullCalendar(menstruation_cycle);
+  });
 </script>
-{% endblock script %}
-
-{% block body %}
+{% endblock script %} {% block body %}
 <body>
-  {% block header %}
-    {% include "../components/header_component.html" %}
-  {% endblock header %}
+  {% block header %} {% include "../components/header_component.html" %} {% endblock header %}
   <main class="main_layout">
     <section class="content_area">
       <section class="star_background">
@@ -41,17 +34,11 @@
         <span class="star star20"></span>
       </section>
       <section class="content_left">
-        {% block infobox %}
-          {% include "../components/infobox_component.html" %}
-        {% endblock infobox %}
+        {% block infobox %} {% include "../components/infobox_component.html" %} {% endblock infobox %}
         <div class="calendar_wrapper">
-          {% block calendar %}
-            {% include "../components/calendar_component.html" %}
-          {% endblock calendar %}
+          {% block calendar %} {% include "../components/calendar_component.html" %} {% endblock calendar %}
         </div>
-        {% block friendbox %}
-          {% include "../components/friendbox_component.html" %}
-        {% endblock friendbox %}
+        {% block friendbox %} {% include "../components/friendbox_component.html" %} {% endblock friendbox %}
       </section>
       <nav class="sidebar_nav" aria-label="페이지 네비게이션">
         <a href="/cyclepage" class="nav_button nav_button1">운 동</a>
@@ -75,32 +62,12 @@
             </span>
           </div>
           <p class="date_description">월경 추가</p>
-          <form
-            class="datepicker"
-            action="{% url 'menstruations:create' %}"
-            method="post"
-          >
+          <form class="datepicker" action="{% url 'menstruations:create' %}" method="post">
             {% csrf_token %}
-            <input
-              id="period_start_date"
-              class="date_input"
-              name="start"
-              type="date"
-            />
+            <input id="period_start_date" class="date_input" name="start" type="date" />
             <img src="{% static 'assets/img/arrow.png' %}" alt="화살표" class="arrow" />
-            <input
-              id="period_end_date"
-              class="date_input"
-              name="end"
-              type="date"
-            />
-            <button
-              id="add_button"
-              class="search_button"
-              type="submit"
-            >
-              추가
-            </button>
+            <input id="period_end_date" class="date_input" name="end" type="date" />
+            <button id="add_button" class="search_button" type="submit">추가</button>
           </form>
           <div class="selected_showingbox hidden">
             <p id="period_start_line" class="hidden"><span id="period_start_text"></span></p>
@@ -118,50 +85,39 @@
               <span></span>
             </div>
             {% for menstruation in menstruations %}
-              <li id="period_row_{{ forloop.counter0 }}" class="period_row">
-                <div class="menstruation_read">
-                  <span>{{menstruation.start|date:'Y.n.j.'}} - {{menstruation.end|date:'Y.n.j.'}}</span>
-                  <span>{{menstruation.duration}}</span>
-                  <span>{{menstruation.cycle}}</span>
-                  <button
-                    class="icon_btn edit_btn"
-                    data-index="{{ forloop.counter0 }}"
-                    type="button"
-                    onclick="
+            <li id="period_row_{{ forloop.counter0 }}" class="period_row">
+              <div class="menstruation_read">
+                <span>{{menstruation.start|date:'Y.n.j.'}} - {{menstruation.end|date:'Y.n.j.'}}</span>
+                <span>{{menstruation.duration}}</span>
+                <span>{{menstruation.cycle}}</span>
+                <button
+                  class="icon_btn edit_btn"
+                  data-index="{{ forloop.counter0 }}"
+                  type="button"
+                  onclick="
                       const menstruation_read = this.closest('.menstruation_read');
                       menstruation_read.classList.add('hidden');
                       menstruation_read.nextElementSibling.classList.remove('hidden');
                     "
-                  >
-                    <img src="{% static 'assets/img/rewrite.png' %}" alt="수정" />
-                  </button>
-                </div>
-                <form
-                  class="hidden"
-                  action="{% url 'menstruations:update' pk=menstruation.id %}"
-                  method="post"
                 >
-                  {% csrf_token %}
-                  <input name="start" type="date" />
-                  <input name="end" type="date" />
-                  <button type="submit">
-                    <img src="{% static 'assets/img/rewrite.png' %}" alt="수정" />
-                  </button>
-                </form>
-                <form
-                  action="{% url 'menstruations:delete' pk=menstruation.id %}"
-                  method="post"
-                >
-                  {% csrf_token %}
-                  <button
-                    class="icon_btn delete_btn"
-                    data-index="{{ forloop.counter0 }}"
-                    type="submit"
-                  >
-                    <img src="{% static 'assets/img/trashcan.png' %}" alt="삭제" />
-                  </button>
-                </form>
-              </li>
+                  <img src="{% static 'assets/img/rewrite.png' %}" alt="수정" />
+                </button>
+              </div>
+              <form class="hidden" action="{% url 'menstruations:update' pk=menstruation.id %}" method="post">
+                {% csrf_token %}
+                <input name="start" type="date" />
+                <input name="end" type="date" />
+                <button type="submit">
+                  <img src="{% static 'assets/img/rewrite.png' %}" alt="수정" />
+                </button>
+              </form>
+              <form action="{% url 'menstruations:delete' pk=menstruation.id %}" method="post">
+                {% csrf_token %}
+                <button class="icon_btn delete_btn" data-index="{{ forloop.counter0 }}" type="submit">
+                  <img src="{% static 'assets/img/trashcan.png' %}" alt="삭제" />
+                </button>
+              </form>
+            </li>
             {% endfor %}
           </div>
         </ol>
@@ -175,6 +131,5 @@
     </section>
   </main>
 </body>
-{% include "../components/modal_component.html" %}
-{% include "../components/alert_modal_component.html" %}
-{% endblock body %}
+{% include "../components/modal_component.html" %} {% include "../components/alert_modal_component.html" %} {% endblock
+body %}
