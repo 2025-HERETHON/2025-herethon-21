@@ -1,18 +1,16 @@
-from string import ascii_lowercase, digits
+import nanoid
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django_nanoid.models import NANOIDField
 from utils.choices import ExerciseGoalType
 from utils.json_handlers import JSONIntChoicesListHandler
 from .managers import CustomUserManager
 
 class CustomUser(AbstractUser):
     # AbstractUser 모델 오버라이딩
-    username = NANOIDField(
+    username = models.CharField(
+        max_length=21,
+        unique=True,
         editable=False,
-        secure_generated=True,
-        alphabetically=ascii_lowercase+digits,
-        size=16,
     )
     first_name = None
     last_name = None
@@ -52,3 +50,8 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.email
+    
+    def save(self, *args, **kwargs):
+        if (not self.pk) and (not self.username):
+            self.username = nanoid.generate()
+        super().save(*args, **kwargs)
