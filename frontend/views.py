@@ -253,7 +253,7 @@ def loginpage(request): #아래 더미데이터는 GPT에게 받은 임시 데�
 
             elif email in dummy_users:
                 if dummy_users[email] == password:
-                    return redirect(reverse('frontend:mypagemain'))
+                    return redirect(reverse('frontend:cyclepage'))
                 else:
                     context['password_error'] = '비밀번호가 틀렸습니다.'
             else:
