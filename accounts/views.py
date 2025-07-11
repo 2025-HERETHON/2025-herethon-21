@@ -1,46 +1,66 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.core.exceptions import ValidationError
 from django.contrib.auth import logout
 from django.contrib.auth.forms import AuthenticationForm
 from .services import UserService
-from .forms import CustomUserCreationForm, CustomUserChangeForm
+from .forms import CustomUserCreationForm
 from utils.choices import ExerciseGoalType
 from .services import UserService
+from django.core.cache import cache
+
 
 # 템플릿 렌더링 처리
-
-def main_view(request):
-    goal_labels = []
-    if request.user.is_authenticated:
-        goals = request.user.exercise_goal  # ["1", "2", "4"]
-        goal_labels = [ExerciseGoalType(int(g)).label for g in goals] # -> [1, 2, 4]
     
-    return render(request, "main.html", {
-        "goal_labels": goal_labels,
-    })
-
-
-def signup_view(request):
+def signup_onboarding1(request):
     if request.method == "POST":
-        # form.data["nickname"]으론 접근 불가 (form은 쿼리여서 수정 불가)
-        # 또한 form은 dict가 아니기 때문에 .get으로 값 접근 불가
-        # form.instance.nickname -> 유효성 검사에 의미 X
+        email = request.POST.get("email")
+        pw1 = request.POST.get("password1")
+        pw2 = request.POST.get("password2")
         
+        # 닉네임 = 이메일 기본값
+        nickname = email
+
+        session_key = request.session.session_key or request.session.save()
+
+        cache.set(f"signup_email_{session_key}", email)
+        cache.set(f"signup_pw1_{session_key}", pw1)
+        cache.set(f"signup_pw2_{session_key}", pw2)
+        cache.set(f"signup_nickname_{session_key}", nickname)
+
+        return redirect("frontend:onboarding_2")
+    
+from django.core.exceptions import ValidationError
+
+def signup_onboarding3_submit(request):
+    if request.method == "POST":
+        session_key = request.session.session_key
+
+        # POST 복사해서 QueryDict 유지
         post_data = request.POST.copy()
-        post_data["nickname"] = post_data.get("email")
-        form = CustomUserCreationForm(post_data, request.FILES)
+
+        # 캐시 값 덮어쓰기
+        post_data["email"] = cache.get(f"signup_email_{session_key}")
+        post_data["password1"] = cache.get(f"signup_pw1_{session_key}")
+        post_data["password2"] = cache.get(f"signup_pw2_{session_key}")
+        post_data["nickname"] = cache.get(f"signup_nickname_{session_key}")
+
+        # exercise_goal은 그대로 두면 됨 (checkbox로 넘어온 값은 이미 POST에 있음)
+
+        # form 생성 (QueryDict 그대로 사용)
+        form = CustomUserCreationForm(post_data)
 
         if form.is_valid():
             try:
-                user = UserService.signup(form)   # form 그대로 넘김, clean_data만 넘길 시 폼 기능 못 씀
-                return redirect("accounts:login")
+                user = UserService.signup(form)
+                return redirect("frontend:onboarding_3")
             except ValidationError as e:
-                return render(request, "signup.html", {"form": form, "error": str(e)})
+                print("회원가입 실패:", e)
+                return redirect("frontend:signuppage")
         else:
-            return render(request, "signup.html", {"form": form, "error": "입력값을 확인해주세요."})
-    else:
-        form = CustomUserCreationForm()
-    return render(request, "signup.html", {"form": form})
+            print("폼 에러:", form.errors)
+            return redirect("frontend:signuppage")
+
+
 
      
 def login_view(request):
