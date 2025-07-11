@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const modalSubText = document.getElementById('modalSubText');
   const rightBtn = document.querySelector('.modal_button.right_btn');
 
+  // 프로필 아이콘 클릭 시 옵션 토글
   if (headerIcon && headerImageOptionBox) {
     headerIcon.addEventListener('click', (event) => {
       headerImageOptionBox.classList.toggle('hidden');
@@ -23,12 +24,14 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  // 프로필 수정
   if (editButton) {
     editButton.addEventListener('click', () => {
       window.location.href = '/editpage';
     });
   }
 
+  // 로그아웃
   if (logoutButton) {
     logoutButton.addEventListener('click', () => {
       modalTitle.textContent = "로그아웃 하시겠습니까?";
@@ -36,11 +39,15 @@ document.addEventListener('DOMContentLoaded', function () {
       modal.style.display = 'flex';
 
       rightBtn.onclick = () => {
-        window.location.href = '/logout/';
+        const logoutUrl = logoutButton.dataset.logoutUrl;  // <- 여기서 HTML data 속성 가져옴
+        if (logoutUrl) {
+          window.location.href = logoutUrl;
+        }
       };
     });
   }
 
+  // 회원 탈퇴
   if (withdrawButton) {
     withdrawButton.addEventListener('click', () => {
       modalTitle.textContent = "정말로 회원 탈퇴를 하시겠습니까?";
@@ -49,12 +56,16 @@ document.addEventListener('DOMContentLoaded', function () {
       modal.style.display = 'flex';
 
       rightBtn.onclick = () => {
-        window.location.href = '/delete_account/';
+        const deleteUrl = withdrawButton.dataset.deleteUrl;  // <- 탈퇴 URL도 동일하게 처리
+        if (deleteUrl) {
+          window.location.href = deleteUrl;
+        }
       };
     });
   }
 });
 
+// 모달 닫기 함수
 function closeModal() {
   const modal = document.getElementById('commonModal');
   if (modal) {

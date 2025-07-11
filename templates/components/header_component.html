@@ -24,7 +24,7 @@
 
 <div id="headerImageOptionBox" class="header_image_option_box hidden">
   <p id="editProfile" class="option_item">회원정보 수정</p>
-  <p id="logout" class="option_item">로그아웃</p>
+  <p id="logout" class="option_item" data-logout-url="{% url 'accounts:logout' %}">로그아웃</p>
   <p id="withdraw" class="option_item">회원 탈퇴</p>
 </div>
 {% endblock body %}
