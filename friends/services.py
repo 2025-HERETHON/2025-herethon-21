@@ -6,7 +6,7 @@ from utils.choices import NotificationCategoryType
 
 class FriendService:
     @staticmethod
-    def send_request(request, sender, receiver):
+    def send_request(sender, receiver):
         if sender == receiver:
             raise ValueError("본인에게 친구 요청을 보낼 수 없습니다.")
 
@@ -28,29 +28,11 @@ class FriendService:
             status=FriendStatusType.PENDING
         )
         
-        NotificationService(request).post(
-            sender=sender,
-            receiver=receiver,
-            category=NotificationCategoryType.REQUEST
-        )
-        
     @staticmethod
-    def accept_request(request, friend):
+    def accept_request(friend):
         friend.status = FriendStatusType.ACCEPT
         friend.save()   
-             
-        NotificationService(request).post(
-            sender=friend.sender,
-            receiver=friend.receiver,
-            category=NotificationCategoryType.ACCEPT
-        )
         
     @staticmethod
-    def reject_request(request, friend):
+    def reject_request(friend):
         friend.delete()
-        
-        NotificationService(request).post(
-            sender=friend.sender,
-            receiver=friend.receiver,
-            category=NotificationCategoryType.ACCEPT
-        )

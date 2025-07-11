@@ -5,9 +5,10 @@ from django.db.models import Q
 from .models import Friend
 from accounts.models import CustomUser
 from .services import FriendService
+from notifications.services import NotificationService
 from django.contrib import messages
 from utils.json_handlers import JSONIntChoicesListHandler
-from utils.choices import ExerciseGoalType
+from utils.choices import ExerciseGoalType, NotificationCategoryType
 
 
 @login_required
@@ -26,6 +27,12 @@ def create_send_friends(request):
         try:
             receiver = CustomUser.objects.get(email=email)
             FriendService.send_request(request.user, receiver)
+            service = NotificationService(request)
+            service.post(
+                sender=request.user,
+                receiver=receiver,
+                category=NotificationCategoryType.REQUEST
+        )
             messages.success(request, f"{email}님에게 친구 요청을 보냈습니다.")
         except CustomUser.DoesNotExist:
             messages.error(request, "해당 이메일의 사용자가 존재하지 않습니다.")
@@ -53,6 +60,13 @@ def create_accept_friend(request, username):
         ).first()
         if friend:
             FriendService.accept_request(friend)
+            service = NotificationService(request)
+            service.post(                
+                sender=friend.sender,
+                receiver=friend.receiver,
+                category=NotificationCategoryType.ACCEPT
+            )
+        
         return redirect("friends:read_friends_list")
     
 @login_required
@@ -65,6 +79,12 @@ def create_reject_friend(request, username):
         ).first()
         if friend:
             FriendService.reject_request(friend)
+            service = NotificationService(request)
+            service.post(
+                sender=friend.sender,
+                receiver=friend.receiver,
+                category=NotificationCategoryType.REJECT
+            )
         return redirect("friends:read_friends_list")
         
 @login_required
