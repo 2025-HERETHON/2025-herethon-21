@@ -1,9 +1,11 @@
-from django.shortcuts import render, redirect
-from django.urls import reverse
 import json
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpRequest
+from django.urls import reverse
 from menstruations.services import MenstruationService
+from notifications.services import NotificationService
 
-def routineingpage(request):
+def routineingpage(request:HttpRequest):
     data_list = [
         {
             "id": 1,
@@ -100,10 +102,10 @@ def routineingpage(request):
                 ) 
 
 
-def componentpage(request):
+def componentpage(request:HttpRequest):
     return render(request,"pages/component_page.html")
 
-def cyclepage(request):
+def cyclepage(request:HttpRequest):
     service = MenstruationService(request)
     today_phase = service.get_today_phase()
 
@@ -111,7 +113,7 @@ def cyclepage(request):
         "today_phase": today_phase,
     })
 
-def scrappage(request):
+def scrappage(request:HttpRequest):
     data_list = [
         {
             "date": "2025-05-09",
@@ -152,10 +154,10 @@ def scrappage(request):
     ]
     return render(request,"pages/scrap_page.html", {"data_list": data_list})
 
-def restpage(request):
+def restpage(request:HttpRequest):
     return render(request,"pages/rest_page.html")
 
-def periodpage(request):
+def periodpage(request:HttpRequest):
     service = MenstruationService(request)
     menstruations = service.get_list()
     menstruation_average = service.get_average()
@@ -165,26 +167,25 @@ def periodpage(request):
         'menstruation_average': menstruation_average,
     })
 
-def componentcalendar(request):
-    return render(request,"pages/component_calendar.html")
+def componentcalendar(request:HttpRequest):
     return render(request,"pages/component_calendar.html")
 
-def mypage(request):
+def mypage(request:HttpRequest):
     return render(request,"pages/mypage.html")
 
-def onboarding_1(request):
+def onboarding_1(request:HttpRequest):
     return render(request, "pages/onboarding_pages/onboarding_1.html")
 
-def onboarding_2(request):
+def onboarding_2(request:HttpRequest):
     return render(request, "pages/onboarding_pages/onboarding_2.html")
 
-def onboarding_3(request):
+def onboarding_3(request:HttpRequest):
     return render(request, "pages/onboarding_pages/onboarding_3.html")
 
-def signuppage(request):
+def signuppage(request:HttpRequest):
     return render(request, "pages/onboarding_pages/signup_page.html")
 
-def loginpage(request): #아래 더미데이터는 GPT에게 받은 임시 데이터입니다
+def loginpage(request:HttpRequest): #아래 더미데이터는 GPT에게 받은 임시 데이터입니다
     dummy_users = {
         'fitforme@example.com': 'abc123!@#',
     }
@@ -204,7 +205,7 @@ def loginpage(request): #아래 더미데이터는 GPT에게 받은 임시 데�
 
             elif email in dummy_users:
                 if dummy_users[email] == password:
-                    return redirect(reverse('frontend:mypagemain'))
+                    return redirect(reverse('frontend:cyclepage'))
                 else:
                     context['password_error'] = '비밀번호가 틀렸습니다.'
             else:
@@ -215,16 +216,21 @@ def loginpage(request): #아래 더미데이터는 GPT에게 받은 임시 데�
 
     return render(request, 'pages/onboarding_pages/login_page.html', context)
 
-def lastmenstruationpage(request):
+def lastmenstruationpage(request:HttpRequest):
     return render(request, "pages/onboarding_pages/last_menstruation_page.html")
 
-def purposepage(request):
+def purposepage(request:HttpRequest):
     return render(request, "pages/onboarding_pages/purpose_page.html")
 
-def alarmpage(request):
-    return render(request, "pages/alarm_page.html")
+def alarmpage(request:HttpRequest):
+    service = NotificationService(request)
+    notification_list = service.get_list()
 
-def mypagemain(request):
+    return render(request, "pages/alarm_page.html", {
+        'notification_list': notification_list,
+    })
+
+def mypagemain(request:HttpRequest):
     data_list = [
         {
             "id": 1,
@@ -259,7 +265,7 @@ def mypagemain(request):
     ]
     return render(request, "pages/mypage_main.html", {"data_list": data_list})
 
-def makefriends(request):
+def makefriends(request:HttpRequest):
     data_list = [
         {
             "id": 1,
@@ -294,13 +300,13 @@ def makefriends(request):
     ]
     return render(request, "pages/make_friends_pages/friends_email_input.html", {"data_list": data_list})
 
-def friendsconfirm(request):
+def friendsconfirm(request:HttpRequest):
     return render(request, "pages/make_friends_pages/friends_confirm.html")
 
-def friended(request):
+def friended(request:HttpRequest):
     return render(request, "pages/make_friends_pages/friended.html")
 
-def finishedroutine(request):
+def finishedroutine(request:HttpRequest):
     data_list = [
         {
             "date": "2025-05-09",
@@ -317,92 +323,14 @@ def finishedroutine(request):
     ]
     return render(request, "pages/finished_routine.html", {"data_list": data_list})
 
-def editpage(request):
+def editpage(request:HttpRequest):
     return render(request,"pages/edit_page.html")
 
-def friendpage(request):
-    dummy_friends = [
-        {"id": 1, "name": "친구1", "icon": "assets/img/icon.png", "intro": "안녕? 나는 친구1라고 해. 운동광EAZY", "tags": ["체형 관리", "근력 강화"]},
-        {"id": 2, "name": "친구2", "icon": "assets/img/icon.png", "intro": "나는 친구2야.", "tags": ["근력 강화", "체형 증진"]},
-        {"id": 3, "name": "친구3", "icon": "assets/img/icon.png", "intro": "나는 친구3이야.", "tags": ["스트레스 해소", "유연성 향상"]},
-        {"id": 4, "name": "친구4", "icon": "assets/img/icon.png", "intro": "나는 친구4이야.", "tags": ["체형 관리", "근력 강화"]},
-        {"id": 5, "name": "친구5", "icon": "assets/img/icon.png", "intro": "나는 친구5이야.", "tags": ["근력 강화", "스트레스 해소"]},
-    ]
-
-    friend_id = request.GET.get("id")
-    selected_friend = None
-
-    if friend_id:
-        try:
-            friend_id = int(friend_id)
-            selected_friend = next((f for f in dummy_friends if f["id"] == friend_id), None)
-        except ValueError:
-            pass
+def friendpage(request:HttpRequest, friend_username:str):
+    service = NotificationService(request)
+    is_prodded = service.get_is_prodded(friend_username)
 
     return render(request, "pages/friend_page.html", {
-        "friend": selected_friend
-    })
-
-def friendpage(request):
-    # 친구 상세정보 더미 데이터
-    dummy_friends = [
-        {"id": 1, "name": "친구1", "icon": "assets/img/icon.png", "intro": "안녕? 나는 친구1라고 해. 운동광EAZY", "tags": ["체형 관리", "근력 강화"]},
-        {"id": 2, "name": "친구2", "icon": "assets/img/icon.png", "intro": "나는 친구2야.", "tags": ["근력 강화", "체형 증진"]},
-        {"id": 3, "name": "친구3", "icon": "assets/img/icon.png", "intro": "나는 친구3이야.", "tags": ["스트레스 해소", "유연성 향상"]},
-        {"id": 4, "name": "친구4", "icon": "assets/img/icon.png", "intro": "나는 친구4이야.", "tags": ["체형 관리", "근력 강화"]},
-        {"id": 5, "name": "친구5", "icon": "assets/img/icon.png", "intro": "나는 친구5이야.", "tags": ["근력 강화", "스트레스 해소"]},
-    ]
-
-    # 친구 리뷰 더미 데이터
-    data_list = [
-        {
-            "id": 1,
-            "start_time": "08:40",
-            "end_time": "09:00",
-            "duration_minutes": 20,
-            "content": "배고파",
-            "rating": 3,
-            "emotion_counts": {
-                "crying": 0,
-                "anger": 0,
-                "agree": 9,
-                "surprized": 1,
-                "smile": 3
-            },
-        },
-        {
-            "id": 2,
-            "start_time": "18:00",
-            "end_time": "19:00",
-            "duration_minutes": 60,
-            "content": "고양이귀여워",
-            "rating": 5,
-            "emotion_counts": {
-                "crying": 0,
-                "anger": 0,
-                "agree": 98,
-                "surprized": 0,
-                "smile": 10
-            },
-        },
-    ]
-
-    has_review_today = True  # TODO: 날짜 비교해서 바꾸기
-
-
-    friend_id = request.GET.get("id")
-    selected_friend = None
-
-    if friend_id:
-        try:
-            friend_id = int(friend_id)
-            selected_friend = next((f for f in dummy_friends if f["id"] == friend_id), None)
-        except ValueError:
-            selected_friend = None
-
-  
-    return render(request, "pages/friend_page.html", {
-        "friend": selected_friend,
-        "data_list": data_list,
-        "has_review_today": has_review_today,
+        'friend_username': friend_username,
+        'is_prodded': is_prodded,
     })
