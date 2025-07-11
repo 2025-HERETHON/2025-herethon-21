@@ -9,95 +9,107 @@
 {% block script %}
 <script src="{% static 'functions/component_functions/calendar_component.js' %}"></script>
 <script src="{% static 'functions/page_functions/edit_page.js' %}"></script>
+<script>
+  const menstruation_cycle = JSON.parse('{{ menstruation_cycle|escapejs }}');
+  callCalendar(menstruation_cycle);
+</script>
 {% endblock script %}
-
 
 {% block body %}
 <body>
 
-    {% block header %}
-        {% include "../components/header_component.html" %}
-    {% endblock header %}
-    
-    <main class="main_layout">
+  {% block header %}
+    {% include "../components/header_component.html" %}
+  {% endblock header %}
+
+  <main class="main_layout">
     <section class="content_area">
-        <div class="center_image_wrapper">
-            <img src="{% static 'assets/img/page.png' %}" alt="가운데 배너" class="center_image" />
-        </div>
+      <div class="center_image_wrapper">
+        <img src="{% static 'assets/img/page.png' %}" alt="가우드 배너" class="center_image" />
+      </div>
 
-        {% block bg %}
+      {% block bg %}
         {% include "../components/bg_component.html" %}
-        {% endblock bg %}
-
+      {% endblock bg %}
     </section>
-        
-      <section class="content_left"> 
-        {% block infobox %}
+
+    <section class="content_left"> 
+      {% block infobox %}
         {% include "../components/infobox_component.html" %}
-        {% endblock infobox %}
+      {% endblock infobox %}
 
-        <div class="calendar_wrapper">
-          {% block calendar %}
+      <div class="calendar_wrapper">
+        {% block calendar %}
           {% include "../components/calendar_component.html" %}
-          {% endblock calendar %}
-        </div>
+        {% endblock calendar %}
+      </div>
 
-        {% block friendbox %}
+      {% block friendbox %}
         {% include "../components/friendbox_component.html" %}
-        {% endblock friendbox %}
+      {% endblock friendbox %}
+    </section>
 
-      </section>
+    <section class="content_right">
+      <img src="{% static 'assets/img/deco_pipi.png' %}" alt="상단 피피" class="deco_pipi" />
 
-      <section class="content_right">
-        <img src="{% static 'assets/img/deco_pipi.png' %}" alt="상단 피피" class="deco_pipi" />
+      <!-- ✅ form 시작 -->
+      <form method="POST" action="{% url 'accounts:update_CustomUser' %}" enctype="multipart/form-data" id="editProfileForm">
+        {% csrf_token %}
         <div class="info_block_wrapper">
-            <p class="section_title">나의 프로필</p>
+          <p class="section_title">마이 프로필</p>
 
           <div class="info_box">
             <div class="info_content">
               <div class="profile_image_wrapper">
                 <img src="{% static 'assets/img/icon.png' %}" alt="아이콘"
-                class="icon_image2 {% if is_editable %}editable_icon{% endif %}" />
+                     class="icon_image2 {% if is_editable %}editable_icon{% endif %}" 
+                     id="profileImage" />
               </div>
-     
-              <h3 class="info_title editable_text" contenteditable="true" spellcheck="false">나</h3>
-     
+              <h3 class="info_title editable_text" contenteditable="true" spellcheck="false" id="nickname_display">{{ user.nickname }}</h3>
+              <input type="hidden" name="nickname" id="nickname_input" value="{{ user.nickname }}">
             </div>
             <div class="intro_images">
-                <img id="penIcon_2" src="{% static 'assets/img/pen_before.png' %}" alt="연필" class="pen_icon" />
-                <img id="trashcanIcon_2" src="{% static 'assets/img/trashcan.png' %}" alt="휴지통" class="trashcan_img" />
+              <img id="penIcon_2" src="{% static 'assets/img/pen_before.png' %}" alt="연필" class="pen_icon" />
+              <img id="trashcanIcon_2" src="{% static 'assets/img/trashcan.png' %}" alt="휴지통" class="trashcan_img" />
             </div>
           </div>
-        
-            <div id="imageOptionBox" class="image_option_box hidden">
-              <p id="galleryOption" class="option_item">갤러리 들어가기</p>
-              <p id="defaultImageOption" class="option_item">기본 사진 선택하기</p>
-            </div>
 
-            <input type="file" id="profileImageInput" accept="image/*" style="display: none;" />
+          <div id="imageOptionBox" class="image_option_box hidden">
+            <p id="galleryOption" class="option_item">갤러리 들어가기</p>
+            <p id="defaultImageOption" class="option_item">기본 사진 선택하기</p>
+          </div>
 
-            <p class="section_title_2">자기소개</p>
-            <div class="section_box">
-              <textarea id="introTextarea" class="intro_textarea"></textarea>
-              <div class="intro_images">
-                <img id="penIcon" src="{% static 'assets/img/pen_before.png' %}" alt="연필" class="pen_icon" />
-                <img id="trashcanIcon" src="{% static 'assets/img/trashcan.png' %}" alt="휴지통" class="trashcan_img" />
-              </div>
-            </div>
+          <input type="file" name="profile_image" id="profileImageInput" accept="image/*" style="display: none;" />
 
-            <p class="section_title_2">운동 목적</p>
-            <div class="preference_box">
-              <div class="tags">
-                <span class="preference_tag">체형 관리</span> <span class="preference_tag">체형 증진</span> <span class="preference_tag">스트레스 해소</span>
-                <span class="preference_tag">근력 강화</span> <span class="preference_tag">유연성 향상</span>
-              </div>
+          <p class="section_title_2">자기소개</p>
+          <div class="section_box">
+            <textarea id="introTextarea" class="intro_textarea">{{ user.bio }}</textarea>
+            <input type="hidden" name="bio" id="bio_input">
+            <div class="intro_images">
+              <img id="penIcon" src="{% static 'assets/img/pen_before.png' %}" alt="연필" class="pen_icon" />
+              <img id="trashcanIcon" src="{% static 'assets/img/trashcan.png' %}" alt="휴지통" class="trashcan_img" />
             </div>
+          </div>
 
-            <div class="button_wrapper">
-              <button id="saveButton" class="submit_button" disabled>수정 완료</button>
+          <p class="section_title_2">운동 목적</p>
+          <div class="preference_box">
+            <div class="tags">
+              {% for value, label in goal_choices %}
+                <span class="preference_tag {% if value in selected_goals %}active{% endif %}">
+                  {{ label }}
+                  <input type="checkbox" name="goals" value="{{ value }}" class="goal_checkbox" hidden
+                         {% if value in selected_goals %}checked{% endif %}>
+                </span>
+              {% endfor %}
             </div>
+          </div>
+
+          <div class="button_wrapper">
+            <button id="saveButton" class="submit_button" type="submit" disabled>수정 완료</button>
+          </div>
         </div>
-      </section>
+      </form>
+      <!-- ✅ form 끝 -->
     </section>
 
     <nav class="sidebar_nav" aria-label="페이지 네비게이션">
@@ -107,5 +119,13 @@
     </nav>
   </main>
 </body>
+
+<script>
+  document.getElementById("editProfileForm").addEventListener("submit", function () {
+    document.getElementById("nickname_input").value = document.getElementById("nickname_display").textContent.trim();
+    document.getElementById("bio_input").value = document.getElementById("introTextarea").value.trim();
+  });
+</script>
+
 {% include "../components/modal_component.html" %}
 {% endblock body %}
