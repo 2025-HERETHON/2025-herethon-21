@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>운동 완료</title>
+</head>
+<body>
+  <table>
+    <thead>
+      <tr>
+        <th>순서</th>
+        <th>운동</th>
+        <th>난이도</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in exercise_routine %}
+      <tr>
+        <td>{{item.order}}</td>
+        <td>{{item.exercise}}</td>
+        <td>{{item.difficulty}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <form
+    action="{% url 'exercises:exercise_review_create' %}"
+    method="post"
+  >
+    {% csrf_token %}
+    <input name="exercise_history" type="hidden" value="{{exercise_history_id}}" />
+    <input name="rating" type="number" min="1" max="5" />
+    <textarea name="comment"></textarea>
+    <button type="submit">운동 리뷰 추가하기</button>
+  </form>
+</body>
+</html>

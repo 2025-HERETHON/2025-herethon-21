@@ -112,3 +112,6 @@
 .shake {
   animation: shake 0.4s;
 }
+input[type="checkbox"] {
+  display: none;
+}

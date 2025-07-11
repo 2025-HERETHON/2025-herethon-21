@@ -17,10 +17,13 @@
                 <span class="input_error_message">{{ email_error }}</span>
             {% endif %}
         </div>
-        <input type="text" id="email" name="email"
-            placeholder="예) Fitforme@example.com"
-            value="{{ email|default:'' }}"
-            class="{% if email_error %}input_error{% endif %}" />
+            <form method="post" action="{% url 'accounts:login' %}">
+                {% csrf_token %}
+                <input type="email" id="email" name="email"
+                    placeholder="예) Fitforme@example.com"
+                    value="{{ email|default:'' }}"
+                    class="{% if email_error %}input_error{% endif %}" required />
+            </form>
        </div>
 
        <div class="text_input_hugger">
@@ -30,18 +33,27 @@
                 <span class="input_error_message">{{ password_error }}</span>
             {% endif %}
         </div>
-        <input type="password" id="password" name="password"
-            placeholder="영문, 숫자, 특수문자 조합 8~16자"
-            value="{{ password|default:'' }}"
-            class="{% if password_error %}input_error{% endif %}" />
+            <form method="post" action="{% url 'accounts:login' %}">
+                {% csrf_token %}
+                <input type="password" id="password" name="password"
+                    placeholder="영문, 숫자, 특수문자 조합 8~16자"
+                    value="{{ password|default:'' }}"
+                    class="{% if password_error %}input_error{% endif %}" />
+            </form>
        </div>
 
 
         {% if error %}
             <p style="color:red;">{{ error }}</p>
         {% endif %}
-        <button type="submit" value="로그인" id="login_submitbtn">로그인</button>
+
+        <form method="post" action="{% url 'accounts:login' %}">
+            {% csrf_token %}
+            <button type="submit" value="로그인" id="login_submitbtn">로그인</button>
+        </form>
+
         <button type="button" id="to_signup" data-url="{% url 'frontend:onboarding_1' %}">회원가입</button>
+        
         </form>
     </div>
 {% endblock body %}
