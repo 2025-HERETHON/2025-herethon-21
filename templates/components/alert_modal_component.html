@@ -1,0 +1,24 @@
+{% extends "../example/base.html" %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/component_styles/alert_modal_component.css' %}" />
+{% endblock style %}
+
+{% block script %}
+<script src="{% static 'functions/component_functions/alert_modal_component.js' %}"></script>
+{% endblock script %}
+
+{% block body %}
+<div id="alertModal" class="alert_modal_overlay" style="display: none;">
+  <div class="alert_modal_box">
+    <div class="alert_modal_content">
+      <img id="alertModalImage" class="alert_modal_image" />
+      <h3 id="alertModalTitle" class="alert_modal_title"></h3>
+      <p id="alertModalContent" class="alert_modal_content"></p>
+    </div>
+    <div class="alert_modal_buttons">
+      <button class="alert_modal_button" id="alertConfirmBtn">확인</button>
+    </div>
+  </div>
+</div>
+{% endblock body %}

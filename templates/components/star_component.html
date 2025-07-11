@@ -1,0 +1,22 @@
+{% extends "../example/base.html" %}
+{% load static %} 
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/component_styles/star_component.css' %}" />
+{% endblock style %} 
+{% block script %}
+{% endblock script %}
+
+{% block body %} 
+      <div class="starscore">
+      {% for i in "12345" %}
+        <span class="star_per">
+          {% if forloop.counter <= data.rating %}
+            <img src="{% static 'assets/img/star_purple.png' %}" alt="별" />
+          {% else %}
+            <img src="{% static 'assets/img/star_gray.png' %}" alt="별" />
+          {% endif %}
+        </span>
+      {% endfor %}
+    </div>
+
+{% endblock body %}

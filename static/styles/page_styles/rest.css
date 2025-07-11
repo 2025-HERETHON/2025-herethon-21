@@ -1,0 +1,148 @@
+.nav_button:first-child {
+  border: 2px solid #A48BE7;
+  border-right: none;
+}
+
+.nav_button:not(:first-child) {
+  border-top: 1.5px dashed #A48BE7;
+  border-left: 1.5px dashed #A48BE7;
+  border-bottom: 1.5px dashed #A48BE7;
+  border-right: 2px solid #A48BE7;
+}
+
+.toggle_box {
+  background-color: #ffffff;
+  margin: 16px auto;
+  text-align: center;
+  margin-top: 178px;
+  width: 430px; 
+}
+
+.toggle_text_wrapper {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;                          
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 33px;
+  margin-left: 12px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  border-radius: 26px;
+  transition: 0.4s;
+  display: flex;                    
+  align-items: center;
+  justify-content: space-between; 
+  padding: 0 6px;                
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+  box-sizing: border-box;
+}
+
+.toggle_text {
+  z-index: 2; /* 동그라미 아래로 깔리지 않도록 */
+  pointer-events: none;
+}
+
+.on_text {
+   margin-left: auto;
+}
+
+.off_text {
+  margin-right: auto;
+}
+
+/* 슬라이더 안의 동그라미 */
+.slider::before {
+  position: absolute;
+  content: "";
+  height: 21px;
+  width: 21px;
+  left: 5px;
+  bottom: 6px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.4s;
+  z-index: 1; 
+}
+
+input:checked + .slider {
+  background-color: #a48be7; 
+}
+
+input:checked + .slider::before {
+  transform: translateX(29px);
+}
+
+input:checked + .slider .on_text {
+  opacity: 1;
+}
+
+input:checked + .slider .off_text {
+  opacity: 0;
+}
+
+input:not(:checked) + .slider .on_text {
+  opacity: 0;
+}
+
+input:not(:checked) + .slider .off_text {
+  opacity: 1;
+}
+
+.bottom_text {
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  margin-top: 12px;
+  line-height: 2;
+}
+
+.line1 {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 1);
+}
+
+.line2 {
+  font-size: 10px;
+  font-weight: 500;
+  color: rgba(217, 217, 217, 1);
+}
+
+.right_image_wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;  
+  height: 100%; 
+}
+
+.pipi_rest {
+    width: 351px;
+    margin-top: 160px;
+}

@@ -1,0 +1,129 @@
+{% extends "../example/base.html" %}
+{% load static %} 
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/component_styles/page_component.css' %}" />
+<link rel="stylesheet" href="{% static 'styles/page_styles/period.css' %}" />
+<link rel="stylesheet" href="{% static 'styles/page_styles/page_common.css' %}" />
+{% endblock style %} 
+
+{% block script %}
+<script src="{% static 'functions/component_functions/calendar_component.js' %}"></script>
+<script src="{% static 'functions/page_functions/period_page.js' %}"></script>
+{% endblock script %}
+
+{% block body %}
+<body>
+
+    {% block header %}
+        {% include "../components/header_component.html" %}
+    {% endblock header %}
+    
+    
+    <main class="main_layout">
+    <section class="content_area">
+
+        <section class="star_background">
+            <span class="star star5"></span> <span class="star star6"></span> <span class="star star7"></span> <span class="star star8"></span>
+            <span class="star star9"></span> <span class="star star10"></span> <span class="star star11"></span> <span class="star star12"></span>
+            <span class="star star13"></span> <span class="star star14"></span> <span class="star star15"></span> <span class="star star16"></span>
+            <span class="star star17"></span> <span class="star star20"></span>
+        </section>
+        
+      <section class="content_left">
+        {% block infobox %}
+        {% include "../components/infobox_component.html" %}
+        {% endblock infobox %}
+
+        <div class="calendar_wrapper">
+          {% block calendar %}
+          {% include "../components/calendar_component.html" %}
+          {% endblock calendar %}
+        </div>
+        
+        {% block friendbox %}
+        {% include "../components/friendbox_component.html" %}
+        {% endblock friendbox %}
+
+      </section>
+      
+    <nav class="sidebar_nav" aria-label="페이지 네비게이션">
+      <a href="/cyclepage" class="nav_button nav_button1">운 동</a>
+      <a href="/scrappage" class="nav_button nav_button2">스 크 랩</a>
+      <a href="/periodpage" class="nav_button nav_button3">월 경</a>
+    </nav>
+
+      <section class="content_right">
+        <div class="date_picker_wrapper">
+          <p class="date_description">월경 평균</p>
+          <div class="date_range_box">
+            <span class="line_text_wrapper">
+              <span class="text_group">
+                <span class="text_left_1">평균 기간</span>
+                <span class="text_left_2">7일</span>
+              </span>
+              <img src="{% static 'assets/img/period_line.png' %}" alt="분간선" class="line" />
+              <span class="text_group">
+                <span class="text_right_1">평균 주기</span>
+                <span class="text_right_2">28일</span>
+              </span>
+            </span>
+          </div>
+          <p class="date_description">월경 추가</p>
+          <div class="datepicker">
+            <input type="date" id="period_start_date" class="date_input" />
+            <img src="{% static 'assets/img/arrow.png' %}" alt="화살표" class="arrow" />
+            <input type="date" id="period_end_date" class="date_input" />
+            <button id="add_button" class="search_button">추가</button>
+          </div>
+
+          <div class="selected_showingbox hidden">
+            <p id="period_start_line" class="hidden"><span id="period_start_text"></span></p>
+            <p id="period_end_line" class="hidden"><span id="period_end_text"></span></p>
+          </div>
+        </div>
+        {% if period_data %}
+        <div class="period_history">
+          <h2>월경 내역</h2>
+          <div class="period_table">
+            <div class="period_header">
+              <span class="period_cycle">월경 주기</span>
+              <span>기간</span>
+              <span>주기</span>
+              <span></span> 
+            </div>
+
+            {% for item in period_data %}
+            <div class="period_row" id="period_row_{{ forloop.counter0 }}">
+              <span>{{ item.start_date }} - {{ item.end_date }}</span>
+              <span>{{ item.duration }}</span>
+              <span>{{ item.cycle }}</span>
+              <span class="icon_cell">
+                <button class="icon_btn edit_btn" data-index="{{ forloop.counter0 }}">
+                  <img src="{% static 'assets/img/rewrite.png' %}" alt="수정" />
+                </button>
+                <button class="icon_btn delete_btn" data-index="{{ forloop.counter0 }}">
+                  <img src="{% static 'assets/img/trashcan.png' %}" alt="삭제" />
+                </button>
+              </span>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% else %}
+          <div class="no_period_data">
+            <img src="{% static 'assets/img/heart_pipi.png' %}" alt="피피" class="pipi"/>
+            <p class="pipi_says">월경 날짜를 추가하고 더욱 정확한 월경 데이터를 만들어가요! 피피</p>
+          </div>
+        {% endif %}
+
+      </section>
+
+
+    </section>
+
+
+  </main>
+</body>
+{% include "../components/modal_component.html" %}
+{% include "../components/alert_modal_component.html" %}
+{% endblock body %}

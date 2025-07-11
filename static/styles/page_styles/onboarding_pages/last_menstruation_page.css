@@ -1,0 +1,130 @@
+*{
+    overflow-y: hidden;
+}
+.ment_hugger{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.mentstar{
+    width:25px;
+    margin-bottom:30px;
+}
+.content_left{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.selected_showingbox{
+    padding:20px 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #A48BE7;
+    border-radius: 20px;
+    margin-top:20px;
+    display: none;
+}
+.selected_showingbox p{
+    margin: 4px 0;
+    font-weight: 500;
+}
+.hidden {
+    display: none;
+}
+
+.content_right{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.datepicker {
+  background-color: #A48BE733;
+  border-radius: 16px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: fit-content;
+}
+
+.datepicker input[type="date"] {
+  -webkit-appearance: none;
+  appearance: none;
+  position: relative;
+  font-family: "Noto Sans KR", sans-serif;
+  background: transparent;
+  border: none;
+  font-size: 14px;
+  padding: 6px 8px;
+  color: #000;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  max-width: 110px;
+  flex-shrink: 1;
+  margin-right:-20px;
+}
+
+.datepicker input[type="date"]:first-child {
+    margin-right:-30px;
+}
+.datepicker input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.arrow {
+  color: #A48BE7;
+  font-weight: bold;
+  font-size: 20px;
+  margin-top: 8px;
+  margin-left: 25px;
+}
+
+.before_page{
+    position: absolute;
+    bottom:0;
+    left:0;
+    font-size:50px;
+    color:gray;
+    margin: 20px 30px;
+}
+.before_page a{
+    text-decoration: none;  
+    color:inherit;
+}
+.next_page{
+    position: absolute;
+    bottom:0;
+    right:0;
+    font-size:50px;
+    color:gray;
+    margin: 20px 30px;
+}
+.next_page a{
+    text-decoration: none;  
+    color:inherit;
+}
+
+.left_right{
+  width:15px;
+  margin:20px 10px;
+}
+.calendar img {
+    width: 20px;
+    position: relative; /* 💥 꼭 필요해 */
+    z-index: 10;
+}

@@ -1,0 +1,154 @@
+.big_hugger {
+  width: 500px;
+  height: auto;
+}
+
+.contentbox {
+  background-color: white;
+  border-radius: 10px;
+  border: 1.5px solid var(--gray-100, #DDD);
+  box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.review_toprow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px 5px 20px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.review_text {
+  position: relative;
+  padding: 10px 0 20px 0;
+  border-radius: 10px;
+  background-color: white;
+}
+.review_text textarea {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 80px;
+  resize: none;
+  border: none;
+  font-size: 14px;
+  line-height: 40px;
+  padding: 0 20px;
+  background-color: transparent;
+  box-sizing: border-box;
+  outline: none;
+  font-family: "Noto Sans KR", sans-serif;
+}
+.review_footer {
+  display: flex;
+  gap: 20px;
+  padding: 10px 20px;
+  justify-content: flex-end;
+}
+
+.icon_btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  padding-bottom:10px;
+}
+
+.icon_btn img {
+  width: 25px;
+  height: 25px;
+  opacity: 0.7;
+}
+
+.icon_btn img:hover {
+  opacity: 1;
+}
+.review_bottomrow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px 15px 15px;
+}
+.time_range{
+  width:250px;
+}
+#todays_review {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+}
+
+#todays_review img {
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  animation: popEffect 0.3s ease;
+}
+
+.conditionscore {
+  height: 65px;
+  font-size: 30px;
+  color: rgb(202, 202, 202);
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-grow: 1;
+  margin-right: 50px;
+}
+.conditionscore span:hover {
+  cursor: pointer;
+}
+.condition_per {
+  display: inline-block;
+  width: auto;
+}
+
+.condition_per img {
+  width: 40px;
+}
+
+.condition_per.selected img {
+  transform: scale(1.3);
+}
+
+.condition_toprow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px 5px 20px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.condition_text {
+  position: relative;
+  padding: 10px 0 20px 0;
+  border-radius: 10px;
+  background-color: white;
+}
+.condition_text textarea {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 80px;
+  resize: none;
+  border: none;
+  font-size: 14px;
+  line-height: 40px;
+  padding: 0 20px;
+  background-color: transparent;
+  box-sizing: border-box;
+  outline: none;
+  font-family: "Noto Sans KR", sans-serif;
+}
+.condition_footer {
+  display: flex;
+  gap: 20px;
+  padding: 10px;
+}

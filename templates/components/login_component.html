@@ -1,0 +1,47 @@
+{% extends "../example/base.html" %}
+{% load static %} 
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/component_styles/login_component.css' %}" />
+{% endblock style %} 
+{% block script %}
+<script src="{% static 'functions/component_functions/login_component.js' %}"></script>
+{% endblock script %}
+
+{% block body %}
+    <div class="container">
+        <form method="get" action="{% url 'frontend:loginpage' %}">
+       <div class="text_input_hugger">
+        <div class="input_label_row">
+            <label for="email">이메일</label>
+            {% if email_error %}
+                <span class="input_error_message">{{ email_error }}</span>
+            {% endif %}
+        </div>
+        <input type="text" id="email" name="email"
+            placeholder="예) Fitforme@example.com"
+            value="{{ email|default:'' }}"
+            class="{% if email_error %}input_error{% endif %}" />
+       </div>
+
+       <div class="text_input_hugger">
+        <div class="input_label_row">
+            <label for="password">비밀번호</label>
+            {% if password_error %}
+                <span class="input_error_message">{{ password_error }}</span>
+            {% endif %}
+        </div>
+        <input type="password" id="password" name="password"
+            placeholder="영문, 숫자, 특수문자 조합 8~16자"
+            value="{{ password|default:'' }}"
+            class="{% if password_error %}input_error{% endif %}" />
+       </div>
+
+
+        {% if error %}
+            <p style="color:red;">{{ error }}</p>
+        {% endif %}
+        <button type="submit" value="로그인" id="login_submitbtn">로그인</button>
+        <button type="button" id="to_signup" data-url="{% url 'frontend:onboarding_1' %}">회원가입</button>
+        </form>
+    </div>
+{% endblock body %}

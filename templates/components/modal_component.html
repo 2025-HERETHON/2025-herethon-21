@@ -1,0 +1,29 @@
+{% extends "../example/base.html" %}
+
+{% load static %} 
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/component_styles/modal_component.css' %}" />
+{% endblock style %} 
+
+{% block script %}
+  {% if not modal_loaded %}
+  <script src="{% static 'functions/component_functions/modal_component.js' %}"></script>
+  {% endif %}
+{% endblock script %}
+
+
+{% block body %}
+<div id="commonModal" class="modal_overlay" style="display: none;">
+  <div class="modal_box">
+    <div class="modal_content">
+      <img id="modalImage" class="modal_image" src="{% static 'assets/img/modal_star.png' %}" alt="모달 아이콘" />
+      <h3 id="modalTitle" class="modal_title">기본 타이틀</h3>
+      <p id="modalSubText" class="modal_subtext" style="display: none;">작은 설명입니다.</p>
+    </div>
+    <div class="modal_buttons">
+      <button class="modal_button left_btn" onclick="closeModal()">아니오</button>
+      <button class="modal_button right_btn">예</button>
+    </div>
+  </div>
+</div>
+{% endblock body %}

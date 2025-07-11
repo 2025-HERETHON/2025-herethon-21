@@ -1,0 +1,52 @@
+{% extends "../example/base.html" %}
+{% load static %} 
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/component_styles/reviewed_review_component.css' %}" />
+<link rel="stylesheet" href="{% static 'styles/component_styles/review_component.css' %}" />
+{% endblock style %} 
+{% block script %}
+<script src="{% static 'functions/component_functions/reviewed_review_component.js' %}"></script>
+{% endblock script %}
+
+{% block body %} 
+  <div class="bighugger">
+    <div class="review_container contentbox" id="reviewToggleBox_{{ forloop.counter0 }}">
+      <div class="review_toprow" id="reviewSummary_{{ forloop.counter0 }}">
+        <span class="time_range">{{ data.start_time }}~{{ data.end_time }} ({{ data.duration_minutes }}분)</span>
+        <div class="star_rating disabled" id="starRating_{{ forloop.counter0 }}">
+          {% include "./star_component.html" with data=data %}
+        </div>
+      </div>
+
+      <div class="review_detail collapsed" id="reviewDetail_{{ forloop.counter0 }}">
+        <div class="condition_text">
+          <textarea id="text_input_{{ forloop.counter0 }}" disabled>{{ data.content }}</textarea>
+        </div>
+
+        <div class="condition_bottomrow">
+          <div class="emotions">
+            {% for emotion, count in data.emotion_counts.items %}
+              <div class="emotion_btn">
+                <span class="count" data-original="{{ count }}">{{ count }}</span>
+                <span class="emotion_per">
+                  <img src="{% static 'assets/img/' %}{{ emotion }}.png" alt="{{ emotion }}" />
+                </span>
+              </div>
+            {% endfor %}
+          </div>
+
+          <div class="condition_footer">
+            <button class="icon_btn" id="reviewed_review_editbtn_{{ forloop.counter0 }}">
+              <img src="{% static 'assets/img/rewrite.png' %}" alt="수정" />
+            </button>
+            <button class="icon_btn" id="delete_btn_{{ forloop.counter0 }}">
+              <img src="{% static 'assets/img/trashcan.png' %}" alt="삭제" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% include "../components/modal_component.html" %}
+{% include "../components/alert_modal_component.html" %}
+{% endblock body %}

@@ -1,0 +1,202 @@
+.nav_button:nth-child(2) {
+  border: 2px solid #A48BE7;
+  border-right: none;
+}
+
+.nav_button:not(:nth-child(2)) {
+  border-top: 1.5px dashed #A48BE7;
+  border-left: 1.5px dashed #A48BE7;
+  border-bottom: 1.5px dashed #A48BE7;
+  border-right: 2px solid #A48BE7;
+}
+
+
+.content_right {
+  display: flex;
+  justify-content: flex-start; 
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.content_right::-webkit-scrollbar {
+    display: none;
+}
+.date_picker_wrapper {
+  width:450px ;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; 
+  gap: 4px; 
+  margin: 60px auto 0 auto;
+  margin-bottom:20px;
+}
+
+.date_description {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.date_input {
+  flex: 1;
+  min-width: 120px;
+  padding: 8px 10px;
+  font-size: 14px;
+  border: none;
+  background-color: rgba(255, 255, 255, 1);
+}
+
+.search_button {
+  padding: 8px 16px;
+  background-color: rgba(239, 239, 239, 1);
+  color: rgba(0, 0, 0, 1);
+  border: none;
+  border-radius: 7px;
+  font-weight: 500;
+  cursor: not-allowed;
+  white-space: nowrap;
+}
+
+.search_button.active {
+  background-color: rgba(164, 139, 231, 1);
+  color: rgba(255, 255, 255, 1);
+  cursor: pointer;
+}
+
+.arrow {
+  width: 14px;
+  height: 10px;
+}
+.routines{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin:20px;
+}
+.delete_btn{
+  width:15px;
+}
+.scrapped_time{
+  font-size: 17px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  margin:10px 0;
+}
+.date_{
+  margin-right:20px;
+}
+.bighugger{
+  border: 2px solid rgb(223, 223, 223);
+}
+
+.pipi{
+  width:500px;
+  margin-top:20px;
+  margin-bottom:30px;
+}
+.no_scrap_data{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.pipi_says{
+    background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='16' ry='16' stroke='%23A48BE7FF' stroke-width='3' stroke-dasharray='10' stroke-dashoffset='100' stroke-linecap='butt'/%3e%3c/svg%3e");
+    border-radius: 16px;
+    padding:10px 20px;
+}
+
+.icon_btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.icon_btn img {
+  width: 16px;
+  height: 16px;
+  opacity: 0.6;
+}
+
+.icon_btn img:hover {
+  opacity: 1;
+}
+
+
+.datepicker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 10px 12px 8px;;
+  background-color: rgba(255, 255, 255, 1);
+  border: 1.5px solid rgba(221, 221, 221, 1);
+  border-radius: 13px;
+  width: 100%;
+  max-width: 490px;
+  height: 46px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.05);
+}
+
+.datepicker input[type="date"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  border: none;
+  font-size: 14px;
+  padding: 6px 15px;
+  color: transparent; 
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  min-width: 168px;
+  position: relative;
+}
+
+
+.datepicker input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  right: 0;
+  top: 0;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.datepicker input[type="date"]::-webkit-datetime-edit {
+  color: transparent;
+}
+
+.datepicker input[type="date"].has-value {
+  appearance: none;
+  background: transparent;
+  border: none;
+  font-size: 14px;
+  padding: 6px 15px;
+  color: transparent; 
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  max-width: 110px;
+  position: relative;
+}
+
+.datepicker input[type="date"].has-value::-webkit-datetime-edit {
+  color: #000;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.perroutine {
+  cursor: pointer; /* ✅ 클릭 가능한 느낌 추가 */
+}

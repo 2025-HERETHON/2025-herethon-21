@@ -1,0 +1,37 @@
+{% extends "../example/base.html" %}
+{% load static %} 
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/component_styles/review_component.css' %}" />
+{% endblock style %} 
+{% block script %}
+<script src="{% static 'functions/component_functions/review_component.js' %}"></script>
+<script src="{% static 'functions/component_functions/modal_component.js' %}"></script>
+<script src="{% static 'functions/component_functions/alert_modal_component.js' %}"></script>
+{% endblock script %}
+
+{% block body %} 
+  <div class="big_hugger">
+    <div class="contentbox">
+      
+      <div class="review_toprow">
+        <span class="time_range">07:00~07:20 (20분)</span>
+        {% include "./star_component.html" %}
+      </div>
+
+      <div class="review_text">
+        <textarea placeholder="오늘 루틴에 대해 리뷰를 남겨주세요!" id="text_input"></textarea>
+      </div>
+        <div class="review_footer">
+          <button class="icon_btn" id="edit_btn">
+            <img src="{% static 'assets/img/rewrite.png' %}" alt="수정" />
+          </button>
+          <button class="icon_btn" id="review_resetbtn">
+            <img src="{% static 'assets/img/trashcan.png' %}" alt="삭제" />
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% include "../components/modal_component.html" %}
+{% include "../components/alert_modal_component.html" %}
+{% endblock body %}

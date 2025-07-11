@@ -1,0 +1,30 @@
+{% extends "../example/base.html" %}
+{% load static %} 
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/page_styles/page_common.css' %}" />
+{% endblock style %} 
+
+
+
+{% block body %}
+<div class="info_box">
+  {% if friend %}
+  <div class="info_content">
+    <img src="{% static friend.icon %}" alt="아이콘" class="icon_image2" />
+    <div class="info_text_group">
+      <h3 class="info_title">{{ friend.name }}</h3>
+      <p class="info_text">{{ friend.intro }}</p>
+      <div class="tags">
+        {% for tag in friend.tags %}
+        <span class="preference_tag">{{ tag }}</span>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <p>친구 정보를 불러올 수 없습니다.</p>
+  {% endif %}
+</div>
+
+
+{% endblock body %}

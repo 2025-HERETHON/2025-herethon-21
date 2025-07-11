@@ -1,0 +1,142 @@
+@font-face {
+  font-family: 'Inter';
+  src: url('/static/assets/font/Inter_18pt-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('/static/assets/font/Inter_18pt-Medium.ttf') format('truetype');
+  font-weight: 500;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('/static/assets/font/Inter_24pt-Bold.ttf') format('truetype');
+  font-weight: 700;
+}
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* html, body 높이 100% 지정 */
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden; 
+}
+
+.main_layout {
+  display: flex;
+  min-height: 100vh; /* 브라우저 화면보다 작을 땐 채우고, 클 땐 자동 확장 */
+  width: 100%;
+}
+
+.star_background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2;
+  pointer-events: none; /* 클릭 막기 */
+}
+
+.star {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background-image: url("/static/assets/img/star.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: 3; 
+  opacity: 0.5;
+}
+
+/* 원하는 위치마다 클래스 지정 */
+.star1 {
+  bottom: 10%;
+  right: 8%;
+}
+.star2 {
+  bottom: 74%;
+  right: 10%;
+}
+.star3 {
+  bottom: 40%;
+  right: 9%;
+}
+.star4 {
+  bottom: 53%;
+  right: 15%;
+}
+.star5 {
+  bottom: 96%;
+  right: 78%;
+}
+.star6 {
+  bottom: 87%;
+  right: 90%;
+}
+.star7 {
+  bottom: 70%;
+  right: 96%;
+}
+.star8 {
+  bottom: 75%;
+  right: 52%;
+}
+.star9 {
+  bottom: 54%;
+  right: 57%;
+}
+.star10 {
+  bottom: 28%;
+  right: 98%;
+}
+.star11 {
+  bottom: 38%;
+  right: 48%;
+}
+.star12 {
+  bottom: 55%;
+  right: 93%;
+}
+.star13 {
+  bottom: 9%;
+  right: 68%;
+}
+.star14 {
+  bottom: 2%;
+  right: 48%;
+}
+.star15 {
+  bottom: 15%;
+  right: 53%;
+}
+.star16 {
+  bottom: -1.5%;
+  right: 80%;
+}
+.star17 {
+  bottom: 97%;
+  right: 58%;
+}
+.star18 {
+  bottom: 97%;
+  right: 40%;
+}
+.star19 {
+  bottom: 96%;
+  right: 23%;
+}
+.star20 {
+  bottom: 3%;
+  right: 92%;
+}
+
+a {
+  text-decoration: none;
+}

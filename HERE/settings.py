@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'exercises',
     'friends',
     'notifications',
+    'frontend',
 ]
 
 MIDDLEWARE = [

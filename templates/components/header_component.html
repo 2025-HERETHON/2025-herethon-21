@@ -1,0 +1,30 @@
+{% extends "../example/base.html" %}
+{% load static %} 
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/component_styles/header_component.css' %}" />
+{% endblock style %} 
+
+{% block script %}
+<script src="{% static 'functions/component_functions/header_component.js' %}"></script>
+{% endblock script %}
+
+{% block body %}
+<header class="top_section">
+  <section class="top_bar">
+    <a href="{% url 'frontend:mypagemain' %}">
+    <img src="{% static 'assets/img/logo.png' %}" alt="로고" class="logo_image" />
+    </a>
+    <img src="{% static 'assets/img/icon.png' %}" alt="아이콘" class="icon_image" id="headerIconImage" />
+    <a href="{% url 'frontend:alarmpage' %}">
+      <img src="{% static 'assets/img/noti.png' %}" alt="알림" class="noti_image" />
+    </a>
+  </section>
+</header>
+
+<div id="headerImageOptionBox" class="header_image_option_box hidden">
+  <p id="editProfile" class="option_item">회원정보 수정</p>
+  <p id="logout" class="option_item">로그아웃</p>
+  <p id="withdraw" class="option_item">회원 탈퇴</p>
+</div>
+{% endblock body %}

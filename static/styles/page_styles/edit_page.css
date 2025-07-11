@@ -1,0 +1,303 @@
+.main_layout {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+.content_area {
+  display: flex;
+  flex: 1; 
+  overflow: auto;
+  position: relative;
+}
+
+.center_image_wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5; 
+  pointer-events: none; 
+}
+
+.center_image {
+  height: 80vh;
+  object-fit: contain;
+}
+
+.content_left {
+  flex-basis: 50%;
+  background-color: #ffffff;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.content_right {
+  flex-basis: 50%;
+  background-color: #ffffff;
+  padding: 20px;
+  overflow-y: auto;
+  position: relative; 
+}
+
+.sidebar_nav {
+  width: 6vw;
+  min-width: 50px;
+  max-width: 60px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+}
+
+.nav_button {
+  writing-mode: vertical-rl; 
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 17px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  background-color: rgba(255, 255, 255, 1); 
+  border: 1.5px dashed #A48BE7; /* 여기 수정 https://kovart.github.io/dashed-border-generator/ 활용 */
+  color: rgba(0, 0, 0, 1);
+}
+
+.content_right .info_box {
+  margin: 0 20px 0 20px; 
+  border-radius: 18px;
+}
+
+.info_block_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;     
+  margin: 65px auto 0 auto;    
+  max-width: 490px;      
+  width: 100%;
+  gap: 10px;                 
+}
+
+.section_title {
+  font-size: 18px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 1);
+  padding-left: 20px; 
+}
+
+.section_box {
+  background: rgba(255, 255, 255, 1);
+  border: 1.5px solid rgba(217, 217, 217, 1);
+  border-radius: 12px;
+  padding: 20px;
+  width: 450px;
+  height: 90px;
+  box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.05);
+  padding-left: 20px; 
+  margin: 0 auto 0 auto;
+  position: relative;
+}
+
+.intro_textarea {
+  width: 100%;
+  height: 60px;
+  border: none;
+  resize: none;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #333;
+  outline: none;
+}
+
+.section_title_2 {
+  margin-top: 30px;
+  font-size: 18px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 1);
+  padding-left: 20px; 
+}
+
+.preference_box .tags {
+  display: grid;
+  grid-template-columns: repeat(2, auto); 
+  flex-wrap: wrap;
+  justify-content: center; 
+  gap: 12px 38px;
+  cursor: pointer;
+}
+
+.preference_box .preference_tag.active {
+  background-color: #A48BE7; 
+  color: #fff; 
+}
+
+.preference_box .preference_tag {
+  display: inline-flex; 
+  justify-content: center; 
+  align-items: center;
+  padding: 6px 14px;
+  background: var(--gray-200, #EFEFEF);
+  border-radius: 14px;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 1);
+  font-weight: 500;
+  transition: background-color 0.3s;
+  width: 160px;
+  height: 37px;
+}
+
+.preference_box {
+  background: rgba(255, 255, 255, 1);
+  border: 1.5px solid rgba(217, 217, 217, 1);
+  border-radius: 12px;
+  padding: 30px 14px;
+  width: 450px;
+  height: auto;
+  box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.05);
+  margin: 0 auto 0 auto;
+}
+
+.button_wrapper {
+  width: 100%;      
+  margin-top: 40px;
+  margin-bottom: 5px;
+}
+
+.submit_button {
+  display: block;
+  margin: 0 auto;  
+  background-color: rgba(239, 239, 239, 1);
+  color: rgba(0, 0, 0, 1);
+  font-size: 16px;
+  font-weight: 700;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.deco_pipi {
+  width: 140px;
+  height: auto;
+  position: absolute;   
+  top: 0;              
+  left: 60%; 
+}
+
+.intro_box {
+  position: relative;  
+}
+
+.intro_images {
+  position: absolute;
+  bottom: 10px;        
+  right: 14px;      
+  display: flex;
+  gap: 8px;            
+}
+
+.pen_icon {
+  width: 20px;
+  height: 20px;
+  object-fit: cover;
+}
+
+.trashcan_img {
+  width: 20px;
+  height: 22px;
+  object-fit: cover;
+}
+
+.submit_button.active {
+  background-color: rgba(164, 139, 231, 1);
+  color: white;
+  cursor: pointer;
+}
+
+.image_option_box {
+  position: absolute;
+  top: 130px; 
+  background-color: rgba(255, 255, 255, 1);
+  border: 1.5px solid rgba(221, 221, 221, 1);
+  padding: 18px 20px;
+  border-radius: 12px;
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+  z-index: 9;
+  width: 150px;
+  height: 115px;
+  margin-left: 150px;
+}
+
+.image_option_box .option_item {
+  margin: 14px 0 5px 0; 
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 1);
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
+
+.info_content {
+  display: flex;
+  align-items: center; 
+  gap: 16px; 
+  
+}
+
+.content_right .info_box {
+  background: #FFF;
+  border: 1.5px solid var(--gray-100, #DDD);
+  border-radius: 20px;
+  padding: 20px;
+  width: 450px;
+  height: 145px;
+  box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.05);
+  position: relative;
+  z-index: 5;
+}
+
+.profile_image_wrapper {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0; 
+}
+
+.profile_image_wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border-radius: 50%; 
+}
+
+.icon_image2 {
+  height: auto;           
+  width: 100px;        
+  margin-left: 3px;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-1.5px); }
+  50% { transform: translateX(1.5px); }
+  75% { transform: translateX(-1.5px); }
+  100% { transform: translateX(0); }
+}
+
+.shake {
+  animation: shake 0.4s;
+}

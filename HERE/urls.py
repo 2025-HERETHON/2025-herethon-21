@@ -27,6 +27,7 @@ urlpatterns = [
     path('exercises/', include('exercises.urls')),
     path('friends/', include('friends.urls')),
     path('notifications/', include('notifications.urls')),
+    path('', include('frontend.urls')),
 ]
 
 if settings.DEBUG:

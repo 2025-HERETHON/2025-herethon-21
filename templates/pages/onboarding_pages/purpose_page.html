@@ -1,0 +1,68 @@
+{% extends "../../example/base.html" %}
+{% load static %} 
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/page_styles/null.css' %}" />
+<link rel="stylesheet" href="{% static 'styles/component_styles/page_component.css' %}" />
+<link rel="stylesheet" href="{% static 'styles/page_styles/onboarding_pages/purpose_page.css' %}" />
+<link rel="stylesheet" href="{% static 'styles/page_styles/mypage_main.css' %}" />
+{% endblock style %} 
+
+
+{% block script %}
+<script src="{% static 'functions/page_functions/onboarding_pages/purpose_page.js' %}"></script>
+{% endblock script %}
+
+
+{% block body %}
+<body>
+
+    <header class="top_section">
+        <section class="top_bar">
+            <img src="{% static 'assets/img/logo.png' %}" alt="로고" class="logo_image" />
+        </section>
+    </header>
+    
+    <main class="main_layout">
+    <section class="content_area">
+        <section class="content_left">
+        <div class="ment_hugger">
+        <img src="{% static 'assets/img/star_highlight.png' %}" alt="피포미 별" />
+            <p><b>당신의 운동 목적을 2가지 선택해주세요</b></p>
+            <p id="default_msg">복수 선택 2개 가능</p>
+            <div class="selected_showingbox">
+                <p id="selected_keywords"><span id="selected_purposes"></span></p>
+            </div>
+        </div>
+        <div class="before_page"><a href="{% url 'frontend:lastmenstruationpage' %}">
+          <img src="{% static 'assets/img/left.png' %}" alt="뒤로가기" class="left_right"/>
+        </a></div>
+      </section>
+    <nav class="sidebar_nav" aria-label="페이지 네비게이션">
+        <p class="nav_button nav_button1"></p>   
+        <div class="nav_line"></div>
+        <div class="nav_line"></div>
+        </nav>
+
+      <section class="content_right">
+        <section class="star_background">
+            <span class="star star5"></span> <span class="star star6"></span> <span class="star star7"></span> <span class="star star8"></span>
+            <span class="star star9"></span><span class="star star11"></span> <span class="star star12"></span>
+            <span class="star star13"></span> <span class="star star14"></span> <span class="star star15"></span> <span class="star star16"></span>
+        </section>
+        <!-- 오른쪽 컨텐츠 영역 -->
+        <div class="container">
+            <div class="purpose">체형 관리</div>
+            <div class="purpose">체력 증진</div>
+            <div class="purpose">스트레스 해소</div>
+            <div class="purpose">근력 강화</div>
+            <div class="purpose">유연성 향상</div>
+        </div>
+        <div class="next_page"><a href="{% url 'frontend:onboarding_3' %}">
+          <img src="{% static 'assets/img/right.png' %}" alt="진행하기" class="left_right"/>
+        </a></div>
+        </section>
+    </section>
+  </main>
+</body>
+
+{% endblock body %}
