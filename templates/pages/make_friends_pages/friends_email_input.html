@@ -59,10 +59,13 @@
         <!-- 오른쪽 컨텐츠 영역 -->
          <div class="email_finder_hugger">
         <div class="input_hugger">
+        <form method="post" action="{% url 'friends:create_send_friends' %}" id="friendForm">
+            {% csrf_token %}
             <label for="email">이메일</label><br />
             <input type="text" id="email" name="email" placeholder="예&#41; Fitforme@example.com" />
         </div>
-        <button type="button" id="friend_submitbtn">친구 추가</button>
+        <button type="submit" id="friend_submitbtn">친구 추가</button>
+        </form>
       </div>
         </section>
     </section>

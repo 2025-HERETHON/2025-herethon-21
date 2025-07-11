@@ -33,12 +33,13 @@
     <section class="content_area">
         <section class="content_left">
         <div class="ment_hugger">
-        <img src="{% static 'assets/img/star_highlight.png' %}" alt="피포미 별" />
-        <b class="set_midder">
-        <p>친구 이름이 <span id="username">성혜린</span>님 맞으신가요?</p>
-        <p>아니라면 뒤로가기 버튼을 눌러 수정해주세요</p>
-        </b>
-      </div>
+          <img src="{% static 'assets/img/star_highlight.png' %}" alt="피포미 별" />
+          <b class="set_midder">
+            <p>친구 이름이 <span id="username">{{ receiver_user.nickname }}</span>님 맞으신가요?</p>
+            <p>아니라면 뒤로가기 버튼을 눌러 수정해주세요</p>
+          </b>
+        </div>
+
         <div class="before_page"><a href="{% url 'frontend:makefriends' %}">
           <img src="{% static 'assets/img/left.png' %}" alt="뒤로가기" class="left_right"/>
         </a></div>
@@ -58,10 +59,14 @@
         </section>
         <!-- 오른쪽 컨텐츠 영역 -->
         <div class="email_finder_hugger">
-        <img src="{% static 'assets/img/anger.png' %}" alt="프로필 사진" class="profile_photo" />
-        <p id="useremail">hyerin@gmail.com</p>
-        <button type="submit" id="friend_confirmbtn">친구 추가</button>
-      </div>
+          <img src="{{ receiver_user.profile_image.url }}" alt="프로필 사진" class="profile_image" />
+          <p id="usernickname">{{ receiver_user.nickname }}</p>
+
+          <form method="post" action="{% url 'friends:create_accept_friend' receiver_user.username %}">
+            {% csrf_token %}
+            <button type="submit" id="friend_confirmbtn">친구 추가</button>
+          </form>
+        </div>
         </section>
     </section>
   </main>
