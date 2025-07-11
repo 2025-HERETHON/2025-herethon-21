@@ -7,7 +7,8 @@ from .forms import CustomUserCreationForm
 from utils.choices import ExerciseGoalType
 from .services import UserService
 from django.core.cache import cache
-from utils.json_handlers import JSONIntChoicesListHandler
+from django.contrib import messages
+from menstruations.services import MenstruationService
 
 
 # 템플릿 렌더링 처리
@@ -29,6 +30,33 @@ def signup_onboarding1(request):
 
         return redirect("frontend:onboarding_2")
     
+def signup_onboarding2(request):
+    if request.method == "POST":
+        start = request.POST.get("start")
+        end = request.POST.get("end")
+        print(f'\n\n📌 start: {start}\n📌 end: {end}\n')
+
+        if not start or not end:
+            messages.error(request, "시작일과 종료일을 입력해주세요.")
+            return redirect("frontend:onboarding_2")
+
+        # MenstruationService를 활용해 월경 객체 저장
+        try:
+            request.POST = request.POST.copy()
+            request.POST["start"] = start
+            request.POST["end"] = end
+
+            service = MenstruationService(request)
+            message = service.post()
+            messages.success(request, message)
+        except Exception as e:
+            print(f"❌ 월경 정보 저장 실패: {e}")
+            messages.error(request, "월경 정보 저장에 실패했습니다.")
+            return redirect("frontend:onboarding_2")
+
+        return redirect("frontend:purposepage")  # ✅ 다음 온보딩 단계
+    return render(request, "pages/onboarding_pages/last_menstruation_page.html")
+
 
 def signup_onboarding3_submit(request):
     if request.method == "POST":
