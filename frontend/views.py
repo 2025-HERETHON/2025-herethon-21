@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 import json
+from utils.choices import ExerciseGoalType
 
 def routineingpage(request):
     data_list = [
@@ -306,7 +307,13 @@ def mypagemain(request):
             },
         },
     ]
-    return render(request, "pages/mypage_main.html", {"data_list": data_list})
+    
+    goal_labels = []
+    if request.user.is_authenticated:
+        goals = request.user.exercise_goal  # ["1", "2", "4"]
+        goal_labels = [ExerciseGoalType(int(g)).label for g in goals] # -> [1, 2, 4]
+    
+    return render(request, "pages/mypage_main.html", {"data_list": data_list, "goal_labels":goal_labels})
 
 def makefriends(request):
     data_list = [
