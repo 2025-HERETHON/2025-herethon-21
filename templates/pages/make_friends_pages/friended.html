@@ -7,12 +7,10 @@
 <link rel="stylesheet" href="{% static 'styles/page_styles/mypage_main.css' %}" />
 <link rel="stylesheet" href="{% static 'styles/page_styles/onboarding_pages/onboarding_1.css' %}" />
 <link rel="stylesheet" href="{% static 'styles/page_styles/make_friends_pages/friends_email_input.css' %}" />
-
 <link rel="stylesheet" href="{% static 'styles/page_styles/make_friends_pages/friends_confirm.css' %}" />
 <link rel="stylesheet" href="{% static 'styles/page_styles/make_friends_pages/friended.css' %}" />
 <link rel="stylesheet" href="{% static 'styles/component_styles/signup_component.css' %}" />
-
-{% endblock style %} 
+{% endblock style %}
 
 {% block script %}
 <script src="{% static 'functions/page_functions/make_friends_pages/friended.js' %}"></script>
@@ -21,56 +19,67 @@
 {% block body %}
 <body>
 
-    <header class="top_section">
-        <section class="top_bar">
-            <img src="{% static 'assets/img/logo.png' %}" alt="로고" class="logo_image" />
-        </section>
-    </header>
-    
-    <main class="main_layout">
-    <section class="content_area">
-        <section class="content_left">
-        <div class="ment_hugger">
+<header class="top_section">
+  <section class="top_bar">
+    <img src="{% static 'assets/img/logo.png' %}" alt="로고" class="logo_image" />
+  </section>
+</header>
+
+<main class="main_layout">
+  <section class="content_area">
+    <section class="content_left">
+      <div class="ment_hugger">
         <img src="{% static 'assets/img/star_highlight.png' %}" alt="피포미 별" />
         <b class="set_midder">
-        <p>친구 신청이 완료되었습니다</p>
-        <p>서로 응원하며 함께해요!</p>
+          <p>친구 신청이 완료되었습니다</p>
+          <p>서로 응원하며 함께해요!</p>
         </b>
       </div>
-        <div class="before_page"><a href="{% url 'frontend:makefriends' %}">
-          <img src="{% static 'assets/img/left.png' %}" alt="뒤로가기" class="left_right"/>
-        </a></div>
-      </section>
+      <div class="before_page">
+        <a href="{% url 'frontend:makefriends' %}">
+          <img src="{% static 'assets/img/left.png' %}" alt="뒤로가기" class="left_right" />
+        </a>
+      </div>
+    </section>
 
     <nav class="sidebar_nav" aria-label="페이지 네비게이션">
-        <p class="nav_button nav_button1">알 림</p>   
-        <div class="nav_line"></div>
-        <div class="nav_line"></div>
-        </nav>
+      <p class="nav_button nav_button1">알 림</p>   
+      <div class="nav_line"></div>
+      <div class="nav_line"></div>
+    </nav>
 
-      <section class="content_right">
-        <section class="star_background">
-            <span class="star star5"></span> <span class="star star6"></span> <span class="star star7"></span> <span class="star star8"></span>
-            <span class="star star9"></span><span class="star star11"></span> <span class="star star12"></span>
-            <span class="star star13"></span> <span class="star star14"></span> <span class="star star15"></span> <span class="star star16"></span>
-        </section>
-        <!-- 오른쪽 컨텐츠 영역 -->
-        <div class="email_finder_hugger">
+    <section class="content_right">
+      <section class="star_background">
+        <span class="star star5"></span> <span class="star star6"></span> <span class="star star7"></span> <span class="star star8"></span>
+        <span class="star star9"></span><span class="star star11"></span> <span class="star star12"></span>
+        <span class="star star13"></span> <span class="star star14"></span> <span class="star star15"></span> <span class="star star16"></span>
+      </section>
+
+      <!-- 오른쪽 컨텐츠 영역 -->
+      <div class="email_finder_hugger">
         <div class="friended_users">
-        <div class="peruser">
-            <img src="{% static 'assets/img/anger.png' %}" alt="프로필 사진" class="profile_photo" />
-            <p id="useremail">hyerin@gmail.com</p>
-        </div>
-        <div class="peruser">
-            <img src="{% static 'assets/img/crying.png' %}" alt="프로필 사진" class="profile_photo" />
-            <p id="useremail">yuna@gmail.com</p>
-        </div>
+
+      <p>{{ sender.email }}</p>
+      <p>{{ receiver_email }}</p>
+
+      <!-- 보낸 사람 -->
+      <div class="peruser">
+        <img src="{{ sender.profile_image.url }}" alt="보낸 사람 프로필" class="profile_photo" />
+        <p>{{ sender.email }}</p>  <!-- 여기에 sender.email 제대로 접근해야 함 -->
+      </div>
+
+      <!-- 받은 사람 -->
+      <div class="peruser">
+        <img src="{{ receiver.profile_image.url }}" alt="받은 사람 프로필" class="profile_photo" />
+        <p>{{ receiver.email }}</p>  <!-- 여기서도 마찬가지 -->
+      </div>
+
         </div>
         <button type="submit" id="goto_main">운동 바로가기</button>
       </div>
-        </section>
     </section>
-  </main>
-</body>
+  </section>
+</main>
 
+</body>
 {% endblock body %}

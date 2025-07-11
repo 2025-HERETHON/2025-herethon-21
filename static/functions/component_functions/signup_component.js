@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("signup_form");
     const emailInput = document.getElementById("email");
     const pwInput = document.getElementById("password");
     const pwCheckInput = document.getElementById("repassword");
@@ -55,10 +56,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     submitBtn.addEventListener("click", function (e) {
-        e.preventDefault();
-
+        e.preventDefault(); // 기본 제출 막고
         if (validateForm()) {
-            window.location.href = "/onboarding_2";
+            form.submit(); // 유효성 통과 시 폼 직접 제출
         }
     });
 });

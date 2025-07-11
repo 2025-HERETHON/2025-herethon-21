@@ -1,11 +1,18 @@
 from ast import literal_eval
-from datetime import timedelta
+from datetime import date, timedelta
+import json
 from django.core.cache import cache
-from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
+from django.utils.timezone import now as timezone_now
 from django.utils.dateparse import parse_duration
 from utils.constants import CACHE_KEY
+from utils.choices import ReactionEmojiType, ExerciseGoalType
+from utils.json_handlers import JSONIntChoicesListHandler
+from accounts.models import CustomUser
+from conditionreviews.models import ConditionReview
 from exercises.services import ExerciseAiService, ScrappedExerciseRoutineService, ExerciseHistoryService
 from menstruations.services import MenstruationService
 from notifications.services import NotificationService
@@ -119,17 +126,37 @@ def purposepage(request:HttpRequest):
 def alarmpage(request:HttpRequest):
     service = NotificationService(request)
     notification_list = service.get_list()
-
+    
     return render(request, "pages/alarm_page.html", {
         'notification_list': notification_list,
     })
 
+@login_required
 def mypagemain(request:HttpRequest):
+    # 운동 목표 변환
+    goal_labels = []
+    if request.user.is_authenticated:
+        goals = request.user.exercise_goal  # 예: ["1", "2", "4"]
+        goal_labels = [ExerciseGoalType(int(g)).label for g in goals]
+
+    # 컨디션 리뷰 조회용 context
+    today = date.today()
+    now_time = timezone_now().strftime("%H:%M")
+    review = ConditionReview.objects.filter(user=request.user, date=today).first()
+    review_time = review.updated_at.strftime("%H:%M") if review else None
+    
     history_service = ExerciseHistoryService(request)
     exercise_histories = history_service.get_list()
 
     return render(request, "pages/mypage_main.html", {
-        'exercise_histories': exercise_histories,
+        "exercise_histories": exercise_histories,
+        "goal_labels": goal_labels,
+        "today": today,
+        "now": now_time,
+        "review": review,
+        "rating_choices": ReactionEmojiType.choices,
+        "rating": getattr(review, "rating", None),
+        "review_time":review_time
     })
 
 def makefriends(request:HttpRequest):
@@ -167,23 +194,38 @@ def makefriends(request:HttpRequest):
     ]
     return render(request, "pages/make_friends_pages/friends_email_input.html", {"data_list": data_list})
 
-def friendsconfirm(request:HttpRequest):
-    return render(request, "pages/make_friends_pages/friends_confirm.html")
+def friendsconfirm(request, email):
+    receiver_user = get_object_or_404(CustomUser, email=email)
+    return render(request, 'pages/make_friends_pages/friends_confirm.html', {
+        'receiver_user': receiver_user
+    })
+def friended(request):
+    sender = request.user
+    receiver_email = request.GET.get("email")  # 또는 request.POST.get 등
+    receiver = get_object_or_404(CustomUser, email=receiver_email)
 
-def friended(request:HttpRequest):
-    return render(request, "pages/make_friends_pages/friended.html")
+    return render(request, "pages/make_friends_pages/friended.html", {
+        "sender": sender,
+        "receiver": receiver,
+        "receiver_email": receiver_email
+    })
 
 def finishedroutine(request:HttpRequest):
-    
     return render(request, "pages/finished_routine.html", {"data_list": data_list})
 
 def editpage(request:HttpRequest):
+    user = request.user
+    handler = JSONIntChoicesListHandler(user, "exercise_goal", ExerciseGoalType)
+
     exercise_routine = cache.get(CACHE_KEY(request.user.username).EXERCISE_ROUTINE)
     exercise_history_id = cache.get(CACHE_KEY(request.user.username).EXERCISE_HISTORY_ID)
 
     return render(request, 'pages/edit_page.html', {
         'exercise_routine': exercise_routine,
         'exercise_history_id': exercise_history_id,
+        'user': user,
+        'goal_choices': ExerciseGoalType.choices,
+        'selected_goals': handler.get_int_values()
     })
 
 def friendpage(request:HttpRequest, friend_username:str):

@@ -26,8 +26,8 @@ urlpatterns = [
     path("mypagemain", mypagemain, name="mypagemain"),
     path("alarmpage", alarmpage, name="alarmpage"),
     path("makefriends", makefriends, name="makefriends"),
-    path("friendsconfirm", friendsconfirm, name="friendsconfirm"),
-    path("friended", friended, name="friended"),
+    path('friendsconfirm/<str:email>/', friendsconfirm, name='friendsconfirm'),
+    path("friended/", friended, name="friended"),
     path("finishedroutine", finishedroutine, name="finishedroutine"),
     path("editpage", editpage, name="editpage"),
 ]

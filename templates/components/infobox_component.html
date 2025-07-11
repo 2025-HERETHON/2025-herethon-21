@@ -14,11 +14,13 @@
              class="icon_image2 {% if is_editable %}editable_icon{% endif %}" />
             </div>
             <div class="info_text_group">
-              <h3 class="info_title">나</h3>
-              <p class="info_text">안녕? 나는 너만의 운동 루틴 추천 AI 피피야</p>
+              <h3 class="info_title">{{ request.user.nickname }}</h3>
+              <p class="info_text">{{ request.user.bio }}</p>
               <div class="tags">
-                <span class="preference_tag">체형 관리</span>
-                <span class="preference_tag">근력 강화</span>
+                {% for goal in goal_labels %}
+                  <span class="preference_tag">{{ goal }}</span>
+                {% endfor %}
+
               </div>
             </div>
           </div>
