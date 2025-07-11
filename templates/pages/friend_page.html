@@ -74,6 +74,7 @@
               action="{% url 'notifications:create' %}"
               method="post"
             >
+              {% csrf_token %}
               <input name="receiver" type="hidden" value="{{friend_username}}" />
               <input name="category" type="hidden" value="5" />
               <button
