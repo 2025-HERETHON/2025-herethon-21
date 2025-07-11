@@ -76,15 +76,17 @@
     </nav>
   </main>
 {% block script %}
-  <script>
-    window.hasReviewToday = JSON.parse("{{ data_list|length|yesno:'true,false' }}");
-  </script>
-
-  <script src="{% static 'functions/component_functions/calendar_component.js' %}"></script>
-  <script>
-    const menstruation_cycle = JSON.parse('{{ menstruation_cycle|escapejs }}');
-    callCalendar(menstruation_cycle);
-  </script>
+<script>
+  window.hasReviewToday = JSON.parse("{{ data_list|length|yesno:'true,false' }}");
+</script>
+<script src="{% static 'functions/component_functions/calendar_component.js' %}"></script>
+{{ menstruation_cycle|json_script:"menstruation_cycle" }}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const menstruation_cycle = JSON.parse(document.getElementById('menstruation_cycle').textContent);
+    callFullCalendar(menstruation_cycle);
+  });
+</script>
 {% endblock script %}
 </body>
 {% include "../components/modal_component.html" %}

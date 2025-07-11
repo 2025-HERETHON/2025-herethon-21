@@ -23,7 +23,7 @@ let today = new Date();
 let currentYear = today.getFullYear();
 let currentMonth = today.getMonth();
 
-function renderCalendar(year, month, aiPredictedSchedules) {
+function renderCalendar(year, month, exerciseReviewList, phaseObj) {
   calendarTitle.textContent = `${monthNames[month]} ${year}`;
 
   const firstDayOfMonth = new Date(year, month, 1).getDay(); // 요일: 0 (Sun) ~ 6 (Sat)
@@ -55,10 +55,10 @@ function renderCalendar(year, month, aiPredictedSchedules) {
 
     // 🚫달력 표시를 위해 추가한 부분 2 필요 없을 때는 지워도 됨
     phaseNames.forEach((phaseName) => {
-      aiPredictedSchedules[phaseName].forEach((dateStr) => {
+      phaseObj[phaseName].forEach((dateStr) => {
         const date = Number(dateStr.split("-")[2]);
-        const target_date = Number(dayCell.textContent);
-        if (target_date == date) {
+        const targetDate = Number(dayCell.textContent);
+        if (targetDate == date) {
           dayCell.classList.add(`highlight_${phaseName}`);
         }
       });
@@ -80,20 +80,17 @@ function renderCalendar(year, month, aiPredictedSchedules) {
   }
   calendarDays.appendChild(fragment);
 
-  // ⭐ 오늘 날짜에 별 아이콘 추가 (운동 리뷰가 있을 경우)
-  if (
-    typeof hasReviewToday !== "undefined" &&
-    year === today.getFullYear() &&
-    month === today.getMonth() &&
-    hasReviewToday === true
-  ) {
+  // ⭐ 운동 리뷰가 있는 날짜에 별 아이콘 추가
+  if (exerciseReviewList.length > 0) {
     const calendarCells = document.querySelectorAll(".calendar_day_positioned");
-    const todayDate = today.getDate();
+
+    const exerciseDates = new Set(exerciseReviewList.map((dateStr) => Number(dateStr.split("-")[2])));
 
     calendarCells.forEach((cell) => {
-      const cellDay = parseInt(cell.textContent.trim(), 10);
-      if (cellDay === todayDate && !cell.classList.contains("prev_month") && !cell.classList.contains("next_month")) {
-        let iconWrapper = cell.querySelector(".calendar_icon_wrapper");
+      const targetDate = Number(cell.textContent);
+
+      if (exerciseDates.has(targetDate)) {
+        const iconWrapper = cell.querySelector(".calendar_icon_wrapper");
         if (!iconWrapper) {
           iconWrapper = document.createElement("div");
           iconWrapper.className = "calendar_icon_wrapper";
@@ -113,8 +110,12 @@ function renderCalendar(year, month, aiPredictedSchedules) {
   }
 }
 
-function callCalendar(aiPredictedSchedules) {
-  renderCalendar(currentYear, currentMonth, aiPredictedSchedules);
+function callFullCalendar(exerciseReviewList, phaseObj) {
+  const today = new Date();
+  const currentYear = today.getFullYear();
+  const currentMonth = today.getMonth();
+
+  renderCalendar(currentYear, currentMonth, exerciseReviewList, phaseObj);
 
   prevMonthBtn.addEventListener("click", function () {
     currentMonth--;
@@ -122,7 +123,7 @@ function callCalendar(aiPredictedSchedules) {
       currentMonth = 11;
       currentYear--;
     }
-    renderCalendar(currentYear, currentMonth, aiPredictedSchedules);
+    renderCalendar(currentYear, currentMonth, exerciseReviewList, phaseObj);
   });
 
   nextMonthBtn.addEventListener("click", function () {
@@ -131,6 +132,6 @@ function callCalendar(aiPredictedSchedules) {
       currentMonth = 0;
       currentYear++;
     }
-    renderCalendar(currentYear, currentMonth, aiPredictedSchedules);
+    renderCalendar(currentYear, currentMonth, exerciseReviewList, phaseObj);
   });
 }
