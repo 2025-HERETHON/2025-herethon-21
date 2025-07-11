@@ -2,6 +2,7 @@ import json
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpRequest
 from django.urls import reverse
+from notifications.services import NotificationService
 
 def routineingpage(request:HttpRequest):
     data_list = [
@@ -270,7 +271,12 @@ def purposepage(request:HttpRequest):
     return render(request, "pages/onboarding_pages/purpose_page.html")
 
 def alarmpage(request:HttpRequest):
-    return render(request, "pages/alarm_page.html")
+    service = NotificationService(request)
+    notification_list = service.get_list()
+
+    return render(request, "pages/alarm_page.html", {
+        'notification_list': notification_list,
+    })
 
 def mypagemain(request:HttpRequest):
     data_list = [
