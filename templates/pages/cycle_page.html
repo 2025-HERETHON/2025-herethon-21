@@ -98,13 +98,13 @@
             <img
               class="cycle_logo"
               src="
-                {% if today_phase='월경기' %}
+                {% if today_phase == '월경기' %}
                   {% static 'assets/img/sad_pipi.png' %}
-                {% elif today_phase='난포기' %}
+                {% elif today_phase == '난포기' %}
                   {% static 'assets/img/happy_pipi.png' %}
-                {% elif today_phase='배란기' %}
+                {% elif today_phase == '배란기' %}
                   {% static 'assets/img/happy_pipi.png' %}
-                {% elif today_phase='황체기' %}
+                {% elif today_phase == '황체기' %}
                   {% static 'assets/img/sad_pipi.png' %}
                 {% else %}
                   {% static 'assets/img/cycle_logo.png' %}
