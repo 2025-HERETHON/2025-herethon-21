@@ -1,8 +1,14 @@
-{% extends "../example/base.html" %} {% load static %} {% block style %}
+{% extends "../example/base.html" %}
+
+{% load static %}
+
+{% block style %}
 <link rel="stylesheet" href="{% static 'styles/component_styles/page_component.css' %}" />
 <link rel="stylesheet" href="{% static 'styles/page_styles/period.css' %}" />
 <link rel="stylesheet" href="{% static 'styles/page_styles/page_common.css' %}" />
-{% endblock style %} {% block script %}
+{% endblock style %}
+
+{% block script %}
 <script src="{% static 'functions/component_functions/calendar_component.js' %}"></script>
 <script src="{% static 'functions/page_functions/period_page.js' %}"></script>
 {{ exercise_reviews|json_script:"exercise_reviews" }}
@@ -14,9 +20,13 @@
     callFullCalendar(exercise_reviews, menstruation_cycle);
   });
 </script>
-{% endblock script %} {% block body %}
+{% endblock script %}
+
+{% block body %}
 <body>
-  {% block header %} {% include "../components/header_component.html" %} {% endblock header %}
+  {% block header %}
+    {% include "../components/header_component.html" %}
+  {% endblock header %}
   <main class="main_layout">
     <section class="content_area">
       <section class="star_background">
@@ -36,11 +46,17 @@
         <span class="star star20"></span>
       </section>
       <section class="content_left">
-        {% block infobox %} {% include "../components/infobox_component.html" %} {% endblock infobox %}
+        {% block infobox %}
+          {% include "../components/infobox_component.html" %}
+        {% endblock infobox %}
         <div class="calendar_wrapper">
-          {% block calendar %} {% include "../components/calendar_component.html" %} {% endblock calendar %}
+          {% block calendar %}
+            {% include "../components/calendar_component.html" %}
+          {% endblock calendar %}
         </div>
-        {% block friendbox %} {% include "../components/friendbox_component.html" %} {% endblock friendbox %}
+        {% block friendbox %}
+          {% include "../components/friendbox_component.html" %}
+        {% endblock friendbox %}
       </section>
       <nav class="sidebar_nav" aria-label="페이지 네비게이션">
         <a href="/cyclepage" class="nav_button nav_button1">운 동</a>
@@ -133,5 +149,6 @@
     </section>
   </main>
 </body>
-{% include "../components/modal_component.html" %} {% include "../components/alert_modal_component.html" %} {% endblock
-body %}
+{% include "../components/modal_component.html" %}
+{% include "../components/alert_modal_component.html" %}
+{% endblock body %}
