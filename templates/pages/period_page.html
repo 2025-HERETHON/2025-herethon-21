@@ -71,12 +71,33 @@
             </span>
           </div>
           <p class="date_description">월경 추가</p>
-          <div class="datepicker">
-            <input type="date" id="period_start_date" class="date_input" />
+          <form
+            class="datepicker"
+            action="{% url 'menstruations:create' %}"
+            method="post"
+          >
+            {% csrf_token %}
+            <input
+              id="period_start_date"
+              class="date_input"
+              name="start"
+              type="date"
+            />
             <img src="{% static 'assets/img/arrow.png' %}" alt="화살표" class="arrow" />
-            <input type="date" id="period_end_date" class="date_input" />
-            <button id="add_button" class="search_button">추가</button>
-          </div>
+            <input
+              id="period_end_date"
+              class="date_input"
+              name="end"
+              type="date"
+            />
+            <button
+              id="add_button"
+              class="search_button"
+              type="submit"
+            >
+              추가
+            </button>
+          </form>
           <div class="selected_showingbox hidden">
             <p id="period_start_line" class="hidden"><span id="period_start_text"></span></p>
             <p id="period_end_line" class="hidden"><span id="period_end_text"></span></p>
