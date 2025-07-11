@@ -56,7 +56,7 @@
         <!-- 오른쪽 컨텐츠 영역 -->
         <div class="alarmhugger">
           {% for notification in notification_list %}
-            {% if notification.category==1 %} <!--상대가 나에게 친구 요청함-->
+            {% if notification.category == 1 %} <!--상대가 나에게 친구 요청함-->
               <div class="bubble left" id="bubbleA1">
                 <div class="timestamp">{{notification.created_at|timesince}} 전</div>
                 <div class="content_line">
@@ -78,25 +78,25 @@
                 </div>
               </div>
             {% endif %}
-            {% if notification.category==2 %} <!--상대가 내 친구 요청을 수락함-->
+            {% if notification.category == 2 %} <!--상대가 내 친구 요청을 수락함-->
               <div class="bubble left">
                 <div class="timestamp">{{notification.created_at|timesince}} 전</div>
                 <div class="message_text">{{notification.sender__nickname}}가 내 친구 요청을 수락했어요</div>
               </div>
             {% endif %}
-            {% if notification.category==3 %} <!--상대가 내 친구 요청을 거절함-->
+            {% if notification.category == 3 %} <!--상대가 내 친구 요청을 거절함-->
               <div class="bubble left">
                 <div class="timestamp">{{notification.created_at|timesince}} 전</div>
                 <div class="message_text">{{notification.sender__nickname}}가 내 친구 요청을 거절했어요</div>
               </div>
             {% endif %}
-            {% if notification.category==4 %} <!--상대가 내 운동 리뷰에 반응함-->
+            {% if notification.category == 4 %} <!--상대가 내 운동 리뷰에 반응함-->
               <div class="bubble left">
                 <div class="timestamp">{{notification.created_at|timesince}} 전</div>
                 <div class="message_text">{{notification.sender__nickname}}가 내 운동 리뷰에 반응을 남겼어요</div>
               </div>
             {% endif %}
-            {% if notification.category==5 %} <!--상대가 나를 콕 찌르기함-->
+            {% if notification.category == 5 %} <!--상대가 나를 콕 찌르기함-->
               <div class="bubble left">
                 <div class="timestamp">{{notification.created_at|timesince}} 전</div>
                 <div class="message_text">{{notification.sender__nickname}}가 운동을 재촉하며 콕 찔렀어요</div>

@@ -53,7 +53,7 @@
               <span>
                 <div class="starscore">
                   {% for i in "12345" %}
-                    {% if forloop.counter<=data_list.0.difficulty %}
+                    {% if forloop.counter <= data_list.0.difficulty %}
                       <span class="star_per">
                         <img src="{% static 'assets/img/star_purple.png' %}" alt="보라별" />
                       </span>

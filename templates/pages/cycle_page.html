@@ -12,11 +12,13 @@
 {% block script %}
 <script src="{% static 'functions/component_functions/calendar_component.js' %}"></script>
 <script src="{% static 'functions/page_functions/cycle_page.js' %}"></script>
+{{ exercise_reviews|json_script:"exercise_reviews" }}
 {{ menstruation_cycle|json_script:"menstruation_cycle" }}
 <script>
   document.addEventListener('DOMContentLoaded', function() {
+    const exercise_reviews = JSON.parse(document.getElementById('exercise_reviews').textContent);
     const menstruation_cycle = JSON.parse(document.getElementById('menstruation_cycle').textContent);
-    callFullCalendar(menstruation_cycle);
+    callFullCalendar(exercise_reviews, menstruation_cycle);
   });
 </script>
 <script>
@@ -96,13 +98,13 @@
             <img
               class="cycle_logo"
               src="
-                {% if today_phase='월경기' %}
+                {% if today_phase == '월경기' %}
                   {% static 'assets/img/sad_pipi.png' %}
-                {% elif today_phase='난포기' %}
+                {% elif today_phase == '난포기' %}
                   {% static 'assets/img/happy_pipi.png' %}
-                {% elif today_phase='배란기' %}
+                {% elif today_phase == '배란기' %}
                   {% static 'assets/img/happy_pipi.png' %}
-                {% elif today_phase='황체기' %}
+                {% elif today_phase == '황체기' %}
                   {% static 'assets/img/sad_pipi.png' %}
                 {% else %}
                   {% static 'assets/img/cycle_logo.png' %}
@@ -134,15 +136,15 @@
             </div>
             <input type="range" min="0" max="4" step="1" value="0" id="customSlider" />
           </div>
+          <form
+            action="{% url 'frontend:routineingpage' %}"
+            method="post"
+          >
           <div class="routine_hugger">
             <div id="list_prev">
               <img src="{% static 'assets/img/left.png' %}" alt="왼쪽" />
             </div>
             <div class="per_routine_list">
-              <form
-                action="{% url 'frontend:routineingpage' %}"
-                method="post"
-              >
                 {% csrf_token %}
                 {% for ai_exercise_routine in ai_exercise_routines %}
                   <label>

@@ -24,7 +24,7 @@ class ExerciseAiService:
 
     def get(self) -> list[list[dict[str,any]]]:
         """AI 운동 루틴 생성"""
-        exercise_routine_duration_str = self.request.GET['exercise_routine_duration']
+        exercise_routine_duration_str = self.request.GET.get('exercise_routine_duration', '00:20:00')
         exercise_routine_duration = parse_duration(exercise_routine_duration_str)
 
         menstruation_service = MenstruationService(self.request)
@@ -241,8 +241,12 @@ class ExerciseHistoryService:
     @validate_auth
     def get_list(self) -> list[dict[str,any]]:
         """운동 내역 목록 조회"""
-        date_str = self.request.GET['date']
-        target_date = parse_date(date_str)
+        date_str = self.request.GET.get('date')
+        if date_str != None:
+            target_date = parse_date(date_str)
+        else:
+            target_date = timezone.localdate()
+
         friend_username = self.request.GET.get('friend_username')
         username = friend_username or self.request.user.username
 
@@ -316,8 +320,13 @@ class ExerciseReviewService:
     @validate_auth
     def get_list(self):
         """운동 리뷰 목록 조회 (달력)"""
-        month_str = self.request.GET['month']
-        year, month = map(int, month_str.split('-'))
+        month_str = self.request.GET.get('month')
+        if month_str != None:
+            year, month = map(int, month_str.split('-'))
+        else:
+            now = timezone.now()
+            year = now.year
+            month = now.month
 
         friend_username = self.request.GET.get('friend_username')
         username = friend_username or self.request.user.username
