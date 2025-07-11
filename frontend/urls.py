@@ -2,7 +2,6 @@ from django.urls import path
 from .views import *
 from django.shortcuts import redirect
 
-
 app_name = 'frontend'
 
 urlpatterns = [

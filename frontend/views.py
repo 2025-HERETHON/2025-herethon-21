@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect
-from django.urls import reverse
 import json
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpRequest
+from django.urls import reverse
 
-def routineingpage(request):
+def routineingpage(request:HttpRequest):
     data_list = [
         {
             "id": 1,
@@ -99,10 +100,10 @@ def routineingpage(request):
                 ) 
 
 
-def componentpage(request):
+def componentpage(request:HttpRequest):
     return render(request,"pages/component_page.html")
 
-def cyclepage(request):
+def cyclepage(request:HttpRequest):
     data_list = [
         {
             "date": "2025-05-09",
@@ -143,7 +144,7 @@ def cyclepage(request):
     ]
     return render(request,"pages/cycle_page.html", {"data_list": data_list})
 
-def scrappage(request):
+def scrappage(request:HttpRequest):
     data_list = [
         {
             "date": "2025-05-09",
@@ -184,10 +185,10 @@ def scrappage(request):
     ]
     return render(request,"pages/scrap_page.html", {"data_list": data_list})
 
-def restpage(request):
+def restpage(request:HttpRequest):
     return render(request,"pages/rest_page.html")
 
-def periodpage(request):
+def periodpage(request:HttpRequest):
     dummy_period_data = [
         {
             "start_date": "2025-06-01",
@@ -212,28 +213,26 @@ def periodpage(request):
         "period_data": dummy_period_data
     }
     return render(request, "pages/period_page.html", context)
-    return render(request,"pages/component_page.html")
 
-def componentcalendar(request):
-    return render(request,"pages/component_calendar.html")
+def componentcalendar(request:HttpRequest):
     return render(request,"pages/component_calendar.html")
 
-def mypage(request):
+def mypage(request:HttpRequest):
     return render(request,"pages/mypage.html")
 
-def onboarding_1(request):
+def onboarding_1(request:HttpRequest):
     return render(request, "pages/onboarding_pages/onboarding_1.html")
 
-def onboarding_2(request):
+def onboarding_2(request:HttpRequest):
     return render(request, "pages/onboarding_pages/onboarding_2.html")
 
-def onboarding_3(request):
+def onboarding_3(request:HttpRequest):
     return render(request, "pages/onboarding_pages/onboarding_3.html")
 
-def signuppage(request):
+def signuppage(request:HttpRequest):
     return render(request, "pages/onboarding_pages/signup_page.html")
 
-def loginpage(request): #아래 더미데이터는 GPT에게 받은 임시 데이터입니다
+def loginpage(request:HttpRequest): #아래 더미데이터는 GPT에게 받은 임시 데이터입니다
     dummy_users = {
         'fitforme@example.com': 'abc123!@#',
     }
@@ -264,16 +263,16 @@ def loginpage(request): #아래 더미데이터는 GPT에게 받은 임시 데�
 
     return render(request, 'pages/onboarding_pages/login_page.html', context)
 
-def lastmenstruationpage(request):
+def lastmenstruationpage(request:HttpRequest):
     return render(request, "pages/onboarding_pages/last_menstruation_page.html")
 
-def purposepage(request):
+def purposepage(request:HttpRequest):
     return render(request, "pages/onboarding_pages/purpose_page.html")
 
-def alarmpage(request):
+def alarmpage(request:HttpRequest):
     return render(request, "pages/alarm_page.html")
 
-def mypagemain(request):
+def mypagemain(request:HttpRequest):
     data_list = [
         {
             "id": 1,
@@ -308,7 +307,7 @@ def mypagemain(request):
     ]
     return render(request, "pages/mypage_main.html", {"data_list": data_list})
 
-def makefriends(request):
+def makefriends(request:HttpRequest):
     data_list = [
         {
             "id": 1,
@@ -343,13 +342,13 @@ def makefriends(request):
     ]
     return render(request, "pages/make_friends_pages/friends_email_input.html", {"data_list": data_list})
 
-def friendsconfirm(request):
+def friendsconfirm(request:HttpRequest):
     return render(request, "pages/make_friends_pages/friends_confirm.html")
 
-def friended(request):
+def friended(request:HttpRequest):
     return render(request, "pages/make_friends_pages/friended.html")
 
-def finishedroutine(request):
+def finishedroutine(request:HttpRequest):
     data_list = [
         {
             "date": "2025-05-09",
@@ -366,10 +365,10 @@ def finishedroutine(request):
     ]
     return render(request, "pages/finished_routine.html", {"data_list": data_list})
 
-def editpage(request):
+def editpage(request:HttpRequest):
     return render(request,"pages/edit_page.html")
 
-def friendpage(request):
+def friendpage(request:HttpRequest):
     dummy_friends = [
         {"id": 1, "name": "친구1", "icon": "assets/img/icon.png", "intro": "안녕? 나는 친구1라고 해. 운동광EAZY", "tags": ["체형 관리", "근력 강화"]},
         {"id": 2, "name": "친구2", "icon": "assets/img/icon.png", "intro": "나는 친구2야.", "tags": ["근력 강화", "체형 증진"]},
@@ -392,7 +391,7 @@ def friendpage(request):
         "friend": selected_friend
     })
 
-def friendpage(request):
+def friendpage(request:HttpRequest):
     # 친구 상세정보 더미 데이터
     dummy_friends = [
         {"id": 1, "name": "친구1", "icon": "assets/img/icon.png", "intro": "안녕? 나는 친구1라고 해. 운동광EAZY", "tags": ["체형 관리", "근력 강화"]},
