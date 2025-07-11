@@ -1,158 +1,52 @@
-import json
-from django.shortcuts import render, redirect, get_object_or_404
+from ast import literal_eval
+from datetime import timedelta
+from django.core.cache import cache
+from django.shortcuts import render, redirect
 from django.http import HttpRequest
 from django.urls import reverse
+from django.utils.dateparse import parse_duration
+from utils.constants import CACHE_KEY
+from exercises.services import ExerciseAiService, ScrappedExerciseRoutineService, ExerciseHistoryService
 from menstruations.services import MenstruationService
 from notifications.services import NotificationService
 
 def routineingpage(request:HttpRequest):
-    data_list = [
-        {
-            "id": 1,
-            "content": "준비 스트레칭",
-            "details": [
-                "텍스트1",
-                "텍스트2", 
-                "텍스트3"
-                ],
-            "time": 1, #타이머 테스트용으로 짧게 1분으로 설정해뒀습니다
-            "detail_images": [
-                "assets/img/fitnessdog.png",
-                "assets/img/squat_1.png",
-                "assets/img/happy_pipi_hugging.png",
-                ],
-            "category" : "준비 운동",
-            "difficulty" : 2,
-        },
-        {
-            "id": 2,
-            "content": "스쿼트",
-            "details": [
-                "텍스트1",
-                "텍스트2", 
-                "텍스트3"
-                ],
-            "time": 5,
-            "detail_images": [
-                "assets/img/squat_1.png",
-                "assets/img/fitnessdog.png",
-                "assets/img/happy_pipi_hugging.png",
-                ],
-            "category" : "하체 근력",
-            "difficulty" : 4,
-        },
-        {
-            "id": 3,
-            "content": "플랭크",
-            "details": [
-                "텍스트1",
-                "텍스트2", 
-                "텍스트3"
-                ],
-            "time": 3,
-            "detail_images": [
-                "assets/img/fitnessdog.png",
-                "assets/img/squat_1.png",
-                "assets/img/happy_pipi_hugging.png",
-                ],
-            "category" : "코어 근력",
-            "difficulty" : 4,
-        },
-        {
-            "id": 4,
-            "content": "암서클",
-            "details": [
-                "텍스트1",
-                "텍스트2", 
-                "텍스트3"
-                ],
-            "time": 5,
-            "detail_images": [
-                "assets/img/fitnessdog.png",
-                "assets/img/squat_1.png",
-                "assets/img/happy_pipi_hugging.png",
-                ],
-            "category" : "팔 근력",
-            "difficulty" : 3,
-        },
-        {
-            "id": 5,
-            "content": "마무리 스트레칭",
-            "details": [
-                "텍스트1",
-                "텍스트2", 
-                "텍스트3"
-                ],
-            "time": 4,
-            "detail_images": [
-                "assets/img/fitnessdog.png",
-                "assets/img/squat_1.png",
-                "assets/img/happy_pipi_hugging.png",
-                ],
-            "category" : "마무리 운동",
-            "difficulty" : 2,
-        },
-    ]
-    return render(request,
-                    "pages/routine_ing_page.html",
-                    {
-                        'data_list': data_list,
-                        'data_list_json':json.dumps(data_list),
-                    }
-                ) 
+    exercise_routine_str = request.POST.get('exercise_routine')
+    exercise_routine:list[dict[str,any]] = literal_eval(exercise_routine_str)
+    exercise_routine_duration = sum((parse_duration(item['exercise']['duration']) for item in exercise_routine), timedelta(0))
+    
+    service = ExerciseHistoryService(request)
+    exercise_history_id, message = service.post(exercise_routine_duration)
 
+    cache.set(CACHE_KEY(request.user.username).EXERCISE_ROUTINE, exercise_routine, timeout=3600*2)
+    cache.set(CACHE_KEY(request.user.username).EXERCISE_HISTORY_ID, exercise_history_id, timeout=3600*2)
+
+    return render(request, 'pages/routine_ing_page.html', {
+        'exercise_routine': exercise_routine,
+    })
 
 def componentpage(request:HttpRequest):
     return render(request,"pages/component_page.html")
 
 def cyclepage(request:HttpRequest):
-    service = MenstruationService(request)
-    today_phase = service.get_today_phase()
+    menstruation_service = MenstruationService(request)
+    today_phase = menstruation_service.get_today_phase()
+
+    ai_service = ExerciseAiService(request)
+    ai_exercise_routines = ai_service.get()
 
     return render(request,"pages/cycle_page.html", {
         "today_phase": today_phase,
+        'ai_exercise_routines': ai_exercise_routines,
     })
 
 def scrappage(request:HttpRequest):
-    data_list = [
-        {
-            "date": "2025-05-09",
-            "time": "13:02",
-            "duration": "20분",
-            "routines": [
-                {"id": 1, "name": "준비 스트레칭", "duration": "3분", "part": "몸풀기","img": "assets/img/happy_pipi_hugging.png"},
-                {"id": 2, "name": "런지", "duration": "5분", "part": "하체 근력","img": "assets/img/2_selection_pipi.png"},
-                {"id": 3, "name": "버피 테스트", "duration": "3분", "part": "전신 유산소","img": "assets/img/happy_pipi_hugging.png"},
-                {"id": 4, "name": "팔 돌리기", "duration": "5분", "part": "어깨 유연성","img": "assets/img/happy_pipi_hugging.png"},
-                {"id": 5, "name": "마무리 스트레칭", "duration": "4분", "part": "근육 이완","img": "assets/img/happy_pipi_hugging.png"},
-            ]
-        },
-        {
-            "date": "2025-05-09",
-            "time": "09:10",
-            "duration": "20분",
-            "routines": [
-                {"id": 1, "name": "워밍업 점핑잭", "duration": "3분", "part": "전신 워밍업","img": "assets/img/happy_pipi_hugging.png"},
-                {"id": 2, "name": "사이드 런지", "duration": "5분", "part": "하체 근력","img": "assets/img/happy_pipi_hugging.png"},
-                {"id": 3, "name": "플랭크 트위스트", "duration": "3분", "part": "복근/코어","img": "assets/img/happy_pipi_hugging.png"},
-                {"id": 4, "name": "암 레이즈", "duration": "5분", "part": "팔/어깨","img": "assets/img/happy_pipi_hugging.png"},
-                {"id": 5, "name": "쿨다운 요가", "duration": "4분", "part": "유연성","img": "assets/img/happy_pipi_hugging.png"},
-            ]
-        },
-        {
-            "date": "2025-05-08",
-            "time": "18:00",
-            "duration": "20분",
-            "routines": [
-                {"id": 1, "name": "목 스트레칭", "duration": "3분", "part": "경추 이완","img": "assets/img/happy_pipi_hugging.png"},
-                {"id": 2, "name": "스쿼트", "duration": "5분", "part": "하체 근력","img": "assets/img/happy_pipi_hugging.png"},
-                {"id": 3, "name": "마운틴 클라이머", "duration": "3분", "part": "코어/전신","img": "assets/img/happy_pipi_hugging.png"},
-                {"id": 4, "name": "삼두근 킥백", "duration": "5분", "part": "팔/삼두","img": "assets/img/happy_pipi_hugging.png"},
-                {"id": 5, "name": "호흡 명상", "duration": "4분", "part": "호흡 안정","img": "assets/img/happy_pipi_hugging.png"},
-            ],
-        },
-    ]
-    return render(request,"pages/scrap_page.html", {"data_list": data_list})
+    scrap_service = ScrappedExerciseRoutineService(request)
+    scrapped_exercise_routines = scrap_service.get_list()
+
+    return render(request,"pages/scrap_page.html", {
+        'scrapped_exercise_routines': scrapped_exercise_routines,
+    })
 
 def restpage(request:HttpRequest):
     return render(request,"pages/rest_page.html")
@@ -231,39 +125,12 @@ def alarmpage(request:HttpRequest):
     })
 
 def mypagemain(request:HttpRequest):
-    data_list = [
-        {
-            "id": 1,
-            "start_time": "07:00",
-            "end_time": "08:00",
-            "duration_minutes": 60,
-            "content": "아 오늘 운동 힘들었다",
-            "rating": 1,
-            "emotion_counts": {
-                "crying": 5,
-                "anger": 2,
-                "agree": 10,
-                "surprized": 1,
-                "smile": 0
-            },
-        },
-        {
-            "id": 2,
-            "start_time": "20:00",
-            "end_time": "20:40",
-            "duration_minutes": 40,
-            "content": "ㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴ",
-            "rating": 4,
-            "emotion_counts": {
-                "crying": 3,
-                "anger": 0,
-                "agree": 7,
-                "surprized": 9,
-                "smile": 1
-            },
-        },
-    ]
-    return render(request, "pages/mypage_main.html", {"data_list": data_list})
+    history_service = ExerciseHistoryService(request)
+    exercise_histories = history_service.get_list()
+
+    return render(request, "pages/mypage_main.html", {
+        'exercise_histories': exercise_histories,
+    })
 
 def makefriends(request:HttpRequest):
     data_list = [
@@ -307,24 +174,17 @@ def friended(request:HttpRequest):
     return render(request, "pages/make_friends_pages/friended.html")
 
 def finishedroutine(request:HttpRequest):
-    data_list = [
-        {
-            "date": "2025-05-09",
-            "time": "13:02",
-            "duration": "20분",
-            "routines": [
-                {"id": 1, "name": "준비 스트레칭", "duration": "3분", "part": "몸풀기","img": "assets/img/happy_pipi_hugging.png"},
-                {"id": 2, "name": "런지", "duration": "5분", "part": "하체 근력","img": "assets/img/happy_pipi_hugging.png"},
-                {"id": 3, "name": "버피 테스트", "duration": "3분", "part": "전신 유산소","img": "assets/img/happy_pipi_hugging.png"},
-                {"id": 4, "name": "팔 돌리기", "duration": "5분", "part": "어깨 유연성","img": "assets/img/happy_pipi_hugging.png"},
-                {"id": 5, "name": "마무리 스트레칭", "duration": "4분", "part": "근육 이완","img": "assets/img/happy_pipi_hugging.png"},
-            ],
-        },
-    ]
+    
     return render(request, "pages/finished_routine.html", {"data_list": data_list})
 
 def editpage(request:HttpRequest):
-    return render(request,"pages/edit_page.html")
+    exercise_routine = cache.get(CACHE_KEY(request.user.username).EXERCISE_ROUTINE)
+    exercise_history_id = cache.get(CACHE_KEY(request.user.username).EXERCISE_HISTORY_ID)
+
+    return render(request, 'pages/edit_page.html', {
+        'exercise_routine': exercise_routine,
+        'exercise_history_id': exercise_history_id,
+    })
 
 def friendpage(request:HttpRequest, friend_username:str):
     service = NotificationService(request)
