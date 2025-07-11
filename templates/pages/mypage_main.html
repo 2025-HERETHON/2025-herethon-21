@@ -81,6 +81,10 @@
   </script>
 
   <script src="{% static 'functions/component_functions/calendar_component.js' %}"></script>
+  <script>
+    const menstruation_cycle = JSON.parse('{{ menstruation_cycle|escapejs }}');
+    callCalendar(menstruation_cycle);
+  </script>
 {% endblock script %}
 </body>
 {% include "../components/modal_component.html" %}

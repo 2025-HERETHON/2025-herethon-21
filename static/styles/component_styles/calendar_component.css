@@ -160,29 +160,28 @@ body {
   background-color: #EBEBEB;
 }
 
-
-.highlight_trip {
+.highlight_menstrual_phase {
   background: linear-gradient(to bottom, rgba(255, 164, 164, 0.3) 50%, transparent 50%);
   background-repeat: no-repeat;
   background-size: 100% 70%; 
   background-position: bottom; 
 }
 
-.highlight_birthday {
+.highlight_follicular_phase {
   background: linear-gradient(to bottom, rgba(255, 234, 164, 0.3) 50%, transparent 50%);
   background-repeat: no-repeat;
   background-size: 100% 70%; 
   background-position: bottom; 
 }
 
-.highlight_exam {
+.highlight_ovulatory_phase {
   background: linear-gradient(to bottom, rgba(164, 231, 255, 0.3) 50%, transparent 50%);
   background-repeat: no-repeat;
   background-size: 100% 70%; 
   background-position: bottom; 
 }
 
-.highlight_date {
+.highlight_luteal_phase {
   background: linear-gradient(to bottom, rgba(217, 217, 217, 0.3) 50%, transparent 50%);
   background-repeat: no-repeat;
   background-size: 100% 70%; 

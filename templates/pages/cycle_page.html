@@ -12,6 +12,9 @@
 <script src="{% static 'functions/component_functions/calendar_component.js' %}"></script>
 <script src="{% static 'functions/page_functions/cycle_page.js' %}"></script>
 <script>
+  const menstruation_cycle = JSON.parse('{{ menstruation_cycle|escapejs }}');
+  callCalendar(menstruation_cycle);
+  
   document.addEventListener("DOMContentLoaded", function () {
     const routineItems = document.querySelectorAll(".routine_item");
     const prevBtn = document.getElementById("list_prev");
