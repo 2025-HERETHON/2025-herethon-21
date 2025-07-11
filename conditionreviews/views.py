@@ -59,7 +59,7 @@ def read_ConditionReview(request, date_str):
     return render(request, "read.html", {
         "review": review,
         "selected_date": date_str,
-        "rating_choices": ReactionEmojiType.choices  # ✅ 여기!
+        "rating_choices": ReactionEmojiType.choices
     })
 
 @login_required
