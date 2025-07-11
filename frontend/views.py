@@ -2,6 +2,7 @@ import json
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpRequest
 from django.urls import reverse
+from menstruations.services import MenstruationService
 from notifications.services import NotificationService
 
 def routineingpage(request:HttpRequest):
@@ -105,45 +106,12 @@ def componentpage(request:HttpRequest):
     return render(request,"pages/component_page.html")
 
 def cyclepage(request:HttpRequest):
-    data_list = [
-        {
-            "date": "2025-05-09",
-            "time": "13:02",
-            "duration": "20분",
-            "routines": [
-                {"id": 1, "name": "준비 스트레칭", "duration": "3분", "part": "몸풀기","img": "assets/img/happy_pipi_hugging.png"},
-                {"id": 2, "name": "런지", "duration": "5분", "part": "하체 근력","img": "assets/img/happy_pipi_hugging.png"},
-                {"id": 3, "name": "버피 테스트", "duration": "3분", "part": "전신 유산소","img": "assets/img/happy_pipi_hugging.png"},
-                {"id": 4, "name": "팔 돌리기", "duration": "5분", "part": "어깨 유연성","img": "assets/img/happy_pipi_hugging.png"},
-                {"id": 5, "name": "마무리 스트레칭", "duration": "4분", "part": "근육 이완","img": "assets/img/happy_pipi_hugging.png"},
-            ]
-        },
-        {
-            "date": "2025-05-09",
-            "time": "09:10",
-            "duration": "20분",
-            "routines": [
-                {"id": 1, "name": "워밍업 점핑잭", "duration": "3분", "part": "전신 워밍업","img": "assets/img/happy_pipi_hugging.png"},
-                {"id": 2, "name": "사이드 런지", "duration": "5분", "part": "하체 근력","img": "assets/img/happy_pipi_hugging.png"},
-                {"id": 3, "name": "플랭크 트위스트", "duration": "3분", "part": "복근/코어","img": "assets/img/happy_pipi_hugging.png"},
-                {"id": 4, "name": "암 레이즈", "duration": "5분", "part": "팔/어깨","img": "assets/img/happy_pipi_hugging.png"},
-                {"id": 5, "name": "쿨다운 요가", "duration": "4분", "part": "유연성","img": "assets/img/happy_pipi_hugging.png"},
-            ]
-        },
-        {
-            "date": "2025-05-08",
-            "time": "18:00",
-            "duration": "20분",
-            "routines": [
-                {"id": 1, "name": "목 스트레칭", "duration": "3분", "part": "경추 이완","img": "assets/img/2_selection_pipi.png"},
-                {"id": 2, "name": "스쿼트", "duration": "5분", "part": "하체 근력","img": "assets/img/2_selection_pipi.png"},
-                {"id": 3, "name": "마운틴 클라이머", "duration": "3분", "part": "코어/전신","img": "assets/img/2_selection_pipi.png"},
-                {"id": 4, "name": "삼두근 킥백", "duration": "5분", "part": "팔/삼두","img": "assets/img/2_selection_pipi.png"},
-                {"id": 5, "name": "호흡 명상", "duration": "4분", "part": "호흡 안정","img": "assets/img/2_selection_pipi.png"},
-            ]
-        },
-    ]
-    return render(request,"pages/cycle_page.html", {"data_list": data_list})
+    service = MenstruationService(request)
+    today_phase = service.get_today_phase()
+
+    return render(request,"pages/cycle_page.html", {
+        "today_phase": today_phase,
+    })
 
 def scrappage(request:HttpRequest):
     data_list = [
@@ -190,30 +158,14 @@ def restpage(request:HttpRequest):
     return render(request,"pages/rest_page.html")
 
 def periodpage(request:HttpRequest):
-    dummy_period_data = [
-        {
-            "start_date": "2025-06-01",
-            "end_date": "2025-06-07",
-            "duration": 7,
-            "cycle": 28,
-        },
-        {
-            "start_date": "2025-06-29",
-            "end_date": "2025-07-05",
-            "duration": 7,
-            "cycle": 35,
-        },
-        {
-            "start_date": "2025-07-26",
-            "end_date": "2025-08-02",
-            "duration": 8,
-            "cycle": 30,
-        },
-    ]
-    context = {
-        "period_data": dummy_period_data
-    }
-    return render(request, "pages/period_page.html", context)
+    service = MenstruationService(request)
+    menstruations = service.get_list()
+    menstruation_average = service.get_average()
+    
+    return render(request, "pages/period_page.html", {
+        'menstruations': menstruations,
+        'menstruation_average': menstruation_average,
+    })
 
 def componentcalendar(request:HttpRequest):
     return render(request,"pages/component_calendar.html")

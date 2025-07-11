@@ -11,6 +11,10 @@
 {% block script %}
 <script src="{% static 'functions/component_functions/calendar_component.js' %}"></script>
 <script src="{% static 'functions/page_functions/scrap_page.js' %}"></script>
+<script>
+  const menstruation_cycle = JSON.parse('{{ menstruation_cycle|escapejs }}');
+  callCalendar(menstruation_cycle);
+</script>
 {% endblock script %}
 
 {% block body %}
