@@ -25,9 +25,11 @@ class CustomUser(AbstractUser):
     # 커스텀 필드
     nickname = models.CharField(
         max_length=100,
+        blank=True,
     )
-    exercise_goal = models.JSONField(
-        default=list, # list[int]
+    bio = models.TextField(
+        null=True,
+        blank=True,
     )
     profile_image = models.ImageField(
         upload_to='user/profile_image',
@@ -35,9 +37,10 @@ class CustomUser(AbstractUser):
         null=True,
         blank=True,
     )
-    bio = models.TextField(
-        blank=True,
+    exercise_goal = models.JSONField(
+        default=list, # list[int]
         null=True,
+        blank=True,
     )
 
     def __init__(self, *args, **kwargs):

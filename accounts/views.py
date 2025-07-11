@@ -1,92 +1,41 @@
 from django.shortcuts import render, redirect
 from django.core.exceptions import ValidationError
-from django.contrib.auth import logout, login
-from django.contrib.auth.forms import AuthenticationForm
-from .services import UserService
-from .forms import CustomUserCreationForm
-from utils.choices import ExerciseGoalType
-from .services import UserService
-from django.core.cache import cache
 from django.contrib import messages
+from django.contrib.auth import login, logout
+from django.contrib.auth.forms import AuthenticationForm
+from django.http import HttpRequest
+from django.views.decorators.http import require_POST
 from menstruations.services import MenstruationService
-
+from .models import CustomUser
+from .forms import CustomUserCreationForm
+from .services import UserService
 
 # 템플릿 렌더링 처리
-def signup_onboarding1(request):
-    if request.method == "POST":
-        email = request.POST.get("email")
-        pw1 = request.POST.get("password1")
-        pw2 = request.POST.get("password2")
-        
-        # 닉네임 = 이메일 기본값
-        nickname = email
-
-        session_key = request.session.session_key or request.session.save()
-
-        cache.set(f"signup_email_{session_key}", email)
-        cache.set(f"signup_pw1_{session_key}", pw1)
-        cache.set(f"signup_pw2_{session_key}", pw2)
-        cache.set(f"signup_nickname_{session_key}", nickname)
-
+@require_POST
+def signup_onboarding1(request:HttpRequest):
+    form = CustomUserCreationForm(request.POST)
+    if form.is_valid():
+        user = form.save(commit=False)
+        user.nickname = request.POST.get("email")
+        user.save()
+        login(request, user)
         return redirect("frontend:onboarding_2")
-    
-def signup_onboarding2(request):
+
+def signup_onboarding2(request:HttpRequest):
     if request.method == "POST":
-        start = request.POST.get("start")
-        end = request.POST.get("end")
-        print(f'\n\n📌 start: {start}\n📌 end: {end}\n')
-
-        if not start or not end:
-            messages.error(request, "시작일과 종료일을 입력해주세요.")
-            return redirect("frontend:onboarding_2")
-
-        # MenstruationService를 활용해 월경 객체 저장
-        try:
-            request.POST = request.POST.copy()
-            request.POST["start"] = start
-            request.POST["end"] = end
-
-            service = MenstruationService(request)
-            message = service.post()
-            messages.success(request, message)
-        except Exception as e:
-            print(f"❌ 월경 정보 저장 실패: {e}")
-            messages.error(request, "월경 정보 저장에 실패했습니다.")
-            return redirect("frontend:onboarding_2")
-
+        service = MenstruationService(request)
+        message = service.post()
+        messages.success(request, message)
         return redirect("frontend:purposepage")  # ✅ 다음 온보딩 단계
     return render(request, "pages/onboarding_pages/last_menstruation_page.html")
 
-
-def signup_onboarding3_submit(request):
-    if request.method == "POST":
-        session_key = request.session.session_key
-
-        # POST 복사해서 QueryDict 유지
-        post_data = request.POST.copy()
-
-        # 캐시 값 덮어쓰기
-        post_data["email"] = cache.get(f"signup_email_{session_key}")
-        post_data["password1"] = cache.get(f"signup_pw1_{session_key}")
-        post_data["password2"] = cache.get(f"signup_pw2_{session_key}")
-        post_data["nickname"] = cache.get(f"signup_nickname_{session_key}")
-
-        # exercise_goal은 그대로 두면 됨 (checkbox로 넘어온 값은 이미 POST에 있음)
-
-        # form 생성 (QueryDict 그대로 사용)
-        form = CustomUserCreationForm(post_data)
-
-        if form.is_valid():
-            try:
-                user = UserService.signup(form)
-                login(request, user)
-                return redirect("frontend:onboarding_3")
-            except ValidationError as e:
-                print("회원가입 실패:", e)
-                return redirect("frontend:signuppage")
-        else:
-            print("폼 에러:", form.errors)
-            return redirect("frontend:signuppage")
+@require_POST
+def signup_onboarding3_submit(request:HttpRequest):
+    exercise_goal_str = request.POST.getlist('exercise_goal')
+    exercise_goal = [int(x) for x in exercise_goal_str]
+    user:CustomUser = request.user
+    user.exercise_goal_handler.set(exercise_goal)
+    return redirect("frontend:cyclepage")
      
 def login_view(request):
     if request.method == 'POST':
