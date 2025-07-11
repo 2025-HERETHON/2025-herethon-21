@@ -455,3 +455,6 @@ def friendpage(request):
         "data_list": data_list,
         "has_review_today": has_review_today,
     })
+
+def errorpage(request):
+    return render(request,"pages/error_page.html")

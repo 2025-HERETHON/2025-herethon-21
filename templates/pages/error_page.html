@@ -1,0 +1,33 @@
+{% extends "../example/base.html" %}
+{% load static %} 
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/page_styles/error_page.css' %}" />
+{% endblock style %} 
+
+{% block script %}
+{% endblock script %}
+
+{% block body %}
+<body>
+    <div class="big_hugger">
+        <div class="error_num">
+            !! <span class="num_center">
+                404
+            </span> !!
+        </div>
+        <div class="hugging_box">
+            <div class="error_category">
+                <img src="{% static 'assets/img/rest_pipi.png' %}" alt="에러 이미지">
+                <p>ERROR : 피피가 자고 있어요!</p>
+            </div>
+            <div class="error_cause">
+                피피가 일이 하기 싫었나 봐요.
+                <br>
+                요청하신 페이지를 피피가 알고 있지 않아요!
+                <br>
+                페이지의 주소를 다시 한 번 확인해주세요 피피!
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock body %}
