@@ -6,6 +6,9 @@ from .models import Friend
 from accounts.models import CustomUser
 from .services import FriendService
 from django.contrib import messages
+from utils.json_handlers import JSONIntChoicesListHandler
+from utils.choices import ExerciseGoalType
+
 
 @login_required
 def read_friends_list(request):
@@ -71,8 +74,13 @@ def read_friend_detail(request, username):
         messages.error(request, "존재하지 않는 사용자입니다.")
         return redirect("friends:read_friends_list")
 
+    # 핸들러로 운동 목표 label 리스트 추출
+    goal_handler = JSONIntChoicesListHandler(friend_user, 'exercise_goal', ExerciseGoalType)
+    exercise_goals = goal_handler.get_display_names_safe()
+
     context = {
         "friend_user": friend_user,
+        "exercise_goals": exercise_goals,
     }
     return render(request, "friend_detail.html", context)
 
