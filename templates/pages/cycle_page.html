@@ -136,15 +136,15 @@
             </div>
             <input type="range" min="0" max="4" step="1" value="0" id="customSlider" />
           </div>
+          <form
+            action="{% url 'frontend:routineingpage' %}"
+            method="post"
+          >
           <div class="routine_hugger">
             <div id="list_prev">
               <img src="{% static 'assets/img/left.png' %}" alt="왼쪽" />
             </div>
             <div class="per_routine_list">
-              <form
-                action="{% url 'frontend:routineingpage' %}"
-                method="post"
-              >
                 {% csrf_token %}
                 {% for ai_exercise_routine in ai_exercise_routines %}
                   <label>
