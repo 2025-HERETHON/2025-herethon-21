@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 from accounts.models import CustomUser
 
 class Menstruation(models.Model):
@@ -15,10 +16,19 @@ class Menstruation(models.Model):
     )
     start = models.DateField()
     end = models.DateField()
+    duration = models.PositiveSmallIntegerField()
+
+    @property
+    def cycle(self):
+        next_menstruation = Menstruation.objects.filter(
+            user=self.user,
+            start__gt=self.start,
+        ).last()
+        return (self.start - next_menstruation.start).days*-1 if next_menstruation else (self.start - timezone.now().date()).days*-1
 
     def __str__(self):
         return f'[{self.user.email}] {self.start} - {self.end}'
-    
+
     class Meta:
         constraints = [
             models.UniqueConstraint(
