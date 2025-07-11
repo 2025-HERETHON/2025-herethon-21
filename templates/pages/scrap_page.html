@@ -1,117 +1,166 @@
 {% extends "../example/base.html" %}
 
-{% load static %} 
+{% load static %}
+
 {% block style %}
 <link rel="stylesheet" href="{% static 'styles/component_styles/page_component.css' %}" />
 <link rel="stylesheet" href="{% static 'styles/component_styles/routine_list_component.css' %}" />
 <link rel="stylesheet" href="{% static 'styles/page_styles/scrap.css' %}" />
 <link rel="stylesheet" href="{% static 'styles/page_styles/page_common.css' %}" />
-{% endblock style %} 
+{% endblock style %}
 
 {% block script %}
 <script src="{% static 'functions/component_functions/calendar_component.js' %}"></script>
 <script src="{% static 'functions/page_functions/scrap_page.js' %}"></script>
+{{ menstruation_cycle|json_script:"menstruation_cycle" }}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const menstruation_cycle = JSON.parse(document.getElementById('menstruation_cycle').textContent);
+    callFullCalendar(menstruation_cycle);
+  });
+</script>
 {% endblock script %}
 
 {% block body %}
-<body>
+  <body>
     {% block header %}
-        {% include "../components/header_component.html" %}
+      {% include "../components/header_component.html" %}
     {% endblock header %}
-    
-    
     <main class="main_layout">
-    <section class="content_area">
-
+      <section class="content_area">
         <section class="star_background">
-            <span class="star star5"></span> <span class="star star6"></span> <span class="star star7"></span> <span class="star star8"></span>
-            <span class="star star9"></span> <span class="star star10"></span> <span class="star star11"></span> <span class="star star12"></span>
-            <span class="star star13"></span> <span class="star star14"></span> <span class="star star15"></span> <span class="star star16"></span>
-            <span class="star star17"></span> <span class="star star20"></span>
+          <span class="star star5"></span> <span class="star star6"></span> <span class="star star7"></span>
+          <span class="star star8"></span> <span class="star star9"></span> <span class="star star10"></span>
+          <span class="star star11"></span> <span class="star star12"></span> <span class="star star13"></span>
+          <span class="star star14"></span> <span class="star star15"></span> <span class="star star16"></span>
+          <span class="star star17"></span> <span class="star star20"></span>
         </section>
-      
-      <section class="content_left">
-        {% block infobox %}
-        {% include "../components/infobox_component.html" %}
-        {% endblock infobox %}
-
-        <div class="calendar_wrapper">
-          {% block calendar %}
-          {% include "../components/calendar_component.html" %}
-          {% endblock calendar %}
-        </div>
-        
-        {% block friendbox %}
-        {% include "../components/friendbox_component.html" %}
-        {% endblock friendbox %}
-
-      </section>
-      
-    <nav class="sidebar_nav" aria-label="페이지 네비게이션">
-      <a href="/cyclepage" class="nav_button nav_button1">운 동</a>
-      <a href="/scrappage" class="nav_button nav_button2">스 크 랩</a>
-      <a href="/periodpage" class="nav_button nav_button3">월 경</a>
-    </nav>
-
-      <section class="content_right">
-        <div class="date_picker_wrapper">
-          <p class="date_description">날짜 선택</p>
-          <div class="datepicker">
-            <input type="date" id="scrap_start_date" class="date_input" />
-            <img src="{% static 'assets/img/arrow.png' %}" alt="화살표" class="arrow" />
-            <input type="date" id="scrap_end_date" class="date_input" />
-            <button id="search_button" class="search_button">검색</button>
+        <section class="content_left">
+          {% block infobox %}
+            {% include "../components/infobox_component.html" %}
+          {% endblock infobox %}
+          <div class="calendar_wrapper">
+            {% block calendar %}
+              {% include "../components/calendar_component.html" %}
+            {% endblock calendar %}
           </div>
-          <div class="selected_showingbox hidden">
-            <p id="scrap_start_line" class="hidden"><span id="scrap_start_text"></span></p>
-            <p id="scrap_end_line" class="hidden"><span id="scrap_end_text"></span></p>
-          </div>
-        </div>
-        <div class="routines">
-        {% if data_list %}
-        {% for routine_day in data_list %}
-        <div class="perroutine">
-          <p class="scrapped_time">
-            <span class="date_">{{ routine_day.date }}</span>
-            <span>{{ routine_day.time }}({{ routine_day.duration }})</span>
-          </p>
-          <div class="bighugger">
-            <div class="scrapbtn">
-              <button class="icon_btn delete_btn" data-index="{{ forloop.counter0 }}">
-                  <img src="{% static 'assets/img/trashcan.png' %}" alt="삭제" />
-                </button>
+          {% block friendbox %}
+            {% include "../components/friendbox_component.html" %}
+          {% endblock friendbox %}
+        </section>
+        <nav class="sidebar_nav" aria-label="페이지 네비게이션">
+          <a href="/cyclepage" class="nav_button nav_button1">운 동</a>
+          <a href="/scrappage" class="nav_button nav_button2">스 크 랩</a>
+          <a href="/periodpage" class="nav_button nav_button3">월 경</a>
+        </nav>
+        <section class="content_right">
+          <div class="date_picker_wrapper">
+            <p class="date_description">날짜 선택</p>
+            <form
+              class="datepicker"
+              action="{% url 'frontend:scrappage' %}"
+              method="get"
+            >
+              {% csrf_token %}
+              <input
+                id="scrap_start_date"
+                class="date_input"
+                name=""
+                type="date"
+              />
+              <img src="{% static 'assets/img/arrow.png' %}" alt="화살표" class="arrow" />
+              <input
+                id="scrap_end_date"
+                class="date_input"
+                name=""
+                type="date"
+              />
+              <button
+                id="search_button"
+                class="search_button"
+                type="submit"
+              >
+                검색
+              </button>
+            </form>
+            <div class="selected_showingbox hidden">
+              <p id="scrap_start_line" class="hidden"><span id="scrap_start_text"></span></p>
+              <p id="scrap_end_line" class="hidden"><span id="scrap_end_text"></span></p>
             </div>
-            <table class="table_centerer">
-              {% for routine in routine_day.routines %}
-              <tr>
-                <th>{{ routine.id }}</th>
-                <td>
-                  <div class="fitness_img">
-                    <img src="{% static routine.img %}" alt="{{ routine.name }}" style="width: 100%; height: 100%;" />
+          </div>
+          <ol class="routines">
+            {% for scrapped_exercise_routine in scrapped_exercise_routines %}
+              <li>  
+                <div
+                  class="perroutine"
+                  onclick="
+                    const dialog = this.closest('.perroutine').nextElementSibling;
+                    dialog.open = true;
+                  "
+                >
+                  <p class="scrapped_time">
+                    <span class="date_">{{scrapped_exercise_routine.scrapped_at}} {{scrapped_exercise_routine.exercise_routine_duration|duration:"(i분)"}}</span>
+                  </p>
+                  <div class="bighugger">
+                    <div class="scrapbtn">
+                      <form
+                        action="{% url 'exercises:scrapped_exercise_routine_delete' scrapped_at=scrapped_exercise_routine.scrapped_at %}"
+                        method="post"
+                      >
+                        {% csrf_token %}
+                        <button
+                          class="icon_btn delete_btn"
+                          data-index="{{ forloop.counter0 }}"
+                          type="submit"
+                        >
+                          <img src="{% static 'assets/img/trashcan.png' %}" alt="삭제" />
+                        </button>
+                      </form>
+                    </div>
+                    <table class="table_centerer">
+                      {% for item in scrapped_exercise_routine.exercise_routine %}
+                        <tr>
+                          <th>{{item.order}}</th>
+                          <td>
+                            <div class="fitness_img">
+                              <img src="{{item.exercise.image1}}" alt="{{item.exercise.name}}" style="width: 100%; height: 100%" />
+                            </div>
+                          </td>
+                          <td>{{item.exercise.name}}</td>
+                          <td>{{item.exercise.duration}}</td>
+                          <td>{{item.exercise.category}}</td>
+                        </tr>
+                      {% endfor %}
+                    </table>
                   </div>
-                </td>
-
-                <td>{{ routine.name }}</td>
-                <td>{{ routine.duration }}</td>
-                <td>{{ routine.part }}</td>
-              </tr>
-              {% endfor %}
-            </table>
-          </div>
-        </div>
-        {% endfor %}
-        {% else %}
-          <div class="no_scrap_data">
-            <img src="{% static 'assets/img/lets_start_pipi.png' %}" alt="피피" class="pipi"/>
-            <p class="pipi_says">날짜를 선택하고 운동을 시작해보세요! 피피</p>
-          </div>
-        {% endif %}
-      </div>
+                </div>
+                <dialog
+                  style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); margin: 0;"
+                >
+                  <p>이 운동을 다시 진행하시겠습니까?</p>
+                  <form method="dialog">
+                    <button>취소하기</button>
+                  </form>
+                  <form
+                    action="{% url 'frontend:routineingpage' %}"
+                    method="post"
+                  >
+                    {% csrf_token %}
+                    <input name="exercise_routine" type="hidden" value="{{ scrapped_exercise_routine.exercise_routine|safe }}" />
+                    <button type="submit">운동하기</button>
+                  </form>
+                </dialog>
+              </li>
+            {% empty %}
+              <div class="no_scrap_data">
+                <img src="{% static 'assets/img/lets_start_pipi.png' %}" alt="피피" class="pipi" />
+                <p class="pipi_says">날짜를 선택하고 운동을 시작해보세요! 피피</p>
+              </div>
+            {% endfor %}
+          </ol>
+        </section>
       </section>
-    </section>
-
-
-  </main>
-</body>
-{% include "../components/modal_component.html" %}
+    </main>
+  </body>
+  {% include "../components/modal_component.html" %}
 {% endblock body %}

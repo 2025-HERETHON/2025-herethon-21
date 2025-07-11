@@ -1,46 +1,45 @@
 {% extends "../example/base.html" %}
-{% load static %} 
+
+{% load static %}
+
 {% block style %}
 <link rel="stylesheet" href="{% static 'styles/component_styles/calendar_component.css' %}" />
-{% endblock style %} 
-
+{% endblock style %}
 
 {% block body %}
 <section class="calendar_container">
   <header class="calendar_header">
     <h2 class="calendar_title" id="calendar_title">July 2025</h2>
-    <button class="month_btn" id="prev_month">‹</button>
-    <button class="month_btn" id="next_month">›</button>
+    <button class="month_btn" id="prev_month"></button>
+    <button class="month_btn" id="next_month"></button>
   </header>
-
-    <section class="calendar_body_wrapper">
-        <section class="calendar_weekdays">
-            <span>Su</span>
-            <span>Mo</span>
-            <span>Tu</span>
-            <span>We</span>
-            <span>Th</span>
-            <span>Fr</span>
-            <span>Sa</span>
-        </section>
-        
-        <section id="calendar_days" class="calendar_days">
-           <!-- JS로 날짜 셀 -->
-        </section>
-        <div class="calendar_legend">
-            <div class="legend_item pink">
-                <span>월경기</span>
-            </div>
-            <div class="legend_item yellow">
-                <span>난포기</span>
-            </div>
-            <div class="legend_item blue">
-                <span>배란기</span>
-            </div>
-            <div class="legend_item gray">
-                <span>황체기</span>
-            </div>
-        </div>
+  <section class="calendar_body_wrapper">
+    <section class="calendar_weekdays">
+      <span>Su</span>
+      <span>Mo</span>
+      <span>Tu</span>
+      <span>We</span>
+      <span>Th</span>
+      <span>Fr</span>
+      <span>Sa</span>
     </section>
+    <section id="calendar_days" class="calendar_days">
+      <!-- JS로 날짜 셀 -->
+    </section>
+    <div class="calendar_legend">
+      <div class="legend_item pink">
+        <span>월경기</span>
+      </div>
+      <div class="legend_item yellow">
+        <span>난포기</span>
+      </div>
+      <div class="legend_item blue">
+        <span>배란기</span>
+      </div>
+      <div class="legend_item gray">
+        <span>황체기</span>
+      </div>
+    </div>
+  </section>
 </section>
 {% endblock body %}

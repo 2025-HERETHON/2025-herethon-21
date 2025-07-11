@@ -1,8 +1,11 @@
 {% extends "../example/base.html" %}
+
 {% load static %} 
+
 {% block style %}
 <link rel="stylesheet" href="{% static 'styles/page_styles/routine_ing_component.css' %}" />
 {% endblock style %} 
+
 {% block script %}
   <script>
     const routineData = JSON.parse('{{ data_list_json|safe }}');
@@ -13,72 +16,68 @@
 {% endblock script %}
 
 {% block body %} 
-
-    {% block header %}
-        {% include "../components/header_component.html" %}
-    {% endblock header %}
-
-    <div class="bighugger">
-      <div class="photobox_wrapper">
-        <div class="photobox_nav photobox_prev" id="photo_prev">
-          <img src="{% static 'assets/img/left.png' %}" alt="왼쪽" class="left_right">
-        </div>
-        <div class="step_number" id="step_number">1</div>
-        <img src="{% static data_list.0.detail_images.0 %}" alt="운동 이미지" class="photobox" id="routine_image">
-        <div class="photobox_nav photobox_next" id="photo_next">
-          <img src="{% static 'assets/img/right.png' %}" alt="오른쪽" class="left_right">
-        </div>
+  {% block header %}
+    {% include "../components/header_component.html" %}
+  {% endblock header %}
+  <div class="bighugger">
+    <div class="photobox_wrapper">
+      <div class="photobox_nav photobox_prev" id="photo_prev">
+        <img src="{% static 'assets/img/left.png' %}" alt="왼쪽" class="left_right">
       </div>
-
-      <div class="routinesection">
-        <div class="timeline" id="timeline">
-          {% for item in data_list %}
+      <div class="step_number" id="step_number">1</div>
+      <img src="{% static data_list.0.detail_images.0 %}" alt="운동 이미지" class="photobox" id="routine_image">
+      <div class="photobox_nav photobox_next" id="photo_next">
+        <img src="{% static 'assets/img/right.png' %}" alt="오른쪽" class="left_right">
+      </div>
+    </div>
+    <div class="routinesection">
+      <div class="timeline" id="timeline">
+        {% for item in data_list %}
           <div class="step">
             <div class="circle">{{ item.time }}m</div>
           </div>
           {% if not forloop.last %}
             <div class="chain"></div>
           {% endif %}
-          {% endfor %}
-        </div>
-        <div class="detail_box">
-          <img src="{% static 'assets/img/happy_pipi_hugging.png' %}" alt="웃는피피" class="happy_pipi_hugging"/>
-          <div class="hugger">
-            <div>
-              <span id="step_content">{{ data_list.0.content }}</span>
-              <span id="category">{{ data_list.0.category }}</span>
-              </div>
-              <div>
-                <span>난이도</span>
-                <span>
-                  <div class="starscore">
-                    {% for i in "12345" %}
-                      {% if forloop.counter <= data_list.0.difficulty %}
-                        <span class="star_per">
-                          <img src="{% static 'assets/img/star_purple.png' %}" alt="보라별" />
-                        </span>
-                      {% else %}
-                        <span class="star_per">
-                          <img src="{% static 'assets/img/star_gray.png' %}" alt="회색별" />
-                        </span>
-                      {% endif %}
-                    {% endfor %}
-                  </div>
-                </span>
+        {% endfor %}
+      </div>
+      <div class="detail_box">
+        <img src="{% static 'assets/img/happy_pipi_hugging.png' %}" alt="웃는피피" class="happy_pipi_hugging"/>
+        <div class="hugger">
+          <div>
+            <span id="step_content">{{ data_list.0.content }}</span>
+            <span id="category">{{ data_list.0.category }}</span>
             </div>
+            <div>
+              <span>난이도</span>
+              <span>
+                <div class="starscore">
+                  {% for i in "12345" %}
+                    {% if forloop.counter<=data_list.0.difficulty %}
+                      <span class="star_per">
+                        <img src="{% static 'assets/img/star_purple.png' %}" alt="보라별" />
+                      </span>
+                    {% else %}
+                      <span class="star_per">
+                        <img src="{% static 'assets/img/star_gray.png' %}" alt="회색별" />
+                      </span>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              </span>
           </div>
-          <div class="detail_description_box">
-            <ul class="detail_lists">
-              {% for detail in data_list.0.details %}
-                <li>{{ detail }}</li>
-              {% endfor %}
-            </ul>
-          </div>
+        </div>
+        <div class="detail_description_box">
+          <ul class="detail_lists">
+            {% for detail in data_list.0.details %}
+              <li>{{ detail }}</li>
+            {% endfor %}
+          </ul>
         </div>
       </div>
     </div>
-    <a href="{% url 'frontend:cyclepage' %}" class="back_button">
-      <img src="{% static 'assets/img/left.png' %}" alt="뒤로가기" />
-    </a>
-
+  </div>
+  <a href="{% url 'frontend:cyclepage' %}" class="back_button">
+    <img src="{% static 'assets/img/left.png' %}" alt="뒤로가기" />
+  </a>
 {% endblock body %}
