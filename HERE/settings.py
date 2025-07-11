@@ -21,6 +21,14 @@ DATABASES = {
     'default': DATABASE_DEFAULT,
 }
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+        'TIMEOUT': 3600*2,  # 2시간
+    }
+}
+
 
 ALLOWED_HOSTS = []
 
@@ -51,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'utils.middleware.ErrorHandlingMiddleware',
 ]
 
 ROOT_URLCONF = 'HERE.urls'
@@ -67,11 +76,16 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'builtins': [
+                'templatetags.duration_filter',
+            ]
         },
     },
 ]
 
 WSGI_APPLICATION = 'HERE.wsgi.application'
+
+AUTH_USER_MODEL = 'accounts.CustomUser'
 
 
 # Password validation
