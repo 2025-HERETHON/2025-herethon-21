@@ -32,7 +32,7 @@ def create_send_friends(request):
                 sender=request.user,
                 receiver=receiver,
                 category=NotificationCategoryType.REQUEST
-        )
+            )
             messages.success(request, f"{email}님에게 친구 요청을 보냈습니다.")
         except CustomUser.DoesNotExist:
             messages.error(request, "해당 이메일의 사용자가 존재하지 않습니다.")
