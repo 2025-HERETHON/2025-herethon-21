@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test</title>
+  </head>
+  <body>
+    <section>
+      <h1>Create</h1>
+      <form
+        action="{% url 'menstruations:create' %}"
+        method="post"
+        >
+        {% csrf_token %}
+        <input name="start" type="date" />
+        <input name="end" type="date" />
+        <button type="submit">추가</button>
+      </form>
+    </section>
+    <section>
+      <h1>오늘은 {{today_phase}}입니다.</h1>
+    </section>
+    <section>
+      <h1>List</h1>
+      <ol>
+        {% for menstruation in menstruations %}
+        <li>
+          {{menstruation.start}} - {{menstruation.end}} | {{menstruation.duration}} | {{menstruation.cycle}}
+          <form
+            action="{% url 'menstruations:update' pk=menstruation.id %}"
+            method="post"
+          >
+            {% csrf_token %}
+            <fieldset>
+              <legend>Update</legend>
+              <input name="start" type="date" />
+              <input name="end" type="date" />
+            </fieldset>
+            <button type="submit">수정</button>
+          </form>
+          <form
+            action="{% url 'menstruations:delete' pk=menstruation.id %}"
+            method="post"
+          >
+           {% csrf_token %}
+           <button type="submit">삭제</button>
+          </form>
+        </li>
+        {% endfor %}
+      </ol>
+    </section>
+    <section>
+      <h1>Average</h1>
+      {{menstruation_average.duration}} | {{menstruation_average.cycle}}
+    </section>
+    <section>
+      <h1>Cycle</h1>
+      {{menstruation_cycle}}
+    </section>
+    {% if messages %}
+    <dialog
+      open
+      style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); margin: 0;"
+    >
+      {% for message in messages %}
+        <p class="{{ message.tags }}">{{ message }}</p>
+      {% endfor %}
+      <form method="dialog">
+        <button>닫기</button>
+      </form>
+    </dialog>
+    {% endif %}
+  </body>
+</html>

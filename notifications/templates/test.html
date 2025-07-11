@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test</title>
+  </head>
+  <body>
+    <h2>{% now "Y-m-d" %}</h2>
+    <section>
+      <h1>List</h1>
+      <ol>
+        {% for notification in notification_list %}
+          <li>
+            {{notification.created_at|timesince}} 전 / {{notification.sender__nickname}} / {{notification.category}}
+          </li>
+        {% empty %}
+          <p>알림이 없습니다.</p>
+        {% endfor %}
+      </ol>
+    </section>
+    <section>
+      <form
+        action="{% url 'notifications:create' %}"
+        method="post"
+      >
+        {% csrf_token %}
+        <input name="receiver" type="hidden" value="{{friend_username}}" />
+        <input name="category" type="hidden" value="5" />
+        <button
+          type="submit"
+          {% if is_prodded %}disabled{% endif %}
+        >
+          {% if is_prodded %}
+            오늘은 이미 찔렀습니다.
+          {% else %}
+            콕 찌르기
+          {% endif %}
+        </button>
+      </form>
+      {% if messages %}
+        {% for message in messages %}
+          <div class="{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    </section>
+  </body>
+</html>

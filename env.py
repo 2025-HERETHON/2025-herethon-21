@@ -11,3 +11,5 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 DEBUG = env('DEBUG')
 SECRET_KEY = env('SECRET_KEY')
 DATABASE_DEFAULT = env.db()
+
+GOOGLE_API_KEY = env('GOOGLE_API_KEY')
