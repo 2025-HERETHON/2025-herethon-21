@@ -52,40 +52,37 @@ def read_receive_list(request):
 
 @login_required
 def create_accept_friend(request, username):
-    if request.method == "POST":
-        friend = Friend.objects.filter(
-            receiver=request.user,
-            sender__username=username,
-            status=FriendStatusType.PENDING
-        ).first()
-        if friend:
-            FriendService.accept_request(friend)
-            service = NotificationService(request)
-            service.post(                
-                sender=friend.sender,
-                receiver=friend.receiver,
-                category=NotificationCategoryType.ACCEPT
-            )
-        
-        return redirect("friends:read_friends_list")
-    
+    friend = Friend.objects.filter(
+        receiver=request.user,
+        sender__username=username,
+        status=FriendStatusType.PENDING
+    ).first()
+    if friend:
+        FriendService.accept_request(friend)
+        service = NotificationService(request)
+        service.post(                
+            sender=friend.sender,
+            receiver=friend.receiver,
+            category=NotificationCategoryType.ACCEPT
+        )
+    return redirect("friends:read_friends_list")
+
 @login_required
 def create_reject_friend(request, username):
-    if request.method == "POST":
-        friend = Friend.objects.filter(
-            receiver=request.user,
-            sender__username=username,
-            status=FriendStatusType.PENDING
-        ).first()
-        if friend:
-            FriendService.reject_request(friend)
-            service = NotificationService(request)
-            service.post(
-                sender=friend.sender,
-                receiver=friend.receiver,
-                category=NotificationCategoryType.REJECT
-            )
-        return redirect("friends:read_friends_list")
+    friend = Friend.objects.filter(
+        receiver=request.user,
+        sender__username=username,
+        status=FriendStatusType.PENDING
+    ).first()
+    if friend:
+        FriendService.reject_request(friend)
+        service = NotificationService(request)
+        service.post(
+            sender=friend.sender,
+            receiver=friend.receiver,
+            category=NotificationCategoryType.REJECT
+        )
+    return redirect("friends:read_friends_list")
         
 @login_required
 def read_friend_detail(request, username):
