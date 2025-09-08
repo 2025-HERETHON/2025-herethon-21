@@ -12,12 +12,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const routineData = Array.from(document.querySelectorAll('.detail_box')).map((box) => {
         const durationStr = box.getAttribute('data-duration');
         const [minutes, seconds] = durationStr.split(':').map(Number);
-        
+
+        // 이미지 배열: data-image-urls JSON으로 받음
+        const imageUrls = JSON.parse(box.getAttribute('data-image-urls') || '["' + box.getAttribute('data-image-url') + '"]');
+
         return {
             durationInSeconds: (minutes * 60) + seconds,
             durationString: durationStr,
             element: box,
-            imagePath: box.getAttribute('data-image-url')
+            imageUrls: imageUrls,
+            currentImageIndex: 0
         };
     });
 
@@ -33,13 +37,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let timerInterval = null;
 
     function startTimer(step) {
-        if (timerInterval) {
-            clearInterval(timerInterval);
-        }
+        if (timerInterval) clearInterval(timerInterval);
 
         const exercise = routineData[step];
         let timeRemaining = exercise.durationInSeconds;
-
         const progressBar = progressBars[step];
         const timeText = timeTexts[step];
         const circumference = 2 * Math.PI * 30;
@@ -47,7 +48,6 @@ document.addEventListener('DOMContentLoaded', () => {
         progressBars.forEach((pb, idx) => {
             pb.style.strokeDasharray = circumference;
             pb.style.strokeDashoffset = circumference;
-            
             timeTexts[idx].textContent = routineData[idx].durationString;
             timeTexts[idx].closest('.step').classList.remove('completed');
         });
@@ -57,7 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
             timeTexts[i].textContent = "완료!";
             timeTexts[i].closest('.step').classList.add('completed');
         }
-
 
         timerInterval = setInterval(() => {
             if (timeRemaining > 0) {
@@ -88,8 +87,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateRoutineUI(step) {
         const currentExercise = routineData[step];
-        routineImage.src = currentExercise.imagePath;
+        routineImage.src = currentExercise.imageUrls[currentExercise.currentImageIndex];
         stepNumberElement.textContent = step + 1;
+
         document.querySelectorAll('.detail_box').forEach((box, index) => {
             box.style.display = (index === step) ? 'flex' : 'none';
         });
@@ -98,10 +98,27 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // 좌우 버튼 이미지 전환
+    prevButton.addEventListener('click', () => {
+        const exercise = routineData[currentStepIndex];
+        exercise.currentImageIndex--;
+        if (exercise.currentImageIndex < 0) exercise.currentImageIndex = exercise.imageUrls.length - 1;
+        routineImage.src = exercise.imageUrls[exercise.currentImageIndex];
+    });
+
+    nextButton.addEventListener('click', () => {
+        const exercise = routineData[currentStepIndex];
+        exercise.currentImageIndex++;
+        if (exercise.currentImageIndex >= exercise.imageUrls.length) exercise.currentImageIndex = 0;
+        routineImage.src = exercise.imageUrls[exercise.currentImageIndex];
+    });
+
+    // 초기 UI
     updateRoutineUI(currentStepIndex);
     startTimer(currentStepIndex);
 });
 </script>
+
 {% endblock script %}
 
 
@@ -154,7 +171,11 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="detail_box" 
             data-index="{{ forloop.counter0 }}" 
             data-duration="{{ item.exercise.duration|slice:"3:" }}" 
-            data-image-url="/media/{{ item.exercise.image }}"
+            data-image-urls='[
+                "{{ item.exercise.image1 }}",
+                "{{ item.exercise.image2 }}",
+                "{{ item.exercise.image3 }}"
+            ]'
             style="{% if forloop.first %}display:flex{% else %}display:none{% endif %}">
         <img src="{% static 'assets/img/happy_pipi_hugging.png' %}" alt="웃는피피" class="happy_pipi_hugging"/>
         <div class="hugger">
