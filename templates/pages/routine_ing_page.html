@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="detail_box" 
             data-index="{{ forloop.counter0 }}" 
             data-duration="{{ item.exercise.duration|slice:"3:" }}" 
-            data-image-url="/media/{{ item.exercise.detail_images.0 }}" 
+            data-image-url="/media/{{ item.exercise.image }}"
             style="{% if forloop.first %}display:flex{% else %}display:none{% endif %}">
         <img src="{% static 'assets/img/happy_pipi_hugging.png' %}" alt="웃는피피" class="happy_pipi_hugging"/>
         <div class="hugger">
@@ -183,7 +183,9 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <div class="detail_description_box">
           <ul class="detail_lists">
-            <li>{{ item.exercise.description }}</li>
+            {% for desc in item.exercise.description_list %}
+              <li>{{ desc }}</li> <!--description들이 나눠진 걸 가정하고 코드를 작성해서 지금상태에서는 아무것도 안 뜹니다!-->
+            {% endfor %}
           </ul>
         </div>
       </div>
