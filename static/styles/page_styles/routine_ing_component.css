@@ -4,7 +4,7 @@ body{
 }
 .bighugger {
   display: flex;
-  height: 100%;
+  height: 95vh;
   flex-direction: row;
   justify-content: center;
   align-items: center;
@@ -284,4 +284,15 @@ body{
 
 .back_button img {
   width: 20px;
+}
+
+.time-text{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
+  line-height: 1;
 }
