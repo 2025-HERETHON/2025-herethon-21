@@ -9,7 +9,7 @@
 {% block script %}
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const routineData = Array.from(document.querySelectorAll('.detail_box')).map((box, index) => {
+    const routineData = Array.from(document.querySelectorAll('.detail_box')).map((box) => {
         const durationStr = box.getAttribute('data-duration');
         const [minutes, seconds] = durationStr.split(':').map(Number);
         
@@ -46,27 +46,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
         progressBars.forEach((pb, idx) => {
             pb.style.strokeDasharray = circumference;
-            pb.style.strokeDashoffset = (idx === step) ? circumference : 0; 
+            pb.style.strokeDashoffset = circumference;
+            
             timeTexts[idx].textContent = routineData[idx].durationString;
+            timeTexts[idx].closest('.step').classList.remove('completed');
         });
-        
-        timeText.style.fontSize = "16px";
+
+        for (let i = 0; i < step; i++) {
+            progressBars[i].style.strokeDashoffset = 0;
+            timeTexts[i].textContent = "완료!";
+            timeTexts[i].closest('.step').classList.add('completed');
+        }
+
 
         timerInterval = setInterval(() => {
-            timeRemaining--;
+            if (timeRemaining > 0) {
+                timeRemaining--;
+                const progress = (exercise.durationInSeconds - timeRemaining) / exercise.durationInSeconds;
+                const offset = circumference - progress * circumference;
+                progressBar.style.strokeDashoffset = offset;
 
-            const progress = (exercise.durationInSeconds - timeRemaining) / exercise.durationInSeconds;
-            const offset = circumference - progress * circumference;
-            progressBar.style.strokeDashoffset = offset;
-
-            const minutes = Math.floor(timeRemaining / 60);
-            const seconds = timeRemaining % 60;
-            timeText.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-
-            if (timeRemaining <= 0) {
+                const minutes = Math.floor(timeRemaining / 60);
+                const seconds = timeRemaining % 60;
+                timeText.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            } else {
                 clearInterval(timerInterval);
-                timeText.style.fontSize = "12px";
                 timeText.textContent = "완료!";
+                timeText.closest('.step').classList.add('completed');
 
                 if (currentStepIndex < totalSteps - 1) {
                     currentStepIndex++;
@@ -90,7 +96,6 @@ document.addEventListener('DOMContentLoaded', () => {
             stepEl.classList.toggle('active', index === step);
         });
     }
-
 
     updateRoutineUI(currentStepIndex);
     startTimer(currentStepIndex);
@@ -145,11 +150,12 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
 
       {% for item in exercise_routine %}
-<div class="detail_box" 
-    data-index="{{ forloop.counter0 }}" 
-    data-duration="{{ item.exercise.duration|slice:"3:" }}" 
-    data-image-url="/media/{{ item.exercise.detail_images.0 }}" 
-    style="{% if forloop.first %}display:flex{% else %}display:none{% endif %}">        <img src="{% static 'assets/img/happy_pipi_hugging.png' %}" alt="웃는피피" class="happy_pipi_hugging"/>
+        <div class="detail_box" 
+            data-index="{{ forloop.counter0 }}" 
+            data-duration="{{ item.exercise.duration|slice:"3:" }}" 
+            data-image-url="/media/{{ item.exercise.detail_images.0 }}" 
+            style="{% if forloop.first %}display:flex{% else %}display:none{% endif %}">
+        <img src="{% static 'assets/img/happy_pipi_hugging.png' %}" alt="웃는피피" class="happy_pipi_hugging"/>
         <div class="hugger">
           <div>
             <span id="step_content">{{ item.exercise.name }}</span>
