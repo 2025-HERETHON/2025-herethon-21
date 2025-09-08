@@ -72,6 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 clearInterval(timerInterval);
                 timeText.textContent = "완료!";
+                timeText.style.fontSize = "13px";
                 timeText.closest('.step').classList.add('completed');
 
                 if (currentStepIndex < totalSteps - 1) {
