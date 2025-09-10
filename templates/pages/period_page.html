@@ -105,34 +105,38 @@
             {% for menstruation in menstruations %}
             <li id="period_row_{{ forloop.counter0 }}" class="period_row">
               <div class="menstruation_read">
-                <span>{{menstruation.start|date:'Y.n.j.'}} - {{menstruation.end|date:'Y.n.j.'}}</span>
-                <span>{{menstruation.duration}}</span>
-                <span>{{menstruation.cycle}}</span>
-                <button
-                  class="icon_btn edit_btn"
-                  data-index="{{ forloop.counter0 }}"
-                  type="button"
-                  onclick="
-                      const menstruation_read = this.closest('.menstruation_read');
-                      menstruation_read.classList.add('hidden');
-                      menstruation_read.nextElementSibling.classList.remove('hidden');
-                    "
-                >
-                  <img src="{% static 'assets/img/rewrite.png' %}" alt="수정" />
-                </button>
+                <span class="period_cycle">{{menstruation.start|date:'Y.n.j.'}} - {{menstruation.end|date:'Y.n.j.'}}</span>
+                <span class="period_date">{{menstruation.duration}}</span>
+                <span class="period_date_cycle">{{menstruation.cycle}}</span>
+                
+                <div class="buttons">
+                  <button
+                    class="icon_btn edit_btn"
+                    data-index="{{ forloop.counter0 }}"
+                    type="button"
+                    onclick="
+                        const menstruation_read = this.closest('.menstruation_read');
+                        menstruation_read.classList.add('hidden');
+                        menstruation_read.nextElementSibling.classList.remove('hidden');
+                      "
+                  >
+                    <img src="{% static 'assets/img/rewrite.png' %}" alt="수정" />
+                  </button>
+                <form action="{% url 'menstruations:delete' pk=menstruation.id %}" method="post">
+                  {% csrf_token %}
+                  <button class="icon_btn delete_btn" data-index="{{ forloop.counter0 }}" type="submit">
+                    <img src="{% static 'assets/img/trashcan.png' %}" alt="삭제" />
+                  </button>
+                </form>
+              </div>
               </div>
               <form class="hidden" action="{% url 'menstruations:update' pk=menstruation.id %}" method="post">
                 {% csrf_token %}
-                <input name="start" type="date" />
-                <input name="end" type="date" />
-                <button type="submit">
+                <input name="start" type="date" class="period_edit_1"/>
+                <span class="to">-</span>
+                <input name="end" type="date"  class="period_edit_2"/>
+                <button type="submit" class="real_edit_btn">
                   <img src="{% static 'assets/img/rewrite.png' %}" alt="수정" />
-                </button>
-              </form>
-              <form action="{% url 'menstruations:delete' pk=menstruation.id %}" method="post">
-                {% csrf_token %}
-                <button class="icon_btn delete_btn" data-index="{{ forloop.counter0 }}" type="submit">
-                  <img src="{% static 'assets/img/trashcan.png' %}" alt="삭제" />
                 </button>
               </form>
             </li>
