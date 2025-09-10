@@ -128,3 +128,8 @@
     position: relative; /* 💥 꼭 필요해 */
     z-index: 10;
 }
+.submit-button{
+    background-color: transparent;
+    border: none;
+    cursor:pointer;
+}
