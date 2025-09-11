@@ -132,13 +132,14 @@
               </div>
               <form class="hidden" action="{% url 'menstruations:update' pk=menstruation.id %}" method="post">
                 {% csrf_token %}
-                <input name="start" type="date" class="period_edit_1"/>
+                <input name="start" type="date" class="period_edit_1" value="{{ menstruation.start|date:'Y-m-d' }}"/>
                 <span class="to">-</span>
-                <input name="end" type="date"  class="period_edit_2"/>
+                <input name="end" type="date" class="period_edit_2" value="{{ menstruation.end|date:'Y-m-d' }}"/>
                 <button type="submit" class="real_edit_btn">
                   <img src="{% static 'assets/img/rewrite.png' %}" alt="수정" />
                 </button>
               </form>
+
             </li>
             {% endfor %}
           </div>
