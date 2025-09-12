@@ -261,14 +261,13 @@ input.user-interacted::-moz-range-thumb {
 }
 #start_btn {
     color:#A48BE7;
-    margin-left:15px;
     font-size: 20px;
     display:flex;
     justify-content: center;
     align-items: center;
     font-weight: 500;
     margin-top: 35px;
-    width:90%;
+    width:105%;
     height:50px;
     padding:28px;
     border-radius: 20px;
