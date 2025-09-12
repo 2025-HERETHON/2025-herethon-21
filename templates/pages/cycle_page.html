@@ -11,7 +11,6 @@
 
 {% block script %}
 <script src="{% static 'functions/component_functions/calendar_component.js' %}"></script>
-<script src="{% static 'functions/page_functions/cycle_page.js' %}"></script>
 {{ exercise_reviews|json_script:"exercise_reviews" }}
 {{ menstruation_cycle|json_script:"menstruation_cycle" }}
 <script>
@@ -45,6 +44,67 @@
     });
 
     updateRoutineDisplay();
+    
+  const slider = document.getElementById("customSlider");
+  const fill = document.getElementById("fillTrack");
+  const label = document.getElementById("timeLabel");
+
+  const timeValues = ["0m", "10m", "20m", "40m", "60m"];
+
+  function updateSlider() {
+    const value = parseInt(slider.value);
+    const percent = (value / 4) * 100;
+    const sliderWidth = slider.offsetWidth;
+    const thumbWidth = 55;
+    const trackExtraOffset = thumbWidth / 2;
+    const availableWidth = sliderWidth - thumbWidth;
+
+    const thumbCenter = (value / 4) * availableWidth + trackExtraOffset;
+    label.style.left = `${thumbCenter - label.offsetWidth / 2}px`;
+
+    fill.style.width = percent + "%";
+
+    if (value === 0) {
+      label.style.display = "none";
+      slider.classList.remove("user-interacted");
+    } else {
+      label.style.display = "block";
+      label.textContent = timeValues[value];
+
+      const thumbCenter = (value / 4) * (sliderWidth - thumbWidth) + thumbWidth / 2;
+      const labelOffset = thumbCenter / 2 - label.offsetWidth / 2;
+      label.style.left = `${labelOffset}px`;
+      slider.classList.add("user-interacted");
+
+    }
+  }
+
+  slider.addEventListener("input", updateSlider);
+  slider.value = 2;
+  updateSlider();
+
+  slider.addEventListener("mousedown", () => {
+    slider.classList.add("user-interacted");
+  });
+
+  slider.addEventListener("touchstart", () => {
+    slider.classList.add("user-interacted");
+  });
+
+
+  const scrapButtons = document.querySelectorAll(".scrapbtn img");
+
+  scrapButtons.forEach((scrapbtn) => {
+    const defaultSrc = scrapbtn.dataset.default;
+    const scrapedSrc = scrapbtn.dataset.scraped;
+    let isScraped = false;
+
+    scrapbtn.addEventListener("click", function (e) {
+      e.preventDefault(); // form submit 막기 (순수 토글용)
+      scrapbtn.src = isScraped ? defaultSrc : scrapedSrc;
+      isScraped = !isScraped;
+    });
+  });
   });
 </script>
 {% endblock script %}
@@ -159,6 +219,7 @@
                           <input name="exercise_routine" type="hidden" value="{{ ai_exercise_routine|safe }}" />
                           <button type="submit">
                             <img
+                              class="scrapbtn"
                               id="scrapicon"
                               src="{% static 'assets/img/scrap.png' %}"
                               alt="스크랩 아이콘"
@@ -174,7 +235,7 @@
                               <td>
                                 <div class="fitness_img">
                                   <img
-                                    style="width: 100%; height: 100%;"
+                                    style="width: 100%;"
                                     src="{{item.exercise.image1}}"
                                     alt="{{item.exercise.name}}"
                                   />
@@ -200,7 +261,7 @@
                 <div id="list_next">
                   <img src="{% static 'assets/img/right.png' %}" alt="오른쪽" />
                 </div>
-                <button type="submit">운동 시작하기</button>
+                <button type="submit" id="start_btn">운동 시작하기</button>
               </form>
             </div>
           </div>
