@@ -130,61 +130,13 @@ slider.addEventListener("change", () => {
     slider.addEventListener("touchstart", () => slider.classList.add("user-interacted"));
 
     // --- 스크랩 버튼 ---
-    const scrapButtons = document.querySelectorAll(".scrapbtn_wrapper button");
-
-    scrapButtons.forEach((button) => {
-        const wrapper = button.parentElement;
-        const scrapbtn = button.querySelector("img");
-        const defaultSrc = scrapbtn.dataset.default;
-        const scrapedSrc = scrapbtn.dataset.scraped;
-        const routineData = wrapper.dataset.routine;
-        const csrfToken = wrapper.dataset.csrf;
-        let isScraped = wrapper.dataset.isScraped === 'true';
-
-        scrapbtn.src = isScraped ? scrapedSrc : defaultSrc;
-
-        button.addEventListener("click", function(e) {
-            e.preventDefault(); 
-            e.stopPropagation(); 
-
-            const formData = new FormData();
-            formData.append('csrfmiddlewaretoken', csrfToken);
-            formData.append('exercise_routine', routineData);
-
-            isScraped = !isScraped;
-            scrapbtn.src = isScraped ? scrapedSrc : defaultSrc;
-            wrapper.dataset.isScraped = isScraped;
-
-            fetch("{% url 'exercises:scrapped_exercise_routine_create' %}", {
-                method: 'POST',
-                body: formData,
-                headers: {'X-CSRFToken': csrfToken},
-            })
-            .then(response => {
-                if (!response.ok) {
-                    isScraped = !isScraped;
-                    scrapbtn.src = isScraped ? scrapedSrc : defaultSrc;
-                    wrapper.dataset.isScraped = isScraped;
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.status !== 'success') {
-                    console.error(data.message);
-                    isScraped = !isScraped;
-                    scrapbtn.src = isScraped ? scrapedSrc : defaultSrc;
-                    wrapper.dataset.isScraped = isScraped;
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                isScraped = !isScraped;
-                scrapbtn.src = isScraped ? scrapedSrc : defaultSrc;
-                wrapper.dataset.isScraped = isScraped;
-            });
-        });
+    document.querySelectorAll(".scrapbtn_wrapper .scrap-checkbox").forEach(checkbox => {
+    const img = checkbox.nextElementSibling.querySelector("img");
+    checkbox.addEventListener("change", () => {
+        img.src = checkbox.checked ? img.dataset.scraped : img.dataset.default;
     });
+
+});
 });
 </script>
 
@@ -280,64 +232,62 @@ slider.addEventListener("change", () => {
 
                         </form>
                     </div>
-                    <form
-                        action="{% url 'frontend:routineingpage' %}"
-                        method="post"
-                    >
-                    <div class="routine_hugger">
-                        <div id="list_prev">
-                            <img src="{% static 'assets/img/left.png' %}" alt="왼쪽" />
-                        </div>
-                        <div class="per_routine_list">
-                            {% csrf_token %}
-                            {% for ai_exercise_routine in ai_exercise_routines %}
-                                <div class="routine_item" data-index="{{ forloop.counter0 }}" {% if not forloop.first %}style="display:none;"{% endif %}>
-                                    <div class="bighugger" id="border">
-                                        <div class="scrapbtn_wrapper" 
-                                        data-routine="{{ ai_exercise_routine|safe }}"
-                                        data-csrf="{{ csrf_token }}"
-                                        data-is-scraped="{% if is_scraped %}true{% else %}false{% endif %}">
-                                        <button type="button" class="scrap">
-                                            <img
-                                                id="scrapicon"
-                                                src="{% if is_scraped %}{% static 'assets/img/scrap_scrapped.png' %}{% else %}{% static 'assets/img/scrap.png' %}{% endif %}"
-                                                alt="스크랩 아이콘"
-                                                data-default="{% static 'assets/img/scrap.png' %}"
-                                                data-scraped="{% static 'assets/img/scrap_scrapped.png' %}"
-                                            />
-                                        </button>
+                    <form action="{% url 'frontend:routineingpage' %}" method="post">
+                        {% csrf_token %}
+                        <div class="routine_hugger">
+                            <div id="list_prev">
+                                <img src="{% static 'assets/img/left.png' %}" alt="왼쪽" />
+                            </div>
+                            <div class="per_routine_list">
+                                {% for ai_exercise_routine in ai_exercise_routines %}
+                                    <div class="routine_item" data-index="{{ forloop.counter0 }}" {% if not forloop.first %}style="display:none;"{% endif %}>
+                                        <div class="bighugger" id="border">
+                                            <div class="scrapbtn_wrapper">
+                                                <input type="checkbox" 
+                                                    class="scrap-checkbox" 
+                                                    id="scrap_{{ forloop.counter0 }}" 
+                                                    name="scrap_{{ forloop.counter0 }}" 
+                                                    value="{{ ai_exercise_routine|safe }}"
+                                                    {% if is_scraped %}checked{% endif %} />
+                                                <label for="scrap_{{ forloop.counter0 }}">
+                                                    <img src="{% static 'assets/img/scrap.png' %}" 
+                                                        alt="스크랩 아이콘" 
+                                                        data-default="{% static 'assets/img/scrap.png' %}"
+                                                        data-scraped="{% static 'assets/img/scrap_scrapped.png' %}">
+                                                </label>
+                                            </div>
+                                            <table class="table_centerer">
+                                                {% for item in ai_exercise_routine %}
+                                                <tr>
+                                                    <th>{{item.order}}</th>
+                                                    <td>
+                                                        <div class="fitness_img">
+                                                            <img
+                                                                style="width: 100%;"
+                                                                src="{{item.exercise.image1}}"
+                                                                alt="{{item.exercise.name}}"
+                                                            />
+                                                        </div>
+                                                    </td>
+                                                    <td>{{item.exercise.name}}</td>
+                                                    <td>{{item.exercise.duration}}</td>
+                                                    <td>{{item.exercise.category}}</td>
+                                                </tr>
+                                                {% endfor %}
+                                            </table>
+                                        </div>
+                                        <input
+                                            style="display: none;"
+                                            name="exercise_routine"
+                                            type="radio"
+                                            value="{{ ai_exercise_routine|safe }}"
+                                        />
                                     </div>
-                                        <table class="table_centerer">
-                                            {% for item in ai_exercise_routine %}
-                                            <tr>
-                                                <th>{{item.order}}</th>
-                                                <td>
-                                                    <div class="fitness_img">
-                                                        <img
-                                                            style="width: 100%;"
-                                                            src="{{item.exercise.image1}}"
-                                                            alt="{{item.exercise.name}}"
-                                                        />
-                                                    </div>
-                                                </td>
-                                                <td>{{item.exercise.name}}</td>
-                                                <td>{{item.exercise.duration}}</td>
-                                                <td>{{item.exercise.category}}</td>
-                                            </tr>
-                                            {% endfor %}
-                                        </table>
-                                    </div>
-                                    <input
-                                        style="display: none;"
-                                        name="exercise_routine"
-                                        type="radio"
-                                        value="{{ ai_exercise_routine|safe }}"
-                                    />
-                                </div>
-                            {% endfor %}
-                        </div>
-                        <div id="list_next">
-                            <img src="{% static 'assets/img/right.png' %}" alt="오른쪽" />
+                                {% endfor %}
+                            </div>
+                            <div id="list_next">
+                                <img src="{% static 'assets/img/right.png' %}" alt="오른쪽" />
+                            </div>
                         </div>
                         <button type="submit" id="start_btn">운동 시작하기</button>
                     </form>

@@ -345,3 +345,6 @@ input.user-interacted::-moz-range-thumb {
     right: 10px;
     z-index: 10;
 }
+.scrapbtn_wrapper input[type="checkbox"] {
+  display: none;
+}
