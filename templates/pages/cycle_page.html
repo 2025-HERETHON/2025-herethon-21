@@ -264,19 +264,19 @@
                                 <div class="routine_item" data-index="{{ forloop.counter0 }}" {% if not forloop.first %}style="display:none;"{% endif %}>
                                     <div class="bighugger" id="border">
                                         <div class="scrapbtn_wrapper" 
-     data-routine="{{ ai_exercise_routine|safe }}"
-     data-csrf="{{ csrf_token }}"
-     data-is-scraped="{% if is_scraped %}true{% else %}false{% endif %}">
-    <button type="button" class="scrap">
-        <img
-            id="scrapicon"
-            src="{% if is_scraped %}{% static 'assets/img/scrap_scrapped.png' %}{% else %}{% static 'assets/img/scrap.png' %}{% endif %}"
-            alt="스크랩 아이콘"
-            data-default="{% static 'assets/img/scrap.png' %}"
-            data-scraped="{% static 'assets/img/scrap_scrapped.png' %}"
-        />
-    </button>
-</div>
+                                        data-routine="{{ ai_exercise_routine|safe }}"
+                                        data-csrf="{{ csrf_token }}"
+                                        data-is-scraped="{% if is_scraped %}true{% else %}false{% endif %}">
+                                        <button type="button" class="scrap">
+                                            <img
+                                                id="scrapicon"
+                                                src="{% if is_scraped %}{% static 'assets/img/scrap_scrapped.png' %}{% else %}{% static 'assets/img/scrap.png' %}{% endif %}"
+                                                alt="스크랩 아이콘"
+                                                data-default="{% static 'assets/img/scrap.png' %}"
+                                                data-scraped="{% static 'assets/img/scrap_scrapped.png' %}"
+                                            />
+                                        </button>
+                                    </div>
                                         <table class="table_centerer">
                                             {% for item in ai_exercise_routine %}
                                             <tr>
