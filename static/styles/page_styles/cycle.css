@@ -324,3 +324,13 @@ input.user-interacted::-moz-range-thumb {
   justify-content: center;
   align-items: center;
 }
+.routine_item .bighugger {
+    position: relative; 
+}
+
+.routine_item .scrapbtn_wrapper {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+}
