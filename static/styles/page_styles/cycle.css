@@ -243,6 +243,17 @@ input.user-interacted::-webkit-slider-thumb {
 input.user-interacted::-moz-range-thumb {
   margin-left: 5px;
 }
+#customSlider::-webkit-slider-thumb {
+    transform: translateX(var(--thumb-left, 0));
+}
+#customSlider::-moz-range-thumb {
+    transform: translateX(var(--thumb-left, 0));
+}
+#customSlider::-ms-thumb {
+    transform: translateX(var(--thumb-left, 0));
+}
+
+
 .routine_hugger{
   display: flex;
   justify-content: center;

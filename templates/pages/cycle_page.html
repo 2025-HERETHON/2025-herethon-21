@@ -22,146 +22,172 @@
     });
 </script>
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const routineItems = document.querySelectorAll(".routine_item");
-        const prevBtn = document.getElementById("list_prev");
-        const nextBtn = document.getElementById("list_next");
-        const radioInputs = document.querySelectorAll('input[name="exercise_routine"]');
-        let currentIndex = 0;
+document.addEventListener("DOMContentLoaded", function () {
+    const routineItems = document.querySelectorAll(".routine_item");
+    const prevBtn = document.getElementById("list_prev");
+    const nextBtn = document.getElementById("list_next");
+    const radioInputs = document.querySelectorAll('input[name="exercise_routine"]');
+    let currentIndex = 0;
 
-        function updateRoutineDisplay() {
-            routineItems.forEach((item, index) => {
-                item.style.display = index === currentIndex ? "block" : "none";
-                if (index === currentIndex) {
-                    radioInputs[index].checked = true;
-                }
-            });
-        }
-
-        prevBtn.addEventListener("click", () => {
-            currentIndex = (currentIndex - 1 + routineItems.length) % routineItems.length;
-            updateRoutineDisplay();
-        });
-
-        nextBtn.addEventListener("click", () => {
-            currentIndex = (currentIndex + 1) % routineItems.length;
-            updateRoutineDisplay();
-        });
-
+    function updateRoutineDisplay() {
         routineItems.forEach((item, index) => {
-            item.addEventListener("click", () => {
+            item.style.display = index === currentIndex ? "block" : "none";
+            if (index === currentIndex) {
                 radioInputs[index].checked = true;
-            });
-        });
-
-        updateRoutineDisplay();
-
-        const slider = document.getElementById("customSlider");
-        const fill = document.getElementById("fillTrack");
-        const label = document.getElementById("timeLabel");
-
-        const timeValues = ["0m", "10m", "20m", "40m", "60m"];
-
-        function updateSlider() {
-            const value = parseInt(slider.value);
-            const percent = (value / 4) * 100;
-            const sliderWidth = slider.offsetWidth;
-            const thumbWidth = 55;
-            const trackExtraOffset = thumbWidth / 2;
-            const availableWidth = sliderWidth - thumbWidth;
-
-            const thumbCenter = (value / 4) * availableWidth + trackExtraOffset;
-            label.style.left = `${thumbCenter - label.offsetWidth / 2}px`;
-
-            fill.style.width = percent + "%";
-
-            if (value === 0) {
-                label.style.display = "none";
-                slider.classList.remove("user-interacted");
-            } else {
-                label.style.display = "block";
-                label.textContent = timeValues[value];
-
-                const thumbCenter = (value / 4) * (sliderWidth - thumbWidth) + thumbWidth / 2;
-                const labelOffset = thumbCenter / 2 - label.offsetWidth / 2;
-                label.style.left = `${labelOffset}px`;
-                slider.classList.add("user-interacted");
             }
-        }
-
-        slider.addEventListener("input", updateSlider);
-        slider.value = 2;
-        updateSlider();
-
-        slider.addEventListener("mousedown", () => {
-            slider.classList.add("user-interacted");
         });
+    }
 
-        slider.addEventListener("touchstart", () => {
-            slider.classList.add("user-interacted");
+    prevBtn.addEventListener("click", () => {
+        currentIndex = (currentIndex - 1 + routineItems.length) % routineItems.length;
+        updateRoutineDisplay();
+    });
+
+    nextBtn.addEventListener("click", () => {
+        currentIndex = (currentIndex + 1) % routineItems.length;
+        updateRoutineDisplay();
+    });
+
+    routineItems.forEach((item, index) => {
+        item.addEventListener("click", () => {
+            radioInputs[index].checked = true;
         });
+    });
 
-        const scrapButtons = document.querySelectorAll(".scrapbtn_wrapper button");
+    updateRoutineDisplay();
 
-        scrapButtons.forEach((button) => {
-            const wrapper = button.parentElement;
-            const scrapbtn = button.querySelector("img");
-            const defaultSrc = scrapbtn.dataset.default;
-            const scrapedSrc = scrapbtn.dataset.scraped;
-            const routineData = wrapper.dataset.routine;
-            const csrfToken = wrapper.dataset.csrf;
-            let isScraped = wrapper.dataset.isScraped === 'true';
+    // --- 슬라이더 관련 ---
+    const slider = document.getElementById("customSlider");
+    const fill = document.getElementById("fillTrack");
+    const label = document.getElementById("timeLabel");
+    const form = document.getElementById("sliderForm");
+    const hiddenInput = document.getElementById("durationHHMMSS");
 
+    // 실제 시간 배열
+const timeValues = [10, 20, 40, 60]; // 0분 제거
+
+// 초기값 세팅
+let initialIndex = 1; // 기본 10분
+const urlParams = new URLSearchParams(window.location.search);
+const durationHHMMSS = urlParams.get("exercise_routine_duration");
+if (durationHHMMSS) {
+    const parts = durationHHMMSS.split(":");
+    if (parts.length === 3) {
+        const minutes = parseInt(parts[1]);
+        initialIndex = timeValues.indexOf(minutes);
+        if (initialIndex === -1) initialIndex = 1;
+    }
+}
+slider.value = initialIndex;
+hiddenInput.value = formatHHMMSS(timeValues[initialIndex]);
+
+function formatHHMMSS(minutes) {
+    const h = String(Math.floor(minutes / 60)).padStart(2,'0');
+    const m = String(minutes % 60).padStart(2,'0');
+    const s = '00';
+    return `${h}:${m}:${s}`;
+}
+
+function updateSliderUI() {
+    const index = parseInt(slider.value);
+    const value = timeValues[index];
+    label.textContent = value + "m";
+
+    const minOffset = 0.25; // 1/4 만큼 오른쪽 시작
+    const maxIndex = timeValues.length - 1;
+
+    // fill 길이
+    const percent = minOffset*100 + (index / maxIndex) * (100 - minOffset*100);
+    fill.style.width = percent + "%";
+
+    // thumb 위치
+    const sliderWidth = slider.offsetWidth;
+    const thumbWidth = 55;
+    const availableWidth = sliderWidth - thumbWidth;
+    const thumbCenter = minOffset * availableWidth + (index / maxIndex)* (availableWidth * (1 - minOffset));
+
+    // label 위치
+    const trackExtraOffset = thumbWidth / 2;
+    const labelOffset = thumbCenter + trackExtraOffset - label.offsetWidth / 2;
+    label.style.left = `${labelOffset}px`;
+    label.style.display = "block";
+
+    // slider thumb 위치 보정
+    slider.style.setProperty('--thumb-left', `${thumbCenter}px`);
+}
+
+updateSliderUI();
+
+slider.addEventListener("input", updateSliderUI);
+slider.addEventListener("change", () => {
+    const index = parseInt(slider.value);
+    hiddenInput.value = formatHHMMSS(timeValues[index]);
+    form.submit();
+});
+
+
+    slider.addEventListener("mousedown", () => slider.classList.add("user-interacted"));
+    slider.addEventListener("touchstart", () => slider.classList.add("user-interacted"));
+
+    // --- 스크랩 버튼 ---
+    const scrapButtons = document.querySelectorAll(".scrapbtn_wrapper button");
+
+    scrapButtons.forEach((button) => {
+        const wrapper = button.parentElement;
+        const scrapbtn = button.querySelector("img");
+        const defaultSrc = scrapbtn.dataset.default;
+        const scrapedSrc = scrapbtn.dataset.scraped;
+        const routineData = wrapper.dataset.routine;
+        const csrfToken = wrapper.dataset.csrf;
+        let isScraped = wrapper.dataset.isScraped === 'true';
+
+        scrapbtn.src = isScraped ? scrapedSrc : defaultSrc;
+
+        button.addEventListener("click", function(e) {
+            e.preventDefault(); 
+            e.stopPropagation(); 
+
+            const formData = new FormData();
+            formData.append('csrfmiddlewaretoken', csrfToken);
+            formData.append('exercise_routine', routineData);
+
+            isScraped = !isScraped;
             scrapbtn.src = isScraped ? scrapedSrc : defaultSrc;
+            wrapper.dataset.isScraped = isScraped;
 
-            button.addEventListener("click", function(e) {
-                e.preventDefault(); 
-                e.stopPropagation(); 
-
-                const formData = new FormData();
-                formData.append('csrfmiddlewaretoken', csrfToken);
-                formData.append('exercise_routine', routineData);
-
-                isScraped = !isScraped;
-                scrapbtn.src = isScraped ? scrapedSrc : defaultSrc;
-                wrapper.dataset.isScraped = isScraped;
-
-                fetch("{% url 'exercises:scrapped_exercise_routine_create' %}", {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'X-CSRFToken': csrfToken
-                    },
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        isScraped = !isScraped;
-                        scrapbtn.src = isScraped ? scrapedSrc : defaultSrc;
-                        wrapper.dataset.isScraped = isScraped;
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    if (data.status === 'success') {
-                        console.log(data.message);
-                    } else {
-                        console.error(data.message);
-                        isScraped = !isScraped;
-                        scrapbtn.src = isScraped ? scrapedSrc : defaultSrc;
-                        wrapper.dataset.isScraped = isScraped;
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
+            fetch("{% url 'exercises:scrapped_exercise_routine_create' %}", {
+                method: 'POST',
+                body: formData,
+                headers: {'X-CSRFToken': csrfToken},
+            })
+            .then(response => {
+                if (!response.ok) {
                     isScraped = !isScraped;
                     scrapbtn.src = isScraped ? scrapedSrc : defaultSrc;
                     wrapper.dataset.isScraped = isScraped;
-                });
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.status !== 'success') {
+                    console.error(data.message);
+                    isScraped = !isScraped;
+                    scrapbtn.src = isScraped ? scrapedSrc : defaultSrc;
+                    wrapper.dataset.isScraped = isScraped;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                isScraped = !isScraped;
+                scrapbtn.src = isScraped ? scrapedSrc : defaultSrc;
+                wrapper.dataset.isScraped = isScraped;
             });
         });
     });
+});
 </script>
+
 {% endblock script %}
 
 {% block body %}
@@ -248,7 +274,11 @@
                             <div class="slider-fill" id="fillTrack"></div>
                             <div class="slider-time" id="timeLabel">0m</div>
                         </div>
-                        <input type="range" min="0" max="4" step="1" value="0" id="customSlider" />
+                        <form id="sliderForm" method="get" action="{% url 'frontend:cyclepage' %}">
+                            <input type="range" min="0" max="3" step="1" value="0" id="customSlider" />
+                            <input type="hidden" name="exercise_routine_duration" id="durationHHMMSS" value="00:20:00" />
+
+                        </form>
                     </div>
                     <form
                         action="{% url 'frontend:routineingpage' %}"
