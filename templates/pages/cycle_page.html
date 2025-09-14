@@ -105,6 +105,7 @@ function updateSliderUI() {
 
     if(value === 60){
         fillPercent += 10;
+        thumbOffset += 20; 
     }
 
     fill.style.width = fillPercent + "%";
@@ -259,26 +260,6 @@ slider.addEventListener("change", () => {
                                 {% for ai_exercise_routine in ai_exercise_routines %}
                                     <div class="routine_item" data-index="{{ forloop.counter0 }}" {% if not forloop.first %}style="display:none;"{% endif %}>
                                         <div class="bighugger" id="border">
-                                            <div class="scrapbtn_wrapper">
-                                                <input type="checkbox" 
-                                                    class="scrap-checkbox" 
-                                                    id="scrap_{{ forloop.counter0 }}" 
-                                                    name="scrap_{{ forloop.counter0 }}" 
-                                                    value="{{ ai_exercise_routine|safe }}"
-                                                    {% if is_scraped %}checked{% endif %}
-                                                    onclick="
-                                                        const url = new URL(window.location);
-                                                        url.searchParams.set('scrap_index', '{{ forloop.counter0 }}');
-                                                        url.searchParams.set('scrap_value', this.checked ? 1 : 0);
-                                                        window.location.href = url.toString();
-                                                    " />
-                                                <label for="scrap_{{ forloop.counter0 }}">
-                                                    <img src="{% static 'assets/img/scrap.png' %}" 
-                                                        alt="스크랩 아이콘" 
-                                                        data-default="{% static 'assets/img/scrap.png' %}"
-                                                        data-scraped="{% static 'assets/img/scrap_scrapped.png' %}">
-                                                </label>
-                                            </div>
                                             <table class="table_centerer">
                                                 {% for item in ai_exercise_routine %}
                                                 <tr>
