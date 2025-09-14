@@ -5,13 +5,13 @@
 {% block style %}
 <link rel="stylesheet" href="{% static 'styles/component_styles/page_component.css' %}" />
 <link rel="stylesheet" href="{% static 'styles/component_styles/routine_list_component.css' %}" />
+<link rel="stylesheet" href="{% static 'styles/component_styles/modal_component.css' %}" />
 <link rel="stylesheet" href="{% static 'styles/page_styles/scrap.css' %}" />
 <link rel="stylesheet" href="{% static 'styles/page_styles/page_common.css' %}" />
 {% endblock style %}
 
 {% block script %}
 <script src="{% static 'functions/component_functions/calendar_component.js' %}"></script>
-<script src="{% static 'functions/page_functions/scrap_page.js' %}"></script>
 {{ exercise_reviews|json_script:"exercise_reviews" }}
 {{ menstruation_cycle|json_script:"menstruation_cycle" }}
 <script>
@@ -19,7 +19,29 @@
     const exercise_reviews = JSON.parse(document.getElementById('exercise_reviews').textContent);
     const menstruation_cycle = JSON.parse(document.getElementById('menstruation_cycle').textContent);
     callFullCalendar(exercise_reviews, menstruation_cycle);
-  });
+
+    const perroutines = document.querySelectorAll('.perroutine');
+
+    perroutines.forEach(item => {
+        item.addEventListener('click', function(event) {
+            if(event.target.closest('.delete_btn')) return;
+
+            const dialog = this.nextElementSibling;
+            if (dialog && dialog.tagName === 'DIALOG') {
+                dialog.showModal();
+            }
+        });
+    });
+
+    const deleteButtons = document.querySelectorAll('.delete_btn');
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function(event) {
+            event.stopPropagation(); // 부모 클릭 이벤트 막기
+            // form 제출은 그대로
+        });
+    });
+
+ });
 </script>
 {% endblock script %}
 
@@ -101,7 +123,7 @@
                   "
                 >
                   <p class="scrapped_time">
-                    <span class="date_">{{scrapped_exercise_routine.scrapped_at}} {{scrapped_exercise_routine.exercise_routine_duration|duration:"(i분)"}}</span>
+                    <span class="date_">{{ scrapped_exercise_routine.scrapped_at|stringformat:"s"|slice:":16" }} {{scrapped_exercise_routine.exercise_routine_duration|duration:"(i분)"}}</span>
                   </p>
                   <div class="bighugger">
                     <div class="scrapbtn">
@@ -114,6 +136,7 @@
                           class="icon_btn delete_btn"
                           data-index="{{ forloop.counter0 }}"
                           type="submit"
+                          onclick="event.stopPropagation();"
                         >
                           <img src="{% static 'assets/img/trashcan.png' %}" alt="삭제" />
                         </button>
@@ -137,20 +160,28 @@
                   </div>
                 </div>
                 <dialog
-                  style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); margin: 0;"
+                  class="dialog_modal"
                 >
-                  <p>이 운동을 다시 진행하시겠습니까?</p>
-                  <form method="dialog">
-                    <button>취소하기</button>
-                  </form>
-                  <form
-                    action="{% url 'frontend:routineingpage' %}"
-                    method="post"
-                  >
-                    {% csrf_token %}
-                    <input name="exercise_routine" type="hidden" value="{{ scrapped_exercise_routine.exercise_routine|safe }}" />
-                    <button type="submit">운동하기</button>
-                  </form>
+                  <div class="modal_box">
+                    <div class="modal_content">
+                      <img id="modalImage" class="modal_image" src="{% static 'assets/img/modal_star.png' %}" alt="모달 아이콘" />
+                      <h3 id="modalTitle" class="modal_title">이 운동을 시작하시겠습니까?</h3>
+                      <div class="modal_buttons">
+                        <form method="dialog" class="modal_button left_btn">
+                          <button class="modal_button left_btn">취소하기</button>
+                        </form>
+                        <form
+                          action="{% url 'frontend:routineingpage' %}"
+                          method="post"
+                          class="modal_button right_btn"
+                        >
+                          {% csrf_token %}
+                          <input name="exercise_routine" type="hidden" value="{{ scrapped_exercise_routine.exercise_routine|safe }}" />
+                          <button type="submit"class="modal_button right_btn">운동하기</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
                 </dialog>
               </li>
             {% empty %}
@@ -164,5 +195,17 @@
       </section>
     </main>
   </body>
-  {% include "../components/modal_component.html" %}
+<div id="commonModal" style="display: none;">
+  <div class="modal_box">
+    <div class="modal_content">
+      <img id="modalImage" class="modal_image" src="" alt="모달 아이콘" />
+      <h3 id="modalTitle" class="modal_title">기본 타이틀</h3>
+      <p id="modalSubText" class="modal_subtext" style="display: none;">작은 설명입니다.</p>
+    </div>
+    <div class="modal_buttons">
+      <button class="modal_button left_btn" onclick="closeModal()">아니오</button>
+      <button class="modal_button right_btn">예</button>
+    </div>
+  </div>
+</div>
 {% endblock body %}

@@ -61,6 +61,9 @@
 .purpose.selected {
   background-color: #EAE3FF;
 }
+.purpose input[type="checkbox"] {
+  display: none;
+}
 
 .before_page{
     position: absolute;
@@ -111,4 +114,10 @@
 
 .shake {
   animation: shake 0.4s;
+}
+
+.submit-button{
+    background-color: transparent;
+    border: none;
+    cursor:pointer;
 }

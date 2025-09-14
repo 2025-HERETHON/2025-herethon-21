@@ -7,206 +7,311 @@
 <link rel="stylesheet" href="{% static 'styles/component_styles/routine_list_component.css' %}" />
 <link rel="stylesheet" href="{% static 'styles/page_styles/cycle.css' %}" />
 <link rel="stylesheet" href="{% static 'styles/page_styles/page_common.css' %}" />
+
 {% endblock style %}
 
 {% block script %}
 <script src="{% static 'functions/component_functions/calendar_component.js' %}"></script>
-<script src="{% static 'functions/page_functions/cycle_page.js' %}"></script>
 {{ exercise_reviews|json_script:"exercise_reviews" }}
 {{ menstruation_cycle|json_script:"menstruation_cycle" }}
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const exercise_reviews = JSON.parse(document.getElementById('exercise_reviews').textContent);
-    const menstruation_cycle = JSON.parse(document.getElementById('menstruation_cycle').textContent);
-    callFullCalendar(exercise_reviews, menstruation_cycle);
-  });
+    document.addEventListener('DOMContentLoaded', function() {
+        const exercise_reviews = JSON.parse(document.getElementById('exercise_reviews').textContent);
+        const menstruation_cycle = JSON.parse(document.getElementById('menstruation_cycle').textContent);
+        callFullCalendar(exercise_reviews, menstruation_cycle);
+    });
 </script>
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
     const routineItems = document.querySelectorAll(".routine_item");
     const prevBtn = document.getElementById("list_prev");
     const nextBtn = document.getElementById("list_next");
+    const radioInputs = document.querySelectorAll('input[name="exercise_routine"]');
     let currentIndex = 0;
 
     function updateRoutineDisplay() {
-      routineItems.forEach((item, index) => {
-        item.style.display = index === currentIndex ? "block" : "none";
-      });
+        routineItems.forEach((item, index) => {
+            item.style.display = index === currentIndex ? "block" : "none";
+            if (index === currentIndex) {
+                radioInputs[index].checked = true;
+            }
+        });
     }
 
     prevBtn.addEventListener("click", () => {
-      currentIndex = (currentIndex - 1 + routineItems.length) % routineItems.length;
-      updateRoutineDisplay();
+        currentIndex = (currentIndex - 1 + routineItems.length) % routineItems.length;
+        updateRoutineDisplay();
     });
 
     nextBtn.addEventListener("click", () => {
-      currentIndex = (currentIndex + 1) % routineItems.length;
-      updateRoutineDisplay();
+        currentIndex = (currentIndex + 1) % routineItems.length;
+        updateRoutineDisplay();
+    });
+
+    routineItems.forEach((item, index) => {
+        item.addEventListener("click", () => {
+            radioInputs[index].checked = true;
+        });
     });
 
     updateRoutineDisplay();
-  });
+
+    // --- 슬라이더 관련 ---
+    const slider = document.getElementById("customSlider");
+    const fill = document.getElementById("fillTrack");
+    const label = document.getElementById("timeLabel");
+    const form = document.getElementById("sliderForm");
+    const hiddenInput = document.getElementById("durationHHMMSS");
+
+    // 실제 시간 배열
+const timeValues = [0, 10, 20, 40, 60]; 
+
+// 초기값 세팅
+let initialIndex = 2;
+const urlParams = new URLSearchParams(window.location.search);
+const durationHHMMSS = urlParams.get("exercise_routine_duration");
+if (durationHHMMSS) {
+    const parts = durationHHMMSS.split(":");
+    if (parts.length === 3) {
+        const minutes = parseInt(parts[1]);
+        initialIndex = timeValues.indexOf(minutes);
+        if (initialIndex === -1) initialIndex = 1;
+    }
+}
+slider.value = initialIndex;
+hiddenInput.value = formatHHMMSS(timeValues[initialIndex]);
+
+function formatHHMMSS(minutes) {
+    const h = String(Math.floor(minutes / 60)).padStart(2,'0');
+    const m = String(minutes % 60).padStart(2,'0');
+    const s = '00';
+    return `${h}:${m}:${s}`;
+}
+function updateSliderUI() {
+    const index = parseInt(slider.value);
+    const value = timeValues[index];
+    const maxIndex = timeValues.length - 1;
+    const percent = index / maxIndex;
+
+    // fill 너비
+    let fillPercent = percent * 90;
+    let thumbOffset = percent * 100;
+
+    if(value === 60){
+        fillPercent += 10;
+    }
+
+    fill.style.width = fillPercent + "%";
+    slider.style.setProperty('--thumb-left', thumbOffset + '%');
+
+    // label 처리
+    if(value === 0){
+        label.style.display = "none";
+    } else {
+        label.textContent = value + "m";
+        label.style.display = "block";
+
+        const sliderRect = slider.getBoundingClientRect();
+        const labelOffset = sliderRect.width * percent - label.offsetWidth / 2;
+        label.style.left = labelOffset/2 - 20 + "px";
+    }
+}
+
+
+
+updateSliderUI();
+
+slider.addEventListener("input", updateSliderUI);
+slider.addEventListener("change", () => {
+    const index = parseInt(slider.value);
+    const minutes = timeValues[index];
+
+    // 0분이면 submit 막기
+    if (minutes === 0) {
+        slider.value = 2;
+        updateSliderUI();
+        return;
+    }
+    hiddenInput.value = formatHHMMSS(timeValues[index]);
+    form.submit();
+});
+
+
+    slider.addEventListener("mousedown", () => slider.classList.add("user-interacted"));
+    slider.addEventListener("touchstart", () => slider.classList.add("user-interacted"));
+
+    // --- 스크랩 버튼 ---
+    document.querySelectorAll(".scrapbtn_wrapper .scrap-checkbox").forEach(checkbox => {
+    const img = checkbox.nextElementSibling.querySelector("img");
+    checkbox.addEventListener("change", () => {
+        img.src = checkbox.checked ? img.dataset.scraped : img.dataset.default;
+    });
+
+});
+});
 </script>
+
 {% endblock script %}
 
 {% block body %}
 <body>
-  {% block header %}
-  {% include "../components/header_component.html" %}
-  {% endblock header %}
-  <main class="main_layout">
-    <section class="content_area">
-      <section class="star_background">
-        <span class="star star5"></span>
-        <span class="star star6"></span>
-        <span class="star star7"></span>
-        <span class="star star8"></span>
-        <span class="star star9"></span>
-        <span class="star star10"></span>
-        <span class="star star11"></span>
-        <span class="star star12"></span>
-        <span class="star star13"></span>
-        <span class="star star14"></span>
-        <span class="star star15"></span>
-        <span class="star star16"></span>
-      </section>
-      <section class="content_left">
-        {% block infobox %}
-          {% include "../components/infobox_component.html" %}
-        {% endblock infobox %}
-        <div class="calendar_wrapper">
-          {% block calendar %}
-            {% include "../components/calendar_component.html" %}
-          {% endblock calendar %}
-        </div>
-        {% block friendbox %}
-          {% include "../components/friendbox_component.html" %}
-        {% endblock friendbox %}
-      </section>
-      <nav class="sidebar_nav" aria-label="페이지 네비게이션">
-        <a href="/cyclepage" class="nav_button nav_button1">운 동</a>
-        <a href="/scrappage" class="nav_button nav_button2">스 크 랩</a>
-        <a href="/periodpage" class="nav_button nav_button3">월 경</a>
-      </nav>
-      <section class="content_right">
-        <!-- 오른쪽 컨텐츠 영역 -->
-        <div class="text_box">
-          <div class="text_image_wrapper">
-            <span class="text_1">오늘의 주기는 </span>
-            <span class="text_2">{{today_phase}} </span>
-            <span class="text_3">입니다</span>
-            <img
-              class="cycle_logo"
-              src="
-                {% if today_phase == '월경기' %}
-                  {% static 'assets/img/sad_pipi.png' %}
-                {% elif today_phase == '난포기' %}
-                  {% static 'assets/img/happy_pipi.png' %}
-                {% elif today_phase == '배란기' %}
-                  {% static 'assets/img/happy_pipi.png' %}
-                {% elif today_phase == '황체기' %}
-                  {% static 'assets/img/sad_pipi.png' %}
-                {% else %}
-                  {% static 'assets/img/cycle_logo.png' %}
-                {% endif %}
-              "
-              alt="로고"
-            />
-          </div>
-        </div>
-        <div class="toggle_box">
-          <div class="toggle_text_wrapper">
-            <h2 class="main_text">AI 운동 루틴 추천</h2>
-            <label class="switch">
-              <input type="checkbox" id="toggleSwitch" checked />
-              <span class="slider">
-                <a
-                  class="toggle_text on_text"
-                  href="/restpage"
-                >
-                  운동
-                </a>
-              </span>
-            </label>
-          </div>
-          <div class="slider-container">
-            <div class="slider-track">
-              <div class="slider-fill" id="fillTrack"></div>
-              <div class="slider-time" id="timeLabel">0m</div>
-            </div>
-            <input type="range" min="0" max="4" step="1" value="0" id="customSlider" />
-          </div>
-          <form
-            action="{% url 'frontend:routineingpage' %}"
-            method="post"
-          >
-          <div class="routine_hugger">
-            <div id="list_prev">
-              <img src="{% static 'assets/img/left.png' %}" alt="왼쪽" />
-            </div>
-            <div class="per_routine_list">
-                {% csrf_token %}
-                {% for ai_exercise_routine in ai_exercise_routines %}
-                  <label>
-                    <div class="routine_item" data-index="{{ forloop.counter0 }}" {% if not forloop.first %}style="display:none;"{% endif %}>
-                      <div class="bighugger" id="border">
-                        <form
-                          class="scrapbtn"
-                          action="{% url 'exercises:scrapped_exercise_routine_create' %}"
-                          method="post"
-                        >
-                          {% csrf_token %}
-                          <input name="exercise_routine" type="hidden" value="{{ ai_exercise_routine|safe }}" />
-                          <button type="submit">
-                            <img
-                              id="scrapicon"
-                              src="{% static 'assets/img/scrap.png' %}"
-                              alt="스크랩 아이콘"
-                              data-default="{% static 'assets/img/scrap.png' %}"
-                              data-scraped="{% static 'assets/img/scrap_scrapped.png' %}"
-                            />
-                          </button>
-                        </form>
-                        <table class="table_centerer">
-                          {% for item in ai_exercise_routine %}
-                            <tr>
-                              <th>{{item.order}}</th>
-                              <td>
-                                <div class="fitness_img">
-                                  <img
-                                    style="width: 100%; height: 100%;"
-                                    src="{{item.exercise.image1}}"
-                                    alt="{{item.exercise.name}}"
-                                  />
-                                </div>
-                              </td>
-                              <td>{{item.exercise.name}}</td>
-                              <td>{{item.exercise.duration}}</td>
-                              <td>{{item.exercise.category}}</td>
-                            </tr>
-                          {% endfor %}
-                        </table>
-                      </div>
+    {% block header %}
+    {% include "../components/header_component.html" %}
+    {% endblock header %}
+    <main class="main_layout">
+        <section class="content_area">
+            <section class="star_background">
+                <span class="star star5"></span>
+                <span class="star star6"></span>
+                <span class="star star7"></span>
+                <span class="star star8"></span>
+                <span class="star star9"></span>
+                <span class="star star10"></span>
+                <span class="star star11"></span>
+                <span class="star star12"></span>
+                <span class="star star13"></span>
+                <span class="star star14"></span>
+                <span class="star star15"></span>
+                <span class="star star16"></span>
+            </section>
+            <section class="content_left">
+                {% block infobox %}
+                {% include "../components/infobox_component.html" %}
+                {% endblock infobox %}
+                <div class="calendar_wrapper">
+                    {% block calendar %}
+                    {% include "../components/calendar_component.html" %}
+                    {% endblock calendar %}
+                </div>
+                {% block friendbox %}
+                {% include "../components/friendbox_component.html" %}
+                {% endblock friendbox %}
+            </section>
+            <nav class="sidebar_nav" aria-label="페이지 네비게이션">
+                <a href="/cyclepage" class="nav_button nav_button1">운 동</a>
+                <a href="/scrappage" class="nav_button nav_button2">스 크 랩</a>
+                <a href="/periodpage" class="nav_button nav_button3">월 경</a>
+            </nav>
+            <section class="content_right">
+                <div class="text_box">
+                    <div class="text_image_wrapper">
+                        <span class="text_1">오늘의 주기는 </span>
+                        <span class="text_2">{{today_phase}} </span>
+                        <span class="text_3">입니다</span>
+                        <img
+                            class="cycle_logo"
+                            src="
+                                {% if today_phase == '월경기' %}
+                                    {% static 'assets/img/sad_pipi.png' %}
+                                {% elif today_phase == '난포기' %}
+                                    {% static 'assets/img/happy_pipi.png' %}
+                                {% elif today_phase == '배란기' %}
+                                    {% static 'assets/img/happy_pipi.png' %}
+                                {% elif today_phase == '황체기' %}
+                                    {% static 'assets/img/sad_pipi.png' %}
+                                {% else %}
+                                    {% static 'assets/img/cycle_logo.png' %}
+                                {% endif %}
+                            "
+                            alt="로고"
+                        />
                     </div>
-                    <input
-                      style="display: none;"
-                      name="exercise_routine"
-                      type="radio"
-                      value="{{ ai_exercise_routine|safe }}"
-                    />
-                  </label>
-                {% endfor %}
                 </div>
-                <div id="list_next">
-                  <img src="{% static 'assets/img/right.png' %}" alt="오른쪽" />
+                <div class="toggle_box">
+                    <div class="toggle_text_wrapper">
+                        <h2 class="main_text">AI 운동 루틴 추천</h2>
+                        <label class="switch">
+                            <input type="checkbox" id="toggleSwitch" checked />
+                            <span class="slider">
+                                <a
+                                    class="toggle_text on_text"
+                                    href="/restpage"
+                                >
+                                    운동
+                                </a>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="slider-container">
+                        <div class="slider-track">
+                            <div class="slider-fill" id="fillTrack"></div>
+                            <div class="slider-time" id="timeLabel">0m</div>
+                        </div>
+                        <form id="sliderForm" method="get" action="{% url 'frontend:cyclepage' %}">
+                            <input type="range" min="0" max="4" step="1" value="0" id="customSlider" />
+                            <input type="hidden" name="exercise_routine_duration" id="durationHHMMSS" value="00:20:00" />
+
+                        </form>
+                    </div>
+                    <form action="{% url 'frontend:routineingpage' %}" method="post">
+                        {% csrf_token %}
+                        <div class="routine_hugger">
+                            <div id="list_prev">
+                                <img src="{% static 'assets/img/left.png' %}" alt="왼쪽" />
+                            </div>
+                            <div class="per_routine_list">
+                                {% for ai_exercise_routine in ai_exercise_routines %}
+                                    <div class="routine_item" data-index="{{ forloop.counter0 }}" {% if not forloop.first %}style="display:none;"{% endif %}>
+                                        <div class="bighugger" id="border">
+                                            <div class="scrapbtn_wrapper">
+                                                <input type="checkbox" 
+                                                    class="scrap-checkbox" 
+                                                    id="scrap_{{ forloop.counter0 }}" 
+                                                    name="scrap_{{ forloop.counter0 }}" 
+                                                    value="{{ ai_exercise_routine|safe }}"
+                                                    {% if is_scraped %}checked{% endif %}
+                                                    onclick="
+                                                        const url = new URL(window.location);
+                                                        url.searchParams.set('scrap_index', '{{ forloop.counter0 }}');
+                                                        url.searchParams.set('scrap_value', this.checked ? 1 : 0);
+                                                        window.location.href = url.toString();
+                                                    " />
+                                                <label for="scrap_{{ forloop.counter0 }}">
+                                                    <img src="{% static 'assets/img/scrap.png' %}" 
+                                                        alt="스크랩 아이콘" 
+                                                        data-default="{% static 'assets/img/scrap.png' %}"
+                                                        data-scraped="{% static 'assets/img/scrap_scrapped.png' %}">
+                                                </label>
+                                            </div>
+                                            <table class="table_centerer">
+                                                {% for item in ai_exercise_routine %}
+                                                <tr>
+                                                    <th>{{item.order}}</th>
+                                                    <td>
+                                                        <div class="fitness_img">
+                                                            <img
+                                                                style="width: 100%;"
+                                                                src="{{item.exercise.image1}}"
+                                                                alt="{{item.exercise.name}}"
+                                                            />
+                                                        </div>
+                                                    </td>
+                                                    <td>{{item.exercise.name}}</td>
+                                                    <td>{{item.exercise.duration}}</td>
+                                                    <td>{{item.exercise.category}}</td>
+                                                </tr>
+                                                {% endfor %}
+                                            </table>
+                                        </div>
+                                        <input
+                                            style="display: none;"
+                                            name="exercise_routine"
+                                            type="radio"
+                                            value="{{ ai_exercise_routine|safe }}"
+                                        />
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <div id="list_next">
+                                <img src="{% static 'assets/img/right.png' %}" alt="오른쪽" />
+                            </div>
+                        </div>
+                        <button type="submit" id="start_btn">운동 시작하기</button>
+                    </form>
                 </div>
-                <button type="submit">운동 시작하기</button>
-              </form>
             </div>
-          </div>
-        </div>
-      </section>
-    </section>
-  </main>
+            </section>
+        </section>
+    </main>
 </body>
 {% endblock body %}
