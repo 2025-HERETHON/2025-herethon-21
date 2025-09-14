@@ -6,7 +6,7 @@ CustomUser = get_user_model()
 class CustomBaseUserCreationForm(BaseUserCreationForm):
     class Meta:
         model = CustomUser
-        fields = ("id","email",)
+        fields = ("email",)
 
 class CustomUserCreationForm(CustomBaseUserCreationForm):
     class Meta(CustomBaseUserCreationForm.Meta):
@@ -15,7 +15,7 @@ class CustomUserCreationForm(CustomBaseUserCreationForm):
 class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = CustomUser
-        fields = "__all__"
+        exclude = ("id",)
 
 class CustomAdminUserCreationForm(SetUnusablePasswordMixin, CustomBaseUserCreationForm):
     usable_password = SetUnusablePasswordMixin.create_usable_password_field()
