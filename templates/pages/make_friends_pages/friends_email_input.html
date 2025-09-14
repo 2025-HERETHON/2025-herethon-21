@@ -16,7 +16,39 @@
 
 
 {% block script %}
-<script src="{% static 'functions/page_functions/make_friends_pages/friends_email_input.js' %}"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const emailInput = document.getElementById("email");
+  const submitBtn = document.getElementById("friend_submitbtn");
+
+  function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+
+  function checkInputs() {
+    const email = emailInput.value.trim();
+
+    if (email.length === 0) {
+      emailInput.style.border = "2px solid white";
+    } else if (!isValidEmail(email)) {
+      emailInput.style.border = "2px solid rgb(240, 102, 125)";
+    } else {
+      emailInput.style.border = "2px solid rgb(131, 218, 129)";
+    }
+
+    submitBtn.disabled = !isValidEmail(email);
+    submitBtn.style.backgroundColor = isValidEmail(email) ? "rgb(174, 129, 218)" : "white";
+    submitBtn.style.color = isValidEmail(email) ? "white" : "#A48BE7";
+  }
+
+  emailInput.addEventListener("input", checkInputs);
+
+  // 초기 상태 반영
+  checkInputs();
+});
+</script>
+
 {% endblock script %}
 
 
@@ -47,7 +79,7 @@
       </section>
 
     <nav class="sidebar_nav" aria-label="페이지 네비게이션">
-        <p class="nav_button nav_button1">알 림</p>   
+        <p class="nav_button nav_button1"></p>   
         <div class="nav_line"></div>
         <div class="nav_line"></div>
         </nav>
@@ -64,10 +96,10 @@
         <form method="post" action="{% url 'friends:create_send_friends' %}" id="friendForm">
             {% csrf_token %}
             <label for="email">이메일</label><br />
-            <input type="text" id="email" name="email" placeholder="예&#41; Fitforme@example.com" />
-        </div>
-        <button type="submit" id="friend_submitbtn">친구 추가</button>
+            <input type="text" id="email" name="email" placeholder="예) Fitforme@example.com" />
+            <button type="submit" id="friend_submitbtn">친구 추가</button>
         </form>
+
       </div>
         </section>
     </section>

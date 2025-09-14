@@ -10,7 +10,6 @@
 {% endblock style %}
 
 {% block script %}
-<script src="{% static 'functions/page_functions/alarm_page.js' %}"></script>
 {% endblock script %}
 
 {% block body %}
@@ -26,6 +25,7 @@
       </a>
     </section>
   </header>
+
   <main class="main_layout">
     <section class="content_area">
       <section class="content_left">
@@ -34,11 +34,13 @@
           <p class="pipi_says">어떤 알림이 왔는지 확인해 볼까요? 피피</p>
         </div>
       </section>
+
       <nav class="sidebar_nav" aria-label="페이지 네비게이션">
         <p class="nav_button nav_button1">알 림</p>
         <div class="nav_line"></div>
         <div class="nav_line"></div>
       </nav>
+
       <section class="content_right">
         <section class="star_background">
           <span class="star star5"></span>
@@ -53,61 +55,49 @@
           <span class="star star15"></span>
           <span class="star star16"></span>
         </section>
-        <!-- 오른쪽 컨텐츠 영역 -->
+
         <div class="alarmhugger">
           {% for notification in notification_list %}
-            {% if notification.category == 1 %} <!--상대가 나에게 친구 요청함-->
-              <div class="bubble left" id="bubbleA1">
-                <div class="timestamp">{{notification.created_at|timesince}} 전</div>
-                <div class="content_line">
-                  <div class="message_text">
-                    <span class="username">{{notification.sender__nickname}}</span>가 친구 요청을 보냈어요
-                  </div>
-                  <div class="btns">
-                    <button
-                      onclick="location.href=`{% url 'friends:create_accept_friend' username=notification.sender__username %}`"
-                    >
-                      수락
-                    </button>
-                    <button
-                      onclick="location.href=`{% url 'friends:create_reject_friend' username=notification.sender__username %}`"
-                    >
-                      거절
-                    </button>
-                  </div>
+            <div class="bubble left" id="bubble{{ forloop.counter }}">
+              <div class="timestamp">{{ notification.created_at|timesince }} 전</div>
+              <div class="content_line">
+                <div class="message_text">
+                  {% if notification.category == 1 %}
+                    {{ notification.sender__nickname }}가 친구 요청을 보냈어요
+                  {% elif notification.category == 2 %}
+                    {{ notification.sender__nickname }}가 내 친구 요청을 수락했어요
+                  {% elif notification.category == 3 %}
+                    {{ notification.sender__nickname }}가 내 친구 요청을 거절했어요
+                  {% elif notification.category == 4 %}
+                    {{ notification.sender__nickname }}가 내 운동 리뷰에 반응을 남겼어요
+                  {% elif notification.category == 5 %}
+                    {{ notification.sender__nickname }}가 운동을 재촉하며 콕 찔렀어요
+                  {% endif %}
                 </div>
+
+                {% if notification.category == 1 %}
+                  <div class="btns">
+                    <!-- 수락 폼 -->
+                    <form method="post" action="{% url 'friends:create_accept_friend' username=notification.sender__username %}">
+                      {% csrf_token %}
+                      <button type="submit">수락</button>
+                    </form>
+                    <!-- 거절 폼 -->
+                    <form method="post" action="{% url 'friends:create_reject_friend' username=notification.sender__username %}">
+                      {% csrf_token %}
+                      <button type="submit">거절</button>
+                    </form>
+                  </div>
+                {% endif %}
               </div>
-            {% endif %}
-            {% if notification.category == 2 %} <!--상대가 내 친구 요청을 수락함-->
-              <div class="bubble left">
-                <div class="timestamp">{{notification.created_at|timesince}} 전</div>
-                <div class="message_text">{{notification.sender__nickname}}가 내 친구 요청을 수락했어요</div>
-              </div>
-            {% endif %}
-            {% if notification.category == 3 %} <!--상대가 내 친구 요청을 거절함-->
-              <div class="bubble left">
-                <div class="timestamp">{{notification.created_at|timesince}} 전</div>
-                <div class="message_text">{{notification.sender__nickname}}가 내 친구 요청을 거절했어요</div>
-              </div>
-            {% endif %}
-            {% if notification.category == 4 %} <!--상대가 내 운동 리뷰에 반응함-->
-              <div class="bubble left">
-                <div class="timestamp">{{notification.created_at|timesince}} 전</div>
-                <div class="message_text">{{notification.sender__nickname}}가 내 운동 리뷰에 반응을 남겼어요</div>
-              </div>
-            {% endif %}
-            {% if notification.category == 5 %} <!--상대가 나를 콕 찌르기함-->
-              <div class="bubble left">
-                <div class="timestamp">{{notification.created_at|timesince}} 전</div>
-                <div class="message_text">{{notification.sender__nickname}}가 운동을 재촉하며 콕 찔렀어요</div>
-              </div>
-            {% endif %}
+            </div>
           {% empty %}
             <div class="pipi_null_img">
               <img src="{% static 'assets/img/mypage_icon.png' %}" alt="알림X피피이미지" />
             </div>
           {% endfor %}
         </div>
+
       </section>
     </section>
   </main>

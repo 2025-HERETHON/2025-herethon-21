@@ -13,7 +13,6 @@
 {% endblock style %}
 
 {% block script %}
-<script src="{% static 'functions/page_functions/make_friends_pages/friended.js' %}"></script>
 {% endblock script %}
 
 {% block body %}
@@ -81,7 +80,10 @@
       </div>
 
         </div>
-        <button type="submit" id="goto_main">운동 바로가기</button>
+
+        <form method="get" action="{% url 'frontend:cyclepage' %}">
+          <button type="submit" id="goto_main">운동 바로가기</button>
+        </form>
       </div>
     </section>
   </section>

@@ -9,7 +9,6 @@
 
 
 {% block script %}
-<script src="{% static 'functions/page_functions/onboarding_pages/onboarding_3.js' %}"></script>
 {% endblock script %}
 
 
@@ -56,7 +55,9 @@
         <!-- 오른쪽 컨텐츠 영역 -->
         <img src="{% static 'assets/img/happy_pipi_hugging.png' %}" alt="피피 웃는 얼굴" class="smile_pipi"/>
         <img src="{% static 'assets/img/logo.png' %}" alt="로고" class="logo_big"/>
-        <button type="submit" value="시작하기" id="done_submitbtn">시작하기</button>
+        <form method="get" action="{% url 'frontend:cyclepage' %}">
+          <button type="submit" value="시작하기" id="done_submitbtn">시작하기</button>
+        </form>
     </section>
     </section>
   </main>
