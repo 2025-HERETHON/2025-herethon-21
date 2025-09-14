@@ -73,8 +73,14 @@ const durationHHMMSS = urlParams.get("exercise_routine_duration");
 if (durationHHMMSS) {
     const parts = durationHHMMSS.split(":");
     if (parts.length === 3) {
+        const hours = parseInt(parts[0]);
         const minutes = parseInt(parts[1]);
-        initialIndex = timeValues.indexOf(minutes);
+        const totalMinutes = hours * 60 + minutes;
+        console.log("durationHHMMSS:", durationHHMMSS);
+        console.log("totalMinutes:", totalMinutes);
+        console.log("index:", timeValues.indexOf(totalMinutes));
+
+        initialIndex = timeValues.indexOf(totalMinutes);
         if (initialIndex === -1) initialIndex = 1;
     }
 }
