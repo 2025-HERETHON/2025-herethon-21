@@ -26,7 +26,7 @@ urlpatterns = [
     path("finishedroutine", finishedroutine, name="finishedroutine"),
 
     path("mypagemain", mypagemain, name="mypagemain"),
-    path("friendpage/<str:friend_username>", friendpage, name="friendpage"),
+    path("friendpage/<str:friend_id>", friendpage, name="friendpage"),
 
     path("makefriends", makefriends, name="makefriends"),
     path('friendsconfirm/<str:email>/', friendsconfirm, name='friendsconfirm'),

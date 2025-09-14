@@ -25,7 +25,7 @@
         method="post"
       >
         {% csrf_token %}
-        <input name="receiver" type="hidden" value="{{friend_username}}" />
+        <input name="receiver" type="hidden" value="{{friend_id}}" />
         <input name="category" type="hidden" value="5" />
         <button
           type="submit"

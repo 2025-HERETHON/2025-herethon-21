@@ -19,11 +19,11 @@ class NotificationService:
         return notifications
 
     @validate_auth
-    def get_is_prodded(self, friend_username):
+    def get_is_prodded(self, friend_id):
         is_prodded = Notification.objects.filter(
             created_at__date=timezone.now(),
             sender=self.request.user,
-            receiver__username=friend_username,
+            receiver__id=friend_id,
             category=NotificationCategoryType.PROD,
         ).exists()
         return is_prodded

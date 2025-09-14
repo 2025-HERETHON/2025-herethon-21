@@ -65,12 +65,12 @@
                   </div>
                   <div class="btns">
                     <button
-                      onclick="location.href=`{% url 'friends:create_accept_friend' username=notification.sender__username %}`"
+                      onclick="location.href=`{% url 'friends:create_accept_friend' id=notification.sender__id %}`"
                     >
                       수락
                     </button>
                     <button
-                      onclick="location.href=`{% url 'friends:create_reject_friend' username=notification.sender__username %}`"
+                      onclick="location.href=`{% url 'friends:create_reject_friend' id=notification.sender__id %}`"
                     >
                       거절
                     </button>

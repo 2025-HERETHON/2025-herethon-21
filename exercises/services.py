@@ -247,11 +247,11 @@ class ExerciseHistoryService:
         else:
             target_date = timezone.localdate()
 
-        friend_username = self.request.GET.get('friend_username')
-        username = friend_username or self.request.user.username
+        friend_id = self.request.GET.get('friend_id')
+        id = friend_id or self.request.user.id
 
         exercise_histories = ExerciseHistory.objects.filter(
-            user__username=username,
+            user__id=id,
             created_at__date=target_date,
         ).prefetch_related(
             'exercise_review__reactions',
@@ -328,11 +328,11 @@ class ExerciseReviewService:
             year = now.year
             month = now.month
 
-        friend_username = self.request.GET.get('friend_username')
-        username = friend_username or self.request.user.username
+        friend_id = self.request.GET.get('friend_id')
+        id = friend_id or self.request.user.id
 
         exercise_reviews = ExerciseReview.objects.filter(
-            exercise_history__user__username=username,
+            exercise_history__user__id=id,
             exercise_history__created_at__year=year,
             exercise_history__created_at__month=month,
         ).order_by('exercise_history__created_at')
