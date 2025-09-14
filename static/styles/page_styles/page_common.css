@@ -1,3 +1,11 @@
+
+button {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer; /* 선택 시 손 모양으로 */
+}
+
 .sidebar_nav {
   width: 6vw;
   min-width: 50px;

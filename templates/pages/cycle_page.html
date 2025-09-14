@@ -10,17 +10,7 @@
 {% endblock style %}
 
 {% block script %}
-<script src="{% static 'functions/component_functions/calendar_component.js' %}"></script>
-<script src="{% static 'functions/page_functions/cycle_page.js' %}"></script>
-{{ exercise_reviews|json_script:"exercise_reviews" }}
-{{ menstruation_cycle|json_script:"menstruation_cycle" }}
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const exercise_reviews = JSON.parse(document.getElementById('exercise_reviews').textContent);
-    const menstruation_cycle = JSON.parse(document.getElementById('menstruation_cycle').textContent);
-    callFullCalendar(exercise_reviews, menstruation_cycle);
-  });
-</script>
+
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const routineItems = document.querySelectorAll(".routine_item");
@@ -54,9 +44,11 @@
   {% block header %}
   {% include "../components/header_component.html" %}
   {% endblock header %}
+  
   <main class="main_layout">
     <section class="content_area">
-      <section class="star_background">
+      <!-- 배경 데코레이션 영역 -->
+      <section class="star_background" aria-hidden="true">
         <span class="star star5"></span>
         <span class="star star6"></span>
         <span class="star star7"></span>
@@ -70,31 +62,40 @@
         <span class="star star15"></span>
         <span class="star star16"></span>
       </section>
-      <section class="content_left">
+      
+      <!-- 좌측 사이드바 -->
+      <aside class="content_left">
         {% block infobox %}
           {% include "../components/infobox_component.html" %}
         {% endblock infobox %}
-        <div class="calendar_wrapper">
+        
+        <section class="calendar_wrapper">
           {% block calendar %}
             {% include "../components/calendar_component.html" %}
           {% endblock calendar %}
-        </div>
+        </section>
+        
         {% block friendbox %}
           {% include "../components/friendbox_component.html" %}
         {% endblock friendbox %}
-      </section>
+      </aside>
+      
+      <!-- 페이지 네비게이션 -->
       <nav class="sidebar_nav" aria-label="페이지 네비게이션">
         <a href="/cyclepage" class="nav_button nav_button1">운 동</a>
         <a href="/scrappage" class="nav_button nav_button2">스 크 랩</a>
         <a href="/periodpage" class="nav_button nav_button3">월 경</a>
       </nav>
+      
+      <!-- 메인 컨텐츠 영역 -->
       <section class="content_right">
-        <!-- 오른쪽 컨텐츠 영역 -->
-        <div class="text_box">
-          <div class="text_image_wrapper">
-            <span class="text_1">오늘의 주기는 </span>
-            <span class="text_2">{{today_phase}} </span>
-            <span class="text_3">입니다</span>
+        <header class="text_box">
+          <section class="text_image_wrapper">
+            <h1>
+              <span class="text_1">오늘의 주기는 </span>
+              <span class="text_2">{{today_phase}} </span>
+              <span class="text_3">입니다</span>
+            </h1>
             <img
               class="cycle_logo"
               src="
@@ -110,54 +111,70 @@
                   {% static 'assets/img/cycle_logo.png' %}
                 {% endif %}
               "
-              alt="로고"
+              alt="{{today_phase}} 상태 표시 캐릭터"
             />
-          </div>
-        </div>
-        <div class="toggle_box">
-          <div class="toggle_text_wrapper">
+          </section>
+        </header>
+        
+        <!-- AI 운동 루틴 추천 섹션 -->
+        <section class="toggle_box">
+          <header class="toggle_text_wrapper">
             <h2 class="main_text">AI 운동 루틴 추천</h2>
             <label class="switch">
               <input type="checkbox" id="toggleSwitch" checked />
               <span class="slider">
-                <a
-                  class="toggle_text on_text"
-                  href="/restpage"
-                >
-                  운동
-                </a>
+                <a class="toggle_text on_text" href="/restpage">운동</a>
               </span>
             </label>
-          </div>
-          <div class="slider-container">
-            <div class="slider-track">
-              <div class="slider-fill" id="fillTrack"></div>
-              <div class="slider-time" id="timeLabel">0m</div>
-            </div>
-            <input type="range" min="0" max="4" step="1" value="0" id="customSlider" />
-          </div>
-          <form
-            action="{% url 'frontend:routineingpage' %}"
-            method="post"
-          >
-          <div class="routine_hugger">
-            <div id="list_prev">
-              <img src="{% static 'assets/img/left.png' %}" alt="왼쪽" />
-            </div>
-            <div class="per_routine_list">
+          </header>
+          
+          <!-- 운동 시간 조절 컨트롤 -->
+          <section class="slider-container">
+            <section class="slider-track">
+              <section class="slider-fill" id="fillTrack"></section>
+              <section class="slider-time" id="timeLabel">0m</section>
+            </section>
+            <input 
+              type="range" 
+              min="0" 
+              max="4" 
+              step="1" 
+              value="0" 
+              id="customSlider" 
+              aria-label="운동 시간 조절"
+            />
+          </section>
+          
+          <!-- 운동 루틴 선택 폼 -->
+          <form action="{% url 'frontend:routineingpage' %}" method="post">
+            <section class="routine_hugger">
+              <button type="button" id="list_prev" aria-label="이전 루틴">
+                <img src="{% static 'assets/img/left.png' %}" alt="" />
+              </button>
+              
+              <section class="per_routine_list">
                 {% csrf_token %}
                 {% for ai_exercise_routine in ai_exercise_routines %}
                   <label>
-                    <div class="routine_item" data-index="{{ forloop.counter0 }}" {% if not forloop.first %}style="display:none;"{% endif %}>
-                      <div class="bighugger" id="border">
+                    <article 
+                      class="routine_item" 
+                      data-index="{{ forloop.counter0 }}" 
+                      {% if not forloop.first %}style="display:none;"{% endif %}
+                    >
+                      <section class="bighugger" id="border">
+                        <!-- 스크랩 버튼 폼 -->
                         <form
                           class="scrapbtn"
                           action="{% url 'exercises:scrapped_exercise_routine_create' %}"
                           method="post"
                         >
                           {% csrf_token %}
-                          <input name="exercise_routine" type="hidden" value="{{ ai_exercise_routine|safe }}" />
-                          <button type="submit">
+                          <input 
+                            name="exercise_routine" 
+                            type="hidden" 
+                            value="{{ ai_exercise_routine|safe }}" 
+                          />
+                          <button type="submit" aria-label="루틴 스크랩하기">
                             <img
                               id="scrapicon"
                               src="{% static 'assets/img/scrap.png' %}"
@@ -167,27 +184,41 @@
                             />
                           </button>
                         </form>
+                        
+                        <!-- 운동 루틴 테이블 -->
                         <table class="table_centerer">
-                          {% for item in ai_exercise_routine %}
+                          <thead>
                             <tr>
-                              <th>{{item.order}}</th>
-                              <td>
-                                <div class="fitness_img">
-                                  <img
-                                    style="width: 100%; height: 100%;"
-                                    src="{{item.exercise.image1}}"
-                                    alt="{{item.exercise.name}}"
-                                  />
-                                </div>
-                              </td>
-                              <td>{{item.exercise.name}}</td>
-                              <td>{{item.exercise.duration}}</td>
-                              <td>{{item.exercise.category}}</td>
+                              <th scope="col">순서</th>
+                              <th scope="col">이미지</th>
+                              <th scope="col">운동명</th>
+                              <th scope="col">시간</th>
+                              <th scope="col">카테고리</th>
                             </tr>
-                          {% endfor %}
+                          </thead>
+                          <tbody>
+                            {% for item in ai_exercise_routine %}
+                              <tr>
+                                <th scope="row">{{item.order}}</th>
+                                <td>
+                                  <figure class="fitness_img">
+                                    <img
+                                      style="width: 100%; height: 100%;"
+                                      src="{{item.exercise.image1}}"
+                                      alt="{{item.exercise.name}} 운동 이미지"
+                                    />
+                                  </figure>
+                                </td>
+                                <td>{{item.exercise.name}}</td>
+                                <td>{{item.exercise.duration}}</td>
+                                <td>{{item.exercise.category}}</td>
+                              </tr>
+                            {% endfor %}
+                          </tbody>
                         </table>
-                      </div>
-                    </div>
+                      </section>
+                    </article>
+                    
                     <input
                       style="display: none;"
                       name="exercise_routine"
@@ -196,15 +227,16 @@
                     />
                   </label>
                 {% endfor %}
-                </div>
-                <div id="list_next">
-                  <img src="{% static 'assets/img/right.png' %}" alt="오른쪽" />
-                </div>
-                <button type="submit">운동 시작하기</button>
-              </form>
-            </div>
-          </div>
-        </div>
+              </section>
+              
+              <button type="button" id="list_next" aria-label="다음 루틴">
+                <img src="{% static 'assets/img/right.png' %}" alt="" />
+              </button>
+              
+              <button type="submit">운동 시작하기</button>
+            </section>
+          </form>
+        </section>
       </section>
     </section>
   </main>
