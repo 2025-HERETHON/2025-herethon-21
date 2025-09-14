@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from utils.choices import FriendStatusType
 from django.db.models import Q
 from .models import Friend
-from accounts.models import CustomUser
 from .services import FriendService
 from notifications.services import NotificationService
 from django.contrib import messages
@@ -11,7 +11,7 @@ from utils.json_handlers import JSONIntChoicesListHandler
 from utils.choices import ExerciseGoalType, NotificationCategoryType
 from django.urls import reverse
 
-
+CustomUser = get_user_model()
 
 @login_required
 def read_friends_list(request):

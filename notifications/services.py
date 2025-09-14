@@ -2,7 +2,6 @@ from django.http import HttpRequest
 from django.utils import timezone
 from utils.choices import NotificationCategoryType
 from utils.validators import validate_auth, validate_not_self
-from accounts.models import CustomUser
 from .models import Notification
 
 class NotificationService:
@@ -30,7 +29,7 @@ class NotificationService:
 
     @validate_not_self
     @validate_auth
-    def post(self, sender:CustomUser, receiver:CustomUser, category:NotificationCategoryType):
+    def post(self, sender, receiver, category:NotificationCategoryType):
         Notification.objects.create(
             sender=sender,
             receiver=receiver,

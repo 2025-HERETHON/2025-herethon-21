@@ -1,5 +1,6 @@
 from ast import literal_eval
 from datetime import date, timedelta
+from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from django.http import HttpRequest
 from django.shortcuts import render, redirect, get_object_or_404
@@ -9,11 +10,12 @@ from django.utils.dateparse import parse_duration
 from utils.constants import CACHE_KEY
 from utils.choices import ReactionEmojiType, ExerciseGoalType
 from utils.json_handlers import JSONIntChoicesListHandler
-from accounts.models import CustomUser
 from conditionreviews.models import ConditionReview
 from exercises.services import ExerciseAiService, ScrappedExerciseRoutineService, ExerciseHistoryService, ExerciseReviewService
 from menstruations.services import MenstruationService
 from notifications.services import NotificationService
+
+CustomUser = get_user_model()
 
 def routineingpage(request:HttpRequest):
     exercise_routine_str = request.POST.get('exercise_routine')

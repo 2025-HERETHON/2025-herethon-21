@@ -6,7 +6,6 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpRequest
 from django.views.decorators.http import require_POST
 from menstruations.services import MenstruationService
-from .models import CustomUser
 from .forms import CustomUserCreationForm
 from .services import UserService
 
@@ -33,7 +32,7 @@ def signup_onboarding2(request:HttpRequest):
 def signup_onboarding3_submit(request:HttpRequest):
     exercise_goal_str = request.POST.getlist('exercise_goal')
     exercise_goal = [int(x) for x in exercise_goal_str]
-    user:CustomUser = request.user
+    user = request.user
     user.exercise_goal_handler.set(exercise_goal)
     return redirect("frontend:cyclepage")
      

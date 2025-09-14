@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import BaseUserCreationForm, UserChangeForm, SetUnusablePasswordMixin
-from .models import CustomUser
-from django import forms
 from django.contrib.auth import get_user_model
+
+CustomUser = get_user_model()
 
 class CustomBaseUserCreationForm(BaseUserCreationForm):
     class Meta:
