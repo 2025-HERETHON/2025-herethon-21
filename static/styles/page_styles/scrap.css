@@ -72,9 +72,12 @@
   justify-content: center;
   align-items: center;
   margin:20px;
+  list-style-type: none;
+
 }
 .delete_btn{
   width:15px;
+  z-index: 10;
 }
 .scrapped_time{
   font-size: 17px;
@@ -199,4 +202,22 @@
 
 .perroutine {
   cursor: pointer; /* ✅ 클릭 가능한 느낌 추가 */
+}
+.dialog_modal{
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding:35vh 35vw;
+}
+.modal_buttons {
+  display: flex;
+  width: 100%;
+  height: 80px;
+}
+.modal_title{
+  margin-bottom:45px;
 }
