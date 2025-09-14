@@ -5,10 +5,10 @@ from django.core.cache import cache
 from django.http import HttpRequest
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-from django.utils.timezone import now as timezone_now
 from django.utils.dateparse import parse_duration
-from utils.constants import CACHE_KEY
+from django.utils.timezone import now as timezone_now
 from utils.choices import ReactionEmojiType, ExerciseGoalType
+from utils.constants import CACHE_KEY
 from utils.json_handlers import JSONIntChoicesListHandler
 from conditionreviews.models import ConditionReview
 from exercises.services import ExerciseAiService, ScrappedExerciseRoutineService, ExerciseHistoryService, ExerciseReviewService

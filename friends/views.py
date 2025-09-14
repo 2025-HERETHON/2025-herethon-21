@@ -1,15 +1,14 @@
-from django.shortcuts import render, redirect
+from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from utils.choices import FriendStatusType
 from django.db.models import Q
+from django.shortcuts import render, redirect
+from django.urls import reverse
+from utils.choices import ExerciseGoalType, FriendStatusType, NotificationCategoryType
+from utils.json_handlers import JSONIntChoicesListHandler
+from notifications.services import NotificationService
 from .models import Friend
 from .services import FriendService
-from notifications.services import NotificationService
-from django.contrib import messages
-from utils.json_handlers import JSONIntChoicesListHandler
-from utils.choices import ExerciseGoalType, NotificationCategoryType
-from django.urls import reverse
 
 CustomUser = get_user_model()
 
