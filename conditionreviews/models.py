@@ -1,6 +1,8 @@
 from django.db import models
-from accounts.models import CustomUser
+from django.contrib.auth import get_user_model
 from utils.choices import ReactionEmojiType
+
+CustomUser = get_user_model()
 
 class ConditionReview(models.Model):
     created_at = models.DateTimeField(

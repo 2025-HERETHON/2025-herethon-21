@@ -1,7 +1,9 @@
+from django.contrib.auth import get_user_model
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from utils.choices import ExerciseCategoryType, ReactionEmojiType
-from accounts.models import CustomUser
+
+CustomUser = get_user_model()
 
 class Exercise(models.Model):
     name = models.CharField(

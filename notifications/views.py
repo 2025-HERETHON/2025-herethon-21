@@ -1,9 +1,11 @@
+from django.contrib.auth import get_user_model
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpRequest
 from django.views.decorators.http import require_GET, require_POST
 from utils.choices import NotificationCategoryType
-from accounts.models import CustomUser
 from .services import NotificationService
+
+CustomUser = get_user_model()
 
 @require_GET
 def test_read(request:HttpRequest, friend_id:str):
