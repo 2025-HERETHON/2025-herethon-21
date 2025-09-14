@@ -122,12 +122,15 @@
                   >
                     <img src="{% static 'assets/img/rewrite.png' %}" alt="수정" />
                   </button>
-                <form action="{% url 'menstruations:delete' pk=menstruation.id %}" method="post">
-                  {% csrf_token %}
-                  <button class="icon_btn delete_btn" data-index="{{ forloop.counter0 }}" type="submit">
-                    <img src="{% static 'assets/img/trashcan.png' %}" alt="삭제" />
-                  </button>
-                </form>
+                {% if menstruations|length > 1 %}
+<form action="{% url 'menstruations:delete' pk=menstruation.id %}" method="post">
+  {% csrf_token %}
+  <button class="icon_btn delete_btn" data-index="{{ forloop.counter0 }}" type="submit">
+    <img src="{% static 'assets/img/trashcan.png' %}" alt="삭제" />
+  </button>
+</form>
+{% endif %}
+
               </div>
               </div>
               <form class="hidden" action="{% url 'menstruations:update' pk=menstruation.id %}" method="post">
