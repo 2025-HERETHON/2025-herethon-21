@@ -87,33 +87,36 @@ function formatHHMMSS(minutes) {
     const s = '00';
     return `${h}:${m}:${s}`;
 }
-
 function updateSliderUI() {
     const index = parseInt(slider.value);
     const value = timeValues[index];
-        const maxIndex = timeValues.length - 1;
-        const percent = index / maxIndex;
+    const maxIndex = timeValues.length - 1;
+    const percent = index / maxIndex;
 
-        // fillTrack width
-        fill.style.width = (percent * 90) + "%";
+    // fill 너비
+    let fillPercent = percent * 90;
+    let thumbOffset = percent * 100;
 
-        // thumb 위치
-        slider.style.setProperty('--thumb-left', percent * 100 + '%');
+    if(value === 60){
+        fillPercent += 10;
+    }
 
+    fill.style.width = fillPercent + "%";
+    slider.style.setProperty('--thumb-left', thumbOffset + '%');
 
-    // 0분이면 숨기기, 아니면 표시
+    // label 처리
     if(value === 0){
         label.style.display = "none";
     } else {
         label.textContent = value + "m";
         label.style.display = "block";
 
-        // label 위치 (thumb 중앙)
         const sliderRect = slider.getBoundingClientRect();
         const labelOffset = sliderRect.width * percent - label.offsetWidth / 2;
         label.style.left = labelOffset/2 - 20 + "px";
     }
 }
+
 
 
 updateSliderUI();
