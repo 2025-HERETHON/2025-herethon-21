@@ -39,13 +39,13 @@ def cyclepage(request:HttpRequest):
     today_phase = menstruation_service.get_today_phase()
 
     ai_service = ExerciseAiService(request)
-    #ai_exercise_routines = ai_service.get()
+    ai_exercise_routines = ai_service.get()
 
     return render(request,"pages/cycle_page.html", {
         'exercise_reviews': exercise_reviews,
         'menstruation_cycle': menstruation_cycle,
         "today_phase": today_phase,
-        #'ai_exercise_routines': ai_exercise_routines,
+        'ai_exercise_routines': ai_exercise_routines,
     })
 
 def scrappage(request:HttpRequest):
