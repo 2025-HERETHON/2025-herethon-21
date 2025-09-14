@@ -64,10 +64,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const hiddenInput = document.getElementById("durationHHMMSS");
 
     // 실제 시간 배열
-const timeValues = [10, 20, 40, 60]; // 0분 제거
+const timeValues = [0, 10, 20, 40, 60]; 
 
 // 초기값 세팅
-let initialIndex = 1; // 기본 10분
+let initialIndex = 2;
 const urlParams = new URLSearchParams(window.location.search);
 const durationHHMMSS = urlParams.get("exercise_routine_duration");
 if (durationHHMMSS) {
@@ -91,36 +91,44 @@ function formatHHMMSS(minutes) {
 function updateSliderUI() {
     const index = parseInt(slider.value);
     const value = timeValues[index];
-    label.textContent = value + "m";
+        const maxIndex = timeValues.length - 1;
+        const percent = index / maxIndex;
 
-    const minOffset = 0.25; // 1/4 만큼 오른쪽 시작
-    const maxIndex = timeValues.length - 1;
+        // fillTrack width
+        fill.style.width = (percent * 90) + "%";
 
-    // fill 길이
-    const percent = minOffset*100 + (index / maxIndex) * (100 - minOffset*100);
-    fill.style.width = percent + "%";
+        // thumb 위치
+        slider.style.setProperty('--thumb-left', percent * 100 + '%');
 
-    // thumb 위치
-    const sliderWidth = slider.offsetWidth;
-    const thumbWidth = 55;
-    const availableWidth = sliderWidth - thumbWidth;
-    const thumbCenter = minOffset * availableWidth + (index / maxIndex)* (availableWidth * (1 - minOffset));
 
-    // label 위치
-    const trackExtraOffset = thumbWidth / 2;
-    const labelOffset = thumbCenter + trackExtraOffset - label.offsetWidth / 2;
-    label.style.left = `${labelOffset}px`;
-    label.style.display = "block";
+    // 0분이면 숨기기, 아니면 표시
+    if(value === 0){
+        label.style.display = "none";
+    } else {
+        label.textContent = value + "m";
+        label.style.display = "block";
 
-    // slider thumb 위치 보정
-    slider.style.setProperty('--thumb-left', `${thumbCenter}px`);
+        // label 위치 (thumb 중앙)
+        const sliderRect = slider.getBoundingClientRect();
+        const labelOffset = sliderRect.width * percent - label.offsetWidth / 2;
+        label.style.left = labelOffset/2 - 20 + "px";
+    }
 }
+
 
 updateSliderUI();
 
 slider.addEventListener("input", updateSliderUI);
 slider.addEventListener("change", () => {
     const index = parseInt(slider.value);
+    const minutes = timeValues[index];
+
+    // 0분이면 submit 막기
+    if (minutes === 0) {
+        slider.value = 2;
+        updateSliderUI();
+        return;
+    }
     hiddenInput.value = formatHHMMSS(timeValues[index]);
     form.submit();
 });
@@ -227,7 +235,7 @@ slider.addEventListener("change", () => {
                             <div class="slider-time" id="timeLabel">0m</div>
                         </div>
                         <form id="sliderForm" method="get" action="{% url 'frontend:cyclepage' %}">
-                            <input type="range" min="0" max="3" step="1" value="0" id="customSlider" />
+                            <input type="range" min="0" max="4" step="1" value="0" id="customSlider" />
                             <input type="hidden" name="exercise_routine_duration" id="durationHHMMSS" value="00:20:00" />
 
                         </form>
@@ -248,7 +256,13 @@ slider.addEventListener("change", () => {
                                                     id="scrap_{{ forloop.counter0 }}" 
                                                     name="scrap_{{ forloop.counter0 }}" 
                                                     value="{{ ai_exercise_routine|safe }}"
-                                                    {% if is_scraped %}checked{% endif %} />
+                                                    {% if is_scraped %}checked{% endif %}
+                                                    onclick="
+                                                        const url = new URL(window.location);
+                                                        url.searchParams.set('scrap_index', '{{ forloop.counter0 }}');
+                                                        url.searchParams.set('scrap_value', this.checked ? 1 : 0);
+                                                        window.location.href = url.toString();
+                                                    " />
                                                 <label for="scrap_{{ forloop.counter0 }}">
                                                     <img src="{% static 'assets/img/scrap.png' %}" 
                                                         alt="스크랩 아이콘" 

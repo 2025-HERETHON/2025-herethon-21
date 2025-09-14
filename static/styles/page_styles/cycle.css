@@ -191,7 +191,7 @@ input:not(:checked) + .slider .off_text {
   padding: 2px 8px;
   border-radius: 12px;
   font-size: 14px;
-  z-index: 4;
+  z-index: 2;
   display: none;
   white-space: nowrap;
 }
@@ -347,4 +347,12 @@ input.user-interacted::-moz-range-thumb {
 }
 .scrapbtn_wrapper input[type="checkbox"] {
   display: none;
+}
+#customSlider::-webkit-slider-thumb {
+    left: var(--thumb-left);
+    transform: translateX(-50%);
+}
+#customSlider::-moz-range-thumb {
+    left: var(--thumb-left);
+    transform: translateX(-50%);
 }
