@@ -61,7 +61,7 @@
           <img src="{{ receiver_user.profile_image.url }}" alt="프로필 사진" class="profile_image" />
           <p id="usernickname">{{ receiver_user.nickname }}</p>
 
-          <form method="post" action="{% url 'friends:create_accept_friend' receiver_user.username %}">
+          <form method="post" action="{% url 'friends:create_accept_friend' receiver_user.id %}">
             {% csrf_token %}
             <button type="submit" id="friend_confirmbtn">친구 추가</button>
           </form>

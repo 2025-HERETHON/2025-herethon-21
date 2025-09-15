@@ -78,12 +78,12 @@
                 {% if notification.category == 1 %}
                   <div class="btns">
                     <!-- 수락 폼 -->
-                    <form method="post" action="{% url 'friends:create_accept_friend' username=notification.sender__username %}">
+                    <form method="post" action="{% url 'friends:create_accept_friend' username=notification.sender__id %}">
                       {% csrf_token %}
                       <button type="submit">수락</button>
                     </form>
                     <!-- 거절 폼 -->
-                    <form method="post" action="{% url 'friends:create_reject_friend' username=notification.sender__username %}">
+                    <form method="post" action="{% url 'friends:create_reject_friend' username=notification.sender__id %}">
                       {% csrf_token %}
                       <button type="submit">거절</button>
                     </form>

@@ -55,10 +55,10 @@ def read_receive_list(request):
     return render(request, "friend_request_received.html", {"friend_requests":friend_requests})
 
 @login_required
-def create_accept_friend(request, username):
+def create_accept_friend(request, id):
     friend = Friend.objects.filter(
         receiver=request.user,
-        sender__username=username,
+        sender__id=id,
         status=FriendStatusType.PENDING
     ).first()
     if friend:
@@ -72,10 +72,10 @@ def create_accept_friend(request, username):
     return redirect("friends:read_friends_list")
 
 @login_required
-def create_reject_friend(request, username):
+def create_reject_friend(request, id):
     friend = Friend.objects.filter(
         receiver=request.user,
-        sender__username=username,
+        sender__id=id,
         status=FriendStatusType.PENDING
     ).first()
     if friend:
@@ -89,8 +89,8 @@ def create_reject_friend(request, username):
     return redirect("friends:read_friends_list")
         
 @login_required
-def read_friend_detail(request, username):
-    friend_user = CustomUser.objects.filter(username=username).first()
+def read_friend_detail(request, id):
+    friend_user = CustomUser.objects.filter(id=id).first()
     if not friend_user:
         messages.error(request, "존재하지 않는 사용자입니다.")
         return redirect("friends:read_friends_list")

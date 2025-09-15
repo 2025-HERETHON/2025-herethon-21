@@ -6,8 +6,8 @@ from django.contrib.auth import get_user_model
 class CustomBaseUserCreationForm(BaseUserCreationForm):
     class Meta:
         model = CustomUser
-        fields = ("email",)
-        read_only_fields = ("username",)
+        fields = ("id","email",)
+        read_only_fields = ("id",)
 
 class CustomUserCreationForm(CustomBaseUserCreationForm):
     class Meta(CustomBaseUserCreationForm.Meta):
@@ -17,7 +17,7 @@ class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = CustomUser
         fields = "__all__"
-        read_only_fields = ("username",)
+        read_only_fields = ("id",)
 
 class CustomAdminUserCreationForm(SetUnusablePasswordMixin, CustomBaseUserCreationForm):
     usable_password = SetUnusablePasswordMixin.create_usable_password_field()
