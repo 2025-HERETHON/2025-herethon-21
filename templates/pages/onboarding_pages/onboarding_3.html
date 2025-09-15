@@ -55,9 +55,7 @@
         <!-- 오른쪽 컨텐츠 영역 -->
         <img src="{% static 'assets/img/happy_pipi_hugging.png' %}" alt="피피 웃는 얼굴" class="smile_pipi"/>
         <img src="{% static 'assets/img/logo.png' %}" alt="로고" class="logo_big"/>
-        <form method="get" action="{% url 'frontend:cyclepage' %}">
-          <button type="submit" value="시작하기" id="done_submitbtn">시작하기</button>
-        </form>
+        <a href="{% url 'frontend:cyclepage' %}">시작하기</a>
     </section>
     </section>
   </main>
