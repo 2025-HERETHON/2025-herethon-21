@@ -41,16 +41,16 @@ def test_exercise_start(request:HttpRequest): # 운동방 페이지
     service = ExerciseHistoryService(request)
     exercise_history_id, message = service.post(exercise_routine_duration)
 
-    cache.set(CACHE_KEY(request.user.username).EXERCISE_ROUTINE, exercise_routine, timeout=3600*2)
-    cache.set(CACHE_KEY(request.user.username).EXERCISE_HISTORY_ID, exercise_history_id, timeout=3600*2)
+    cache.set(CACHE_KEY(request.user.id).EXERCISE_ROUTINE, exercise_routine, timeout=3600*2)
+    cache.set(CACHE_KEY(request.user.id).EXERCISE_HISTORY_ID, exercise_history_id, timeout=3600*2)
 
     return render(request, 'test_exercise_start.html', {
         'exercise_routine': exercise_routine,
     })
 
 def test_exercise_end(request:HttpRequest): # 운동 후 운동 리뷰 작성 페이지
-    exercise_routine = cache.get(CACHE_KEY(request.user.username).EXERCISE_ROUTINE)
-    exercise_history_id = cache.get(CACHE_KEY(request.user.username).EXERCISE_HISTORY_ID)
+    exercise_routine = cache.get(CACHE_KEY(request.user.id).EXERCISE_ROUTINE)
+    exercise_history_id = cache.get(CACHE_KEY(request.user.id).EXERCISE_HISTORY_ID)
 
     return render(request, 'test_exercise_end.html', {
         'exercise_routine': exercise_routine,

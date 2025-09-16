@@ -7,28 +7,29 @@ app_name = 'frontend'
 urlpatterns = [
     path("", lambda request: redirect("frontend:loginpage"), name="home"),
 
-    path("loginpage", loginpage, name="loginpage"),
-    path("signuppage", signuppage, name="signuppage"),
+    path("login", loginpage, name="loginpage"),
+    path("signup", signuppage, name="signuppage"),
     path("onboarding_1", onboarding_1, name="onboarding_1"),
     path("onboarding_2", onboarding_2, name="onboarding_2"),
     path("onboarding_3", onboarding_3, name="onboarding_3"),
-    path("lastmenstruationpage", lastmenstruationpage, name="lastmenstruationpage"),
-    path("purposepage", purposepage, name="purposepage"),
+    path("lastmenstruation", lastmenstruationpage, name="lastmenstruationpage"),
+    path("purpose", purposepage, name="purposepage"),
 
-    path("cyclepage", cyclepage, name="cyclepage"),
-    path("restpage", restpage, name="restpage"),
-    path("scrappage", scrappage, name="scrappage"),
-    path("periodpage", periodpage, name="periodpage"),
-    path("editpage", editpage, name="editpage"),
-    path("alarmpage", alarmpage, name="alarmpage"),
+    path("cycle", cyclepage, name="cyclepage"),
+    path("rest", restpage, name="restpage"),
+    path("scrap", scrappage, name="scrappage"),
+    path("period", periodpage, name="periodpage"),
+    path("edit", editpage, name="editpage"),
+    path("alarm", alarmpage, name="alarmpage"),
     
-    path("routineingpage", routineingpage, name="routineingpage"),
+    path("routineing", routineingpage, name="routineingpage"),
     path("finishedroutine", finishedroutine, name="finishedroutine"),
 
     path("mypagemain", mypagemain, name="mypagemain"),
-    path("friendpage/<str:friend_username>", friendpage, name="friendpage"),
+    path("friend/<str:friend_username>", friendpage, name="friendpage"),
 
     path("makefriends", makefriends, name="makefriends"),
     path('friendsconfirm/<str:email>/', friendsconfirm, name='friendsconfirm'),
     path("friended/", friended, name="friended"),
 ]
+

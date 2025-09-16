@@ -11,7 +11,6 @@
 {% endblock style %}
 
 {% block script %}
-<script src="{% static 'functions/page_functions/finished_routine.js' %}"></script>
 <script src="{% static 'functions/component_functions/routine_list_component.js' %}"></script>
 {% endblock script %}
 
@@ -50,8 +49,8 @@
         {% include "../components/review_component.html" with data=data index=forloop.counter0 %}
         <br />
         <div class="btn_hugger">
-          <button type="submit" value="운동 바로가기" id="go_to_main">운동 바로가기</button>
-          <button type="submit" value="운동 시작하기" id="scrap_btn">운동 스크랩하기</button>
+        <a href="{% url 'frontend:cyclepage' %}">운동 바로가기</a>
+          <button type="submit" value="운동 스크랩하기" id="scrap_btn">운동 스크랩하기</button>
         </div>
       </section>
     </section>

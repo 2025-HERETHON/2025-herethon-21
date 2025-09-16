@@ -65,7 +65,7 @@
                 method="post"
               >
                 {% csrf_token %}
-                <input name="receiver" type="hidden" value="{{friend_username}}" />
+                <input name="receiver" type="hidden" value="{{friend_id}}" />
                 <input name="category" type="hidden" value="5" />
                 <button
                   type="submit"
@@ -97,9 +97,9 @@
         {% endif %}
       </section>
       <nav class="sidebar_nav" aria-label="페이지 네비게이션">
-        <a href="/cyclepage" class="nav_button nav_button1">운 동</a>
-        <a href="/scrappage" class="nav_button nav_button2">스 크 랩</a>
-        <a href="/periodpage" class="nav_button nav_button3">월 경</a>
+                <a href="{% url 'frontend:cyclepage' %}" class="nav_button nav_button1">운 동</a>
+                <a href="{% url 'frontend:scrappage' %}" class="nav_button nav_button2">스 크 랩</a>
+                <a href="{% url 'frontend:periodpage' %}" class="nav_button nav_button3">월 경</a>
       </nav>
     </main>
   </body>

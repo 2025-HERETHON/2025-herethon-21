@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // 프로필 수정
   if (editButton) {
     editButton.addEventListener('click', () => {
-      window.location.href = '/editpage';
+      window.location.href = '/edit';
     });
   }
 

@@ -6,13 +6,13 @@ from accounts.models import CustomUser
 from .services import NotificationService
 
 @require_GET
-def test_read(request:HttpRequest, friend_username:str):
+def test_read(request:HttpRequest, friend_id:str):
     service = NotificationService(request)
     notification_list = service.get_list()
-    is_prodded = service.get_is_prodded(friend_username)
+    is_prodded = service.get_is_prodded(friend_id)
 
     return render(request, 'test.html', {
-        'friend_username': friend_username,
+        'friend_id': friend_id,
         'notification_list': notification_list,
         'is_prodded': is_prodded,
     })
@@ -23,7 +23,7 @@ def create_notification(request:HttpRequest):
 
     receiver_str = request.POST.get('receiver')
     category_str = request.POST.get('category')
-    receiver = get_object_or_404(CustomUser, username=receiver_str)
+    receiver = get_object_or_404(CustomUser, id=receiver_str)
     category = NotificationCategoryType(int(category_str))
 
     message = service.post(request.user, receiver, category)

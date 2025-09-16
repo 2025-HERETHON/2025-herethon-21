@@ -23,8 +23,8 @@ def routineingpage(request:HttpRequest):
     service = ExerciseHistoryService(request)
     exercise_history_id, message = service.post(exercise_routine_duration)
 
-    cache.set(CACHE_KEY(request.user.username).EXERCISE_ROUTINE, exercise_routine, timeout=3600*2)
-    cache.set(CACHE_KEY(request.user.username).EXERCISE_HISTORY_ID, exercise_history_id, timeout=3600*2)
+    cache.set(CACHE_KEY(request.user.id).EXERCISE_ROUTINE, exercise_routine, timeout=3600*2)
+    cache.set(CACHE_KEY(request.user.id).EXERCISE_HISTORY_ID, exercise_history_id, timeout=3600*2)
 
     return render(request, 'pages/routine_ing_page.html', {
         'exercise_routine': exercise_routine,
@@ -236,8 +236,8 @@ def friended(request):
     })
 
 def finishedroutine(request:HttpRequest):
-    exercise_routine = cache.get(CACHE_KEY(request.user.username).EXERCISE_ROUTINE)
-    exercise_history_id = cache.get(CACHE_KEY(request.user.username).EXERCISE_HISTORY_ID)
+    exercise_routine = cache.get(CACHE_KEY(request.user.id).EXERCISE_ROUTINE)
+    exercise_history_id = cache.get(CACHE_KEY(request.user.id).EXERCISE_HISTORY_ID)
     
     return render(request, "pages/finished_routine.html", {
         'exercise_routine': exercise_routine,
@@ -262,15 +262,15 @@ def editpage(request:HttpRequest):
         'selected_goals': handler.get_int_values(),
     })
 
-def friendpage(request:HttpRequest, friend_username:str):
+def friendpage(request:HttpRequest, friend_id:str):
     exercise_review_service = ExerciseReviewService(request)
     exercise_reviews = exercise_review_service.get_list()
     
     notification_service = NotificationService(request)
-    is_prodded = notification_service.get_is_prodded(friend_username)
+    is_prodded = notification_service.get_is_prodded(friend_id)
 
     return render(request, "pages/friend_page.html", {
         'exercise_reviews': exercise_reviews,
-        'friend_username': friend_username,
+        'friend_id': friend_id,
         'is_prodded': is_prodded,
     })

@@ -7,11 +7,7 @@ from .managers import CustomUserManager
 
 class CustomUser(AbstractUser):
     # AbstractUser 모델 오버라이딩
-    username = models.CharField(
-        max_length=21,
-        unique=True,
-        editable=False,
-    )
+    username = None
     first_name = None
     last_name = None
     email = models.EmailField(
@@ -23,6 +19,11 @@ class CustomUser(AbstractUser):
     REQUIRED_FIELDS = []
 
     # 커스텀 필드
+    id = models.CharField(
+        max_length=21,
+        unique=True,
+        editable=False,
+    )
     nickname = models.CharField(
         max_length=100,
         blank=True,
@@ -53,8 +54,8 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.email
-    
+
     def save(self, *args, **kwargs):
-        if (not self.pk) and (not self.username):
-            self.username = nanoid.generate()
+        if (not self.pk) and (not self.id):
+            self.id = nanoid.generate()
         super().save(*args, **kwargs)

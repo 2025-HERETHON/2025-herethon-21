@@ -13,7 +13,6 @@
 {% endblock style %}
 
 {% block script %}
-<script src="{% static 'functions/page_functions/make_friends_pages/friended.js' %}"></script>
 {% endblock script %}
 
 {% block body %}
@@ -43,7 +42,7 @@
     </section>
 
     <nav class="sidebar_nav" aria-label="페이지 네비게이션">
-      <p class="nav_button nav_button1">알 림</p>   
+      <p class="nav_button nav_button1"></p>   
       <div class="nav_line"></div>
       <div class="nav_line"></div>
     </nav>
@@ -59,23 +58,30 @@
       <div class="email_finder_hugger">
         <div class="friended_users">
 
-      <p>{{ sender.email }}</p>
-      <p>{{ receiver_email }}</p>
 
       <!-- 보낸 사람 -->
       <div class="peruser">
-        <img src="{{ sender.profile_image.url }}" alt="보낸 사람 프로필" class="profile_photo" />
+          <img 
+            src="{% if sender.profile_image %}{{ sender.profile_image.url }}{% else %}{% static 'assets/img/icon.png' %}{% endif %}" 
+            alt="보낸 사람 프로필" 
+            class="profile_photo" 
+          />
         <p>{{ sender.email }}</p>  <!-- 여기에 sender.email 제대로 접근해야 함 -->
       </div>
 
       <!-- 받은 사람 -->
-      <div class="peruser">
-        <img src="{{ receiver.profile_image.url }}" alt="받은 사람 프로필" class="profile_photo" />
+      <div class="peruser"> 
+        <img 
+          src="{% if receiver.profile_image %}{{ receiver.profile_image.url }}{% else %}{% static 'assets/img/icon.png' %}{% endif %}" 
+          alt="받은 사람 프로필" 
+          class="profile_photo" 
+        />        
         <p>{{ receiver.email }}</p>  <!-- 여기서도 마찬가지 -->
       </div>
 
         </div>
-        <button type="submit" id="goto_main">운동 바로가기</button>
+
+        <a href="{% url 'frontend:cyclepage' %}">운동 바로가기</a>
       </div>
     </section>
   </section>
