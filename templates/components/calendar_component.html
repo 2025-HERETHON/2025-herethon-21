@@ -9,37 +9,36 @@
 {% block body %}
 <section class="calendar_container">
   <header class="calendar_header">
-    <h2 class="calendar_title" id="calendar_title">July 2025</h2>
-    <button class="month_btn" id="prev_month"></button>
-    <button class="month_btn" id="next_month"></button>
+    <h2 class="calendar_title">{{ calendar_year }}년 {{ calendar_month }}월</h2>
   </header>
+
   <section class="calendar_body_wrapper">
     <section class="calendar_weekdays">
-      <span>Su</span>
-      <span>Mo</span>
-      <span>Tu</span>
-      <span>We</span>
-      <span>Th</span>
-      <span>Fr</span>
-      <span>Sa</span>
+      <span>Su</span><span>Mo</span><span>Tu</span>
+      <span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
     </section>
-    <section id="calendar_days" class="calendar_days">
-      <!-- JS로 날짜 셀 -->
+
+    <section class="calendar_days">
+      {% for day in calendar_days %}
+        <div class="calendar_day
+                    {% if day.is_today %} today {% endif %}
+                    {% if day.phase %} highlight_{{ day.phase }} {% endif %}">
+          {{ day.day }}
+          {% if day.has_review %}
+            <img src="{% static 'assets/img/star_calendar_icon.png' %}" 
+                 alt="review star" class="review_star_icon"/>
+          {% endif %}
+        </div>
+      {% endfor %}
     </section>
+
     <div class="calendar_legend">
-      <div class="legend_item pink">
-        <span>월경기</span>
-      </div>
-      <div class="legend_item yellow">
-        <span>난포기</span>
-      </div>
-      <div class="legend_item blue">
-        <span>배란기</span>
-      </div>
-      <div class="legend_item gray">
-        <span>황체기</span>
-      </div>
+      <div class="legend_item pink"><span>월경기</span></div>
+      <div class="legend_item yellow"><span>난포기</span></div>
+      <div class="legend_item blue"><span>배란기</span></div>
+      <div class="legend_item gray"><span>황체기</span></div>
     </div>
   </section>
 </section>
+
 {% endblock body %}

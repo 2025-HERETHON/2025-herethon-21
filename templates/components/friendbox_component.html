@@ -1,5 +1,4 @@
 {% extends "../example/base.html" %}
-
 {% load static %}
 
 {% block style %}
@@ -8,45 +7,31 @@
 
 {% block body %}
 <div class="friend_box">
+  {% comment %}
+    friends 컨텍스트 예시:
+    friends = [
+        {'id': 1, 'username': 'user1', 'name': '나', 'profile_image_url': '/static/assets/img/icon.png'},
+        {'id': 2, 'username': 'friend1', 'name': '친구1', 'profile_image_url': '/static/assets/img/icon.png'},
+        ...
+    ]
+  {% endcomment %}
+
+  {% for friend in friends %}
   <div class="friend_item">
-    <a href="/mypagemain">
-      <img src="{% static 'assets/img/icon.png' %}" alt="친구 아이콘" class="friend_icon" />
+    <a href="{% url 'frontend:friendpage' friend.username %}">
+      <img src="{{ friend.profile_image_url }}" 
+           alt="친구 아이콘" 
+           class="friend_icon" />
     </a>
-    <p class="friend_name">나</p>
+    <p class="friend_name">{{ friend.name }}</p>
   </div>
-  <div class="friend_item">
-    <a href="">
-      <img src="{% static 'assets/img/icon.png' %}" alt="친구 아이콘" class="friend_icon" />
-    </a>
-    <p class="friend_name">친구1</p>
-  </div>
-  <div class="friend_item">
-    <a href="">
-      <img src="{% static 'assets/img/icon.png' %}" alt="친구 아이콘" class="friend_icon" />
-    </a>
-    <p class="friend_name">친구2</p>
-  </div>
-  <div class="friend_item">
-    <a href="">
-      <img src="{% static 'assets/img/icon.png' %}" alt="친구 아이콘" class="friend_icon" />
-    </a>
-    <p class="friend_name">친구3</p>
-  </div>
-  <div class="friend_item">
-    <a href="">
-      <img src="{% static 'assets/img/icon.png' %}" alt="친구 아이콘" class="friend_icon" />
-    </a>
-    <p class="friend_name">친구4</p>
-  </div>
-  <div class="friend_item">
-    <a href="">
-      <img src="{% static 'assets/img/icon.png' %}" alt="친구 아이콘" class="friend_icon" />
-    </a>
-    <p class="friend_name">친구5</p>
-  </div>
+  {% endfor %}
+
   <div class="plus_friend">
-    <a href="">
-      <img src="{% static 'assets/img/plus_button.png' %}" alt="친구 추가 아이콘" class="plus_friend" />
+    <a href="{% url 'frontend:makefriends' %}">
+      <img src="{% static 'assets/img/plus_button.png' %}" 
+           alt="친구 추가 아이콘" 
+           class="plus_friend" />
     </a>
   </div>
 </div>
