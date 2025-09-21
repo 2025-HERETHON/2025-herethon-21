@@ -9,11 +9,9 @@
     {% endblock title %}
   </title>
   <link rel="icon" href="{% static 'assets/img/favicon.ico' %}" type="image/x-icon" />
+  <link rel="stylesheet" href="{% static 'styles/page_styles/base.css' %}" />
 
   {% block style %}
-  <link rel="stylesheet" href="{% static 'styles/page_styles/base.css' %}" />
-  {% block base_side_style %}
-  {% endblock base_side_style %}
   {% endblock style %}
   {% block script %}
   {% endblock script %}
