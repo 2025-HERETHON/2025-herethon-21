@@ -31,5 +31,7 @@ urlpatterns = [
     path("makefriends", makefriends, name="makefriends"),
     path('friendsconfirm/<str:email>/', friendsconfirm, name='friendsconfirm'),
     path("friended/", friended, name="friended"),
+
+    path("base_side/", base_side, name="base_side"), #확인용, 지우고 PR
 ]
 

@@ -1,0 +1,50 @@
+{% extends "./base.html" %}
+{% load static %} 
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/page_styles/null.css' %}" />
+{% endblock style %}
+
+{% block script %}
+{% endblock script %}
+
+{% block body %}
+<body>
+
+<header class="top_section">
+    <section class="top_bar">
+        <img src="{% static 'assets/img/logo.png' %}" alt="로고" class="logo_image" />
+    </section>
+</header>
+
+<main class="main_layout">
+    <section class="content_area">
+        <!-- 오른쪽 컨텐츠 영역 -->
+        <section class="content_left">
+            {% block contentLeft %}
+            {% endblock contentLeft %}
+        </section>
+
+        <!--가운데 인덱스 영역-->
+        <nav class="sidebar_nav" aria-label="페이지 네비게이션">
+        <p class="nav_button nav_button1">
+            {% block pageName %}
+            {% endblock pageName %}
+        </p>   
+        <div class="nav_line"></div>
+        <div class="nav_line"></div>
+        </nav>
+
+    <!-- 오른쪽 컨텐츠 영역 -->
+    <section class="content_right">
+        <section class="star_background">
+        {% block starBackground %}
+        {% endblock starBackground %}
+        </section>
+        {% block contentRight %}
+        {% endblock contentRight %}
+    </section>
+  </section>
+</main>
+
+</body>
+{% endblock body %}
