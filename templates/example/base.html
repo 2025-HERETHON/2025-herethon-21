@@ -1,3 +1,4 @@
+{% load static %} 
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -7,6 +8,9 @@
     {% block title %}
     {% endblock title %}
   </title>
+  <link rel="icon" href="{% static 'assets/img/favicon.ico' %}" type="image/x-icon" />
+  <link rel="stylesheet" href="{% static 'styles/page_styles/base.css' %}" />
+
   {% block style %}
   {% endblock style %}
   {% block script %}

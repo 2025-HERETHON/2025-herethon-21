@@ -1,0 +1,16 @@
+{% extends "./base_side.html" %}
+{% load static %}
+
+{% block contentLeft %}
+    <span class="star star5"></span> <span class="star star6"></span> <span class="star star7"></span>
+    <span class="star star9"></span><span class="star star15"></span>
+    <span class="star star12"></span> <span class="star star13"></span>
+    <span class="star star15"></span>
+    {% block left %}
+    {% endblock left %}
+{% endblock contentLeft %}
+
+{% block contentRight %}
+    {% block right %}
+    {% endblock right %}
+{% endblock contentRight %}

@@ -1,0 +1,29 @@
+{% extends "./base_side.html" %}
+{% load static %}
+
+{% block right_style %}
+<link rel="stylesheet" href="{% static 'styles/page_styles/base_side_right.css' %}" />
+{% endblock right_style %}
+
+{% block contentLeft %}
+    <div class="ment_hugger">
+        <img src="{% static 'assets/img/star_highlight.png' %}" alt="피포미 별" />
+        <p class="mainmsg">
+            {% block mainMessage %}
+            {% endblock mainMessage %}
+        </p>   
+        {% block left %}
+        {% endblock left %}
+    </div>
+{% endblock contentLeft %}
+
+{% block contentRight %}
+    <section class="star_background">
+        <span class="star star5"></span> <span class="star star6"></span> <span class="star star7"></span>
+        <span class="star star8"></span> <span class="star star9"></span><span class="star star11"></span>
+        <span class="star star12"></span> <span class="star star13"></span> <span class="star star14"></span>
+        <span class="star star15"></span> <span class="star star16"></span>
+    </section>
+    {% block right %}
+    {% endblock right %}
+{% endblock contentRight %}
