@@ -30,6 +30,6 @@ urlpatterns = [
 
     path("makefriends", makefriends, name="makefriends"),
     path('friendsconfirm/<str:email>/', friendsconfirm, name='friendsconfirm'),
-    path("friended/", friended, name="friended"),z
+    path("friended/", friended, name="friended"),
 ]
 
