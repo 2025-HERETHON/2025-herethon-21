@@ -1,6 +1,8 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 from utils.choices import FriendStatusType
-from accounts.models import CustomUser
+
+CustomUser = get_user_model()
 
 class Friend(models.Model):
     created_at = models.DateTimeField(

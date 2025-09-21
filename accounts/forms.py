@@ -1,23 +1,21 @@
 from django.contrib.auth.forms import BaseUserCreationForm, UserChangeForm, SetUnusablePasswordMixin
-from .models import CustomUser
-from django import forms
 from django.contrib.auth import get_user_model
+
+CustomUser = get_user_model()
 
 class CustomBaseUserCreationForm(BaseUserCreationForm):
     class Meta:
         model = CustomUser
-        fields = ("id","email",)
-        read_only_fields = ("id",)
+        fields = ("email",)
 
 class CustomUserCreationForm(CustomBaseUserCreationForm):
     class Meta(CustomBaseUserCreationForm.Meta):
         fields = CustomBaseUserCreationForm.Meta.fields + ("nickname","bio","profile_image","exercise_goal",)
-    
+
 class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = CustomUser
-        fields = "__all__"
-        read_only_fields = ("id",)
+        exclude = ("id",)
 
 class CustomAdminUserCreationForm(SetUnusablePasswordMixin, CustomBaseUserCreationForm):
     usable_password = SetUnusablePasswordMixin.create_usable_password_field()

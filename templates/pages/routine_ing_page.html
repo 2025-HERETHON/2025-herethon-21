@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     updateRoutineUI(currentStepIndex);
                     startTimer(currentStepIndex);
                 } else {
-                    alert("루틴을 완료했습니다! 🎉");
+                  document.getElementById("finishForm").submit();
                 }
             }
         }, 1000);
@@ -116,6 +116,27 @@ document.addEventListener('DOMContentLoaded', () => {
     // 초기 UI
     updateRoutineUI(currentStepIndex);
     startTimer(currentStepIndex);
+
+document.getElementById('finishBtn').addEventListener('click', (e) => {
+  e.preventDefault(); // 혹시 submit 전에 JS 처리 필요할 때
+  const routineItems = Array.from(document.querySelectorAll('.routine_item'));
+  const routinesToSend = routineItems.map(item => {
+    const tableRows = item.querySelectorAll('table tr');
+    return Array.from(tableRows).map(row => {
+      const cells = row.querySelectorAll('td, th');
+      return {
+        id: cells[0].textContent.trim(),
+        img: cells[1].querySelector('img').getAttribute('src'),
+        name: cells[2].textContent.trim(),
+        duration: cells[3].textContent.trim(),
+        part: cells[4].textContent.trim(),
+      };
+    });
+  });
+
+  document.getElementById('finish_exercise_routine').value = JSON.stringify(routinesToSend);
+  document.getElementById('finishForm').submit();
+});
 });
 </script>
 
@@ -217,4 +238,3 @@ document.addEventListener('DOMContentLoaded', () => {
   <a href="{% url 'frontend:cyclepage' %}" class="back_button">
     <img src="{% static 'assets/img/left.png' %}" alt="뒤로가기" />
   </a>
-{% endblock body %}

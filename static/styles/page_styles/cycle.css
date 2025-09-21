@@ -278,7 +278,7 @@ input.user-interacted::-moz-range-thumb {
     align-items: center;
     font-weight: 500;
     margin-top: 35px;
-    width:105%;
+    width:100%;
     height:50px;
     padding:28px;
     border-radius: 20px;
@@ -293,7 +293,7 @@ input.user-interacted::-moz-range-thumb {
 
 #list_prev{
   position: absolute;
-  top: 38%;
+  top: 40%;
   left:-40px;
   z-index:10;
 }
@@ -303,7 +303,7 @@ input.user-interacted::-moz-range-thumb {
 }
 #list_next{
   position: absolute;
-  top: 38%;
+  top: 40%;
   right:-40px;
   z-index:10;
 }

@@ -20,9 +20,9 @@ class CustomUser(AbstractUser):
 
     # 커스텀 필드
     id = models.CharField(
-        max_length=21,
-        unique=True,
+        primary_key=True,
         editable=False,
+        max_length=21,
     )
     nickname = models.CharField(
         max_length=100,

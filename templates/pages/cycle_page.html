@@ -11,16 +11,6 @@
 {% endblock style %}
 
 {% block script %}
-<script src="{% static 'functions/component_functions/calendar_component.js' %}"></script>
-{{ exercise_reviews|json_script:"exercise_reviews" }}
-{{ menstruation_cycle|json_script:"menstruation_cycle" }}
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const exercise_reviews = JSON.parse(document.getElementById('exercise_reviews').textContent);
-        const menstruation_cycle = JSON.parse(document.getElementById('menstruation_cycle').textContent);
-        callFullCalendar(exercise_reviews, menstruation_cycle);
-    });
-</script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const routineItems = document.querySelectorAll(".routine_item");
@@ -73,8 +63,14 @@ const durationHHMMSS = urlParams.get("exercise_routine_duration");
 if (durationHHMMSS) {
     const parts = durationHHMMSS.split(":");
     if (parts.length === 3) {
+        const hours = parseInt(parts[0]);
         const minutes = parseInt(parts[1]);
-        initialIndex = timeValues.indexOf(minutes);
+        const totalMinutes = hours * 60 + minutes;
+        console.log("durationHHMMSS:", durationHHMMSS);
+        console.log("totalMinutes:", totalMinutes);
+        console.log("index:", timeValues.indexOf(totalMinutes));
+
+        initialIndex = timeValues.indexOf(totalMinutes);
         if (initialIndex === -1) initialIndex = 1;
     }
 }
@@ -99,6 +95,7 @@ function updateSliderUI() {
 
     if(value === 60){
         fillPercent += 10;
+        thumbOffset += 20; 
     }
 
     fill.style.width = fillPercent + "%";
@@ -188,9 +185,9 @@ slider.addEventListener("change", () => {
                 {% endblock friendbox %}
             </section>
             <nav class="sidebar_nav" aria-label="페이지 네비게이션">
-                <a href="/cyclepage" class="nav_button nav_button1">운 동</a>
-                <a href="/scrappage" class="nav_button nav_button2">스 크 랩</a>
-                <a href="/periodpage" class="nav_button nav_button3">월 경</a>
+                <a href="{% url 'frontend:cyclepage' %}" class="nav_button nav_button1">운 동</a>
+                <a href="{% url 'frontend:scrappage' %}" class="nav_button nav_button2">스 크 랩</a>
+                <a href="{% url 'frontend:periodpage' %}" class="nav_button nav_button3">월 경</a>
             </nav>
             <section class="content_right">
                 <div class="text_box">
@@ -253,26 +250,6 @@ slider.addEventListener("change", () => {
                                 {% for ai_exercise_routine in ai_exercise_routines %}
                                     <div class="routine_item" data-index="{{ forloop.counter0 }}" {% if not forloop.first %}style="display:none;"{% endif %}>
                                         <div class="bighugger" id="border">
-                                            <div class="scrapbtn_wrapper">
-                                                <input type="checkbox" 
-                                                    class="scrap-checkbox" 
-                                                    id="scrap_{{ forloop.counter0 }}" 
-                                                    name="scrap_{{ forloop.counter0 }}" 
-                                                    value="{{ ai_exercise_routine|safe }}"
-                                                    {% if is_scraped %}checked{% endif %}
-                                                    onclick="
-                                                        const url = new URL(window.location);
-                                                        url.searchParams.set('scrap_index', '{{ forloop.counter0 }}');
-                                                        url.searchParams.set('scrap_value', this.checked ? 1 : 0);
-                                                        window.location.href = url.toString();
-                                                    " />
-                                                <label for="scrap_{{ forloop.counter0 }}">
-                                                    <img src="{% static 'assets/img/scrap.png' %}" 
-                                                        alt="스크랩 아이콘" 
-                                                        data-default="{% static 'assets/img/scrap.png' %}"
-                                                        data-scraped="{% static 'assets/img/scrap_scrapped.png' %}">
-                                                </label>
-                                            </div>
                                             <table class="table_centerer">
                                                 {% for item in ai_exercise_routine %}
                                                 <tr>

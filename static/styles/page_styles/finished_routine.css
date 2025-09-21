@@ -20,6 +20,11 @@
   gap: 12px; 
   align-items: center;
 }
+.btn_hugger form{
+  width:100%;
+  display:flex;
+  justify-content: center;
+}
 .btn_hugger button {
   width: 65%; 
   padding: 14px 0;
@@ -31,7 +36,6 @@
   color:black;
   cursor: pointer;
 }
-
 #go_to_main:hover {
   background-color: #A48BE7;
   color: white;

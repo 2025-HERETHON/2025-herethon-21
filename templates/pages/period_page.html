@@ -9,17 +9,8 @@
 {% endblock style %}
 
 {% block script %}
-<script src="{% static 'functions/component_functions/calendar_component.js' %}"></script>
 <script src="{% static 'functions/page_functions/period_page.js' %}"></script>
-{{ exercise_reviews|json_script:"exercise_reviews" }}
-{{ menstruation_cycle|json_script:"menstruation_cycle" }}
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const exercise_reviews = JSON.parse(document.getElementById('exercise_reviews').textContent);
-    const menstruation_cycle = JSON.parse(document.getElementById('menstruation_cycle').textContent);
-    callFullCalendar(exercise_reviews, menstruation_cycle);
-  });
-</script>
+
 {% endblock script %}
 
 {% block body %}
@@ -59,9 +50,9 @@
         {% endblock friendbox %}
       </section>
       <nav class="sidebar_nav" aria-label="페이지 네비게이션">
-        <a href="/cyclepage" class="nav_button nav_button1">운 동</a>
-        <a href="/scrappage" class="nav_button nav_button2">스 크 랩</a>
-        <a href="/periodpage" class="nav_button nav_button3">월 경</a>
+                <a href="{% url 'frontend:cyclepage' %}" class="nav_button nav_button1">운 동</a>
+                <a href="{% url 'frontend:scrappage' %}" class="nav_button nav_button2">스 크 랩</a>
+                <a href="{% url 'frontend:periodpage' %}" class="nav_button nav_button3">월 경</a>
       </nav>
       <section class="content_right">
         <div class="date_picker_wrapper">
@@ -122,12 +113,15 @@
                   >
                     <img src="{% static 'assets/img/rewrite.png' %}" alt="수정" />
                   </button>
-                <form action="{% url 'menstruations:delete' pk=menstruation.id %}" method="post">
-                  {% csrf_token %}
-                  <button class="icon_btn delete_btn" data-index="{{ forloop.counter0 }}" type="submit">
-                    <img src="{% static 'assets/img/trashcan.png' %}" alt="삭제" />
-                  </button>
-                </form>
+                {% if menstruations|length > 1 %}
+<form action="{% url 'menstruations:delete' pk=menstruation.id %}" method="post">
+  {% csrf_token %}
+  <button class="icon_btn delete_btn" data-index="{{ forloop.counter0 }}" type="submit">
+    <img src="{% static 'assets/img/trashcan.png' %}" alt="삭제" />
+  </button>
+</form>
+{% endif %}
+
               </div>
               </div>
               <form class="hidden" action="{% url 'menstruations:update' pk=menstruation.id %}" method="post">
