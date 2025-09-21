@@ -9,5 +9,5 @@ urlpatterns = [
     path('received/', read_receive_list, name="read_send_list"),
     path('accept/<str:id>/', create_accept_friend, name="create_accept_friend"),
     path('reject/<str:id>/', create_reject_friend, name="create_reject_friend"),
-    path('detail/<str:id>/', read_friend_detail, name="read_friend_detail"),  
+    path('detail/<str:id>/', read_friend_detail, name="read_friend_detail"),
 ]
