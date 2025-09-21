@@ -238,10 +238,3 @@ document.getElementById('finishBtn').addEventListener('click', (e) => {
   <a href="{% url 'frontend:cyclepage' %}" class="back_button">
     <img src="{% static 'assets/img/left.png' %}" alt="뒤로가기" />
   </a>
-  <form id="finishForm" action="{% url 'frontend:finishedroutine' %}" method="post">
-    {% csrf_token %}
-    <input type="hidden" name="exercise_routine" id="finish_exercise_routine">
-    <button type="submit" id="finishBtn" class="finish_button">루틴 완료(개발용)</button>
-  </form>
-
-{% endblock body %}

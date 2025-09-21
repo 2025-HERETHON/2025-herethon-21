@@ -10,14 +10,6 @@
 
 {% block script %}
 <script src="{% static 'functions/page_functions/friend_page.js' %}"></script>
-<script src="{% static 'functions/component_functions/calendar_basic.js' %}"></script>
-{{ exercise_reviews|json_script:"exercise_reviews" }}
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const exercise_reviews = JSON.parse(document.getElementById('exercise_reviews').textContent);
-    callExerciseReviewCalendar(exercise_reviews);
-  });
-</script>
 {% endblock script %}
 
 {% block body %}
