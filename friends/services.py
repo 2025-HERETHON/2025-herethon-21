@@ -1,8 +1,6 @@
-from .models import Friend
-from utils.choices import FriendStatusType
 from django.db.models import Q
-from notifications.services import NotificationService
-from utils.choices import NotificationCategoryType
+from utils.choices import FriendStatusType
+from .models import Friend
 
 class FriendService:
     @staticmethod
