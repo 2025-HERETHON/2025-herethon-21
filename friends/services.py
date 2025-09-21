@@ -25,12 +25,12 @@ class FriendService:
             receiver=receiver,
             status=FriendStatusType.PENDING
         )
-        
+
     @staticmethod
     def accept_request(friend):
         friend.status = FriendStatusType.ACCEPT
-        friend.save()   
-        
+        friend.save()
+
     @staticmethod
     def reject_request(friend):
         friend.delete()

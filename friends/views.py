@@ -86,7 +86,7 @@ def create_reject_friend(request, friend_id):
             category=NotificationCategoryType.REJECT
         )
     return redirect("friends:read_friends_list")
-        
+
 @login_required
 def read_friend_detail(request, id):
     friend_user = CustomUser.objects.filter(id=id).first()
@@ -103,4 +103,3 @@ def read_friend_detail(request, id):
         "exercise_goals": exercise_goals,
     }
     return render(request, "friend_detail.html", context)
-
