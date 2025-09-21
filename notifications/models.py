@@ -1,6 +1,8 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 from utils.choices import NotificationCategoryType
-from accounts.models import CustomUser
+
+CustomUser = get_user_model()
 
 class Notification(models.Model):
     created_at = models.DateTimeField(
