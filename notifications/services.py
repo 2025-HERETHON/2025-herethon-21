@@ -68,4 +68,3 @@ class NotificationService:
             receiver=receiver,
             category=category # Enum 값이 자동으로 정수로 변환됨
         )
-        return '알림을 추가했습니다.'
