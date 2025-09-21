@@ -1,8 +1,6 @@
-from .models import Friend
-from utils.choices import FriendStatusType
 from django.db.models import Q
-from notifications.services import NotificationService
-from utils.choices import NotificationCategoryType
+from utils.choices import FriendStatusType
+from .models import Friend
 
 class FriendService:
     @staticmethod
@@ -27,12 +25,12 @@ class FriendService:
             receiver=receiver,
             status=FriendStatusType.PENDING
         )
-        
+
     @staticmethod
     def accept_request(friend):
         friend.status = FriendStatusType.ACCEPT
-        friend.save()   
-        
+        friend.save()
+
     @staticmethod
     def reject_request(friend):
         friend.delete()

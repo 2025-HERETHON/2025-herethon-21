@@ -54,10 +54,10 @@ def read_receive_list(request):
     return render(request, "friend_request_received.html", {"friend_requests":friend_requests})
 
 @login_required
-def create_accept_friend(request, id):
+def create_accept_friend(request, friend_id):
     friend = Friend.objects.filter(
         receiver=request.user,
-        sender__id=id,
+        sender__id=friend_id,
         status=FriendStatusType.PENDING
     ).first()
     if friend:
@@ -71,10 +71,10 @@ def create_accept_friend(request, id):
     return redirect("friends:read_friends_list")
 
 @login_required
-def create_reject_friend(request, id):
+def create_reject_friend(request, friend_id):
     friend = Friend.objects.filter(
         receiver=request.user,
-        sender__id=id,
+        sender__id=friend_id,
         status=FriendStatusType.PENDING
     ).first()
     if friend:
@@ -86,7 +86,7 @@ def create_reject_friend(request, id):
             category=NotificationCategoryType.REJECT
         )
     return redirect("friends:read_friends_list")
-        
+
 @login_required
 def read_friend_detail(request, id):
     friend_user = CustomUser.objects.filter(id=id).first()
@@ -103,4 +103,3 @@ def read_friend_detail(request, id):
         "exercise_goals": exercise_goals,
     }
     return render(request, "friend_detail.html", context)
-

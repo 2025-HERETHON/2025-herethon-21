@@ -26,8 +26,8 @@ class FriendStatusType(IntegerChoices):
     REJECT = 3, '거절'
 
 class NotificationCategoryType(IntegerChoices):
-    REQUEST = 1, '친구 요청'
-    ACCEPT = 2, '친구 요청을 수락'
-    REJECT = 3, '친구 요청을 거절'
-    REACTION = 4, '운동 리뷰에 반응'
-    PROD = 5, '콕 찌르기'
+    REQUEST = 1, '친구 요청했어요'
+    ACCEPT = 2, '친구 요청을 수락했어요'
+    REJECT = 3, '친구 요청을 거절했어요'
+    REACTION = 4, '운동 리뷰에 반응했어요'
+    PROD = 5, '콕 찔렀어요'
