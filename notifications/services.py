@@ -53,7 +53,7 @@ class NotificationService:
     @validate_auth
     def get_is_prodded(self, friend_id):
         is_prodded = Notification.objects.filter(
-            created_at__date=timezone.now(),
+            created_at__date=timezone.now().date(),
             sender=self.request.user,
             receiver__id=friend_id,
             category=NotificationCategoryType.PROD,
