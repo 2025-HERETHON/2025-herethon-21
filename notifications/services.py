@@ -68,3 +68,7 @@ class NotificationService:
             receiver=receiver,
             category=category # Enum 값이 자동으로 정수로 변환됨
         )
+
+    @validate_auth
+    def delete(self, notification:Notification):
+        notification.delete()
