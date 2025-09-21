@@ -1,0 +1,36 @@
+{% extends "./base_side.html" %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/page_styles/null.css' %}" />
+<link rel="stylesheet" href="{% static 'styles/component_styles/page_component.css' %}" />
+<link rel="stylesheet" href="{% static 'styles/page_styles/onboarding_pages/onboarding_1.css' %}" />
+<link rel="stylesheet" href="{% static 'styles/page_styles/mypage_main.css' %}" />
+{% endblock style %}
+
+{% block contentLeft %}
+    <div class="ment_hugger">
+        <img src="{% static 'assets/img/star_highlight.png' %}" alt="피포미 별" />
+        <p>
+            {% block mainMessage %}
+            {% endblock mainMessage %}
+        </p>              
+        <p class="subtext">
+            {% block subMessage %}
+            {% endblock subMessage %}
+        </p>
+        {% block left %}
+        {% endblock left %}
+    </div>
+{% endblock contentLeft %}
+
+{% block contentRight %}
+    <section class="star_background">
+        <span class="star star5"></span> <span class="star star6"></span> <span class="star star7"></span>
+        <span class="star star8"></span> <span class="star star9"></span><span class="star star11"></span>
+        <span class="star star12"></span> <span class="star star13"></span> <span class="star star14"></span>
+        <span class="star star15"></span> <span class="star star16"></span>
+    </section>
+    {% block right %}
+    {% endblock right %}
+{% endblock contentRight %}

@@ -276,7 +276,3 @@ def friendpage(request:HttpRequest, friend_id:str):
         'friend_id': friend_id,
         'is_prodded': is_prodded,
     })
-
-
-def base_side(request):
-    return render(request, "example/base_side.html")
