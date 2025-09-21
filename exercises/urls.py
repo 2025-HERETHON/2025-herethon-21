@@ -4,9 +4,6 @@ from .views import *
 app_name = 'exercises'
 
 urlpatterns = [
-    path('test', test, name='test'),
-    path('test/exercise/start', test_exercise_start, name='test_exercise_start'),
-    path('test/exercise/end', test_exercise_end, name='test_exercise_end'),
     path('scrap/create', create_scrapped_exercise_routine, name='scrapped_exercise_routine_create'),
     path('scrap/<str:scrapped_at>/delete', delete_scrapped_exercise_routine, name='scrapped_exercise_routine_delete'),
     path('history/create', create_exercise_history, name='exercise_history_create'),
