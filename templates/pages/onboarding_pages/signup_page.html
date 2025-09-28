@@ -1,59 +1,24 @@
-{% extends "../../example/base.html" %}
+{% extends "../../example/base_side_right.html" %}
 {% load static %} 
-{% block style %}
-<link rel="stylesheet" href="{% static 'styles/page_styles/null.css' %}" />
-<link rel="stylesheet" href="{% static 'styles/component_styles/page_component.css' %}" />
+{% block plus_style %}
 <link rel="stylesheet" href="{% static 'styles/page_styles/onboarding_pages/signup_page.css' %}" />
-<link rel="stylesheet" href="{% static 'styles/page_styles/mypage_main.css' %}" />
-{% endblock style %} 
+{% endblock plus_style %} 
 
-
-{% block script %}
+{% block plus_script %}
 <script src="{% static 'functions/page_functions/onboarding_pages/purpose_page.js' %}"></script>
-{% endblock script %}
+{% endblock plus_script %}
 
+{% block mainMessage %}
+  <p>
+    <b>
+    먼저 회원가입을 해볼까요?
+    </b>
+  </p>
+  <p>
+    <b>이메일과 비밀번호를 입력해주세요</b>
+  </p>
+{% endblock mainMessage %}
 
-{% block body %}
-<body>
-
-    <header class="top_section">
-        <section class="top_bar">
-            <img src="{% static 'assets/img/logo.png' %}" alt="로고" class="logo_image" />
-        </section>
-    </header>
-    
-    <main class="main_layout">
-    <section class="content_area">
-        <section class="content_left">
-        <div class="ment_hugger">
-        <img src="{% static 'assets/img/star_highlight.png' %}" alt="피포미 별" />
-            <p>
-            <b>
-            먼저 회원가입을 해볼까요?
-            </b>
-            </p>
-            <p>
-            <b>이메일과 비밀번호를 입력해주세요</b>
-            </p>
-        </div>
-      </section>
-    <nav class="sidebar_nav" aria-label="페이지 네비게이션">
-        <p class="nav_button nav_button1"></p>   
-        <div class="nav_line"></div>
-        <div class="nav_line"></div>
-        </nav>
-
-      <section class="content_right">
-        <section class="star_background">
-            <span class="star star5"></span> <span class="star star6"></span> <span class="star star7"></span> <span class="star star8"></span>
-            <span class="star star9"></span><span class="star star11"></span> <span class="star star12"></span>
-            <span class="star star13"></span> <span class="star star14"></span> <span class="star star15"></span> <span class="star star16"></span>
-        </section>
-        <!-- 오른쪽 컨텐츠 영역 -->
-        {% include "../../components/signup_component.html" %}
-        </section>
-    </section>
-  </main>
-</body>
-
-{% endblock body %}
+{% block right %}
+  {% include "../../components/signup_component.html" %}
+{% endblock right %}

@@ -1,6 +1,19 @@
 {% extends "./base_side.html" %}
 {% load static %}
 
+{% block left_style %}
+    {% block plus_style %}
+    {% endblock plus_style %}
+{% endblock left_style %}
+
+{% block script %}
+  {% block plus_script %}
+  {% endblock plus_script %}
+{% endblock script %}
+
+{% block pageName %}
+{% endblock pageName %}
+
 {% block contentLeft %}
     <span class="star star5"></span> <span class="star star6"></span> <span class="star star7"></span>
     <span class="star star9"></span><span class="star star15"></span>
