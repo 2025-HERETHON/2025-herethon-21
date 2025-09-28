@@ -3,15 +3,21 @@
 
 {% block right_style %}
 <link rel="stylesheet" href="{% static 'styles/page_styles/base_side_right.css' %}" />
+    {% block plus_style %}
+    {% endblock plus_style %}
 {% endblock right_style %}
+
+{% block script %}
+  {% block plus_script %}
+  {% endblock plus_script %}
+{% endblock script %}
+
 
 {% block contentLeft %}
     <div class="ment_hugger">
         <img src="{% static 'assets/img/star_highlight.png' %}" alt="피포미 별" />
-        <p class="mainmsg">
-            {% block mainMessage %}
-            {% endblock mainMessage %}
-        </p>   
+        {% block mainMessage %}
+        {% endblock mainMessage %}
         {% block left %}
         {% endblock left %}
     </div>
