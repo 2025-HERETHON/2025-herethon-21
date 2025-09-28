@@ -22,6 +22,7 @@
   <p class="pipi_says">어떤 알림이 왔는지 확인해 볼까요? 피피</p>
 </div>
 {% endblock left %}
+
 {% block right %}
   <div class="alarmhugger">
     {% for notification in notification_list %}
@@ -29,28 +30,18 @@
         <div class="timestamp">{{ notification.created_at|timesince }} 전</div>
         <div class="content_line">
           <div class="message_text">
-            {% if notification.category == 1 %}
-              {{ notification.sender__nickname }}가 친구 요청을 보냈어요
-            {% elif notification.category == 2 %}
-              {{ notification.sender__nickname }}가 내 친구 요청을 수락했어요
-            {% elif notification.category == 3 %}
-              {{ notification.sender__nickname }}가 내 친구 요청을 거절했어요
-            {% elif notification.category == 4 %}
-              {{ notification.sender__nickname }}가 내 운동 리뷰에 반응을 남겼어요
-            {% elif notification.category == 5 %}
-              {{ notification.sender__nickname }}가 운동을 재촉하며 콕 찔렀어요
-            {% endif %}
+            {{ notification.content }}
           </div>
 
-          {% if notification.category == 1 %}
+          {% if "(이)가 친구 요청했어요" in notification.content %}
             <div class="btns">
               <!-- 수락 폼 -->
-              <form method="post" action="{% url 'friends:create_accept_friend' id=notification.sender__id %}">
+              <form method="post" action="{% url 'friends:create_accept_friend' notification_id=notification.id %}">
                 {% csrf_token %}
                 <button type="submit">수락</button>
               </form>
               <!-- 거절 폼 -->
-              <form method="post" action="{% url 'friends:create_reject_friend' id=notification.sender__id %}">
+              <form method="post" action="{% url 'friends:create_reject_friend' notification_id=notification.id %}">
                 {% csrf_token %}
                 <button type="submit">거절</button>
               </form>

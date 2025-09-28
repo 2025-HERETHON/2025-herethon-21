@@ -2,10 +2,12 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.http import HttpRequest
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from utils.choices import ExerciseGoalType, FriendStatusType, NotificationCategoryType
 from utils.json_handlers import JSONIntChoicesListHandler
+from notifications.models import Notification
 from notifications.services import NotificationService
 from .models import Friend
 from .services import FriendService
@@ -54,39 +56,59 @@ def read_receive_list(request):
     return render(request, "friend_request_received.html", {"friend_requests":friend_requests})
 
 @login_required
-def create_accept_friend(request, id):
+def create_accept_friend(request:HttpRequest, notification_id):
+    notification = Notification.objects.get(id=notification_id)
     friend = Friend.objects.filter(
+        sender=notification.sender,
         receiver=request.user,
-        sender__id=id,
         status=FriendStatusType.PENDING
     ).first()
     if friend:
         FriendService.accept_request(friend)
         service = NotificationService(request)
-        service.post(                
+        # 기존 알림 삭제
+        service.delete(notification)
+        # 수락한 사람 알림 추가
+        service.post(
             sender=friend.sender,
             receiver=friend.receiver,
+            category=NotificationCategoryType.ACCEPT
+        )
+        # 수락당한 사람 알림 추가
+        service.post(                
+            sender=friend.receiver,
+            receiver=friend.sender,
             category=NotificationCategoryType.ACCEPT
         )
     return redirect("friends:read_friends_list")
 
 @login_required
-def create_reject_friend(request, id):
+def create_reject_friend(request:HttpRequest, notification_id):
+    notification = Notification.objects.get(id=notification_id)
     friend = Friend.objects.filter(
+        sender=notification.sender,
         receiver=request.user,
-        sender__id=id,
         status=FriendStatusType.PENDING
     ).first()
     if friend:
         FriendService.reject_request(friend)
         service = NotificationService(request)
+        # 기존 알림 삭제
+        service.delete(notification)
+        # 거절한 사람 알림 추가
         service.post(
             sender=friend.sender,
             receiver=friend.receiver,
             category=NotificationCategoryType.REJECT
         )
+        # 거절당한 사람 알림 추가
+        service.post(                
+            sender=friend.receiver,
+            receiver=friend.sender,
+            category=NotificationCategoryType.REJECT
+        )
     return redirect("friends:read_friends_list")
-        
+
 @login_required
 def read_friend_detail(request, id):
     friend_user = CustomUser.objects.filter(id=id).first()
@@ -103,4 +125,3 @@ def read_friend_detail(request, id):
         "exercise_goals": exercise_goals,
     }
     return render(request, "friend_detail.html", context)
-
