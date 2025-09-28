@@ -121,7 +121,6 @@
 
 .left_right{
   width:15px;
-  margin:20px 10px;
 }
 .calendar img {
     width: 20px;
@@ -132,4 +131,9 @@
     background-color: transparent;
     border: none;
     cursor:pointer;
+}
+
+.submit-button img{
+    width:25px;
+    margin: 20px 10px;
 }

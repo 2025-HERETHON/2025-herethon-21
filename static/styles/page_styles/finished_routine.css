@@ -36,10 +36,34 @@
   color:black;
   cursor: pointer;
 }
-#go_to_main:hover {
-  background-color: #A48BE7;
-  color: white;
+.btn_hugger button:hover{
+    cursor: pointer;
+    background-color: #A48BE7;
+    color:white;
+
 }
+#goto_main {
+  font-size: 18px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    margin-top: 50px;
+    width:65%;
+    height:60px;
+    padding:20px;
+    border-radius: 20px;
+  border: 2px solid #dcdcdc;
+  background-color: white;
+  color:black;
+    text-decoration: none;
+}
+#goto_main:hover{
+    cursor: pointer;
+    background-color: #A48BE7;
+    color:white;
+}
+
 .content_right{
     display: flex;
     justify-content: center;

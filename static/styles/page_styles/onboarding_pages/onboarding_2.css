@@ -49,6 +49,10 @@
     color:gray;
     margin: 20px 30px;
 }
+.next_page img{
+    width:25px;
+    margin: 20px 10px;
+}
 .next_page a{
     text-decoration: none;  
     color:inherit;

@@ -6,10 +6,13 @@
 {% endblock plus_style %} 
 
 {% block mainMessage %}
-  <span><b>어서오세요</b></span>
-  <span><b>AI 피피가 월경 주기에 맞는 루틴을 추천해드려요</b></span>
-  <span class="subtext">오른쪽 하단에 다음 버튼을 눌러주세요</span>
+  어서오세요<br />
+  AI 피피가 월경 주기에 맞는 루틴을 추천해드려요
 {% endblock mainMessage %}
+
+{% block left %}
+<span class="subtext">오른쪽 하단 다음 버튼을 눌러주세요</span>
+{% endblock left %}
 
 {% block right %}
   <img src="{% static 'assets/img/welcoming_pipi.png' %}" alt="반겨주는 피피" class="pipi" />

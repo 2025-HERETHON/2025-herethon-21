@@ -45,6 +45,7 @@
   border-radius: 30.117px 0 0 30.117px;
   color: #000;
   position: relative;
+  letter-spacing: 5px; 
 }
 .star_background{
     margin-left:50%;
