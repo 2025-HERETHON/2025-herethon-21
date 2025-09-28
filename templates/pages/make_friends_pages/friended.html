@@ -1,22 +1,13 @@
 {% extends "../../example/base_side_right.html" %}
 {% load static %} 
 {% block plus_style %}
-<link rel="stylesheet" href="{% static 'styles/page_styles/null.css' %}" />
-<link rel="stylesheet" href="{% static 'styles/component_styles/page_component.css' %}" />
-<link rel="stylesheet" href="{% static 'styles/page_styles/alarm_page.css' %}" />
-<link rel="stylesheet" href="{% static 'styles/page_styles/mypage_main.css' %}" />
-<link rel="stylesheet" href="{% static 'styles/page_styles/onboarding_pages/onboarding_1.css' %}" />
-<link rel="stylesheet" href="{% static 'styles/page_styles/make_friends_pages/friends_email_input.css' %}" />
 <link rel="stylesheet" href="{% static 'styles/page_styles/make_friends_pages/friends_confirm.css' %}" />
 <link rel="stylesheet" href="{% static 'styles/page_styles/make_friends_pages/friended.css' %}" />
-<link rel="stylesheet" href="{% static 'styles/component_styles/signup_component.css' %}" />
 {% endblock plus_style %}
 
 {% block mainMessage %}
-<b>
-  <p>친구 신청이 완료되었습니다</p>
-  <p>서로 응원하며 함께해요!</p>
-</b>
+친구 신청이 완료되었습니다<br>
+서로 응원하며 함께해요!
 {% endblock mainMessage %}
 {% block left %}
 <div class="before_page">
@@ -53,6 +44,6 @@
 
         </div>
 
-        <a href="{% url 'frontend:cyclepage' %}">운동 바로가기</a>
+        <a href="{% url 'frontend:cyclepage' %}" id="goto_main">운동 바로가기</a>
       </div>
 {% endblock right %}

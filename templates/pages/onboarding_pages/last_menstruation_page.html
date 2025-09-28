@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 {% block mainMessage %}
-  <p><b>최근 월경의 마지막 월경 시작일과 종료일을 알려주세요</b></p>
+  최근 월경의 마지막 월경 시작일과 종료일을 알려주세요
 {% endblock mainMessage %}
 {% block left %}
   <div class="selected_showingbox">
@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
         <input type="hidden" name="start" id="hidden_start">
         <input type="hidden" name="end" id="hidden_end">
         <button type="submit" class="submit-button">
-          <img src="{% static 'assets/img/right.png' %}" alt="진행하기" class="left_right"/>
+          <img src="{% static 'assets/img/right.png' %}" alt="진행하기"/>
         </button>
       </form>
     </div>

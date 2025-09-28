@@ -16,8 +16,10 @@
 {% block contentLeft %}
     <div class="ment_hugger">
         <img src="{% static 'assets/img/star_highlight.png' %}" alt="피포미 별" />
-        {% block mainMessage %}
-        {% endblock mainMessage %}
+        <p class="mainmsg">
+            {% block mainMessage %}
+            {% endblock mainMessage %}
+        </p>
         {% block left %}
         {% endblock left %}
     </div>

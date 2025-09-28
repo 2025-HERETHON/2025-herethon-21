@@ -18,6 +18,9 @@
     margin-bottom:30px;
 }
 .mainmsg{
-    font-weight:500;
+    font-weight: 600;
     font-size: 17px;
+    white-space: normal;  
+    text-align: center;
+    line-height: 40px;
 }

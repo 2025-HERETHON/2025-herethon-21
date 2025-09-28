@@ -20,6 +20,7 @@
     border-radius: 20px;
     border:2px solid #A48BE7;
     background-color: white;
+    text-decoration: none;
 }
 #goto_main:hover{
     cursor: pointer;

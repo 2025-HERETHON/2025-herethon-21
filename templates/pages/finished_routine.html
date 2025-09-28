@@ -27,7 +27,7 @@
   {% include "../components/review_component.html" with data=data index=forloop.counter0 %}
   <br />
   <div class="btn_hugger">
-  <a href="{% url 'frontend:cyclepage' %}">운동 바로가기</a>
+  <a href="{% url 'frontend:cyclepage' %}" id="goto_main">운동 바로가기</a>
     <button type="submit" value="운동 스크랩하기" id="scrap_btn">운동 스크랩하기</button>
   </div>
 {% endblock right %}

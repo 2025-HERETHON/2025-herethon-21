@@ -1,15 +1,8 @@
 {% extends "../../example/base_side_right.html" %}
 {% load static %} 
 {% block plus_style %}
-<link rel="stylesheet" href="{% static 'styles/page_styles/alarm_page.css' %}" />
-<link rel="stylesheet" href="{% static 'styles/page_styles/mypage_main.css' %}" />
-<link rel="stylesheet" href="{% static 'styles/page_styles/onboarding_pages/onboarding_1.css' %}" />
 <link rel="stylesheet" href="{% static 'styles/page_styles/make_friends_pages/friends_email_input.css' %}" />
-
-<link rel="stylesheet" href="{% static 'styles/page_styles/make_friends_pages/friends_confirm.css' %}" />
-<link rel="stylesheet" href="{% static 'styles/page_styles/make_friends_pages/friended.css' %}" />
-<link rel="stylesheet" href="{% static 'styles/component_styles/signup_component.css' %}" />
-
+<link rel="stylesheet" href="{% static 'styles/page_styles/mypage_main.css' %}" />
 {% endblock plus_style %} 
 
 {% block plus_script %}
@@ -27,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const email = emailInput.value.trim();
 
     if (email.length === 0) {
-      emailInput.style.border = "2px solid white";
+      emailInput.style.border = "2px solid rgb(230, 230, 230)";
     } else if (!isValidEmail(email)) {
       emailInput.style.border = "2px solid rgb(240, 102, 125)";
     } else {
@@ -49,10 +42,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 {% block mainMessage %}
-<b>
-  <p>새로운 친구를 찾고 계신가요?</p>
+  새로운 친구를 찾고 계신가요?<br>
   친구의 이메일을 입력해주세요
-</b>
 {% endblock mainMessage %}
 {% block left %}
 <div class="before_page">
@@ -63,13 +54,13 @@ document.addEventListener("DOMContentLoaded", function () {
 {% endblock left %}
 {% block right %}
 <div class="email_finder_hugger">
-<div class="input_hugger">
-<form method="post" action="{% url 'friends:create_send_friends' %}" id="friendForm">
-    {% csrf_token %}
-    <label for="email">이메일</label><br />
-    <input type="text" id="email" name="email" placeholder="예) Fitforme@example.com" />
-    <button type="submit" id="friend_submitbtn">친구 추가</button>
-</form>
-</div>
+  <div class="input_hugger">
+    <form method="post" action="{% url 'friends:create_send_friends' %}" id="friendForm">
+        {% csrf_token %}
+        <label for="email">이메일</label><br />
+        <input type="text" id="email" name="email" placeholder="예) Fitforme@example.com" />
+        <button type="submit" id="friend_submitbtn">친구 추가</button>
+    </form>
+  </div>
 </div>
 {% endblock right %}
