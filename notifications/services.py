@@ -44,7 +44,7 @@ class NotificationService:
                 'content': (
                     f"{n['sender__nickname']}(이)가 {n['category_display']}" 
                     if n['is_received'] 
-                    else f"{n['receiver__nickname']}의 {n['category_display']}"
+                    else f"{n['receiver__nickname']}에게 {n['category_display']}"
                 )
             }
             for n in notifications
