@@ -69,7 +69,7 @@ def create_accept_friend(request:HttpRequest, notification_id):
         # 기존 알림 삭제
         service.delete(notification)
         # 수락한 사람 알림 추가
-        service.post(                
+        service.post(
             sender=friend.sender,
             receiver=friend.receiver,
             category=NotificationCategoryType.ACCEPT
@@ -108,7 +108,7 @@ def create_reject_friend(request:HttpRequest, notification_id):
             category=NotificationCategoryType.REJECT
         )
     return redirect("friends:read_friends_list")
-        
+
 @login_required
 def read_friend_detail(request, id):
     friend_user = CustomUser.objects.filter(id=id).first()
@@ -125,4 +125,3 @@ def read_friend_detail(request, id):
         "exercise_goals": exercise_goals,
     }
     return render(request, "friend_detail.html", context)
-
